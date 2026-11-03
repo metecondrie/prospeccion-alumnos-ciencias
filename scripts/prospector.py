@@ -448,8 +448,28 @@ def normalize_item(item: Dict[str, Any], idx: int = 1) -> Dict[str, Any]:
     })
     return item
 
+def notify_telegram_lead(lead: Dict[str, Any]):
+    """Envía una alerta instantánea a Telegram si las claves están en .env."""
+    bot_token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID")
+    if not bot_token or not chat_id:
+        return
+    msg = (
+        "🎓 <b>¡NUEVO ALUMNO DE CIENCIAS EXACTAS!</b>\n\n"
+        f"📚 <b>Materia:</b> {lead.get('materia', 'No especificada')}\n"
+        f"📍 <b>Ubicación:</b> {lead.get('país/ubicación', 'No especificada')}\n"
+        f"🎯 <b>Nivel:</b> {lead.get('nivel educativo', 'A convenir')}\n\n"
+        f"💬 <b>Mensaje:</b> <i>{lead.get('mensaje/descripción', '')[:250]}</i>\n\n"
+        f"🔗 <a href='{lead.get('enlace al anuncio', '')}'>Abrir y Contactar Alumno</a>"
+    )
+    try:
+        from extract_telegram import send_telegram_notification
+        send_telegram_notification(bot_token, chat_id, msg)
+    except Exception:
+        pass
+
 def cmd_audit(args):
-    """Clasifica los anuncios brutos usando Gemini Flash y guarda las decisiones."""
+    """Clasifica de forma incremental los nuevos anuncios brutos usando el Triple Motor de IA."""
     print(f"--> Iniciando auditoría semántica con modelo: {args.model}")
     with open(args.input, "r", encoding="utf-8") as f:
         raw_items = json.load(f)
@@ -457,13 +477,42 @@ def cmd_audit(args):
     # Normalizar leads entrantes con IDs deterministas
     raw_items = [normalize_item(it, idx + 1) for idx, it in enumerate(raw_items)]
 
-    print(f"Total anuncios a auditar: {len(raw_items)}")
-    batch_size = args.batch_size
+    # 1. Cargar históricos ya auditados para no desperdiciar llamadas de IA
     approved = []
-    discarded = []
+    if os.path.exists(args.output_approved):
+        try:
+            with open(args.output_approved, "r", encoding="utf-8") as f:
+                approved = json.load(f)
+        except Exception:
+            approved = []
 
-    for i in range(0, len(raw_items), batch_size):
-        batch = raw_items[i:i + batch_size]
+    discarded = []
+    if os.path.exists(args.output_discarded):
+        try:
+            with open(args.output_discarded, "r", encoding="utf-8") as f:
+                discarded = json.load(f)
+        except Exception:
+            discarded = []
+
+    audited_ids = {it["id"] for it in approved + discarded if "id" in it}
+    audited_urls = {it.get("enlace al anuncio") or it.get("enlace_anuncio") for it in approved + discarded if it.get("enlace al anuncio") or it.get("enlace_anuncio")}
+
+    pending_items = [
+        it for it in raw_items
+        if it["id"] not in audited_ids and (it.get("enlace al anuncio") or it.get("enlace_anuncio")) not in audited_urls
+    ]
+
+    print(f"Total anuncios: {len(raw_items)} | Previamente auditados: {len(audited_ids)} | Nuevos a auditar: {len(pending_items)}")
+
+    if not pending_items:
+        print("[OK] No hay nuevos anuncios pendientes de clasificar. Base de datos al día.")
+        return
+
+    batch_size = args.batch_size
+    new_approved_count = 0
+
+    for i in range(0, len(pending_items), batch_size):
+        batch = pending_items[i:i + batch_size]
         items_payload = []
         for item in batch:
             items_payload.append({
@@ -475,7 +524,7 @@ def cmd_audit(args):
                 "enlace": item.get("enlace al anuncio", "")
             })
 
-        print(f"  Procesando lote {i // batch_size + 1} de {(len(raw_items) + batch_size - 1) // batch_size}...")
+        print(f"  Procesando lote {i // batch_size + 1} de {(len(pending_items) + batch_size - 1) // batch_size}...")
         try:
             results = call_multiprovider_batch(items_payload, primary_model=args.model, api_key=args.api_key)
             result_map = {r["id"]: r for r in results if isinstance(r, dict) and "id" in r}
@@ -489,6 +538,8 @@ def cmd_audit(args):
                 item["justificacion_ia"] = res.get("justificacion_ia", "")
                 if res.get("is_student") is True:
                     approved.append(item)
+                    new_approved_count += 1
+                    notify_telegram_lead(item)
                 else:
                     discarded.append(item)
         except Exception as e:
@@ -500,14 +551,14 @@ def cmd_audit(args):
 
         time.sleep(1.0)
 
-    # Guardar salidas
+    # Guardar salidas acumuladas
     with open(args.output_approved, "w", encoding="utf-8") as f:
         json.dump(approved, f, ensure_ascii=False, indent=2)
 
     with open(args.output_discarded, "w", encoding="utf-8") as f:
         json.dump(discarded, f, ensure_ascii=False, indent=2)
 
-    print(f"[OK] Auditoría completa. Aprobados: {len(approved)} | Descartados: {len(discarded)}")
+    print(f"[OK] Auditoría completada. Nuevos alumnos aprobados: {new_approved_count} | Total en base de datos: {len(approved)}")
     print(f"  Archivo aprobados: {args.output_approved}")
     print(f"  Archivo descartados: {args.output_discarded}")
 

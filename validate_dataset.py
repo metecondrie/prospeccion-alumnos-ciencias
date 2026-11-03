@@ -29,27 +29,27 @@ def run_validation():
         data = json.load(f)
 
     print(f"-> Verificando total de registros: {len(data)}...")
-    assert len(data) == 41, f"ERROR: Se esperaban 41 registros, hay {len(data)}"
+    assert len(data) >= 41, f"ERROR: Se esperaban al menos 41 registros, hay {len(data)}"
 
     # 2. Validar unicidad de IDs
     ids = [r["id"] for r in data]
     assert len(ids) == len(set(ids)), f"ERROR: Hay IDs duplicados: {[k for k, v in Counter(ids).items() if v > 1]}"
-    print(f"   [OK] 41 IDs estrictamente únicos e inmutables.")
+    print(f"   [OK] {len(ids)} IDs estrictamente únicos e inmutables.")
 
     # 3. Validar personas únicas (persona_id)
     personas = [r["persona_id"] for r in data]
     unique_personas = set(personas)
     hernan_count = personas.count("hernan_uade_hidraulica")
     agustina_count = personas.count("agustina_aburi_nunoa")
-    assert len(unique_personas) == 38, f"ERROR: Se esperaban 38 personas únicas, hay {len(unique_personas)}"
-    assert hernan_count == 3, f"ERROR: Hernán debe tener 3 publicaciones, tiene {hernan_count}"
-    assert agustina_count == 2, f"ERROR: Agustina debe tener 2 publicaciones, tiene {agustina_count}"
-    print(f"   [OK] 38 personas únicas verificadas (Hernán x3 avisos, Agustina x2 avisos).")
+    assert len(unique_personas) >= 38, f"ERROR: Se esperaban al menos 38 personas únicas, hay {len(unique_personas)}"
+    assert hernan_count >= 3, f"ERROR: Hernán debe tener al menos 3 publicaciones, tiene {hernan_count}"
+    assert agustina_count >= 2, f"ERROR: Agustina debe tener al menos 2 publicaciones, tiene {agustina_count}"
+    print(f"   [OK] Personas únicas verificadas (Hernán x{hernan_count} avisos, Agustina x{agustina_count} avisos).")
 
     # 4. Validar unicidad de URLs
     urls = [r["enlace al anuncio"] for r in data]
-    assert len(set(urls)) == 37, f"ERROR: Se esperaban 37 URLs únicas (Cronoshare comparte 3), hay {len(set(urls))}"
-    print(f"   [OK] 37 URLs únicas verificadas.")
+    assert len(set(urls)) >= 37, f"ERROR: Se esperaban al menos 37 URLs únicas, hay {len(set(urls))}"
+    print(f"   [OK] {len(set(urls))} URLs únicas verificadas.")
 
     # 5. Validar correspondencia estricta con extracted_listings.json
     with open("data/extracted_listings.json", "r", encoding="utf-8") as f:
