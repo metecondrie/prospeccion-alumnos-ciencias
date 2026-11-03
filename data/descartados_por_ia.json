@@ -1,289 +1,412 @@
 [
   {
-    "id": 3,
+    "id": "descarte_1",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Matematicas.Aspx",
     "materia": "Matemáticas, Física, Química",
-    "mensaje": "Matemáticas Matemáticas Inglés Francés Repaso General Física Lengua Castellana y",
-    "reason": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas.aspx",
+    "mensaje/descripción": "Matemáticas Matemáticas Inglés Francés Repaso General Física Lengua Castellana y",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante."
   },
   {
-    "id": 4,
+    "id": "descarte_2",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Ingles.Aspx",
     "materia": "Matemáticas, Física, Química",
-    "mensaje": "Inglés Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Lite",
-    "reason": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/ingles.aspx",
+    "mensaje/descripción": "Inglés Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Lite",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante."
   },
   {
-    "id": 5,
+    "id": "descarte_3",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Frances.Aspx",
     "materia": "Matemáticas, Física, Química",
-    "mensaje": "Francés Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Lit",
-    "reason": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/frances.aspx",
+    "mensaje/descripción": "Francés Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Lit",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante."
   },
   {
-    "id": 6,
+    "id": "descarte_4",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Repaso General.Aspx",
     "materia": "Matemáticas, Física, Química",
-    "mensaje": "Repaso General Matemáticas Inglés Francés Repaso General Física Lengua Castellan",
-    "reason": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/repaso-general.aspx",
+    "mensaje/descripción": "Repaso General Matemáticas Inglés Francés Repaso General Física Lengua Castellan",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante."
   },
   {
-    "id": 7,
+    "id": "descarte_5",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Fisica.Aspx",
     "materia": "Matemáticas, Física, Química",
-    "mensaje": "Física Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Lite",
-    "reason": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/fisica.aspx",
+    "mensaje/descripción": "Física Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Lite",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante."
   },
   {
-    "id": 8,
+    "id": "descarte_6",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Matematicas.Aspx",
     "materia": "Matemáticas, Física, Química",
-    "mensaje": "Lengua Castellana y Literatura Matemáticas Inglés Francés Repaso General Física ",
-    "reason": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas.aspx",
+    "mensaje/descripción": "Lengua Castellana y Literatura Matemáticas Inglés Francés Repaso General Física",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante."
   },
   {
-    "id": 9,
+    "id": "descarte_7",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Quimica.Aspx",
     "materia": "Matemáticas, Física, Química",
-    "mensaje": "Química Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Lit",
-    "reason": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/quimica.aspx",
+    "mensaje/descripción": "Química Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Lit",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante."
   },
   {
-    "id": 10,
+    "id": "descarte_8",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Aleman.Aspx",
     "materia": "Matemáticas, Física, Química",
-    "mensaje": "Alemán Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Lite",
-    "reason": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/aleman.aspx",
+    "mensaje/descripción": "Alemán Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Lite",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante."
   },
   {
-    "id": 11,
+    "id": "descarte_9",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Piano.Aspx",
     "materia": "Matemáticas, Física, Química",
-    "mensaje": "Piano Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Liter",
-    "reason": "El anuncio contiene 'Ofertas de trabajo para profesores', lo que indica que es una oferta de empleo para docentes."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/piano.aspx",
+    "mensaje/descripción": "Piano Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Liter",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El anuncio contiene 'Ofertas de trabajo para profesores', lo que indica que es una oferta de empleo para docentes."
   },
   {
-    "id": 12,
+    "id": "descarte_10",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "A Coruña A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona B",
-    "reason": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas/a-coruna.aspx",
+    "mensaje/descripción": "A Coruña A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona B",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
   },
   {
-    "id": 13,
+    "id": "descarte_11",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Albacete A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona B",
-    "reason": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas/albacete.aspx",
+    "mensaje/descripción": "Albacete A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona B",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
   },
   {
-    "id": 14,
+    "id": "descarte_12",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Alicante A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona B",
-    "reason": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas/alicante.aspx",
+    "mensaje/descripción": "Alicante A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona B",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
   },
   {
-    "id": 15,
+    "id": "descarte_13",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Almería A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bi",
-    "reason": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas/almeria.aspx",
+    "mensaje/descripción": "Almería A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bi",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
   },
   {
-    "id": 16,
+    "id": "descarte_14",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Asturias A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona B",
-    "reason": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas/asturias.aspx",
+    "mensaje/descripción": "Asturias A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona B",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
   },
   {
-    "id": 17,
+    "id": "descarte_15",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Badajoz A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bi",
-    "reason": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas/badajoz.aspx",
+    "mensaje/descripción": "Badajoz A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bi",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
   },
   {
-    "id": 18,
+    "id": "descarte_16",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Balears A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bi",
-    "reason": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas/balears.aspx",
+    "mensaje/descripción": "Balears A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bi",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
   },
   {
-    "id": 19,
+    "id": "descarte_17",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Barcelona A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona ",
-    "reason": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas/barcelona.aspx",
+    "mensaje/descripción": "Barcelona A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
   },
   {
-    "id": 20,
+    "id": "descarte_18",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Bizkaia A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bi",
-    "reason": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas/vizcaya.aspx",
+    "mensaje/descripción": "Bizkaia A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bi",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre."
   },
   {
-    "id": 21,
+    "id": "descarte_19",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Burgos A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Biz",
-    "reason": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas/burgos.aspx",
+    "mensaje/descripción": "Burgos A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Biz",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre."
   },
   {
-    "id": 22,
+    "id": "descarte_20",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Cáceres A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bi",
-    "reason": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas/caceres.aspx",
+    "mensaje/descripción": "Cáceres A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bi",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre."
   },
   {
-    "id": 23,
+    "id": "descarte_21",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Cádiz A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizk",
-    "reason": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas/cadiz.aspx",
+    "mensaje/descripción": "Cádiz A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizk",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre."
   },
   {
-    "id": 24,
+    "id": "descarte_22",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Cantabria A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona ",
-    "reason": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas/cantabria.aspx",
+    "mensaje/descripción": "Cantabria A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre."
   },
   {
-    "id": 25,
+    "id": "descarte_23",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Córdoba A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bi",
-    "reason": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas/cordoba.aspx",
+    "mensaje/descripción": "Córdoba A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bi",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre."
   },
   {
-    "id": 26,
+    "id": "descarte_24",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Gipuzkoa A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona B",
-    "reason": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas/guipuzcoa.aspx",
+    "mensaje/descripción": "Gipuzkoa A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona B",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre."
   },
   {
-    "id": 27,
+    "id": "descarte_25",
     "plataforma": "TusClasesParticulares",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Granada A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bi",
-    "reason": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas/granada.aspx",
+    "mensaje/descripción": "Granada A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bi",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre."
   },
   {
-    "id": 35,
+    "id": "descarte_26",
     "plataforma": "TusClases Argentina",
+    "país/ubicación": "Argentina - Ingles.Aspx",
     "materia": "Física",
-    "mensaje": "Solicitud de estudiante buscando profesor de Física: Inglés Inglés Física",
-    "reason": "Aunque el mensaje contiene 'Solicitud de estudiante buscando profesor', la frase es genérica y repetitiva ('Inglés Inglés Física'). Además, la URL ('/alumnos/ingles.aspx') sugiere que es una página de índice o plantilla de la plataforma que lista búsquedas de alumnos, no un anuncio individual escrito por un estudiante real. Esto encaja con el criterio de exclusión de texto mezclado con menús web o índices de profesores."
+    "enlace al anuncio": "https://www.tusclases.com.ar/alumnos/ingles.aspx",
+    "mensaje/descripción": "Solicitud de estudiante buscando profesor de Física: Inglés Inglés Física",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Aunque el mensaje contiene 'Solicitud de estudiante buscando profesor', la frase es genérica y repetitiva ('Inglés Inglés Física'). Además, la URL ('/alumnos/ingles.aspx') sugiere que es una página de índice o plantilla de la plataforma que lista búsquedas de alumnos, no un anuncio individual escrito por un estudiante real. Esto encaja con el criterio de exclusión de texto mezclado con menús web o índices de profesores."
   },
   {
-    "id": 36,
+    "id": "descarte_27",
     "plataforma": "TusClases Argentina",
+    "país/ubicación": "Argentina - Ingles.Aspx",
     "materia": "Física",
-    "mensaje": "Solicitud de estudiante buscando profesor de Física: Física Inglés Física",
-    "reason": "Similar al caso anterior, el mensaje parece una plantilla o título de sección genérico de la plataforma ('Solicitud de estudiante buscando profesor') y la URL ('/alumnos/fisica.aspx') apunta a un índice de alumnos que buscan clases. La repetición de materias también sugiere una plantilla. Esto se considera texto mezclado con menús web o índices, y por lo tanto, no es un anuncio de un estudiante o padre real."
+    "enlace al anuncio": "https://www.tusclases.com.ar/alumnos/ingles.aspx",
+    "mensaje/descripción": "Solicitud de estudiante buscando profesor de Física: Física Inglés Física",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Similar al caso anterior, el mensaje parece una plantilla o título de sección genérico de la plataforma ('Solicitud de estudiante buscando profesor') y la URL ('/alumnos/fisica.aspx') apunta a un índice de alumnos que buscan clases. La repetición de materias también sugiere una plantilla. Esto se considera texto mezclado con menús web o índices, y por lo tanto, no es un anuncio de un estudiante o padre real."
   },
   {
-    "id": 48,
+    "id": "descarte_28",
     "plataforma": "TusClases Argentina",
+    "país/ubicación": "Argentina - Bahia Blanca",
     "materia": "Química",
-    "mensaje": "Profesor universitario de quimica general e inorganica Bruno Profesor universita",
-    "reason": "El mensaje 'Profesor universitario de quimica general e inorganica Bruno' está redactado como una descripción de servicios ofrecidos por un profesor particular (Bruno), no como una búsqueda de clases por parte de un estudiante. Este es un criterio estricto de exclusión."
+    "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-quimica/bahia-blanca/profesor-universitario-quimica-general-inorganica-2454082.aspx",
+    "mensaje/descripción": "Profesor universitario de quimica general e inorganica Bruno Profesor universita",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje 'Profesor universitario de quimica general e inorganica Bruno' está redactado como una descripción de servicios ofrecidos por un profesor particular (Bruno), no como una búsqueda de clases por parte de un estudiante. Este es un criterio estricto de exclusión."
   },
   {
-    "id": 62,
+    "id": "descarte_29",
     "plataforma": "TusClases Chile",
+    "país/ubicación": "España - Matematicas.Aspx",
     "materia": "Matemáticas, Química",
-    "mensaje": "Matemáticas Matemáticas Inglés Química",
-    "reason": "El mensaje es una lista genérica de materias ('Matemáticas Matemáticas Inglés Química') y el enlace apunta a una página de categoría ('estudiantes/matematicas/') en lugar de un anuncio específico, lo que sugiere que es texto mezclado con un menú web o índice de profesores."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas.aspx",
+    "mensaje/descripción": "Matemáticas Matemáticas Inglés Química",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje es una lista genérica de materias ('Matemáticas Matemáticas Inglés Química') y el enlace apunta a una página de categoría ('estudiantes/matematicas/') en lugar de un anuncio específico, lo que sugiere que es texto mezclado con un menú web o índice de profesores."
   },
   {
-    "id": 63,
+    "id": "descarte_30",
     "plataforma": "TusClases Chile",
+    "país/ubicación": "Chile - Ingles",
     "materia": "Matemáticas, Química",
-    "mensaje": "Inglés Matemáticas Inglés Química",
-    "reason": "El mensaje es una lista genérica de materias ('Inglés Matemáticas Inglés Química') y el enlace apunta a una página de categoría ('estudiantes/ingles/') en lugar de un anuncio específico, lo que sugiere que es texto mezclado con un menú web o índice de profesores."
+    "enlace al anuncio": "https://www.tusclasesparticulares.cl/estudiantes/ingles/",
+    "mensaje/descripción": "Inglés Matemáticas Inglés Química",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje es una lista genérica de materias ('Inglés Matemáticas Inglés Química') y el enlace apunta a una página de categoría ('estudiantes/ingles/') en lugar de un anuncio específico, lo que sugiere que es texto mezclado con un menú web o índice de profesores."
   },
   {
-    "id": 64,
+    "id": "descarte_31",
     "plataforma": "TusClases Chile",
+    "país/ubicación": "Chile - Online",
     "materia": "Matemáticas, Química",
-    "mensaje": "Química Matemáticas Inglés Química",
-    "reason": "El mensaje es una lista genérica de materias ('Química Matemáticas Inglés Química') y el enlace apunta a una página de categoría ('estudiantes/quimica/') en lugar de un anuncio específico, lo que sugiere que es texto mezclado con un menú web o índice de profesores."
+    "enlace al anuncio": "https://www.tusclasesparticulares.cl/estudiantes/quimica/",
+    "mensaje/descripción": "Química Matemáticas Inglés Química",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje es una lista genérica de materias ('Química Matemáticas Inglés Química') y el enlace apunta a una página de categoría ('estudiantes/quimica/') en lugar de un anuncio específico, lo que sugiere que es texto mezclado con un menú web o índice de profesores."
   },
   {
-    "id": 66,
+    "id": "descarte_32",
     "plataforma": "TusClases Perú",
+    "país/ubicación": "Perú - Salamanca",
     "materia": "Física",
-    "mensaje": "Profesora de fisica nivel preuniversitario Olga Ramirez Profesora de fisica nive",
-    "reason": "El mensaje 'Profesora de fisica nivel preuniversitario Olga Ramirez' sugiere que es una profesora particular ofreciendo sus servicios, no un estudiante buscando uno."
+    "enlace al anuncio": "https://www.tusclases.pe/estudiantes/fisica/salamanca/profesora-fisica-nivel-preuniversitario-2419816",
+    "mensaje/descripción": "Profesora de fisica nivel preuniversitario Olga Ramirez Profesora de fisica nive",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje 'Profesora de fisica nivel preuniversitario Olga Ramirez' sugiere que es una profesora particular ofreciendo sus servicios, no un estudiante buscando uno."
   },
   {
-    "id": 68,
+    "id": "descarte_33",
     "plataforma": "TusClases Perú",
+    "país/ubicación": "España - Matematicas.Aspx",
     "materia": "Matemáticas",
-    "mensaje": "Matemáticas Matemáticas Inglés",
-    "reason": "El mensaje es una lista genérica de materias ('Matemáticas Matemáticas Inglés') y el enlace apunta a una página de categoría ('estudiantes/matematicas/') en lugar de un anuncio específico, lo que sugiere que es texto mezclado con un menú web o índice de profesores."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/matematicas.aspx",
+    "mensaje/descripción": "Matemáticas Matemáticas Inglés",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje es una lista genérica de materias ('Matemáticas Matemáticas Inglés') y el enlace apunta a una página de categoría ('estudiantes/matematicas/') en lugar de un anuncio específico, lo que sugiere que es texto mezclado con un menú web o índice de profesores."
   },
   {
-    "id": 69,
+    "id": "descarte_34",
     "plataforma": "TusClases Perú",
+    "país/ubicación": "España - Ingles.Aspx",
     "materia": "Matemáticas",
-    "mensaje": "Inglés Matemáticas Inglés",
-    "reason": "El mensaje es una lista genérica de materias ('Inglés Matemáticas Inglés') y el enlace apunta a una página de categoría ('estudiantes/ingles/') en lugar de un anuncio específico, lo que sugiere que es texto mezclado con un menú web o índice de profesores."
+    "enlace al anuncio": "https://www.tusclasesparticulares.com/alumnos/ingles.aspx",
+    "mensaje/descripción": "Inglés Matemáticas Inglés",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "El mensaje es una lista genérica de materias ('Inglés Matemáticas Inglés') y el enlace apunta a una página de categoría ('estudiantes/ingles/') en lugar de un anuncio específico, lo que sugiere que es texto mezclado con un menú web o índice de profesores."
   },
   {
-    "id": 70,
+    "id": "descarte_35",
     "plataforma": "Cronoshare",
+    "país/ubicación": "España",
     "materia": "Matemáticas, Física",
-    "mensaje": "Clases particulares de matemáticas para ingeniería mecánica en universidad Benid",
-    "reason": "Aunque el mensaje es claramente de un alumno que busca ayuda ('Soy alumno de Ingeniería Mecánica que... quiere ayuda'), el enlace contiene '/empleo/', lo que indica que el anuncio se encuentra en una sección de ofertas de trabajo o empleo para profesores, cumpliendo con el criterio de exclusión."
+    "enlace al anuncio": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "mensaje/descripción": "Clases particulares de matemáticas para ingeniería mecánica en universidad Benid",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Aunque el mensaje es claramente de un alumno que busca ayuda ('Soy alumno de Ingeniería Mecánica que... quiere ayuda'), el enlace contiene '/empleo/', lo que indica que el anuncio se encuentra en una sección de ofertas de trabajo o empleo para profesores, cumpliendo con el criterio de exclusión."
   },
   {
-    "id": 73,
+    "id": "descarte_36",
     "plataforma": "Cronoshare",
+    "país/ubicación": "España - Palmar (Murcia)",
     "materia": "Matemáticas",
-    "mensaje": "Profesor particular para clases de matemáticas para 2º bachillerato El Palmar (M",
-    "reason": "La frase 'Requerimos un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma (Cronoshare) para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre."
+    "enlace al anuncio": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "mensaje/descripción": "Profesor particular para clases de matemáticas para 2º bachillerato El Palmar (M",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "La frase 'Requerimos un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma (Cronoshare) para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre."
   },
   {
-    "id": 75,
+    "id": "descarte_37",
     "plataforma": "Cronoshare",
+    "país/ubicación": "España - Palmar (Murcia)",
     "materia": "Matemáticas, Física, Química",
-    "mensaje": "Profesor particular para clases de matemáticas, física, química para 3º eso Sant",
-    "reason": "La frase 'Necesito un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre."
+    "enlace al anuncio": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "mensaje/descripción": "Profesor particular para clases de matemáticas, física, química para 3º eso Sant",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "La frase 'Necesito un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre."
   },
   {
-    "id": 77,
+    "id": "descarte_38",
     "plataforma": "Cronoshare",
+    "país/ubicación": "España - Sevilla (Sevilla)",
     "materia": "Matemáticas",
-    "mensaje": "Profesor de matemáticas para 1º bachillerato Sevilla (Sevilla). Se solicita un s",
-    "reason": "La frase 'Se solicita un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre."
+    "enlace al anuncio": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "mensaje/descripción": "Profesor de matemáticas para 1º bachillerato Sevilla (Sevilla). Se solicita un s",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "La frase 'Se solicita un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre."
   },
   {
-    "id": 78,
+    "id": "descarte_39",
     "plataforma": "Cronoshare",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Clases online de mantenimiento electromecánico industrial para FP 2º Online. Est",
-    "reason": "La frase 'Estamos buscando un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre."
+    "enlace al anuncio": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "mensaje/descripción": "Clases online de mantenimiento electromecánico industrial para FP 2º Online. Est",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "La frase 'Estamos buscando un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre."
   },
   {
-    "id": 79,
+    "id": "descarte_40",
     "plataforma": "Cronoshare",
+    "país/ubicación": "España - Online",
     "materia": "Matemáticas",
-    "mensaje": "Profesor particular de álgebra para grado universitario Online. Requerimos un se",
-    "reason": "La frase 'Requerimos un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre."
+    "enlace al anuncio": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "mensaje/descripción": "Profesor particular de álgebra para grado universitario Online. Requerimos un se",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "La frase 'Requerimos un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre."
   },
   {
-    "id": 80,
+    "id": "descarte_41",
     "plataforma": "Cronoshare",
+    "país/ubicación": "España - Montellano (Sevilla)",
     "materia": "Matemáticas",
-    "mensaje": "Clases de matemáticas para grado universitario Montellano (Sevilla). Buscamos un",
-    "reason": "La frase 'Buscamos un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre."
+    "enlace al anuncio": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "mensaje/descripción": "Clases de matemáticas para grado universitario Montellano (Sevilla). Buscamos un",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "La frase 'Buscamos un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre."
   }
 ]

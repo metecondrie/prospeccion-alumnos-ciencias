@@ -6,7 +6,7 @@ cls
 echo ===============================================================================
 echo   SISTEMA DE PROSPECCION Y FILTRADO CON IA - PROF. ALEJO ONGARO
 echo   Ciencias Exactas: Matematicas, Fisica, Quimica y Biologia
-echo   Motor de Busqueda Web + Clasificacion Semantica con Google Gemini 3.6 / 3.8
+echo   Web Scraping en Vivo + Auditoria Semantica con Google Gemini Flash
 echo ===============================================================================
 echo.
 echo [DIRECTORIO DE TRABAJO] %~dp0
@@ -32,15 +32,15 @@ REM ----------------------------------------------------------------------------
 REM Intenta leer GEMINI_API_KEY desde variable de entorno o archivo .env local
 if "%GEMINI_API_KEY%"=="" (
     if exist ".env" (
-        for /f "usebackq tokens=1,2 delims==" %%a in (".env") do (
-            if "%%a"=="GEMINI_API_KEY" set GEMINI_API_KEY=%%b
+        for /f "usebackq tokens=1,* delims==" %%a in (".env") do (
+            if /i "%%a"=="GEMINI_API_KEY" set "GEMINI_API_KEY=%%~b"
         )
     )
 )
 
 if "%GEMINI_API_KEY%"=="" (
     echo -------------------------------------------------------------------------------
-    echo [CONFIGURACION DE IA - GOOGLE GEMINI 3.6 / 3.8 FLASH]
+    echo [CONFIGURACION DE IA - GOOGLE GEMINI FLASH]
     echo No se encontro una variable de entorno GEMINI_API_KEY ni un archivo .env.
     echo Para que Gemini clasifique los avisos y descarte academias y empleo:
     echo Obtienes tu clave gratis en: https://aistudio.google.com/app/apikey
@@ -53,11 +53,6 @@ if "%GEMINI_API_KEY%"=="" (
 REM -------------------------------------------------------------------------------
 REM PASO 2: RASTREO Y BUSQUEDA EN VIVO EN PLATAFORMAS (Web Scraping)
 REM Archivo ejecutor: scripts\run_extraction.py
-REM Motores incluidos:
-REM   - TusClases (Espana, Argentina, Chile, Colombia, Mexico, Peru)
-REM   - Tablon de Anuncios (?demanda=1)
-REM   - Cronoshare y comunidades educativas
-REM Salida intermedia: data\extracted_listings.json
 REM -------------------------------------------------------------------------------
 echo ===============================================================================
 echo [1/3] RASTREO Y BUSQUEDA EN VIVO EN PLATAFORMAS (Web Scraping)
@@ -67,29 +62,32 @@ echo ===========================================================================
 echo.
 if exist "scripts\run_extraction.py" (
     python scripts\run_extraction.py
+    if %errorlevel% neq 0 (
+        echo [ERROR] Fallo en la extraccion web en vivo. Se conservan los datos anteriores.
+    )
 ) else (
-    echo [ERROR] No se encontro scripts\run_extraction.py
+    echo [ERROR CRITICO] No se encontro scripts\run_extraction.py
+    pause
+    exit /b 1
 )
 
 REM -------------------------------------------------------------------------------
-REM PASO 3: AUDITORIA SEMANTICA CON IA (Google Gemini 3.6 Flash / 3.8 Flash)
-REM Archivo ejecutor: skills\prospeccion-alumnos-ciencias\scripts\prospector.py audit
-REM Discrimina alumnos reales de academias e institutos, evaluando cada publicacion
-REM Salida de aprobados: data\dataset_canonico_auditado.json
-REM Salida de descartados: data\descartados_auditoria.json
+REM PASO 3: AUDITORIA SEMANTICA CON IA (Google Gemini Flash)
 REM -------------------------------------------------------------------------------
 echo.
 echo ===============================================================================
-echo [2/3] AUDITORIA SEMANTICA Y FILTRADO CON IA (Google Gemini 3.6 / 3.8 Flash)
+echo [2/3] AUDITORIA SEMANTICA Y FILTRADO CON IA (Google Gemini Flash)
 echo Analizando intencion de los anuncios capturados con Gemini...
-echo Ejecutable: skills\prospeccion-alumnos-ciencias\scripts\prospector.py audit
 echo ===============================================================================
 echo.
 if not "%GEMINI_API_KEY%"=="" (
     if exist "skills\prospeccion-alumnos-ciencias\scripts\prospector.py" (
-        python skills\prospeccion-alumnos-ciencias\scripts\prospector.py audit --input data\extracted_listings.json --model gemini-3.6-flash --output-approved data\dataset_canonico_auditado.json --output-discarded data\descartados_auditoria.json
+        python skills\prospeccion-alumnos-ciencias\scripts\prospector.py audit --input data\extracted_listings.json --model gemini-2.5-flash --output-approved data\dataset_canonico_auditado.json --output-discarded data\descartados_auditoria.json
     ) else if exist "scripts\prospector.py" (
-        python scripts\prospector.py audit --input data\extracted_listings.json --model gemini-3.6-flash --output-approved data\dataset_canonico_auditado.json --output-discarded data\descartados_auditoria.json
+        python scripts\prospector.py audit --input data\extracted_listings.json --model gemini-2.5-flash --output-approved data\dataset_canonico_auditado.json --output-discarded data\descartados_auditoria.json
+    )
+    if %errorlevel% neq 0 (
+        echo [ADVERTENCIA] La auditoria de IA reporto un error. Se conservan los datos previos.
     )
 ) else (
     echo [AVISO] Omitiendo llamada a la API de Gemini por falta de GEMINI_API_KEY.
@@ -97,28 +95,58 @@ if not "%GEMINI_API_KEY%"=="" (
 )
 
 REM -------------------------------------------------------------------------------
-REM PASO 4: COMPILACION DE DASHBOARD CRM Y ARCHIVOS CSV
-REM Archivo ejecutor: skills\prospeccion-alumnos-ciencias\scripts\prospector.py build
-REM Genera: dashboard.html, alumnos_ciencias_exactas.csv, dashboard_crm.csv
-REM Preserva intactos todos los estados guardados previamente en tu CRM local
+REM PASO 4: VALIDACION ESTRICTA DE DATASET CANONICO
+REM -------------------------------------------------------------------------------
+echo.
+echo ===============================================================================
+echo [VALIDACION] Comprobando integridad determinista de los datos...
+echo ===============================================================================
+echo.
+if exist "validate_dataset.py" (
+    python validate_dataset.py
+    if %errorlevel% neq 0 (
+        echo [ERROR CRITICO] Fallo la validacion del dataset. Abortando compilacion.
+        pause
+        exit /b 1
+    )
+)
+
+REM -------------------------------------------------------------------------------
+REM PASO 5: COMPILACION DE DASHBOARD CRM Y ARCHIVOS CSV
 REM -------------------------------------------------------------------------------
 echo.
 echo ===============================================================================
 echo [3/3] COMPILACION DE DASHBOARD CRM Y PLANILLAS
 echo Actualizando dashboard.html, alumnos_ciencias_exactas.csv y dashboard_crm.csv...
-echo Ejecutable: skills\prospeccion-alumnos-ciencias\scripts\prospector.py build
 echo ===============================================================================
 echo.
 if exist "skills\prospeccion-alumnos-ciencias\scripts\prospector.py" (
     python skills\prospeccion-alumnos-ciencias\scripts\prospector.py build --approved data\dataset_canonico_auditado.json --discarded data\descartados_auditoria.json --desktop-sync
 ) else if exist "scripts\prospector.py" (
-    python skills\prospeccion-alumnos-ciencias\scripts\prospector.py build --approved data\dataset_canonico_auditado.json --discarded data\descartados_auditoria.json --desktop-sync
+    python scripts\prospector.py build --approved data\dataset_canonico_auditado.json --discarded data\descartados_auditoria.json --desktop-sync
+)
+if %errorlevel% neq 0 (
+    echo [ERROR CRITICO] Fallo la compilacion del dashboard y planillas.
+    pause
+    exit /b 1
+)
+
+where node > nul 2>&1
+if %errorlevel% equ 0 (
+    if exist "check_dashboard.cjs" (
+        echo.
+        echo [VERIFICACION DASHBOARD] Ejecutando suite de pruebas unitarias en Node.js...
+        node check_dashboard.cjs
+        if %errorlevel% neq 0 (
+            echo [ADVERTENCIA] Algunas aserciones del dashboard fallaron.
+        )
+    )
 )
 
 echo.
 echo ===============================================================================
-echo   [EXITO] PROCESO DE PROSPECCION COMPLETADO
-echo   Tu panel dashboard.html y tus planillas CSV fueron actualizados exitosamente.
+echo   [EXITO] PROCESO DE PROSPECCION COMPLETADO EXITOSAMENTE
+echo   Tu panel dashboard.html y tus planillas CSV fueron actualizados.
 echo   Tus estados del CRM (Contactado, Cerrado, etc.) se mantuvieron protegidos.
 echo ===============================================================================
 echo.

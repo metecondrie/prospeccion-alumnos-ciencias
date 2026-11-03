@@ -5,7 +5,9 @@ __pycache__/
 
 # Environment variables
 .env
+.env.local
 .env.*
+!.env.example
 
 # Logs and runtime databases
 *.log
@@ -16,5 +18,8 @@ __pycache__/
 Thumbs.db
 desktop.ini
 
-# Scratch / Temporary files
+# Scratch / Temporary files / Audit work
 scratch/
+audit_work/
+backup_audit_*/
+.agents/

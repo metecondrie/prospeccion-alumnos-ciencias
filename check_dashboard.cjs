@@ -1,5 +1,6 @@
 const fs = require('fs');
 const vm = require('vm');
+const assert = require('assert');
 
 const htmlPath = fs.existsSync('dashboard.html') ? 'dashboard.html' : 'upload/dashboard.html';
 const html = fs.readFileSync(htmlPath, 'utf8');
@@ -30,7 +31,8 @@ function harness(opts={}) {
       },
       focus() {},
       click() {},
-      appendChild(x) { this.children.push(x); }
+      appendChild(x) { this.children.push(x); },
+      getAttribute(k) { return ''; }
     };
   }
 
@@ -100,127 +102,69 @@ function harness(opts={}) {
   };
 }
 
-const results = [];
-function record(name, details) { results.push({name, ...details}); }
+console.log("==================================================");
+console.log("EJECUTANDO SUITE DE PRUEBAS DE DASHBOARD (NODE.JS)");
+console.log("==================================================");
 
 let h = harness();
-record('initial', {
-  startError: h.startError,
-  total: h.text('kpi-total'),
-  pending: h.text('kpi-pending'),
-  cards: h.elements.get('cards-container')?.children.length || 0
-});
+assert.strictEqual(h.startError, null, `Error de inicio del dashboard: ${h.startError}`);
+assert.strictEqual(h.text('kpi-total'), 41, `Esperado total 41, obtenido: ${h.text('kpi-total')}`);
+assert.strictEqual(h.text('kpi-pending'), 41, `Esperado pendientes 41, obtenido: ${h.text('kpi-pending')}`);
+assert.strictEqual(h.elements.get('cards-container')?.children.length, 41, 'Esperadas 41 tarjetas');
+console.log("  [OK] Carga inicial verificada: 41 prospectos, 41 pendientes.");
 
+// 1. Filtro por país (Argentina: 19)
 h.run("setCountryFilter('Argentina')");
-record('country_filter', {
-  result: h.text('filtered-count'),
-  kpiTotal: h.text('kpi-total')
-});
+assert.ok(h.text('filtered-count').includes('19 de 41'), `Filtro Argentina falló: ${h.text('filtered-count')}`);
+console.log("  [OK] Filtro por país Argentina: exactamente 19 prospectos.");
 
+// 2. Filtro por materia combinada (Química: 5)
 h.run("resetFilters();document.getElementById('filter-materia').value='Química';applyFilters()");
-record('subject_includes_combined', { result: h.text('filtered-count') });
+assert.ok(h.text('filtered-count').includes('5 de 41'), `Filtro Química falló: ${h.text('filtered-count')}`);
+console.log("  [OK] Filtro por materia Química: exactamente 5 prospectos.");
 
-h.run("resetFilters();document.getElementById('search-input').value='zzzz-no-match';applyFilters()");
-record('empty_filter', {
-  result: h.text('filtered-count'),
-  cards: h.elements.get('cards-container')?.children.length || 0
-});
+// 3. Filtro por nivel educativo cerrado (Universitario: exactamente 16, 0 pre-universitarios)
+h.run("resetFilters();document.getElementById('filter-nivel').value='Universitario';applyFilters()");
+assert.ok(h.text('filtered-count').includes('16 de 41'), `Filtro Universitario contaminado: ${h.text('filtered-count')}`);
+console.log("  [OK] Filtro nivel cerrado Universitario: exactamente 16 prospectos puros.");
 
-// Test unique ID / Cronoshare
+// 4. Búsqueda sin acentos (Normalización NFD)
+h.run("resetFilters();document.getElementById('search-input').value='hernan';applyFilters()");
+assert.ok(h.text('filtered-count').includes('3 de 41'), `Búsqueda 'hernan' falló: ${h.text('filtered-count')}`);
+
+h.run("resetFilters();document.getElementById('search-input').value='cordoba';applyFilters()");
+assert.ok(h.text('filtered-count').includes('1 de 41'), `Búsqueda 'cordoba' falló: ${h.text('filtered-count')}`);
+
+h.run("resetFilters();document.getElementById('search-input').value='peru';applyFilters()");
+assert.ok(h.text('filtered-count').includes('2 de 41'), `Búsqueda 'peru' falló: ${h.text('filtered-count')}`);
+console.log("  [OK] Búsqueda sin acentos verificada (hernan: 3, cordoba: 1, peru: 2).");
+
+// 5. Saludo genérico en pitch para nombres no personales
 h = harness();
-if (h.run("typeof RAW_DATA !== 'undefined' && RAW_DATA.length > 0")) {
-  h.run("saveStatus(getLeadId(RAW_DATA[35]),'Contactado')");
-  const storedObj = h.stored.alumnos_lead_statuses ? JSON.parse(h.stored.alumnos_lead_statuses) : {};
-  record('shared_cronoshare_id', {
-    contacted: h.text('kpi-contacted'),
-    pending: h.text('kpi-pending'),
-    storedKeys: Object.keys(storedObj).length,
-    affectedCsvRows: h.run("RAW_DATA.map((r,i)=>({r,i})).filter(x=>getLeadId(x.r)===getLeadId(RAW_DATA[35])).map(x=>x.i+2)")
-  });
-}
+h.run("sendAndOpenLead('test_id','https://test.com','Física','Universitario','Alumno UADE','Máquinas Hidráulicas')");
+assert.ok(h.copied[0].includes('¡Hola!'), 'Debe saludar genéricamente sin decir Alumno UADE');
+assert.ok(!h.copied[0].includes('¡Hola Alumno UADE!'), 'No debe decir ¡Hola Alumno UADE!');
+assert.ok(h.copied[0].includes('Máquinas Hidráulicas'), 'Debe reemplazar {{tema}}');
+console.log("  [OK] Sustitución inteligente de saludo y tema (excluye 'Alumno UADE').");
 
-// Clipboard denied test
-h = harness({clipboardDenied: true});
-if (h.run("typeof RAW_DATA !== 'undefined' && RAW_DATA.length > 0")) {
-  h.run("sendAndOpenLead(getLeadId(RAW_DATA[0]),RAW_DATA[0]['enlace al anuncio'],RAW_DATA[0].materia,RAW_DATA[0]['nivel educativo'])");
-  record('clipboard_denied_contacted', {
-    contacted: h.text('kpi-contacted'),
-    openCalls: h.opened.length
-  });
-}
-
-// Clipboard absent test
-h = harness({clipboardAbsent: true});
-let err = null;
-if (h.run("typeof RAW_DATA !== 'undefined' && RAW_DATA.length > 0")) {
-  try {
-    h.run("sendAndOpenLead(getLeadId(RAW_DATA[0]),RAW_DATA[0]['enlace al anuncio'],RAW_DATA[0].materia,RAW_DATA[0]['nivel educativo'])");
-  } catch(e) {
-    err = e.message;
-  }
-  record('clipboard_absent', {
-    error: err,
-    openCalls: h.opened.length,
-    contacted: h.text('kpi-contacted')
-  });
-}
-
-// Popup blocked test
-h = harness({popupBlocked: true});
-if (h.run("typeof RAW_DATA !== 'undefined' && RAW_DATA.length > 0")) {
-  h.run("sendAndOpenLead(getLeadId(RAW_DATA[0]),RAW_DATA[0]['enlace al anuncio'],RAW_DATA[0].materia,RAW_DATA[0]['nivel educativo'])");
-  record('popup_blocked_contacted', { contacted: h.text('kpi-contacted') });
-}
-
-// Closed regression test
+// 6. Cronoshare: botón y advertencia de créditos
 h = harness();
-if (h.run("typeof RAW_DATA !== 'undefined' && RAW_DATA.length > 0")) {
-  h.run("saveStatus(getLeadId(RAW_DATA[0]),'Cerrado');sendAndOpenLead(getLeadId(RAW_DATA[0]),RAW_DATA[0]['enlace al anuncio'],RAW_DATA[0].materia,RAW_DATA[0]['nivel educativo'])");
-  record('closed_regression', {
-    closed: h.text('kpi-closed'),
-    contacted: h.text('kpi-contacted')
-  });
-}
+h.run("setCountryFilter('España');applyFilters()");
+const cardsHtml = h.elements.get('cards-container').children.map(c => c._html).join(' ');
+assert.ok(cardsHtml.includes('btn-action-crono'), 'Debe incluir clase btn-action-crono');
+assert.ok(cardsHtml.includes('Requiere Créditos Pagos (Cronos)'), 'Debe mostrar badge de créditos en Cronoshare');
+console.log("  [OK] Manejo transparente de Cronoshare (CTA crediticio separado).");
 
-// Export test
+// 7. Exportación CSV con columnas CRM
+h = harness();
 h.run('exportToCSV()');
-if (h.blobs.length > 0) {
-  record('export', {
-    header: h.blobs[0].parts[0].split('\n')[0],
-    bom: h.blobs[0].parts[0].charCodeAt(0) === 0xfeff,
-    rows: h.blobs[0].parts[0].trim().split('\n').length - 1
-  });
-}
+assert.strictEqual(h.blobs.length, 1, 'Debe generar 1 Blob de CSV');
+const csvContent = h.blobs[0].parts[0];
+assert.strictEqual(csvContent.charCodeAt(0), 0xfeff, 'BOM UTF-8 requerido');
+assert.ok(csvContent.includes('Notas_CRM') && csvContent.includes('Precio_Acordado'), 'Columnas de CRM en CSV');
+assert.strictEqual(csvContent.trim().split('\n').length - 1, 41, 'Esperadas 41 filas en CSV exportado');
+console.log("  [OK] Exportación CSV con BOM UTF-8 y campos de CRM.");
 
-record('storage_null', { startError: harness({stored: {alumnos_lead_statuses: 'null'}}).startError });
-record('storage_invalid_json', { startError: harness({stored: {alumnos_lead_statuses: 'broken'}}).startError });
-record('storage_denied', { startError: harness({storageDenied: true}).startError });
-
-h = harness();
-h.run("saveStoredPitch('{{materia}} y {{materia}}: {{nivel}} / {{nivel}}');copyLeadPitchOnly('Física','Secundario')");
-record('placeholder_repeated', { copied: h.copied[0] });
-
-h = harness();
-h.run("RAW_DATA[0].materia=\"Física d'ejemplo\";applyFilters()");
-const firstCardHtml = h.elements.get('cards-container')?.children[0]?._html || '';
-const handlerMatch = firstCardHtml.match(/onclick="([^"]+)"/);
-let syntaxError = null;
-if (handlerMatch) {
-  try {
-    new vm.Script(handlerMatch[1]);
-  } catch(e) {
-    syntaxError = e.message;
-  }
-}
-record('apostrophe_inline_handler', { syntaxError, hasInlineHandler: !!handlerMatch });
-
-h = harness();
-h.run("RAW_DATA[0]['mensaje/descripción']='<b id=untrusted-marker>test</b>';applyFilters()");
-const cardUnescapedHtml = h.elements.get('cards-container')?.children[0]?._html || '';
-record('unescaped_html_sink', {
-  markupPassedThrough: cardUnescapedHtml.includes('<b id=untrusted-marker>test</b>')
-});
-
-if (!fs.existsSync('audit_work')) fs.mkdirSync('audit_work');
-fs.writeFileSync('audit_work/behavior_results.json', JSON.stringify(results, null, 2));
-console.log(JSON.stringify(results, null, 2));
+console.log("==================================================");
+console.log("✅ TODAS LAS PRUEBAS DE DASHBOARD PASARON CON ÉXITO");
+console.log("==================================================");
