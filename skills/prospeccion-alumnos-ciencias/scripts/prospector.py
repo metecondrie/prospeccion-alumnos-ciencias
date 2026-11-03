@@ -25,6 +25,31 @@ if hasattr(sys.stdout, 'reconfigure'):
 if hasattr(sys.stderr, 'reconfigure'):
     sys.stderr.reconfigure(encoding='utf-8')
 
+def load_env_file():
+    """Carga variables desde el archivo .env si no están presentes en el entorno."""
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    candidates = [
+        os.path.join(script_dir, "..", "..", "..", ".env"),
+        os.path.join(os.getcwd(), ".env"),
+        r"E:\OneDrive\Escritorio\Prospeccion_Alumnos_Ciencias\.env"
+    ]
+    for p in candidates:
+        if os.path.exists(p):
+            try:
+                with open(p, "r", encoding="utf-8", errors="ignore") as f:
+                    for line in f:
+                        line = line.strip()
+                        if line and not line.startswith("#") and "=" in line:
+                            k, v = line.split("=", 1)
+                            k, v = k.strip(), v.strip().strip('"').strip("'")
+                            if k and k not in os.environ:
+                                os.environ[k] = v
+                break
+            except Exception:
+                pass
+
+load_env_file()
+
 class RateLimitError(Exception):
     """Excepción cuando se recibe HTTP 429 de la API de Google."""
     pass
@@ -119,10 +144,11 @@ def parse_json_response(raw: str) -> List[Dict[str, Any]]:
         raw_clean = re.sub(r"\s*```$", "", raw_clean)
     parsed = json.loads(raw_clean)
     if isinstance(parsed, dict):
-        for k in ("results", "data", "items", "anuncios", "evaluaciones"):
+        for k in ("results", "data", "items", "anuncios", "evaluaciones", "evaluacion"):
             if k in parsed and isinstance(parsed[k], list):
-                parsed = parsed[k]
-                break
+                return parsed[k]
+        if "id" in parsed or "decision_ia" in parsed or "is_student" in parsed:
+            return [parsed]
     if isinstance(parsed, list):
         return parsed
     raise ValueError(f"La respuesta no contiene una lista JSON de anuncios evaluados: {raw_clean[:120]}")
@@ -192,7 +218,7 @@ def call_cloudflare_batch(items: List[Dict[str, Any]], account_id: str, api_toke
     req = urllib.request.Request(
         endpoint,
         data=payload,
-        headers={"Authorization": f"Bearer {api_token}", "Content-Type": "application/json"}
+        headers={"Authorization": f"Bearer {api_token}", "Content-Type": "application/json", "User-Agent": "ProspeccionAlumnos/1.0"}
     )
     for attempt in range(1, max_retries + 1):
         try:
@@ -221,7 +247,7 @@ def call_groq_batch(items: List[Dict[str, Any]], api_key: str, model: str = "ope
     req = urllib.request.Request(
         endpoint,
         data=payload,
-        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json", "User-Agent": "ProspeccionAlumnos/1.0"}
     )
     for attempt in range(1, max_retries + 1):
         try:
@@ -257,7 +283,7 @@ def call_mistral_batch(items: List[Dict[str, Any]], api_key: str, model: str = "
     req = urllib.request.Request(
         endpoint,
         data=payload,
-        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json", "User-Agent": "ProspeccionAlumnos/1.0"}
     )
     for attempt in range(1, max_retries + 1):
         try:
