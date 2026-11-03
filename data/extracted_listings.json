@@ -26,7 +26,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Matematicas.Aspx",
     "fecha_publicacion": "2026-11-01",
-    "mensaje_descripcion": "Matemáticas Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
+    "mensaje_descripcion": "Matemáticas Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Primaria Ofertas de trabajo para profesores",
     "metodo_contacto_directo": "Mensajería interna TusClasesParticulares (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
   },
   {
@@ -36,7 +36,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Ingles.Aspx",
     "fecha_publicacion": "2026-11-01",
-    "mensaje_descripcion": "Inglés Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
+    "mensaje_descripcion": "Inglés Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Primaria Ofertas de trabajo para profesores",
     "metodo_contacto_directo": "Mensajería interna TusClasesParticulares (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
   },
   {
@@ -46,7 +46,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Frances.Aspx",
     "fecha_publicacion": "2026-11-01",
-    "mensaje_descripcion": "Francés Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
+    "mensaje_descripcion": "Francés Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Primaria Ofertas de trabajo para profesores",
     "metodo_contacto_directo": "Mensajería interna TusClasesParticulares (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
   },
   {
@@ -56,7 +56,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Repaso General.Aspx",
     "fecha_publicacion": "2026-11-01",
-    "mensaje_descripcion": "Repaso General Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
+    "mensaje_descripcion": "Repaso General Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Primaria Ofertas de trabajo para profesores",
     "metodo_contacto_directo": "Mensajería interna TusClasesParticulares (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
   },
   {
@@ -66,7 +66,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Fisica.Aspx",
     "fecha_publicacion": "2026-11-01",
-    "mensaje_descripcion": "Física Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
+    "mensaje_descripcion": "Física Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Primaria Ofertas de trabajo para profesores",
     "metodo_contacto_directo": "Mensajería interna TusClasesParticulares (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
   },
   {
@@ -76,7 +76,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Lengua Castellana Y Literatura.Aspx",
     "fecha_publicacion": "2026-11-01",
-    "mensaje_descripcion": "Lengua Castellana y Literatura Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
+    "mensaje_descripcion": "Lengua Castellana y Literatura Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Primaria Ofertas de trabajo para profesores",
     "metodo_contacto_directo": "Mensajería interna TusClasesParticulares (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
   },
   {
@@ -86,7 +86,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Quimica.Aspx",
     "fecha_publicacion": "2026-11-01",
-    "mensaje_descripcion": "Química Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
+    "mensaje_descripcion": "Química Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Primaria Ofertas de trabajo para profesores",
     "metodo_contacto_directo": "Mensajería interna TusClasesParticulares (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
   },
   {
@@ -96,17 +96,17 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Aleman.Aspx",
     "fecha_publicacion": "2026-11-01",
-    "mensaje_descripcion": "Alemán Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
+    "mensaje_descripcion": "Alemán Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Primaria Ofertas de trabajo para profesores",
     "metodo_contacto_directo": "Mensajería interna TusClasesParticulares (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
   },
   {
     "plataforma": "TusClasesParticulares",
-    "enlace_anuncio": "https://www.tusclasesparticulares.com/alumnos/piano.aspx",
+    "enlace_anuncio": "https://www.tusclasesparticulares.com/alumnos/primaria.aspx",
     "materia": "Matemáticas, Física, Química",
     "nivel_educativo": "Secundario",
-    "pais_ubicacion": "España - Piano.Aspx",
+    "pais_ubicacion": "España - Primaria.Aspx",
     "fecha_publicacion": "2026-11-01",
-    "mensaje_descripcion": "Piano Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
+    "mensaje_descripcion": "Primaria Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Primaria Ofertas de trabajo para profesores",
     "metodo_contacto_directo": "Mensajería interna TusClasesParticulares (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
   },
   {
@@ -271,6 +271,16 @@
   },
   {
     "plataforma": "TusClases Argentina",
+    "enlace_anuncio": "https://www.tusclases.com.ar/estudiante-educacion/buenos-aires-ciudad-capital-federal/busco-personal-trainer-educacion-fisica-domingos-2467165.aspx",
+    "materia": "Física",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Argentina - Buenos Aires",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco personal trainer de educacion fisica los domingos Ximena Busco personal trainer de educacion fisica los domingos",
+    "metodo_contacto_directo": "Mensajería interna TusClases Argentina (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Argentina",
     "enlace_anuncio": "https://www.tusclases.com.ar/estudiante-matematica/buenos-aires-ciudad-capital-federal/busco-docente-matematicas-universitarias-clases-particulares-online-2466634.aspx",
     "materia": "Matemáticas",
     "nivel_educativo": "Universitario",
@@ -287,6 +297,26 @@
     "pais_ubicacion": "Argentina - San Antonio Oeste",
     "fecha_publicacion": "2026-11-01",
     "mensaje_descripcion": "Licenciatura higiene y seguridad laboral Lilen Licenciatura higiene y seguridad laboral",
+    "metodo_contacto_directo": "Mensajería interna TusClases Argentina (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Argentina",
+    "enlace_anuncio": "https://www.tusclases.com.ar/alumnos/ingles.aspx",
+    "materia": "Física",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Argentina - Ingles.Aspx",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Solicitud de estudiante buscando profesor de Física: Inglés Inglés Física",
+    "metodo_contacto_directo": "Mensajería interna TusClases Argentina (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Argentina",
+    "enlace_anuncio": "https://www.tusclases.com.ar/alumnos/fisica.aspx",
+    "materia": "Física",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Argentina - Fisica.Aspx",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Solicitud de estudiante buscando profesor de Física: Física Inglés Física",
     "metodo_contacto_directo": "Mensajería interna TusClases Argentina (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
   },
   {
@@ -357,26 +387,6 @@
     "pais_ubicacion": "Argentina - Buenos Aires",
     "fecha_publicacion": "2026-11-01",
     "mensaje_descripcion": "Estoy buscando un profesor de geometria discriptiva Tipi Tap Estoy buscando un profesor de geometria discriptiva",
-    "metodo_contacto_directo": "Mensajería interna TusClases Argentina (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
-  },
-  {
-    "plataforma": "TusClases Argentina",
-    "enlace_anuncio": "https://www.tusclases.com.ar/alumnos/ingles.aspx",
-    "materia": "Física",
-    "nivel_educativo": "Secundario",
-    "pais_ubicacion": "Argentina - Ingles.Aspx",
-    "fecha_publicacion": "2026-11-01",
-    "mensaje_descripcion": "Solicitud de estudiante buscando profesor de Física: Inglés Inglés Física",
-    "metodo_contacto_directo": "Mensajería interna TusClases Argentina (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
-  },
-  {
-    "plataforma": "TusClases Argentina",
-    "enlace_anuncio": "https://www.tusclases.com.ar/alumnos/fisica.aspx",
-    "materia": "Física",
-    "nivel_educativo": "Secundario",
-    "pais_ubicacion": "Argentina - Fisica.Aspx",
-    "fecha_publicacion": "2026-11-01",
-    "mensaje_descripcion": "Solicitud de estudiante buscando profesor de Física: Física Inglés Física",
     "metodo_contacto_directo": "Mensajería interna TusClases Argentina (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
   },
   {
@@ -540,6 +550,76 @@
     "metodo_contacto_directo": "Mensajería interna TusClases México (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
   },
   {
+    "plataforma": "TusClases México",
+    "enlace_anuncio": "https://www.tusclases.mx/estudiantes/matematicas/bachiniva/busco-profesor-estudiante-necesite-apoyo-academico-2436937",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "México - Bachiniva",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco un profesor o un estudiante que necesite apoyo académico Anim Busco un profesor o un estudiante que necesite apoyo académico",
+    "metodo_contacto_directo": "Mensajería interna TusClases México (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases México",
+    "enlace_anuncio": "https://www.tusclases.mx/estudiantes/matematicas/alvaro-obregon/busco-tutor-estudiante-brinde-apoyo-academico-hijo-2436941",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "México - Alvaro Obregon",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco un tutor o estudiante que brinde apoyo académico a mi hijo/a Anim Busco un tutor o estudiante que brinde apoyo académico a mi hijo/a",
+    "metodo_contacto_directo": "Mensajería interna TusClases México (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases México",
+    "enlace_anuncio": "https://www.tusclases.mx/estudiantes/matematicas/alvaro-obregon/busco-profesor-integral-matematicas-basica-espanol-ciencias-sociales-hijo-anos-super-atrasad-2451646",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "México - Alvaro Obregon",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Hola busco un profesor integral para matemáticas básica, español y ciencias sociales para mi hijo de 14 años, que va súper atrasad Sol Robles Hola busco un profesor integral para matemáticas básica, español y ciencias sociales para mi hijo de 14 años, que va súper atrasad",
+    "metodo_contacto_directo": "Mensajería interna TusClases México (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases México",
+    "enlace_anuncio": "https://www.tusclases.mx/estudiantes/online/matematicas/clases-matematicas-fisica-quimica-personalizadas-2443768",
+    "materia": "Matemáticas, Física, Química",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "México - Online",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Clases de matemáticas -fisica y quimica personalizadas Rocio A. Clases de matemáticas -fisica y quimica personalizadas",
+    "metodo_contacto_directo": "Mensajería interna TusClases México (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases México",
+    "enlace_anuncio": "https://www.tusclases.mx/estudiantes/matematicas/puebla/busco-clases-linea-matematicas-hijo-2463817",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "México - Puebla",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco clases en línea de matemáticas para mi hijo Liliana Busco clases en línea de matemáticas para mi hijo",
+    "metodo_contacto_directo": "Mensajería interna TusClases México (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases México",
+    "enlace_anuncio": "https://www.tusclases.mx/estudiantes/matematicas/tlalpan/profesor-matematicas-iniciar-lic-economia-2442467",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "México - Tlalpan",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Profesor(a) matemáticas para iniciar la lic en economía Aileen Profesor(a) matemáticas para iniciar la lic en economía",
+    "metodo_contacto_directo": "Mensajería interna TusClases México (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases México",
+    "enlace_anuncio": "https://www.tusclases.mx/estudiantes/matematicas/",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "México - Online",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "webs ofreciendo sus servicios declases de matemáticas Es importante tomar en consideración que gracias a los tiempos modernos en los que vivimos además de ser maestro de matemáticas a domicilio , también tendrás la posibilidad de dar clases de manera en línea. Lo mejor de todo es que no implica grandes esfuerzos, ya que el proceso de encontrar a...",
+    "metodo_contacto_directo": "Mensajería interna TusClases México (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
     "plataforma": "TusClases Colombia",
     "enlace_anuncio": "https://www.tusclases.co/estudiantes/quimica/subachoque/requiero-docente-enfoque-medico-salud-2440961",
     "materia": "Química",
@@ -587,6 +667,116 @@
     "pais_ubicacion": "Colombia - Online",
     "fecha_publicacion": "2026-11-01",
     "mensaje_descripcion": "Matemáticas Inglés Matemáticas",
+    "metodo_contacto_directo": "Mensajería interna TusClases Colombia (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Colombia",
+    "enlace_anuncio": "https://www.tusclases.co/estudiantes/matematicas/barranquilla/busco-profesor-estudiante-brinde-apoyo-academico-2429456",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Colombia - Barranquilla",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco un profesor o un estudiante que me brinde apoyo académico Banca Busco un profesor o un estudiante que me brinde apoyo académico",
+    "metodo_contacto_directo": "Mensajería interna TusClases Colombia (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Colombia",
+    "enlace_anuncio": "https://www.tusclases.co/estudiantes/online/matematicas/asesorias-area-matematicas-online-2461063",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Colombia - Online",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Asesorias en area de matemáticas Ruby Maria Asesorias en area de matemáticas",
+    "metodo_contacto_directo": "Mensajería interna TusClases Colombia (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Colombia",
+    "enlace_anuncio": "https://www.tusclases.co/estudiantes/matematicas/pasto/matematicas-grado-seno-coceno-tangente-2461045",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Colombia - Pasto",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Matemáticas grado 10 seno coceno tangente Valeria Arteaga Matemáticas grado 10 seno coceno tangente",
+    "metodo_contacto_directo": "Mensajería interna TusClases Colombia (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Colombia",
+    "enlace_anuncio": "https://www.tusclases.co/estudiantes/matematicas/cucuta/hello-looking-for-spanish-teacher-who-can-translate-document-from-english-into-spanish-2454684",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Colombia - Cucuta",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Hello! we're looking for spanish teacher who can translate a document from english into spanish Michael Hello! we're looking for spanish teacher who can translate a document from english into spanish",
+    "metodo_contacto_directo": "Mensajería interna TusClases Colombia (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Colombia",
+    "enlace_anuncio": "https://www.tusclases.co/estudiantes/matematicas/cucuta/busco-profesor-estudiante-pueda-brindar-apoyo-academico-hijo-2429463",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Colombia - Cucuta",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco un profesor o estudiante que pueda brindar apoyo académico a mi hijo Banca Busco un profesor o estudiante que pueda brindar apoyo académico a mi hijo",
+    "metodo_contacto_directo": "Mensajería interna TusClases Colombia (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Colombia",
+    "enlace_anuncio": "https://www.tusclases.co/estudiantes/matematicas/sucre-ciudad-sucre/busco-profesor-matematicas-aplicadas-nativo-2465081",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Colombia - Sucre Sucre",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco profesor de matemáticas aplicadas nativo Daniela Hernández Busco profesor de matemáticas aplicadas nativo",
+    "metodo_contacto_directo": "Mensajería interna TusClases Colombia (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Colombia",
+    "enlace_anuncio": "https://www.tusclases.co/estudiantes/matematicas/barranquilla/busco-tutora-matematicas-hija-anos-debe-ser-presencial-alameda-rio-barranquilla-2451181",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Colombia - Barranquilla",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco tutora de matemáticas para mi hija de 9 años debe ser presencial en alameda del rio barranquilla César Chireno Busco tutora de matemáticas para mi hija de 9 años debe ser presencial en alameda del rio barranquilla",
+    "metodo_contacto_directo": "Mensajería interna TusClases Colombia (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Colombia",
+    "enlace_anuncio": "https://www.tusclases.co/estudiantes/matematicas/subachoque/busco-profesora-dos-ninos-anos-subachoque-2457547",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Colombia - Subachoque",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco profesora para dos niños de 4 y 6 años Wilson Castano Busco profesora para dos niños de 4 y 6 años",
+    "metodo_contacto_directo": "Mensajería interna TusClases Colombia (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Colombia",
+    "enlace_anuncio": "https://www.tusclases.co/estudiantes/fisica/bogota/profesor-fisica-experiencia-nivel-preuniversitario-universitario-2428341",
+    "materia": "Física",
+    "nivel_educativo": "Universitario",
+    "pais_ubicacion": "Colombia - Bogota",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco ingeniero o desarrollador de software. (programacion) Karol Busco ingeniero o desarrollador de software. (programacion)",
+    "metodo_contacto_directo": "Mensajería interna TusClases Colombia (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Colombia",
+    "enlace_anuncio": "https://www.tusclases.co/estudiantes/fisica/pasto/necesito-profesor-explique-bien-pasto-2437798",
+    "materia": "Física",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Colombia - Pasto",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Necesito una profesor que explique muy bien Viviana Margoth Rosero Rivas Necesito una profesor que explique muy bien",
+    "metodo_contacto_directo": "Mensajería interna TusClases Colombia (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Colombia",
+    "enlace_anuncio": "https://www.tusclases.co/estudiantes/fisica/la-argentina/estoy-buscando-profesor-manejo-transferencia-calor-matlab-2458512",
+    "materia": "Física",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Colombia - La Argentina",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Estoy buscando profesor/a con manejo de transferencia de calor, matlab Leo Estoy buscando profesor/a con manejo de transferencia de calor, matlab",
     "metodo_contacto_directo": "Mensajería interna TusClases Colombia (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
   },
   {
@@ -690,6 +880,166 @@
     "metodo_contacto_directo": "Mensajería interna TusClases Chile (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
   },
   {
+    "plataforma": "TusClases Chile",
+    "enlace_anuncio": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/vina-del-mar/clases-nivel-segundo-medio-hija-anos-2461667.aspx",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Chile - Vina Del Mar",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Clases para nivel segundo medio para mi hija de 16 años Iver Alday Sepúlveda Clases para nivel segundo medio para mi hija de 16 años",
+    "metodo_contacto_directo": "Mensajería interna TusClases Chile (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Chile",
+    "enlace_anuncio": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/colina/busco-profesor-matematicas-funciones-progresion-aritmica-2460721.aspx",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Chile - Colina",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco profesor (a) matemáticas (funciones y progresión aritmica) clase presencial Jocelyn Busco profesor (a) matemáticas (funciones y progresión aritmica) clase presencial",
+    "metodo_contacto_directo": "Mensajería interna TusClases Chile (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Chile",
+    "enlace_anuncio": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/santiago-ciudad/busco-profe-ayuden-calculo-diferencial-2448848.aspx",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Universitario",
+    "pais_ubicacion": "Chile - Santiago",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco profe que me ayuden en cálculo diferencial Joaquin Busco profe que me ayuden en cálculo diferencial",
+    "metodo_contacto_directo": "Mensajería interna TusClases Chile (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Chile",
+    "enlace_anuncio": "https://www.tusclasesparticulares.cl/estudiantes/online/matematicas/clases-particulares-matematica-online-2445248",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Chile - Online",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Realizó clases particulares de matematica Paola Realizó clases particulares de matematica",
+    "metodo_contacto_directo": "Mensajería interna TusClases Chile (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Chile",
+    "enlace_anuncio": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/nunoa/busco-profe-matematicas-carrera-administracion-empresas-2442694.aspx",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Universitario",
+    "pais_ubicacion": "Chile - Nunoa",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco profe de matemáticas para la carrera de administración de empresas Martín balbi Busco profe de matemáticas para la carrera de administración de empresas",
+    "metodo_contacto_directo": "Mensajería interna TusClases Chile (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Chile",
+    "enlace_anuncio": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/colina/clases-particulares-domicilio-chicureo-2441673.aspx",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Chile - Colina",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Clases particulares a domicilio , chicureo Cristián jaque Clases particulares a domicilio , chicureo",
+    "metodo_contacto_directo": "Mensajería interna TusClases Chile (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Chile",
+    "enlace_anuncio": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/ovalle/clase-matematica-curso-basico-ovalle-2440271.aspx",
+    "materia": "Matemáticas, Física",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Chile - Ovalle",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Clase de matemática y fisica de curso 8 basico Manuel tapia Clase de matemática y fisica de curso 8 basico",
+    "metodo_contacto_directo": "Mensajería interna TusClases Chile (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Chile",
+    "enlace_anuncio": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/comuna-de-concepcion/the-oxford-institute-needs-expert-curate-and-prepare-our-mathematical-assessment-papers-2438126.aspx",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Chile - Comuna De Concepcion",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "The oxford institute needs an expert to curate and prepare our mathematical assessment papers Trede The oxford institute needs an expert to curate and prepare our mathematical assessment papers",
+    "metodo_contacto_directo": "Mensajería interna TusClases Chile (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Chile",
+    "enlace_anuncio": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/comuna-de-concepcion/busco-profesora-matematicas-ayudar-hija-tema-paes-2434222.aspx",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Chile - Comuna De Concepcion",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco profesora de matemáticas para ayudar a mi hija en tema paes Fabiola Rioseco Busco profesora de matemáticas para ayudar a mi hija en tema paes",
+    "metodo_contacto_directo": "Mensajería interna TusClases Chile (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Chile",
+    "enlace_anuncio": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/coronel/busco-profesor-aprender-sobre-calculo-2433242.aspx",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Chile - Coronel",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco profesor para aprender sobre calculo Camilo Busco profesor para aprender sobre calculo",
+    "metodo_contacto_directo": "Mensajería interna TusClases Chile (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Chile",
+    "enlace_anuncio": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/san-bernardo/profesor-domicilio-estudiante-universitaria-ramo-calculo-2433069.aspx",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Universitario",
+    "pais_ubicacion": "Chile - San Bernardo",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Profesor a domicilio para estudiante universitaria (ramo cálculo) Hannelore Schaff Profesor a domicilio para estudiante universitaria (ramo cálculo)",
+    "metodo_contacto_directo": "Mensajería interna TusClases Chile (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Chile",
+    "enlace_anuncio": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/copiapo/busco-profesora-matematicas-copiapo-2428519.aspx",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Chile - Copiapo",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco profesora de matemáticas en copiapó Claudia Pérez Busco profesora de matemáticas en copiapó",
+    "metodo_contacto_directo": "Mensajería interna TusClases Chile (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Chile",
+    "enlace_anuncio": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/puerto-montt/profesor-matematica-universitario-online-2424968.aspx",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Universitario",
+    "pais_ubicacion": "Chile - Puerto Montt",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Profesor de matemática para universitario Rosa Hidalgo Profesor de matemática para universitario",
+    "metodo_contacto_directo": "Mensajería interna TusClases Chile (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Chile",
+    "enlace_anuncio": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/comuna-de-san-pedro-de-la-paz/necesito-profesor-ensene-hoy-uso-calculadora-grafica-2417236.aspx",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Chile - Comuna De San Pedro De La Paz",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Necesito profesor/a que enseñe hoy, uso de calculadora grafica Yasna Necesito profesor/a que enseñe hoy, uso de calculadora grafica",
+    "metodo_contacto_directo": "Mensajería interna TusClases Chile (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Chile",
+    "enlace_anuncio": "https://www.tusclasesparticulares.cl/estudiantes/fisica/santiago-ciudad/estoy-buscando-profesor-fisica-universidad-2456716.aspx",
+    "materia": "Física",
+    "nivel_educativo": "Universitario",
+    "pais_ubicacion": "Chile - Santiago",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Hola, estoy buscando profesor de fisica para la universidad Joaquin Hola, estoy buscando profesor de fisica para la universidad",
+    "metodo_contacto_directo": "Mensajería interna TusClases Chile (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Perú",
+    "enlace_anuncio": "https://www.tusclases.pe/estudiantes/matematicas/lima-ciudad/estoy-buscando-profesor-particular-matematicas-2462317",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Perú - Lima",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Estoy buscando un profesor(a) particular de matemáticas Sara Estoy buscando un profesor(a) particular de matemáticas",
+    "metodo_contacto_directo": "Mensajería interna TusClases Perú (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
     "plataforma": "TusClases Perú",
     "enlace_anuncio": "https://www.tusclases.pe/estudiantes/fisica/lima-ciudad/busco-profesor-fisica-nivel-universitario-pucp-urgente-2467463",
     "materia": "Física",
@@ -760,6 +1110,96 @@
     "metodo_contacto_directo": "Mensajería interna TusClases Perú (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
   },
   {
+    "plataforma": "TusClases Perú",
+    "enlace_anuncio": "https://www.tusclases.pe/estudiantes/matematicas/lima-ciudad/are-looking-for-maths-teacher-who-can-assist-with-our-mathematical-problems-that-need-solved-2427953",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Perú - Lima",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "We are looking for maths teacher who can assist us with our mathematical problems that need to be solved Erick We are looking for maths teacher who can assist us with our mathematical problems that need to be solved",
+    "metodo_contacto_directo": "Mensajería interna TusClases Perú (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Perú",
+    "enlace_anuncio": "https://www.tusclases.pe/estudiantes/matematicas/comas/urgente-busco-profesora-hijo-cursa-primer-ano-secundaria-2446829",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Perú - Comas",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Urgente busco profesora para mi hijo que cursa el primer año de secundaría Mauro Frank Urgente busco profesora para mi hijo que cursa el primer año de secundaría",
+    "metodo_contacto_directo": "Mensajería interna TusClases Perú (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Perú",
+    "enlace_anuncio": "https://www.tusclases.pe/estudiantes/matematicas/carmen-de-la-legua-reynoso/necesito-profesora-ninos-problemas-aprendizaje-2417991",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Perú - Carmen De La Legua Reynoso",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Necesito una profesora para niños con problemas de aprendizaje Claudia Necesito una profesora para niños con problemas de aprendizaje",
+    "metodo_contacto_directo": "Mensajería interna TusClases Perú (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Perú",
+    "enlace_anuncio": "https://www.tusclases.pe/estudiantes/matematicas/nuevo-chimbote/busco-profesor-matematica-basicas-reforzar-estudias-escolares-2425850",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Perú - Nuevo Chimbote",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco profesor de matematica basicas para reforzar los estudias escolares Ricardo Busco profesor de matematica basicas para reforzar los estudias escolares",
+    "metodo_contacto_directo": "Mensajería interna TusClases Perú (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Perú",
+    "enlace_anuncio": "https://www.tusclases.pe/estudiantes/matematicas/lima-ciudad/busca-profesora-matematicas-nivel-preuniversitario-2445312",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Universitario",
+    "pais_ubicacion": "Perú - Lima",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Se busca profesora de matematicas nivel preuniversitario Olga Ramirez Se busca profesora de matematicas nivel preuniversitario",
+    "metodo_contacto_directo": "Mensajería interna TusClases Perú (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Perú",
+    "enlace_anuncio": "https://www.tusclases.pe/estudiantes/matematicas/los-olivos/busco-profesor-especialidad-aprendizaje-ninos-neurodivergentes-2458720",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Perú - Los Olivos",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco profesor (a) con la especialidad de aprendizaje para niños neurodivergentes Carolina Busco profesor (a) con la especialidad de aprendizaje para niños neurodivergentes",
+    "metodo_contacto_directo": "Mensajería interna TusClases Perú (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Perú",
+    "enlace_anuncio": "https://www.tusclases.pe/estudiantes/matematicas/lima-ciudad/profesor-siente-chistoso-mate-online-2450843",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Perú - Lima",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Profesor pa siente y chistoso de mate 👻 Gianfranco Profesor pa siente y chistoso de mate 👻",
+    "metodo_contacto_directo": "Mensajería interna TusClases Perú (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Perú",
+    "enlace_anuncio": "https://www.tusclases.pe/estudiantes/matematicas/uchiza/estoy-buscando-maestro-hija-ensene-quimica-matematica-biologia-algebra-2463613",
+    "materia": "Matemáticas, Química, Biología",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Perú - Uchiza",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Estoy buscando un maestro para mi hija que le enseñe lo que es quimica, matematica,biologia,y algebra Valery Jaramillo Ortega Estoy buscando un maestro para mi hija que le enseñe lo que es quimica, matematica,biologia,y algebra",
+    "metodo_contacto_directo": "Mensajería interna TusClases Perú (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
+    "plataforma": "TusClases Perú",
+    "enlace_anuncio": "https://www.tusclases.pe/estudiantes/matematicas/san-juan-de-miraflores/busco-profesora-matematicas-2do-secundaria-presencial-domicilio-2442413",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Perú - San Juan De Miraflores",
+    "fecha_publicacion": "2026-11-01",
+    "mensaje_descripcion": "Busco profesora de matemáticas para 2do secundaria presencial a domicilio Oscar Busco profesora de matemáticas para 2do secundaria presencial a domicilio",
+    "metodo_contacto_directo": "Mensajería interna TusClases Perú (botón 'Contactar / Contacta sin compromiso' - comunicación directa al alumno, registro docente gratuito)"
+  },
+  {
     "plataforma": "Cronoshare",
     "enlace_anuncio": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
     "materia": "Matemáticas, Física",
@@ -796,7 +1236,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Palmar (Murcia)",
     "fecha_publicacion": "2026-11-01",
-    "mensaje_descripcion": "Profesor particular para clases de matemáticas para 2º bachillerato El Palmar (Murcia). Precisamos un servicio de Clases Particulares Matemáticas.",
+    "mensaje_descripcion": "Profesor particular para clases de matemáticas para 2º bachillerato El Palmar (Murcia). Requerimos un servicio de Clases Particulares Matemáticas.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -826,7 +1266,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Sevilla (Sevilla)",
     "fecha_publicacion": "2026-09-28",
-    "mensaje_descripcion": "Profesor de matemáticas para 1º bachillerato Sevilla (Sevilla). Se precisa un servicio de Clases Particulares Matemáticas.",
+    "mensaje_descripcion": "Profesor de matemáticas para 1º bachillerato Sevilla (Sevilla). Vamos a contratar un servicio de Clases Particulares Matemáticas.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -836,7 +1276,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Online",
     "fecha_publicacion": "2026-09-21",
-    "mensaje_descripcion": "Clases online de mantenimiento electromecánico industrial para FP 2º Online. Necesito un servicio de Clases Particulares Matemáticas.",
+    "mensaje_descripcion": "Clases online de mantenimiento electromecánico industrial para FP 2º Online. Se precisa un servicio de Clases Particulares Matemáticas.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -846,7 +1286,7 @@
     "nivel_educativo": "Universitario",
     "pais_ubicacion": "España - Online",
     "fecha_publicacion": "2026-09-20",
-    "mensaje_descripcion": "Profesor particular de álgebra para grado universitario Online. Estamos buscando un servicio de Clases Particulares Matemáticas.",
+    "mensaje_descripcion": "Profesor particular de álgebra para grado universitario Online. Buscamos un servicio de Clases Particulares Matemáticas.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -856,7 +1296,7 @@
     "nivel_educativo": "Universitario",
     "pais_ubicacion": "España - Montellano (Sevilla)",
     "fecha_publicacion": "2026-08-09",
-    "mensaje_descripcion": "Clases de matemáticas para grado universitario Montellano (Sevilla). Busco un servicio de Clases Particulares Matemáticas.",
+    "mensaje_descripcion": "Clases de matemáticas para grado universitario Montellano (Sevilla). Pedimos un servicio de Clases Particulares Matemáticas.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -946,7 +1386,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Zaragoza (Zaragoza)",
     "fecha_publicacion": "2026-05-17",
-    "mensaje_descripcion": "Profesor particular para clases de física para 3º eso Zaragoza (Zaragoza). Necesitamos un servicio de Clases Particulares Física.",
+    "mensaje_descripcion": "Profesor particular para clases de física para 3º eso Zaragoza (Zaragoza). Se precisa un servicio de Clases Particulares Física.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -976,7 +1416,7 @@
     "nivel_educativo": "Universitario",
     "pais_ubicacion": "España - Online",
     "fecha_publicacion": "2026-01-21",
-    "mensaje_descripcion": "Profesor para clases particulares de física para ingeniería Online. Busco un servicio de Clases Particulares Física.",
+    "mensaje_descripcion": "Profesor para clases particulares de física para ingeniería Online. Requerimos un servicio de Clases Particulares Física.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -986,7 +1426,7 @@
     "nivel_educativo": "Universitario",
     "pais_ubicacion": "España - Toledo (Toledo)",
     "fecha_publicacion": "2025-10-15",
-    "mensaje_descripcion": "Profesor de física para 1º universidad Toledo (Toledo). Estamos buscando un servicio de Clases Particulares Física.",
+    "mensaje_descripcion": "Profesor de física para 1º universidad Toledo (Toledo). Precisamos un servicio de Clases Particulares Física.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -996,7 +1436,7 @@
     "nivel_educativo": "Universitario",
     "pais_ubicacion": "España - Compostela (A Coruña)",
     "fecha_publicacion": "2025-06-04",
-    "mensaje_descripcion": "Profesor particular de física para grado en quimica Santiago de Compostela (A Coruña). Requerimos un servicio de Clases Particulares Física.",
+    "mensaje_descripcion": "Profesor particular de física para grado en quimica Santiago de Compostela (A Coruña). Estamos buscando un servicio de Clases Particulares Física.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -1006,7 +1446,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Canaria (Las Palmas)",
     "fecha_publicacion": "2026-03-28",
-    "mensaje_descripcion": "Profesor de química para 2º bachillerato Las Palmas de Gran Canaria (Las Palmas). Busco un servicio de Clases Particulares Química.",
+    "mensaje_descripcion": "Profesor de química para 2º bachillerato Las Palmas de Gran Canaria (Las Palmas). Solicitamos un servicio de Clases Particulares Química.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -1016,7 +1456,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Valencia (Valencia)",
     "fecha_publicacion": "2026-03-04",
-    "mensaje_descripcion": "Clases de química Valencia (Valencia). Se requiere un servicio de Clases particulares bioquímica.",
+    "mensaje_descripcion": "Clases de química Valencia (Valencia). Necesito un servicio de Clases particulares bioquímica.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -1036,7 +1476,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Online",
     "fecha_publicacion": "2025-12-09",
-    "mensaje_descripcion": "Profesor para clases particulares de química para 4° eso Online. Busco un servicio de Clases Particulares Química.",
+    "mensaje_descripcion": "Profesor para clases particulares de química para 4° eso Online. Estamos buscando un servicio de Clases Particulares Química.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -1056,7 +1496,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Online",
     "fecha_publicacion": "2025-10-29",
-    "mensaje_descripcion": "Clases particulares de química Online. Necesito un servicio de Clases Particulares Química.",
+    "mensaje_descripcion": "Clases particulares de química Online. Estamos buscando un servicio de Clases Particulares Química.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -1066,7 +1506,7 @@
     "nivel_educativo": "Universitario",
     "pais_ubicacion": "España - Sevilla (Sevilla)",
     "fecha_publicacion": "2025-10-07",
-    "mensaje_descripcion": "Clases de química para grado en bioquímica Sevilla (Sevilla). Precisamos un servicio de Clases Particulares Química.",
+    "mensaje_descripcion": "Clases de química para grado en bioquímica Sevilla (Sevilla). Se requiere un servicio de Clases Particulares Química.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -1116,7 +1556,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Online",
     "fecha_publicacion": "2025-03-28",
-    "mensaje_descripcion": "Profesor particular para clases de química para 1º bachillerato Online. Necesito un servicio de Clases de química.",
+    "mensaje_descripcion": "Profesor particular para clases de química para 1º bachillerato Online. Estamos buscando un servicio de Clases de química.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -1136,7 +1576,7 @@
     "nivel_educativo": "Universitario",
     "pais_ubicacion": "España - Irun (Guipúzcoa)",
     "fecha_publicacion": "2026-10-17",
-    "mensaje_descripcion": "Clases particulares para acceso a la universidad mayores de 25 años Irun (Guipúzcoa). Necesito un servicio de Clases Particulares Biología.",
+    "mensaje_descripcion": "Clases particulares para acceso a la universidad mayores de 25 años Irun (Guipúzcoa). Buscamos un servicio de Clases Particulares Biología.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -1186,7 +1626,7 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España - Sueca (Valencia)",
     "fecha_publicacion": "2023-10-02",
-    "mensaje_descripcion": "Profesor de biología Sueca (Valencia). Necesito un servicio de Clases Particulares Biología.",
+    "mensaje_descripcion": "Profesor de biología Sueca (Valencia). Solicitamos un servicio de Clases Particulares Biología.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
@@ -1196,17 +1636,67 @@
     "nivel_educativo": "Secundario",
     "pais_ubicacion": "España",
     "fecha_publicacion": "2022-11-15",
-    "mensaje_descripcion": "Profesor para clases particulares de biología Alicante/Alacant (Alacant/Alicante). Se precisa un servicio de Clases Particulares Biología.",
+    "mensaje_descripcion": "Profesor para clases particulares de biología Alicante/Alacant (Alacant/Alicante). Se requiere un servicio de Clases Particulares Biología.",
     "metodo_contacto_directo": "Portal Cronoshare: Localizar solicitud en el feed de la categoría indicada por título/ubicación. Desde perfil docente (registro gratuito), solicitar gestión para desbloquear de inmediato teléfono móvil, WhatsApp y chat directo con el alumno/familia (máx. 4 profesionales)."
   },
   {
-    "plataforma": "Reddit (r/empleos_AR)",
-    "enlace_anuncio": "https://www.reddit.com/r/empleos_AR/comments/1x4ic4i/busco_profe_particular_química/",
-    "materia": "Química",
+    "plataforma": "Reddit (r/UBA)",
+    "enlace_anuncio": "https://www.reddit.com/r/UBA/comments/1xdrpwh/como_estudian_ingenieria_uba/",
+    "materia": "Matemáticas, Física",
+    "nivel_educativo": "Universitario",
+    "pais_ubicacion": "Argentina - Comunidad Universitaria",
+    "fecha_publicacion": "2026-10-23",
+    "mensaje_descripcion": "Como estudian ingenieria [UBA]: ¿cómo hacen para estudiar y aprobar materias? Buenas gente, ¿cómo andan? Estoy cursando Ingeniería Mecánica y hace un tiempo vengo dándole vueltas al tema de cómo estudiar mejor. Siento que una cosa es sentarse a estudiar y meterle horas, y otra muy distinta es saber estudiar de una manera que realmente te sirva p...",
+    "metodo_contacto_directo": "Comunidad Reddit (r/UBA) - Mensaje directo (DM / Chat) al usuario autor de la publicación"
+  },
+  {
+    "plataforma": "Reddit (r/UBA)",
+    "enlace_anuncio": "https://www.reddit.com/r/UBA/comments/1x56dyb/como_abarcan_ustedes_los_ejercicios_de/",
+    "materia": "Matemáticas, Química",
     "nivel_educativo": "Universitario",
     "pais_ubicacion": "Argentina - Comunidad Universitaria",
     "fecha_publicacion": "2026-10-13",
-    "mensaje_descripcion": "Busco profe particular química: Buenas. Cómo va? Eso, para química 005 uba xxi submitted by /u/ndqexplidaresdar [link] [comments]",
-    "metodo_contacto_directo": "Comunidad Reddit (r/empleos_AR) - Mensaje directo (DM / Chat) al usuario autor de la publicación"
+    "mensaje_descripcion": "Como abarcan ustedes los ejercicios de matemáticas? [Lic. Ciencias de datos]: Estoy cursando el CBC de una carrera que tiene mucha, mucha matemática pero no sé cómo debería afrontar los ejercicios. Me explico: Cuando no entiendo algo de la guia (algebra y Quimica) tiendo a consultarle a ChatGPT o cualquier otra para que me explique el ejercicio,...",
+    "metodo_contacto_directo": "Comunidad Reddit (r/UBA) - Mensaje directo (DM / Chat) al usuario autor de la publicación"
+  },
+  {
+    "plataforma": "Reddit (r/UBA)",
+    "enlace_anuncio": "https://www.reddit.com/r/UBA/comments/1x2qamm/deber_una_materia_del_cbc_ingeniería/",
+    "materia": "Matemáticas, Física",
+    "nivel_educativo": "Universitario",
+    "pais_ubicacion": "Argentina - Comunidad Universitaria",
+    "fecha_publicacion": "2026-10-10",
+    "mensaje_descripcion": "Deber una materia del cbc (Ingeniería): Holaa! Tengo una duda, en este cuatrimestre me cambié a Ingeniería y quería saber si quedándome una pendiente que es pensamiento computacional podría ingresar a la carrera de igual forma ¿?. En intensivo de verano voy a rendir Análisis matemático ya que en este cuatrimestre estoy cursando Álgebra y Física....",
+    "metodo_contacto_directo": "Comunidad Reddit (r/UBA) - Mensaje directo (DM / Chat) al usuario autor de la publicación"
+  },
+  {
+    "plataforma": "Reddit (r/UBA)",
+    "enlace_anuncio": "https://www.reddit.com/r/UBA/comments/1wuvxb9/profe_particular_de_física_cbc/",
+    "materia": "Física",
+    "nivel_educativo": "Universitario",
+    "pais_ubicacion": "Argentina - Comunidad Universitaria",
+    "fecha_publicacion": "2026-10-01",
+    "mensaje_descripcion": "Profe particular de física (CBC): Hola! Estoy buscando clases particulares de física VIRTUAL para el segundo parcial del cbc. Los temas son dinámica, trabajo y energía, hidrostática. submitted by /u/Comfortable-Soup-787 [link] [comments]",
+    "metodo_contacto_directo": "Comunidad Reddit (r/UBA) - Mensaje directo (DM / Chat) al usuario autor de la publicación"
+  },
+  {
+    "plataforma": "Reddit (r/UBA)",
+    "enlace_anuncio": "https://www.reddit.com/r/UBA/comments/1wsnhdl/queja_profesor_económicas_contador_público/",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Secundario",
+    "pais_ubicacion": "Argentina - Comunidad Universitaria",
+    "fecha_publicacion": "2026-09-28",
+    "mensaje_descripcion": "Queja profesor (Económicas, Contador Público): Para un poco de contexto, estoy cursando Estadística del 2do tramo de FCE en una sede regional. La clase es de 9hs a 11hs. Todas las clases el profesor llega tarde, y me refiero a entre 20 a 35 minutos. En las últimas dos semanas llega pasadas las 9y40 sin ningún tipo de descaro. Nadie en el curso, ...",
+    "metodo_contacto_directo": "Comunidad Reddit (r/UBA) - Mensaje directo (DM / Chat) al usuario autor de la publicación"
+  },
+  {
+    "plataforma": "Reddit (r/UBA)",
+    "enlace_anuncio": "https://www.reddit.com/r/UBA/comments/1w0gigv/creo_q_realmente_necesito_ayuda_cbc_med_vet/",
+    "materia": "Matemáticas",
+    "nivel_educativo": "Universitario",
+    "pais_ubicacion": "Argentina - Comunidad Universitaria",
+    "fecha_publicacion": "2026-08-28",
+    "mensaje_descripcion": "creo q realmente necesito ayuda [cbc med vet]: confesión vergonzosa estoy haciendo el cbc desde principio de año. empecé x uba xxi por cuestiones de distancias y comodidad, fue cuestión de siquiera intentar empezar con matemática, que supe que no iba a poder, así que la deje para este cuatri que estoy haciendo presencial. x cuestiones d la vida ...",
+    "metodo_contacto_directo": "Comunidad Reddit (r/UBA) - Mensaje directo (DM / Chat) al usuario autor de la publicación"
   }
 ]

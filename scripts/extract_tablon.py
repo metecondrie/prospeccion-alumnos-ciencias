@@ -32,6 +32,10 @@ CATEGORY_URLS = [
     f"{BASE_URL}/clases-particulares/profesor-de-matematicas.htm?demanda=1",
     f"{BASE_URL}/clases-particulares/profesor-de-fisica.htm?demanda=1",
     f"{BASE_URL}/clases-particulares/profesor-de-quimica.htm?demanda=1",
+    f"{BASE_URL}/clases-particulares/profesor-de-biologia.htm?demanda=1",
+    f"{BASE_URL}/clases-particulares/clases-universitarias.htm?demanda=1",
+    f"{BASE_URL}/clases-particulares/bachillerato.htm?demanda=1",
+    f"{BASE_URL}/clases-particulares/apoyo-escolar.htm?demanda=1",
     f"{BASE_URL}/clases-particulares/?demanda=1",
 ]
 

@@ -36,17 +36,26 @@ CRONOSHARE_SUBJECT_URLS = [
     f"{BASE_CRONOSHARE}/empleo/clases-particulares-quimica",
     f"{BASE_CRONOSHARE}/empleo/clases-particulares-biologia",
     f"{BASE_CRONOSHARE}/empleo/bachillerato-ciencias",
+    f"{BASE_CRONOSHARE}/empleo/apoyo-escolar",
+    f"{BASE_CRONOSHARE}/empleo/profesor-particular-universidad",
+    "https://www.cronoshare.com.mx/empleo/clases-particulares-matematicas",
+    "https://www.cronoshare.cl/empleo/clases-particulares-matematicas",
 ]
 
 REDDIT_COMMUNITIES = [
+    {
+        "sub": "r/UBA",
+        "url": "https://www.reddit.com/r/UBA/search.rss?q=profesor+OR+particular&restrict_sr=1&sort=new",
+        "country": "Argentina"
+    },
     {
         "sub": "r/empleos_AR",
         "url": "https://www.reddit.com/r/empleos_AR/search.rss?q=matematica+OR+fisica+OR+quimica+OR+particular&restrict_sr=1&sort=new",
         "country": "Argentina"
     },
     {
-        "sub": "r/UBA",
-        "url": "https://www.reddit.com/r/UBA/search.rss?q=profesor+OR+particular&restrict_sr=1&sort=new",
+        "sub": "r/Cordoba",
+        "url": "https://www.reddit.com/r/Cordoba/search.rss?q=profesor+OR+particular&restrict_sr=1&sort=new",
         "country": "Argentina"
     }
 ]
@@ -178,6 +187,7 @@ def extract_community_listings(max_listings: int = 15) -> List[Dict[str, Any]]:
     }
 
     for comm in REDDIT_COMMUNITIES:
+        time.sleep(2.5)
         sub_name = comm["sub"]
         feed_url = comm["url"]
         country = comm["country"]

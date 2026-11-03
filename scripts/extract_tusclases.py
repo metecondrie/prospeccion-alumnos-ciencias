@@ -47,6 +47,8 @@ NETWORK_TARGETS = [
             "https://www.tusclasesparticulares.com/alumnos/fisica.aspx",
             "https://www.tusclasesparticulares.com/alumnos/quimica.aspx",
             "https://www.tusclasesparticulares.com/alumnos/biologia.aspx",
+            "https://www.tusclasesparticulares.com/alumnos/analisis-matematico.aspx",
+            "https://www.tusclasesparticulares.com/alumnos/algebra.aspx",
         ]
     },
     # Argentina
@@ -55,9 +57,15 @@ NETWORK_TARGETS = [
         "domain": "https://www.tusclases.com.ar",
         "platform_name": "TusClases Argentina",
         "urls": [
+            "https://www.tusclases.com.ar/buscar/alumnos.aspx",
             "https://www.tusclases.com.ar/alumnos/matematica.aspx",
             "https://www.tusclases.com.ar/alumnos/fisica.aspx",
             "https://www.tusclases.com.ar/alumnos/quimica.aspx",
+            "https://www.tusclases.com.ar/alumnos/analisis-matematico.aspx",
+            "https://www.tusclases.com.ar/alumnos/algebra.aspx",
+            "https://www.tusclases.com.ar/alumnos/biofisica.aspx",
+            "https://www.tusclases.com.ar/alumnos/capital-federal/matematica.aspx",
+            "https://www.tusclases.com.ar/alumnos/buenos-aires/matematica.aspx",
         ]
     },
     # Mexico
@@ -68,6 +76,9 @@ NETWORK_TARGETS = [
         "urls": [
             "https://www.tusclases.mx/estudiantes/",
             "https://www.tusclases.mx/buscar/alumnos.aspx",
+            "https://www.tusclases.mx/estudiantes/matematicas/",
+            "https://www.tusclases.mx/estudiantes/fisica/",
+            "https://www.tusclases.mx/estudiantes/quimica/",
         ]
     },
     # Colombia
@@ -77,6 +88,8 @@ NETWORK_TARGETS = [
         "platform_name": "TusClases Colombia",
         "urls": [
             "https://www.tusclases.co/estudiantes/",
+            "https://www.tusclases.co/estudiantes/matematicas/",
+            "https://www.tusclases.co/estudiantes/fisica/",
         ]
     },
     # Chile
@@ -86,6 +99,8 @@ NETWORK_TARGETS = [
         "platform_name": "TusClases Chile",
         "urls": [
             "https://www.tusclasesparticulares.cl/estudiantes/",
+            "https://www.tusclasesparticulares.cl/estudiantes/matematicas/",
+            "https://www.tusclasesparticulares.cl/estudiantes/fisica/",
         ]
     },
     # Peru
@@ -95,6 +110,7 @@ NETWORK_TARGETS = [
         "platform_name": "TusClases Perú",
         "urls": [
             "https://www.tusclases.pe/estudiantes/",
+            "https://www.tusclases.pe/estudiantes/matematicas/",
         ]
     },
 ]
