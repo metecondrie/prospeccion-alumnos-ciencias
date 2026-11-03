@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM Alumnos Ciencias Exactas | Prof. Alejo Ongaro</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    .lead-text::-webkit-scrollbar {
+      width: 4px;
+    }
+    .lead-text::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .lead-card {
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .lead-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px -10px rgba(15, 23, 42, 0.12);
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col text-slate-800 antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- TOP NAVBAR -->
+  <header class="bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 text-white border-b border-slate-800 shadow-lg sticky top-0 z-40 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Brand & User Profile -->
+        <div class="flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 to-blue-500 flex items-center justify-center text-xl font-bold shadow-md shadow-indigo-500/25 ring-2 ring-white/10">
+            💻
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-lg font-extrabold tracking-tight text-white">Alejo Ongaro</h1>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                18+ Años Docencia
+              </span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                100% Virtual / Online
+              </span>
+            </div>
+            <p class="text-xs text-slate-400 font-medium">Clases Particulares Online • Ciencias Exactas • Est. Biología Molecular</p>
+          </div>
+        </div>
+
+        <!-- Action Links & Backup -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button onclick="openScanModal()" 
+                  class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-xl shadow-md shadow-indigo-500/25 transition active:scale-95">
+            <span>🔄 Escanear Nuevos</span>
+          </button>
+
+          <a href="https://docs.google.com/spreadsheets/d/1Q5aOcxfSNJ7ri05gY9YF0QjmLIcQiIjgEVB-y5Sf2wY/edit" target="_blank"
+             class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl shadow-sm transition active:scale-95">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            <span class="hidden sm:inline">Google Sheets</span>
+          </a>
+
+          <button onclick="downloadJsonBackup()" title="Descargar copia de seguridad con todos los estados y notas"
+                  class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-xl border border-slate-700 transition active:scale-95">
+            <span>💾 Respaldo JSON</span>
+          </button>
+
+          <label class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-xl border border-slate-700 cursor-pointer transition active:scale-95" title="Restaurar copia de seguridad">
+            <span>📂 Restaurar</span>
+            <input type="file" id="restore-file-input" onchange="restoreJsonBackup(event)" class="hidden" accept=".json">
+          </label>
+
+          <button onclick="exportToCSV()" 
+                  class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-sm transition active:scale-95">
+            <span>Exportar CSV</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 flex-1 w-full">
+
+    <!-- CARTA DE PRESENTACIÓN DE ALEJO (HERO BANNER) -->
+    <div class="bg-gradient-to-br from-indigo-900 via-slate-900 to-slate-950 rounded-3xl p-6 sm:p-8 text-white shadow-xl border border-indigo-500/20 relative overflow-hidden">
+      <div class="absolute -right-16 -top-16 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute right-40 -bottom-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 space-y-4">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl">✉️</span>
+              <h2 class="text-xl font-bold tracking-tight text-white">Tu Mensaje de Presentación Predeterminado</h2>
+              <span class="text-xs px-2.5 py-0.5 rounded-full bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 font-semibold">100% Virtual</span>
+            </div>
+            <p class="text-xs text-indigo-200 mt-1">Al hacer clic en <strong>Copiar y Abrir</strong>, se personaliza automáticamente con el nombre y materia del alumno para que lo pegues en su chat.</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="copyMasterPitch()" 
+                    class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 transition transform active:scale-95">
+              <span>📋 Copiar Texto Maestro</span>
+            </button>
+            <button onclick="togglePitchEditor()" 
+                    class="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/15 text-slate-200 border border-white/10 transition">
+              <span>✏️ Personalizar</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Pitch speech box -->
+        <div class="bg-black/30 border border-white/10 rounded-2xl p-5 backdrop-blur-md">
+          <div id="pitch-display" class="text-sm text-slate-200 leading-relaxed font-normal whitespace-pre-line">
+            <!-- Populated via JS -->
+          </div>
+          <textarea id="pitch-editor" class="hidden w-full h-44 bg-slate-900 border border-indigo-400/40 rounded-xl p-3 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Escribe tu mensaje..."></textarea>
+          
+          <div id="pitch-editor-actions" class="hidden mt-3 flex justify-end gap-2">
+            <button onclick="cancelPitchEdit()" class="px-3 py-1.5 text-xs text-slate-300 hover:text-white">Cancelar</button>
+            <button onclick="savePitchEdit()" class="px-3.5 py-1.5 text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg shadow">Guardar Cambios</button>
+          </div>
+        </div>
+
+        <!-- Credentials tags -->
+        <div class="flex flex-wrap items-center gap-2 pt-1 text-xs">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-indigo-500/20 border border-indigo-400/30 text-indigo-200 font-bold">
+            <span>💻</span> Clases 100% Online / Virtuales
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-300">
+            <span>🎓</span> 18+ Años de Experiencia Docente
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-300">
+            <span>🧬</span> Estudiante de Biología Molecular
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-300">
+            <span>📐</span> Univ, Secundario y Técnico
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-indigo-300 font-medium">
+            <span>📧</span> alejoongaro@gmail.com
+          </span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- STATS COUNTERS BAR -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Prospectos</p>
+          <p id="kpi-total" class="text-3xl font-extrabold text-slate-900 mt-1">41</p>
+          <p class="text-[11px] text-slate-400 mt-0.5">Anuncios calificados</p>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl font-bold">🎯</div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Por Contactar</p>
+          <p id="kpi-pending" class="text-3xl font-extrabold text-amber-600 mt-1">41</p>
+          <p class="text-[11px] text-amber-600/80 mt-0.5">Listos para gestión</p>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl font-bold">⏳</div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Contactados</p>
+          <p id="kpi-contacted" class="text-3xl font-extrabold text-blue-600 mt-1">0</p>
+          <p class="text-[11px] text-blue-600/80 mt-0.5">Envío confirmado</p>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl font-bold">✉️</div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Clases Cerradas</p>
+          <p id="kpi-closed" class="text-3xl font-extrabold text-emerald-600 mt-1">0</p>
+          <p class="text-[11px] text-emerald-600/80 mt-0.5">Alumnos confirmados</p>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl font-bold">🏆</div>
+      </div>
+    </div>
+
+    <!-- CONTROLS, SEARCH & FILTER TOOLBAR -->
+    <div class="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm space-y-4">
+      
+      <!-- Search Input + View Mode Switch -->
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+        
+        <div class="relative flex-1">
+          <label for="search-input" class="sr-only">Buscar prospectos</label>
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </span>
+          <input type="text" id="search-input" oninput="applyFilters()" 
+                 placeholder="Buscar por nombre, tema, examen, facultad o ciudad (ej. Hernán, UBA, Biofísica, PAES, Cambridge)..." 
+                 class="w-full pl-10 pr-4 py-2.5 bg-slate-50 hover:bg-white focus:bg-white border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+        </div>
+
+        <!-- View Mode Switch -->
+        <div class="flex items-center gap-2 self-end sm:self-auto">
+          <div class="inline-flex p-1 bg-slate-100 rounded-xl border border-slate-200 text-xs font-bold">
+            <button id="view-card-btn" onclick="setViewMode('cards')" 
+                    class="px-3 py-1.5 rounded-lg transition bg-white text-indigo-700 shadow-sm flex items-center gap-1.5">
+              <span>🎴 Tarjetas</span>
+            </button>
+            <button id="view-table-btn" onclick="setViewMode('table')" 
+                    class="px-3 py-1.5 rounded-lg transition text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+              <span>📋 Tabla</span>
+            </button>
+          </div>
+          <button onclick="resetFilters()" class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold px-2 py-1">
+            Limpiar Filtros
+          </button>
+          <button onclick="openScanModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-sm transition active:scale-95" title="Escanear y rastrear nuevos alumnos en portales web">
+            <span>🔄 Escanear Nuevos</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- DYNAMIC Country Quick Pills Container -->
+      <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100" id="country-pills-container">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+
+      <!-- Specific Filters (Materia, Nivel, Modalidad, Costo, Estado) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 pt-2 border-t border-slate-100 text-xs">
+        <div>
+          <label for="filter-materia" class="block font-bold text-slate-600 mb-1">Materia Exacta</label>
+          <select id="filter-materia" onchange="applyFilters()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:ring-2 focus:ring-indigo-500 font-medium">
+            <option value="">Todas las Materias</option>
+            <option value="Matemáticas">Matemáticas</option>
+            <option value="Física">Física</option>
+            <option value="Química">Química</option>
+            <option value="Biología">Biología</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="filter-nivel" class="block font-bold text-slate-600 mb-1">Nivel Educativo</label>
+          <select id="filter-nivel" onchange="applyFilters()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:ring-2 focus:ring-indigo-500 font-medium">
+            <option value="">Todos los Niveles</option>
+            <option value="Universitario">Universitario (UBA, UADE, PUCP)</option>
+            <option value="Secundario">Secundario (ESO, Bachillerato, PAES)</option>
+            <option value="Terciario">Terciario / FP</option>
+            <option value="Primaria">Primaria (Fuera de objetivo)</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="filter-modalidad" class="block font-bold text-slate-600 mb-1">Modalidad</label>
+          <select id="filter-modalidad" onchange="applyFilters()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:ring-2 focus:ring-indigo-500 font-medium">
+            <option value="">Todas las Modalidades</option>
+            <option value="Online">🌐 Online Confirmado</option>
+            <option value="Presencial">📍 Pide Presencial (Conversión)</option>
+            <option value="A convenir">❓ A convenir / No especificada</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="filter-costo" class="block font-bold text-slate-600 mb-1">Costo de Contacto</label>
+          <select id="filter-costo" onchange="applyFilters()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:ring-2 focus:ring-indigo-500 font-medium">
+            <option value="">Todos los Costos</option>
+            <option value="Gratuito">🟢 Gratuito (Directo o con registro)</option>
+            <option value="créditos">🟡 Requiere Créditos (Cronoshare)</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="filter-estado" class="block font-bold text-slate-600 mb-1">Estado de Contacto</label>
+          <select id="filter-estado" onchange="applyFilters()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:ring-2 focus:ring-indigo-500 font-medium">
+            <option value="">Todos los Estados</option>
+            <option value="Pendiente">⏳ Pendiente</option>
+            <option value="Contactado">✉️ Contactado</option>
+            <option value="En negociación">💬 En negociación</option>
+            <option value="Cerrado">🎯 Clase Cerrada</option>
+            <option value="Descartado">❌ Descartado</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ACTIVE LEADS COUNTER -->
+    <div class="flex items-center justify-between text-xs font-bold text-slate-500 px-1">
+      <span id="filtered-count">Cargando prospectos...</span>
+      <span class="text-indigo-600 hidden sm:inline">Flujo seguro: Copia el mensaje y abre el anuncio. Confirma el envío solo cuando lo hayas mandado.</span>
+    </div>
+
+    <!-- VIEW 1: MODERN CARDS GRID -->
+    <div id="cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Populated via JavaScript -->
+    </div>
+
+    <!-- VIEW 2: FULL-WIDTH TABLE -->
+    <div id="table-container" class="hidden bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-slate-900 text-white text-[11px] uppercase tracking-wider font-bold">
+              <th class="py-4 px-4 cursor-pointer hover:bg-slate-800" onclick="sortTable('pais')">Origen ⬍</th>
+              <th class="py-4 px-4 cursor-pointer hover:bg-slate-800" onclick="sortTable('nombre')">Alumno ⬍</th>
+              <th class="py-4 px-4 cursor-pointer hover:bg-slate-800" onclick="sortTable('materia')">Materia & Nivel ⬍</th>
+              <th class="py-4 px-4 w-2/5">Anuncio del Alumno</th>
+              <th class="py-4 px-4">Vía y Costo de Contacto</th>
+              <th class="py-4 px-4 text-center">Acción</th>
+              <th class="py-4 px-4 text-center cursor-pointer hover:bg-slate-800" onclick="sortTable('estado')">Estado ⬍</th>
+            </tr>
+          </thead>
+          <tbody id="table-tbody" class="divide-y divide-slate-100 text-xs">
+            <!-- Populated via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 right-6 bg-slate-950 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-800 flex items-center gap-3 transform transition-all duration-300 translate-y-28 opacity-0 z-50">
+    <div class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">✓</div>
+    <div>
+      <p id="toast-title" class="text-xs font-bold text-white">Mensaje Copiado al Portapapeles</p>
+      <p id="toast-msg" class="text-[11px] text-slate-300">Pega (Ctrl+V) el mensaje en el chat del alumno.</p>
+    </div>
+  </div>
+
+  <!-- FALLBACK MANUAL COPY MODAL -->
+  <div id="copy-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-bold text-slate-900">Copiar Mensaje para el Alumno</h3>
+        <button onclick="closeCopyModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold">&times;</button>
+      </div>
+      <p class="text-xs text-slate-500">Selecciona el texto y presiona <kbd class="px-1.5 py-0.5 bg-slate-100 border rounded font-mono text-[11px]">Ctrl+C</kbd> para copiarlo:</p>
+      <textarea id="modal-copy-textarea" class="w-full h-40 bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-800 font-mono focus:ring-2 focus:ring-indigo-500" readonly></textarea>
+      <div class="flex justify-end gap-2">
+        <button onclick="closeCopyModal()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow">Listo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCAN MODAL -->
+  <div id="scan-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🔄</span>
+          <h3 class="text-base font-bold text-slate-900">Escanear y Buscar Nuevos Alumnos</h3>
+        </div>
+        <button onclick="closeScanModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+      </div>
+
+      <p class="text-xs text-slate-600 leading-relaxed">
+        El motor de escaneo se conecta en vivo a <strong>TusClases (ES, AR, CL, CO, MX, PE)</strong>, <strong>Tablón de Anuncios</strong>, <strong>Cronoshare</strong> y <strong>Reddit</strong>, filtrando las ofertas docentes con <strong>Gemini 3.6 Flash / 3.8 Flash</strong>.
+      </p>
+
+      <div class="bg-indigo-50/70 border border-indigo-100 rounded-2xl p-4 space-y-2.5">
+        <p class="text-xs font-bold text-indigo-950 flex items-center gap-1.5">
+          <span>⚡</span> ¿Cómo ejecutar el escaneo desde tu computadora?
+        </p>
+        <ol class="text-xs text-indigo-900 list-decimal list-inside space-y-1.5 leading-normal">
+          <li>Abre tu carpeta de Escritorio: <br><code class="px-2 py-0.5 bg-white border border-indigo-200 rounded font-mono text-[11px] select-all">E:\OneDrive\Escritorio\Prospeccion_Alumnos_Ciencias</code></li>
+          <li>Haz <strong>doble clic</strong> en el archivo ejecutable <strong><code class="font-bold text-indigo-700">Actualizar_Alumnos.bat</code></strong>.</li>
+          <li>¡Listo! El script rastreará los portales, agregará los alumnos nuevos a este panel (sin tocar los que ya contactaste) y recargará tu navegador.</li>
+        </ol>
+      </div>
+
+      <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+        <span class="text-slate-500">¿O prefieres que lo corra yo? Pídemelo en el chat y lo hago al instante.</span>
+        <button onclick="closeScanModal()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // RAW CANONICAL DATA INJECTED
+    var RAW_DATA = [{"id": "tablon_es_benidorm_5363777", "plataforma": "Tablón de Anuncios", "país/ubicación": "España - Benidorm", "pais": "España", "nombre": "Estudiante FP", "persona_id": "estudiante_fp_benidorm", "materia": "Matemáticas", "nivel educativo": "Terciario / FP Superior", "modalidad": "Presencial", "modalidad_solicitada": "Clases presenciales de refuerzo en cálculo de rendimiento", "elegible_virtual": false, "alerta_modalidad": "Pide presencial en Benidorm (Ofrecer pase a Online)", "idioma": "Español", "costo_contacto": "Gratuito directo", "costo_detalle": "Gratuito (Formulario en Tablón de Anuncios)", "enlace al anuncio": "https://www.tablondeanuncios.com/clases-particulares-calculo/calculo_de_rendimiento_de_fabricas_de_ladrillo-5363777.htm", "es_permalink": true, "fecha de publicación": "2026-11-02", "mensaje/descripción": "Cálculo de rendimiento de fábricas de ladrillo. Necesito clases de refuerzo en cálculo de rendimiento de fábricas de ladrillo. Actualmente estoy cursando segundo de FP.", "método de contacto directo": "Formulario web directo en Tablón de Anuncios (botón 'Contactar con el anunciante' - notificación inmediata al alumno)"}, {"id": "tablon_es_lakuntza_5360982", "plataforma": "Tablón de Anuncios", "país/ubicación": "España - Lakuntza", "pais": "España", "nombre": "Estudiante ESO", "persona_id": "estudiante_eso_lakuntza", "materia": "Matemáticas", "nivel educativo": "Secundario (2º ESO)", "modalidad": "A convenir", "modalidad_solicitada": "Clases de apoyo de mate en 2 de la ESO", "elegible_virtual": true, "alerta_modalidad": "Modalidad a coordinar (ofrecer online)", "idioma": "Español", "costo_contacto": "Gratuito directo", "costo_detalle": "Gratuito (Formulario en Tablón de Anuncios)", "enlace al anuncio": "https://www.tablondeanuncios.com/clases-particulares-cursos/necesito_clases_particulares_mate_para_eso-5360982.htm", "es_permalink": true, "fecha de publicación": "2026-10-30", "mensaje/descripción": "Necesito clases particulares de apoyo de matemáticas para 2º de la ESO.", "método de contacto directo": "Formulario web directo en Tablón de Anuncios (botón 'Contactar con el anunciante')"}, {"id": "tc_ar_2466634", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - Buenos Aires", "pais": "Argentina", "nombre": "Sebastián", "persona_id": "sebastian_ba", "materia": "Matemáticas", "nivel educativo": "Universitario", "modalidad": "Online", "modalidad_solicitada": "Clases particulares online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-matematica/buenos-aires-ciudad/busco-docente-matematicas-universitarias-para-clases-particulares-2466634.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Busco docente de matemáticas universitarias para clases particulares online.", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar / Contacta sin compromiso')"}, {"id": "tc_ar_2459605", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - La Plata", "pais": "Argentina", "nombre": "Leonardo", "persona_id": "leonardo_la_plata", "materia": "Matemáticas", "nivel educativo": "Secundario (3er año)", "modalidad": "Presencial", "modalidad_solicitada": "Clases presenciales en La Plata", "elegible_virtual": false, "alerta_modalidad": "Pide presencial en La Plata (Ofrecer pase a Online)", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-matematica/la-plata/profesora-matematica-para-tercer-ano-secundario-2459605.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Estoy buscando profesor/a de matemática para tercer año del secundario presencial en La Plata.", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_ar_2456445", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - Online", "pais": "Argentina", "nombre": "Salvador", "persona_id": "salvador_online", "materia": "Matemáticas, Física", "nivel educativo": "Secundario", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiantes/online/matematica/clases-online-matematica-fisica-2456445.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Clases online de matemática y física para nivel secundario.", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_ar_2446991", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - San Justo", "pais": "Argentina", "nombre": "Antonella", "persona_id": "antonella_san_justo", "materia": "Matemáticas", "nivel educativo": "Secundario / Pre-Universitario (Cambridge A-Level)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-matematica/san-justo/busco-tutor-para-examen-cambridge-pure-mathematics-1-2446991.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Busco tutor/a online para preparar examen internacional Cambridge A-Level (Pure Mathematics 1).", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_ar_2422026", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - Cordoba", "pais": "Argentina", "nombre": "Mateo", "persona_id": "mateo_cordoba", "materia": "Matemáticas", "nivel educativo": "Universitario / Técnico", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-matematica/cordoba-ciudad/busco-profesor-particular-para-clases-online-2422026.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Busco profesor particular para clases online de matemáticas.", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_ar_2422025", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - Buenos Aires", "pais": "Argentina", "nombre": "Bautista", "persona_id": "bautista_ba", "materia": "Matemáticas", "nivel educativo": "Universitario / Técnico", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-matematica/buenos-aires-ciudad/busco-profesor-particular-para-clases-online-2422025.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Busco profesor particular para clases online de matemáticas a nivel superior.", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_ar_2368940", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - Buenos Aires", "pais": "Argentina", "nombre": "Alumno UADE", "persona_id": "alumno_uade_econometria", "materia": "Matemáticas", "nivel educativo": "Universitario (Econometría)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-matematica/buenos-aires-ciudad/econometria-uade-2368940.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Preparación de materia Econometría para la carrera en UADE.", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_ar_2461220", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - Buenos Aires", "pais": "Argentina", "nombre": "Hernán", "persona_id": "hernan_uade_hidraulica", "materia": "Física", "nivel educativo": "Universitario (Ingeniería UADE)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "Publicación principal de Hernán (Final Máquinas Hidráulicas)", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-fisica/buenos-aires-ciudad/final-maquinas-hidraulicas-uade-2461220.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Preparación urgente para rendir examen final de Máquinas Hidráulicas en UADE.", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_ar_2461207", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - Buenos Aires", "pais": "Argentina", "nombre": "Hernán", "persona_id": "hernan_uade_hidraulica", "materia": "Física", "nivel educativo": "Universitario (Ingeniería UADE)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "Aviso duplicado (mismo alumno Hernán ID 2461207 - contactar una sola vez)", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-fisica/buenos-aires-ciudad/final-maquinas-hidraulicas-uade-2461207.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Final Máquinas Hidráulicas UADE (publicación duplicada del alumno Hernán).", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_ar_2461205", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - Buenos Aires", "pais": "Argentina", "nombre": "Hernán", "persona_id": "hernan_uade_hidraulica", "materia": "Física", "nivel educativo": "Universitario (Ingeniería UADE)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "Aviso duplicado (mismo alumno Hernán ID 2461205 - contactar una sola vez)", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-fisica/buenos-aires-ciudad/final-maquinas-hidraulicas-uade-2461205.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Final Máquinas Hidráulicas UADE (publicación duplicada del alumno Hernán).", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_ar_2452395", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - Buenos Aires", "pais": "Argentina", "nombre": "Greta", "persona_id": "greta_ba", "materia": "Física, Química", "nivel educativo": "Secundario (3er año)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-fisica/buenos-aires-ciudad/fisica-quimica-3-ano-2452395.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Necesito clases de apoyo de física y química para tercer año del secundario.", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_ar_2452378", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - Buenos Aires", "pais": "Argentina", "nombre": "Adriana", "persona_id": "adriana_cbc_uba", "materia": "Física", "nivel educativo": "Universitario (CBC UBA)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-fisica/buenos-aires-ciudad/biofisica-53-cbc-2452378.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Biofísica 53 CBC - Apoyo intensivo para rendir examen de Biofísica de la UBA.", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_ar_2448372", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - Wilde", "pais": "Argentina", "nombre": "Estudiante Wilde", "persona_id": "estudiante_wilde", "materia": "Física", "nivel educativo": "Secundario (5to año)", "modalidad": "Presencial", "modalidad_solicitada": "Clases presenciales en Wilde", "elegible_virtual": false, "alerta_modalidad": "Pide presencial en Wilde (Ofrecer pase a Online)", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-fisica/wilde/necesito-profesor-fisica-5to-ano-2448372.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Necesito profesor de física para 5to año presencial en Wilde.", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_ar_2444391", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - Buenos Aires", "pais": "Argentina", "nombre": "Victoria", "persona_id": "victoria_ba", "materia": "Física", "nivel educativo": "Universitario (CBC / UBA XXI)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-fisica/buenos-aires-ciudad/biofisica-2444391.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Clases de Biofísica universitaria para examen final.", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_ar_2423719", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - Rosario Santa Fe", "pais": "Argentina", "nombre": "Solange", "persona_id": "solange_rosario", "materia": "Física", "nivel educativo": "Secundario Técnico (5to año)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-fisica/rosario-santa-fe/electrotecnia-quinto-ano-tecnico-2423719.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Electrotecnia para quinto año de colegio secundario técnico.", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_ar_2408994", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - San Rafael Mendoza", "pais": "Argentina", "nombre": "Carolina", "persona_id": "carolina_mendoza", "materia": "Física", "nivel educativo": "Universitario (Ingeniería)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-fisica/san-rafael-mendoza/termodinamica-2408994.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Termodinámica universitaria para carrera de ingeniería.", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_ar_2375836", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - Buenos Aires", "pais": "Argentina", "nombre": "Lucas", "persona_id": "lucas_ba_biofisica", "materia": "Física", "nivel educativo": "Universitario (Medicina / Salud)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-fisica/buenos-aires-ciudad/biofisica-2375836.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Biofísica para carreras del área de salud y medicina.", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_ar_2368936", "plataforma": "TusClases Argentina", "país/ubicación": "Argentina - City Bell", "pais": "Argentina", "nombre": "Fernanda", "persona_id": "fernanda_city_bell", "materia": "Matemáticas, Física", "nivel educativo": "Universitario (Salud)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.com.ar/estudiante-fisica/city-bell/busco-profesor-particular-para-clases-online-2368936.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Busco profesor particular para clases online de matemáticas y física.", "método de contacto directo": "Mensajería interna TusClases (botón 'Contactar')"}, {"id": "tc_mx_2448370", "plataforma": "TusClases México", "país/ubicación": "México - Ciudad De Mexico", "pais": "México", "nombre": "Estudiante CDMX", "persona_id": "estudiante_cdmx_mat", "materia": "Matemáticas", "nivel educativo": "Secundario (Grado 7)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.mx/estudiantes/matematicas/ciudad-de-mexico/clases-particulares-matematicas-grado-7-2448370.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Clases particulares de matemáticas para nivel 7º grado.", "método de contacto directo": "Mensajería interna TusClases México (botón 'Contactar')"}, {"id": "tc_mx_2368932", "plataforma": "TusClases México", "país/ubicación": "México - Ciudad De Mexico", "pais": "México", "nombre": "Estudiante CDMX", "persona_id": "estudiante_cdmx_bio", "materia": "Biología", "nivel educativo": "Secundario / Preparatoria", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.mx/estudiantes/anatomia/ciudad-de-mexico/anatomia-2368932.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Clases particulares de anatomía y biología para preparatoria.", "método de contacto directo": "Mensajería interna TusClases México (botón 'Contactar')"}, {"id": "tc_co_2466632", "plataforma": "TusClases Colombia", "país/ubicación": "Colombia - Subachoque", "pais": "Colombia", "nombre": "Estudiante Química", "persona_id": "estudiante_quimica_subachoque", "materia": "Química", "nivel educativo": "Secundario / Pre-Universitario", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.co/estudiantes/quimica/subachoque/requiero-profesor-quimica-2466632.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Requiero profesor de química para apoyo académico.", "método de contacto directo": "Mensajería interna TusClases Colombia (botón 'Contactar')"}, {"id": "tc_co_2452392", "plataforma": "TusClases Colombia", "país/ubicación": "Colombia - Manizales", "pais": "Colombia", "nombre": "Daniela", "persona_id": "daniela_manizales", "materia": "Matemáticas", "nivel educativo": "Universitario", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.co/estudiantes/matematicas/manizales/solicito-profesora-matematicas-online-2452392.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Solicito profesor/a de matemáticas online para nivel universitario.", "método de contacto directo": "Mensajería interna TusClases Colombia (botón 'Contactar')"}, {"id": "tc_cl_2466630", "plataforma": "TusClases Chile", "país/ubicación": "Chile - Los Vilos", "pais": "Chile", "nombre": "Ignacia", "persona_id": "ignacia_los_vilos", "materia": "Matemáticas", "nivel educativo": "Secundario / Pre-Universitario (PAES M1/M2)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclasesparticulares.cl/estudiantes/paes/los-vilos/busco-profesor-particular-paes-matematicas-2466630.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Busco profesor particular para preparación intensiva de examen PAES Matemáticas.", "método de contacto directo": "Mensajería interna TusClases Chile (botón 'Contactar')"}, {"id": "tc_cl_2466628", "plataforma": "TusClases Chile", "país/ubicación": "Chile - Vina Del Mar", "pais": "Chile", "nombre": "Victoria", "persona_id": "victoria_vina", "materia": "Física", "nivel educativo": "Secundario / Pre-Universitario (PAES)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclasesparticulares.cl/estudiantes/fisica/vina-del-mar/clases-particulares-fisica-online-2466628.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Clases particulares de física online para preparación de pruebas y PAES.", "método de contacto directo": "Mensajería interna TusClases Chile (botón 'Contactar')"}, {"id": "tc_cl_2465948", "plataforma": "TusClases Chile", "país/ubicación": "Chile - Conchali", "pais": "Chile", "nombre": "Andrea", "persona_id": "andrea_conchali", "materia": "Matemáticas", "nivel educativo": "Secundario (Enseñanza Media)", "modalidad": "Presencial", "modalidad_solicitada": "Clases presenciales en Conchalí", "elegible_virtual": false, "alerta_modalidad": "Pide presencial en Conchalí (Ofrecer pase a Online)", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/conchali/busco-clases-particulares-matematicas-ensenanza-media-presenciales-2465948.aspx", "es_permalink": true, "fecha de publicación": "2026-10-26", "mensaje/descripción": "Busco clases particulares de matemáticas enseñanza media presenciales en Conchalí.", "método de contacto directo": "Mensajería interna TusClases Chile (botón 'Contactar')"}, {"id": "tc_cl_2452390", "plataforma": "TusClases Chile", "país/ubicación": "Chile - Santiago", "pais": "Chile", "nombre": "Valentina", "persona_id": "valentina_santiago_mat", "materia": "Matemáticas", "nivel educativo": "Secundario / Pre-Universitario (PAES)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/santiago-ciudad/busco-profesor-particular-paes-matematicas-2452390.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Busco profesor particular para preparación de examen PAES Matemáticas.", "método de contacto directo": "Mensajería interna TusClases Chile (botón 'Contactar')"}, {"id": "tc_cl_2448368", "plataforma": "TusClases Chile", "país/ubicación": "Chile - Nunoa", "pais": "Chile", "nombre": "Agustina", "persona_id": "agustina_aburi_nunoa", "materia": "Química", "nivel educativo": "Secundario (Enseñanza Media)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "Misma alumna que solicitud de Física (Agustina - ofrecer pack)", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclasesparticulares.cl/estudiantes/quimica/nunoa/clases-quimica-ensenanza-media-2448368.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Clases de Química para enseñanza media (solicitud 1 de Agustina Aburi).", "método de contacto directo": "Mensajería interna TusClases Chile (botón 'Contactar')"}, {"id": "tc_cl_2444389", "plataforma": "TusClases Chile", "país/ubicación": "Chile - Santiago", "pais": "Chile", "nombre": "Valentina", "persona_id": "valentina_santiago_bio", "materia": "Biología", "nivel educativo": "Secundario / Pre-Universitario (PAES)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclasesparticulares.cl/estudiantes/paes/santiago-ciudad/busco-profesor-particular-paes-biologia-2444389.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Busco profesor particular para preparación de prueba PAES Biología.", "método de contacto directo": "Mensajería interna TusClases Chile (botón 'Contactar')"}, {"id": "tc_cl_2368928", "plataforma": "TusClases Chile", "país/ubicación": "Chile - Nunoa", "pais": "Chile", "nombre": "Agustina", "persona_id": "agustina_aburi_nunoa", "materia": "Física", "nivel educativo": "Secundario (Enseñanza Media)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "Misma alumna que solicitud de Química (Agustina - ofrecer pack)", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclasesparticulares.cl/estudiantes/fisica/nunoa/clases-fisica-ensenanza-media-2368928.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Clases de Física para enseñanza media (solicitud 2 de Agustina Aburi).", "método de contacto directo": "Mensajería interna TusClases Chile (botón 'Contactar')"}, {"id": "tc_pe_2466626", "plataforma": "TusClases Perú", "país/ubicación": "Perú - Lima", "pais": "Perú", "nombre": "Pilar", "persona_id": "pilar_lima", "materia": "Física", "nivel educativo": "Universitario (PUCP)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.pe/estudiantes/fisica/lima-ciudad/busco-profesor-particular-para-clases-online-2466626.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Busco profesor particular para clases online de física universitaria PUCP.", "método de contacto directo": "Mensajería interna TusClases Perú (botón 'Contactar')"}, {"id": "tc_pe_2461202", "plataforma": "TusClases Perú", "país/ubicación": "Perú - Chiclayo", "pais": "Perú", "nombre": "Harvey", "persona_id": "harvey_chiclayo", "materia": "Física", "nivel educativo": "Universitario", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito con registro", "costo_detalle": "Mensajería interna gratuita con perfil docente", "enlace al anuncio": "https://www.tusclases.pe/estudiantes/fisica/chiclayo/busco-profesor-particular-para-clases-online-2461202.aspx", "es_permalink": true, "fecha de publicación": "2026-11-01", "mensaje/descripción": "Busco profesor particular para clases online de física nivel superior.", "método de contacto directo": "Mensajería interna TusClases Perú (botón 'Contactar')"}, {"id": "cronoshare_es_mat_barcelona_01", "plataforma": "Cronoshare", "país/ubicación": "España - Barcelona (Barcelona)", "pais": "España", "nombre": "Familia Barcelona", "persona_id": "familia_barcelona_primaria", "materia": "Matemáticas", "nivel educativo": "Primaria (7 años / 3º Primaria)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": false, "alerta_modalidad": "Fuera de rango prioritario: niña de 7 años (matemática en inglés)", "idioma": "Español (con inglés)", "costo_contacto": "Requiere créditos pagos (Cronos)", "costo_detalle": "Canje de cronos para ver WhatsApp/teléfono", "enlace al anuncio": "https://www.cronoshare.com/empleo/clases-particulares-matematicas", "es_permalink": false, "fecha de publicación": "2026-11-02", "mensaje/descripción": "Clases de apoyo escolar con inglés y matemáticas para 3º de primaria (niña de 7 años).", "método de contacto directo": "Cronoshare (requiere créditos de la plataforma para desbloquear WhatsApp del alumno)"}, {"id": "cronoshare_es_mat_lleida_02", "plataforma": "Cronoshare", "país/ubicación": "España - Lleida (Lleida)", "pais": "España", "nombre": "Estudiante Lleida", "persona_id": "estudiante_lleida_bachillerato", "materia": "Matemáticas", "nivel educativo": "Secundario (1º Bachillerato)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Requiere créditos pagos (Cronos)", "costo_detalle": "Canje de cronos para ver WhatsApp/teléfono", "enlace al anuncio": "https://www.cronoshare.com/empleo/clases-particulares-matematicas", "es_permalink": false, "fecha de publicación": "2026-11-02", "mensaje/descripción": "Clases particulares de matemáticas para 1º bachillerato en Lleida.", "método de contacto directo": "Cronoshare (requiere créditos de la plataforma para desbloquear WhatsApp)"}, {"id": "cronoshare_es_mat_madrid_03", "plataforma": "Cronoshare", "país/ubicación": "España - Madrid (Madrid)", "pais": "España", "nombre": "Estudiante Madrid", "persona_id": "estudiante_madrid_domicilio", "materia": "Matemáticas, Física, Química", "nivel educativo": "Secundario (4º ESO)", "modalidad": "Presencial", "modalidad_solicitada": "Clases a domicilio en Madrid", "elegible_virtual": false, "alerta_modalidad": "Pide a domicilio en Madrid (Ofrecer pase a Online)", "idioma": "Español", "costo_contacto": "Requiere créditos pagos (Cronos)", "costo_detalle": "Canje de cronos para ver WhatsApp/teléfono", "enlace al anuncio": "https://www.cronoshare.com/empleo/clases-particulares-matematicas", "es_permalink": false, "fecha de publicación": "2026-11-02", "mensaje/descripción": "Clases particulares de matemáticas, física y química para 4º de la ESO a domicilio en Madrid.", "método de contacto directo": "Cronoshare (requiere créditos para desbloquear teléfono/WhatsApp)"}, {"id": "cronoshare_es_mat_online_euskera_04", "plataforma": "Cronoshare", "país/ubicación": "España - Online", "pais": "España", "nombre": "Estudiante Euskera", "persona_id": "estudiante_euskera_bachillerato", "materia": "Matemáticas", "nivel educativo": "Secundario (1º Bachillerato)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": false, "alerta_modalidad": "Incompatible: pide clases en Euskera", "idioma": "Euskera", "costo_contacto": "Requiere créditos pagos (Cronos)", "costo_detalle": "Canje de cronos para ver WhatsApp/teléfono", "enlace al anuncio": "https://www.cronoshare.com/empleo/clases-particulares-matematicas", "es_permalink": false, "fecha de publicación": "2026-11-02", "mensaje/descripción": "Clases online de matemáticas para 1º bachillerato impartidas en euskera.", "método de contacto directo": "Cronoshare (requiere créditos para desbloquear WhatsApp)"}, {"id": "cronoshare_es_fis_galapagar_05", "plataforma": "Cronoshare", "país/ubicación": "España - Galapagar (Madrid)", "pais": "España", "nombre": "Familia Galapagar", "persona_id": "familia_galapagar", "materia": "Física", "nivel educativo": "Secundario (2º Bachillerato)", "modalidad": "Online", "modalidad_solicitada": "Clases online por deporte del alumno", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Requiere créditos pagos (Cronos)", "costo_detalle": "Canje de cronos para ver WhatsApp/teléfono", "enlace al anuncio": "https://www.cronoshare.com/empleo/clases-particulares-fisica", "es_permalink": false, "fecha de publicación": "2026-11-02", "mensaje/descripción": "Clases de física para 2º bachillerato. Mi hijo hace deporte de alto rendimiento y necesita flexibilidad horaria online.", "método de contacto directo": "Cronoshare (requiere créditos de la plataforma para desbloquear WhatsApp)"}, {"id": "cronoshare_es_fis_online_06", "plataforma": "Cronoshare", "país/ubicación": "España - Online", "pais": "España", "nombre": "Alumna Ingeniería", "persona_id": "alumna_ingenieria_online", "materia": "Física", "nivel educativo": "Universitario (Ingeniería)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Requiere créditos pagos (Cronos)", "costo_detalle": "Canje de cronos para ver WhatsApp/teléfono", "enlace al anuncio": "https://www.cronoshare.com/empleo/clases-particulares-fisica", "es_permalink": false, "fecha de publicación": "2026-11-02", "mensaje/descripción": "Clases particulares de física e ingeniería online para alumna universitaria.", "método de contacto directo": "Cronoshare (requiere créditos de la plataforma para desbloquear WhatsApp)"}, {"id": "cronoshare_es_bio_irun_07", "plataforma": "Cronoshare", "país/ubicación": "España - Irun (Guipúzcoa)", "pais": "España", "nombre": "Estudiante Irún", "persona_id": "estudiante_irun_acceso_univ", "materia": "Biología", "nivel educativo": "Acceso Universidad (+25 años)", "modalidad": "Online", "modalidad_solicitada": "Clases online", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Requiere créditos pagos (Cronos)", "costo_detalle": "Canje de cronos para ver WhatsApp/teléfono", "enlace al anuncio": "https://www.cronoshare.com/empleo/clases-particulares-biologia", "es_permalink": false, "fecha de publicación": "2026-11-02", "mensaje/descripción": "Clases particulares de biología para examen de acceso a la universidad para mayores de 25 años.", "método de contacto directo": "Cronoshare (requiere créditos de la plataforma para desbloquear WhatsApp)"}, {"id": "reddit_ar_empleos_01", "plataforma": "Reddit (r/empleos_AR)", "país/ubicación": "Argentina - Comunidad Universitaria", "pais": "Argentina", "nombre": "Estudiante Reddit", "persona_id": "estudiante_reddit_quimica", "materia": "Química", "nivel educativo": "Universitario", "modalidad": "Online", "modalidad_solicitada": "Clases online o presencial a coordinar", "elegible_virtual": true, "alerta_modalidad": "", "idioma": "Español", "costo_contacto": "Gratuito directo", "costo_detalle": "Gratuito (Mensaje Privado / DM en Reddit)", "enlace al anuncio": "https://www.reddit.com/r/empleos_AR/comments/1x4ic4i/busco_profesor_particular_de_quimica_universitaria/", "es_permalink": true, "fecha de publicación": "2026-11-02", "mensaje/descripción": "Busco profesor particular de química universitaria (preparación para final de Química General e Inorgánica).", "método de contacto directo": "Mensaje directo en Reddit (DM al usuario / chat de la publicación)"}];
+  var DISCARDED_DATA = [];
+  var DISCARDED_DATA = [];
+
+    // Safe in-memory store fallback if localStorage is denied or unavailable
+    var memoryStore = {};
+
+    // Default Master Presentation Pitch with clean variables
+    var DEFAULT_PITCH = `¡Hola{{nombre_saludo}}! ¿Cómo estás? Mi nombre es Alejo. Te contacto porque vi tu búsqueda de clases particulares de {{materia}} (nivel {{nivel}}).
+
+Cuento con más de 18 años de experiencia brindando clases particulares de ciencias exactas (Matemáticas, Física, Química y Biología) para nivel universitario, secundario y técnico. Actualmente soy estudiante avanzado de Biología Molecular en la universidad.
+
+Las clases las dicto de forma 100% ONLINE mediante pizarra digital interactiva, resolución paso a paso de ejercicios en vivo y material en PDF compartido en tiempo real (ideal para coordinar con total comodidad y flexibilidad horaria desde cualquier país o ciudad). Mi enfoque se basa en preparación intensiva para exámenes parciales, finales, recuperatorios o apoyo continuo.
+
+Si gustas, podemos coordinar una breve consulta inicial sin cargo para que me comentes tu temario y acordemos días y horarios.
+
+Te dejo mi correo electrónico directo:
+📧 alejoongaro@gmail.com
+
+¡Quedo a tu disposición para arrancar cuando gustes!`;
+
+    // Strict HTML entity escape helper to avoid any XSS or unescaped markup
+    function escapeHTML(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Safe Local Storage helpers with full exception handling
+    function getStoredStatuses() {
+      try {
+        if (typeof localStorage === 'undefined') return memoryStore['alumnos_lead_statuses'] || {};
+        var raw = localStorage.getItem('alumnos_lead_statuses');
+        if (!raw || raw === 'null' || raw === 'undefined') return {};
+        var parsed = JSON.parse(raw);
+        return (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) ? parsed : {};
+      } catch (e) {
+        return memoryStore['alumnos_lead_statuses'] || {};
+      }
+    }
+
+    function saveStatus(id, status) {
+      var map = getStoredStatuses();
+      map[id] = status;
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('alumnos_lead_statuses', JSON.stringify(map));
+        }
+      } catch (e) {
+        memoryStore['alumnos_lead_statuses'] = map;
+      }
+      updateKPICounters();
+      applyFilters();
+    }
+
+    function getStoredPitch() {
+      try {
+        if (typeof localStorage === 'undefined') return memoryStore['alejo_master_pitch_v3'] || DEFAULT_PITCH;
+        return localStorage.getItem('alejo_master_pitch_v3') || DEFAULT_PITCH;
+      } catch (e) {
+        return memoryStore['alejo_master_pitch_v3'] || DEFAULT_PITCH;
+      }
+    }
+
+    function saveStoredPitch(text) {
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('alejo_master_pitch_v3', text);
+        }
+      } catch (e) {
+        memoryStore['alejo_master_pitch_v3'] = text;
+      }
+    }
+
+    // STABLE UNIQUE IDENTIFIER
+    function getLeadId(item) {
+      return item.id || item.lead_id || (item.plataforma + '_' + (item['enlace al anuncio'] || ''));
+    }
+
+    function getCountryFlag(location) {
+      if (!location) return '📍';
+      if (location.includes('Argentina')) return '🇦🇷';
+      if (location.includes('España')) return '🇪🇸';
+      if (location.includes('Chile')) return '🇨🇱';
+      if (location.includes('Colombia')) return '🇨🇴';
+      if (location.includes('Perú')) return '🇵🇪';
+      if (location.includes('México')) return '🇲🇽';
+      return '📍';
+    }
+
+    function getCountryName(location) {
+      return (location || '').split(' - ')[0] || location || '';
+    }
+
+    function getSubjectBadge(subj) {
+      var s = escapeHTML(subj || '');
+      if (subj.includes('Matemáticas') && (subj.includes('Física') || subj.includes('Química'))) {
+        return '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200">📐⚡ ' + s + '</span>';
+      }
+      if (subj.includes('Matemáticas')) {
+        return '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">📐 ' + s + '</span>';
+      }
+      if (subj.includes('Física')) {
+        return '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">⚡ ' + s + '</span>';
+      }
+      if (subj.includes('Química')) {
+        return '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-violet-50 text-violet-700 border border-violet-200">🧪 ' + s + '</span>';
+      }
+      if (subj.includes('Biología')) {
+        return '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">🧬 ' + s + '</span>';
+      }
+      return '<span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">' + s + '</span>';
+    }
+
+    function showToast(title, msg) {
+      var t = document.getElementById('toast');
+      if (!t) return;
+      document.getElementById('toast-title').textContent = title;
+      document.getElementById('toast-msg').textContent = msg;
+      t.classList.remove('translate-y-28', 'opacity-0');
+      setTimeout(function() {
+        t.classList.add('translate-y-28', 'opacity-0');
+      }, 3500);
+    }
+
+    function showManualCopyModal(text) {
+      var modal = document.getElementById('copy-modal');
+      var area = document.getElementById('modal-copy-textarea');
+      if (modal && area) {
+        area.value = text;
+        modal.classList.remove('hidden');
+        if (typeof area.focus === 'function') area.focus();
+        if (typeof area.select === 'function') area.select();
+      }
+    }
+
+    function closeCopyModal() {
+      var modal = document.getElementById('copy-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function openScanModal() {
+      var modal = document.getElementById('scan-modal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeScanModal() {
+      var modal = document.getElementById('scan-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function renderPitch() {
+      var p = getStoredPitch();
+      var preview = p.replaceAll('{{nombre_saludo}}', ' Sebastián')
+                     .replaceAll('{{materia}}', 'Ciencias Exactas')
+                     .replaceAll('{{nivel}}', 'Universitario / Secundario');
+      var disp = document.getElementById('pitch-display');
+      var edit = document.getElementById('pitch-editor');
+      if (disp) disp.textContent = preview;
+      if (edit) edit.value = p;
+    }
+
+    function togglePitchEditor() {
+      var display = document.getElementById('pitch-display');
+      var editor = document.getElementById('pitch-editor');
+      var actions = document.getElementById('pitch-editor-actions');
+      if (editor.classList.contains('hidden')) {
+        editor.classList.remove('hidden');
+        actions.classList.remove('hidden');
+        display.classList.add('hidden');
+        editor.focus();
+      } else {
+        cancelPitchEdit();
+      }
+    }
+
+    function cancelPitchEdit() {
+      document.getElementById('pitch-editor').classList.add('hidden');
+      document.getElementById('pitch-editor-actions').classList.add('hidden');
+      document.getElementById('pitch-display').classList.remove('hidden');
+    }
+
+    function savePitchEdit() {
+      var newPitch = document.getElementById('pitch-editor').value.trim();
+      if (newPitch) {
+        saveStoredPitch(newPitch);
+        renderPitch();
+        cancelPitchEdit();
+        showToast('✓ Mensaje Guardado', 'Se actualizó tu carta de presentación predeterminada.');
+      }
+    }
+
+    function copyMasterPitch() {
+      var p = getStoredPitch().replaceAll('{{nombre_saludo}}', '')
+                             .replaceAll('{{materia}}', 'ciencias exactas')
+                             .replaceAll('{{nivel}}', 'universitario / secundario');
+      if (navigator && navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        navigator.clipboard.writeText(p).then(function() {
+          showToast('📋 Carta Virtual Copiada', 'Texto de clases online copiado al portapapeles.');
+        }).catch(function() {
+          showManualCopyModal(p);
+        });
+      } else {
+        showManualCopyModal(p);
+      }
+    }
+
+    // SAFE ACTION: COPIES PITCH AND OPENS AD WITHOUT PREMATURELY MARKING AS CONTACTED
+    function sendAndOpenLead(id, url, subj, nivel, nombre) {
+      var pitch = getStoredPitch();
+      var saludo = (nombre && nombre.trim() !== '' && !nombre.includes('Estudiante') && !nombre.includes('Familia') && !nombre.includes('Alumna')) ? ' ' + nombre.trim() : '';
+      pitch = pitch.replaceAll('{{nombre_saludo}}', saludo);
+      pitch = pitch.replaceAll('{{nombre}}', nombre || 'Estudiante');
+      pitch = pitch.replaceAll('{{materia}}', subj || '');
+      pitch = pitch.replaceAll('{{nivel}}', nivel || '');
+
+      // 1. Safe Clipboard copy
+      if (navigator && navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        navigator.clipboard.writeText(pitch).then(function() {
+          var targetName = nombre ? ' para ' + nombre : '';
+          showToast('✉️ Mensaje Copiado' + targetName, 'Pega el mensaje con Ctrl+V. Cuando lo envíes, confirma el estado.');
+        }).catch(function() {
+          showManualCopyModal(pitch);
+        });
+      } else {
+        showManualCopyModal(pitch);
+      }
+
+      // 2. Safe Window Open (Validate HTTP/HTTPS only)
+      if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+        if (window && typeof window.open === 'function') {
+          var win = window.open(url, '_blank');
+          if (!win) {
+            showToast('⚠️ Ventana Bloqueada', 'El navegador bloqueó la pestaña emergente. Usa el enlace directo.');
+          }
+        }
+      }
+    }
+
+    function copyLeadPitchOnly(subj, nivel, nombre) {
+      var pitch = getStoredPitch();
+      var saludo = (nombre && nombre.trim() !== '' && !nombre.includes('Estudiante') && !nombre.includes('Familia') && !nombre.includes('Alumna')) ? ' ' + nombre.trim() : '';
+      pitch = pitch.replaceAll('{{nombre_saludo}}', saludo);
+      pitch = pitch.replaceAll('{{nombre}}', nombre || 'Estudiante');
+      pitch = pitch.replaceAll('{{materia}}', subj || '');
+      pitch = pitch.replaceAll('{{nivel}}', nivel || '');
+      
+      if (navigator && navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        navigator.clipboard.writeText(pitch).then(function() {
+          var targetName = nombre ? ' para ' + nombre : '';
+          showToast('📋 Mensaje Copiado', 'Personalizado' + targetName + ' (' + subj + ').');
+        }).catch(function() {
+          showManualCopyModal(pitch);
+        });
+      } else {
+        showManualCopyModal(pitch);
+      }
+    }
+
+    function updateKPICounters() {
+      var map = getStoredStatuses();
+      var total = RAW_DATA.length;
+      var pending = 0;
+      var contacted = 0;
+      var closed = 0;
+
+      RAW_DATA.forEach(function(item) {
+        var id = getLeadId(item);
+        var status = map[id] || 'Pendiente';
+        if (status === 'Pendiente') pending++;
+        else if (status === 'Contactado' || status === 'En negociación') contacted++;
+        else if (status === 'Cerrado') closed++;
+      });
+
+      var elTot = document.getElementById('kpi-total');
+      var elPen = document.getElementById('kpi-pending');
+      var elCon = document.getElementById('kpi-contacted');
+      var elClo = document.getElementById('kpi-closed');
+      if (elTot) elTot.textContent = total;
+      if (elPen) elPen.textContent = pending;
+      if (elCon) elCon.textContent = contacted;
+      if (elClo) elClo.textContent = closed;
+    }
+
+    var currentCountryFilter = '';
+    var currentViewMode = 'cards';
+    var sortCol = '';
+    var sortAsc = true;
+
+    function renderCountryPills() {
+      var container = document.getElementById('country-pills-container');
+      if (!container) return;
+      var counts = {};
+      RAW_DATA.forEach(function(r) {
+        var c = getCountryName(r['país/ubicación']);
+        counts[c] = (counts[c] || 0) + 1;
+      });
+
+      var html = '<span class="text-xs font-bold text-slate-500 mr-1">País:</span>';
+      var allActive = currentCountryFilter === '' ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50';
+      html += '<button onclick="setCountryFilter(\'\')" class="pill-country text-xs font-semibold px-3 py-1.5 rounded-xl border transition active:scale-95 ' + allActive + '">Todos (' + RAW_DATA.length + ')</button>';
+
+      var sortedCountries = Object.keys(counts).sort(function(a,b) { return counts[b] - counts[a]; });
+      sortedCountries.forEach(function(c) {
+        var flag = getCountryFlag(c);
+        var activeClass = currentCountryFilter === c ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50';
+        html += '<button onclick="setCountryFilter(\'' + escapeHTML(c) + '\')" class="pill-country text-xs font-semibold px-3 py-1.5 rounded-xl border transition active:scale-95 ' + activeClass + '">' + flag + ' ' + escapeHTML(c) + ' (' + counts[c] + ')</button>';
+      });
+
+      container.innerHTML = html;
+    }
+
+    function setCountryFilter(country) {
+      currentCountryFilter = country;
+      renderCountryPills();
+      applyFilters();
+    }
+
+    function setViewMode(mode) {
+      currentViewMode = mode;
+      var cardBtn = document.getElementById('view-card-btn');
+      var tableBtn = document.getElementById('view-table-btn');
+      var cardCont = document.getElementById('cards-container');
+      var tableCont = document.getElementById('table-container');
+
+      if (mode === 'cards') {
+        if (cardBtn) cardBtn.className = 'px-3 py-1.5 rounded-lg transition bg-white text-indigo-700 shadow-sm flex items-center gap-1.5';
+        if (tableBtn) tableBtn.className = 'px-3 py-1.5 rounded-lg transition text-slate-600 hover:text-slate-900 flex items-center gap-1.5';
+        if (cardCont) cardCont.classList.remove('hidden');
+        if (tableCont) tableCont.classList.add('hidden');
+      } else {
+        if (tableBtn) tableBtn.className = 'px-3 py-1.5 rounded-lg transition bg-white text-indigo-700 shadow-sm flex items-center gap-1.5';
+        if (cardBtn) cardBtn.className = 'px-3 py-1.5 rounded-lg transition text-slate-600 hover:text-slate-900 flex items-center gap-1.5';
+        if (tableCont) tableCont.classList.remove('hidden');
+        if (cardCont) cardCont.classList.add('hidden');
+      }
+    }
+
+    function sortTable(col) {
+      if (sortCol === col) {
+        sortAsc = !sortAsc;
+      } else {
+        sortCol = col;
+        sortAsc = true;
+      }
+      applyFilters();
+    }
+
+    function applyFilters() {
+      var q = (document.getElementById('search-input')?.value || '').toLowerCase().trim();
+      var fMateria = document.getElementById('filter-materia')?.value || '';
+      var fNivel = document.getElementById('filter-nivel')?.value || '';
+      var fMod = document.getElementById('filter-modalidad')?.value || '';
+      var fCosto = document.getElementById('filter-costo')?.value || '';
+      var fEstado = document.getElementById('filter-estado')?.value || '';
+      var statuses = getStoredStatuses();
+
+      var cardsContainer = document.getElementById('cards-container');
+      var tableTbody = document.getElementById('table-tbody');
+      if (cardsContainer) cardsContainer.innerHTML = '';
+      if (tableTbody) tableTbody.innerHTML = '';
+
+      var filtered = RAW_DATA.filter(function(item) {
+        var id = getLeadId(item);
+        var currentStatus = statuses[id] || 'Pendiente';
+
+        var fullText = (item.plataforma + ' ' + (item.nombre || '') + ' ' + item.materia + ' ' + item['nivel educativo'] + ' ' + item['país/ubicación'] + ' ' + (item['mensaje/descripción'] || '')).toLowerCase();
+        if (q && !fullText.includes(q)) return false;
+
+        if (currentCountryFilter && !item['país/ubicación'].includes(currentCountryFilter)) return false;
+        if (fMateria && !item.materia.includes(fMateria)) return false;
+        if (fNivel && !item['nivel educativo'].toLowerCase().includes(fNivel.toLowerCase())) return false;
+        if (fMod && item.modalidad !== fMod) return false;
+        if (fCosto && !item.costo_contacto.toLowerCase().includes(fCosto.toLowerCase())) return false;
+        if (fEstado && currentStatus !== fEstado) return false;
+
+        return true;
+      });
+
+      // Apply table sorting if requested
+      if (sortCol) {
+        filtered.sort(function(a, b) {
+          var va = '';
+          var vb = '';
+          if (sortCol === 'pais') { va = a['país/ubicación']; vb = b['país/ubicación']; }
+          else if (sortCol === 'nombre') { va = a.nombre || ''; vb = b.nombre || ''; }
+          else if (sortCol === 'materia') { va = a.materia; vb = b.materia; }
+          else if (sortCol === 'estado') { va = statuses[getLeadId(a)] || 'Pendiente'; vb = statuses[getLeadId(b)] || 'Pendiente'; }
+          var cmp = va.localeCompare(vb);
+          return sortAsc ? cmp : -cmp;
+        });
+      }
+
+      filtered.forEach(function(item) {
+        var id = getLeadId(item);
+        var currentStatus = statuses[id] || 'Pendiente';
+        var flag = getCountryFlag(item['país/ubicación']);
+        var subjBadge = getSubjectBadge(item.materia);
+        var cleanUrl = item['enlace al anuncio'];
+
+        var statusColor = 'bg-amber-50 text-amber-700 border-amber-200';
+        if (currentStatus === 'Contactado') statusColor = 'bg-blue-50 text-blue-700 border-blue-200';
+        if (currentStatus === 'En negociación') statusColor = 'bg-purple-50 text-purple-700 border-purple-200';
+        if (currentStatus === 'Cerrado') statusColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+        if (currentStatus === 'Descartado') statusColor = 'bg-slate-100 text-slate-500 border-slate-200';
+
+        var modBadge = '<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">🌐 Online</span>';
+        if (item.modalidad === 'Presencial') {
+          modBadge = '<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-300">📍 Presencial</span>';
+        } else if (item.modalidad === 'A convenir') {
+          modBadge = '<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">❓ A convenir</span>';
+        }
+
+        var costoBadge = '<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">🟢 ' + escapeHTML(item.costo_contacto) + '</span>';
+        if (item.costo_contacto.includes('créditos')) {
+          costoBadge = '<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-300">🟡 Requiere Créditos Pagos</span>';
+        }
+
+        var studentDisplayName = item.nombre ? '👤 ' + escapeHTML(item.nombre) : '👤 Alumno/a';
+
+        // 1. RENDER CARD (Using safe data attributes and escaped text sinks)
+        if (cardsContainer) {
+          var card = document.createElement('div');
+          card.className = 'lead-card bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm flex flex-col justify-between space-y-4';
+          card.innerHTML = `
+            <div>
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <div class="flex items-center gap-1.5 font-bold text-slate-900 text-sm">
+                    <span>${flag}</span>
+                    <span>${escapeHTML(item.plataforma)}</span>
+                  </div>
+                  <p class="text-xs text-slate-500 font-medium mt-0.5">${escapeHTML(item['país/ubicación'])}</p>
+                </div>
+                <span class="text-[11px] font-bold px-2.5 py-1 rounded-xl border ${statusColor}">
+                  ${escapeHTML(currentStatus)}
+                </span>
+              </div>
+
+              <div class="mt-2 text-xs font-bold text-indigo-900 flex items-center gap-1.5">
+                <span class="px-2.5 py-0.5 bg-indigo-50 border border-indigo-100 rounded-lg">${studentDisplayName}</span>
+                ${item.alerta_modalidad ? `<span class="text-[10px] px-2 py-0.5 bg-amber-50 text-amber-700 border border-amber-200 rounded-md font-normal">${escapeHTML(item.alerta_modalidad)}</span>` : ''}
+              </div>
+
+              <div class="flex flex-wrap items-center gap-1.5 mt-2.5">
+                ${subjBadge}
+                <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                  ${escapeHTML(item['nivel educativo'])}
+                </span>
+                ${modBadge}
+                <span class="text-[11px] text-slate-400 ml-auto font-medium">📅 ${escapeHTML(item['fecha de publicación'])}</span>
+              </div>
+
+              <div class="mt-3 bg-slate-50 rounded-2xl p-3.5 border border-slate-100 lead-text max-h-32 overflow-y-auto">
+                <p class="text-xs text-slate-700 leading-relaxed font-normal">${escapeHTML(item['mensaje/descripción'])}</p>
+              </div>
+
+              <div class="mt-2.5 flex items-start gap-1.5 text-[11px] text-slate-600 bg-slate-50/80 border border-slate-200/80 p-2 rounded-xl">
+                <span class="font-bold">Via:</span>
+                <span class="leading-tight">${escapeHTML(item['método de contacto directo'])}</span>
+              </div>
+
+              <div class="mt-2">
+                ${costoBadge}
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-slate-100 space-y-2">
+              <button class="btn-action-open w-full py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 shadow-md shadow-indigo-500/20 flex items-center justify-center gap-2 transition active:scale-[0.98]"
+                      data-id="${escapeHTML(id)}">
+                <span>📋</span>
+                <span>Copiar Mensaje & Abrir Anuncio</span>
+              </button>
+
+              <div class="grid grid-cols-2 gap-2">
+                <button class="btn-action-confirm py-1.5 px-2.5 rounded-xl text-[11px] font-bold bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 transition flex items-center justify-center gap-1"
+                        data-id="${escapeHTML(id)}">
+                  <span>✓</span> Confirmar Envío
+                </button>
+                
+                <select class="select-status text-[11px] font-bold rounded-xl px-2 py-1.5 border border-slate-200 bg-white text-slate-700 focus:ring-2 focus:ring-indigo-500"
+                        data-id="${escapeHTML(id)}">
+                  <option value="Pendiente" ${currentStatus === 'Pendiente' ? 'selected' : ''}>⏳ Pendiente</option>
+                  <option value="Contactado" ${currentStatus === 'Contactado' ? 'selected' : ''}>✉️ Contactado</option>
+                  <option value="En negociación" ${currentStatus === 'En negociación' ? 'selected' : ''}>💬 Negociando</option>
+                  <option value="Cerrado" ${currentStatus === 'Cerrado' ? 'selected' : ''}>🎯 Cerrado</option>
+                  <option value="Descartado" ${currentStatus === 'Descartado' ? 'selected' : ''}>❌ Descartado</option>
+                </select>
+              </div>
+            </div>
+          `;
+          cardsContainer.appendChild(card);
+        }
+
+        // 2. RENDER TABLE ROW
+        if (tableTbody) {
+          var tr = document.createElement('tr');
+          tr.className = 'hover:bg-slate-50/80 transition border-b border-slate-100';
+          tr.innerHTML = `
+            <td class="py-3.5 px-4 align-top whitespace-nowrap">
+              <div class="font-bold text-slate-900">${flag} ${escapeHTML(item.plataforma)}</div>
+              <div class="text-[11px] text-slate-500 mt-0.5">${escapeHTML(item['país/ubicación'])}</div>
+              <div class="text-[10px] text-slate-400 mt-1">📅 ${escapeHTML(item['fecha de publicación'])}</div>
+            </td>
+            <td class="py-3.5 px-4 align-top whitespace-nowrap">
+              <span class="font-bold text-indigo-900 text-xs">${escapeHTML(item.nombre || 'No especificado')}</span>
+            </td>
+            <td class="py-3.5 px-4 align-top whitespace-nowrap">
+              <div class="mb-1">${subjBadge}</div>
+              <div class="text-xs font-semibold text-slate-600">${escapeHTML(item['nivel educativo'])}</div>
+              <div class="mt-1">${modBadge}</div>
+            </td>
+            <td class="py-3.5 px-4 align-top">
+              <div class="text-xs text-slate-800 leading-relaxed font-normal bg-slate-50 p-2.5 rounded-xl border border-slate-100 max-h-28 overflow-y-auto lead-text">
+                ${escapeHTML(item['mensaje/descripción'])}
+              </div>
+              ${item.alerta_modalidad ? `<div class="mt-1 text-[11px] text-amber-700">⚠️ ${escapeHTML(item.alerta_modalidad)}</div>` : ''}
+            </td>
+            <td class="py-3.5 px-4 align-top text-[11px] text-slate-700 leading-tight">
+              <div class="bg-slate-50 p-2 rounded-xl border border-slate-100 mb-1.5">
+                ${escapeHTML(item['método de contacto directo'])}
+              </div>
+              <div>${costoBadge}</div>
+            </td>
+            <td class="py-3.5 px-4 align-top text-center space-y-1.5 whitespace-nowrap">
+              <button class="btn-action-open inline-flex items-center justify-center gap-1.5 w-full px-3 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition active:scale-95"
+                      data-id="${escapeHTML(id)}">
+                <span>📋</span> Abrir & Copiar
+              </button>
+              <button class="btn-action-confirm inline-flex items-center justify-center gap-1 w-full px-2 py-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded-lg transition"
+                      data-id="${escapeHTML(id)}">
+                <span>✓</span> Confirmar Envío
+              </button>
+            </td>
+            <td class="py-3.5 px-4 align-top text-center whitespace-nowrap">
+              <select class="select-status text-xs font-bold rounded-xl px-2.5 py-1.5 border border-slate-200 bg-white focus:ring-2 focus:ring-indigo-500 text-slate-800"
+                      data-id="${escapeHTML(id)}">
+                <option value="Pendiente" ${currentStatus === 'Pendiente' ? 'selected' : ''}>⏳ Pendiente</option>
+                <option value="Contactado" ${currentStatus === 'Contactado' ? 'selected' : ''}>✉️ Contactado</option>
+                <option value="En negociación" ${currentStatus === 'En negociación' ? 'selected' : ''}>💬 Negociando</option>
+                <option value="Cerrado" ${currentStatus === 'Cerrado' ? 'selected' : ''}>🎯 Cerrado</option>
+                <option value="Descartado" ${currentStatus === 'Descartado' ? 'selected' : ''}>❌ Descartado</option>
+              </select>
+            </td>
+          `;
+          tableTbody.appendChild(tr);
+        }
+      });
+
+      // ATTACH SAFE EVENT LISTENERS (NO INLINE ONCLICK WITH STRINGS)
+      attachActionListeners();
+
+      var countEl = document.getElementById('filtered-count');
+      if (countEl) countEl.textContent = 'Mostrando ' + filtered.length + ' de ' + RAW_DATA.length + ' alumnos calificados';
+    }
+
+    function attachActionListeners() {
+      // 1. Open and Copy buttons
+      var openBtns = document.querySelectorAll('.btn-action-open');
+      openBtns.forEach(function(btn) {
+        btn.onclick = function() {
+          var leadId = btn.getAttribute('data-id');
+          var item = RAW_DATA.find(function(x) { return getLeadId(x) === leadId; });
+          if (item) {
+            sendAndOpenLead(leadId, item['enlace al anuncio'], item.materia, item['nivel educativo'], item.nombre);
+          }
+        };
+      });
+
+      // 2. Confirm Envío buttons
+      var confirmBtns = document.querySelectorAll('.btn-action-confirm');
+      confirmBtns.forEach(function(btn) {
+        btn.onclick = function() {
+          var leadId = btn.getAttribute('data-id');
+          saveStatus(leadId, 'Contactado');
+          showToast('✓ Envío Confirmado', 'El prospecto fue marcado como Contactado.');
+        };
+      });
+
+      // 3. Status select dropdowns
+      var selects = document.querySelectorAll('.select-status');
+      selects.forEach(function(sel) {
+        sel.onchange = function() {
+          var leadId = sel.getAttribute('data-id');
+          saveStatus(leadId, sel.value);
+        };
+      });
+    }
+
+    function resetFilters() {
+      var s = document.getElementById('search-input'); if (s) s.value = '';
+      var m = document.getElementById('filter-materia'); if (m) m.value = '';
+      var n = document.getElementById('filter-nivel'); if (n) n.value = '';
+      var mod = document.getElementById('filter-modalidad'); if (mod) mod.value = '';
+      var c = document.getElementById('filter-costo'); if (c) c.value = '';
+      var e = document.getElementById('filter-estado'); if (e) e.value = '';
+      setCountryFilter('');
+    }
+
+    // EXPORT TO CSV WITH LOCALSTORAGE STATUSES PRESERVED & FORMULA INJECTION DEFENSE
+    function exportToCSV() {
+      var statuses = getStoredStatuses();
+      var csv = '\uFEFF'; // UTF-8 BOM
+      csv += 'ID,Origen,Nombre_Alumno,Materia,Nivel,Modalidad,Costo_Contacto,Estado_Gestion,Link_Anuncio,Mensaje_Alumno,Metodo_Contacto,Fecha\n';
+      
+      function sanitizeCsv(str) {
+        var s = (str || '').toString().replaceAll('"', '""');
+        if (s.startsWith('=') || s.startsWith('+') || s.startsWith('-') || s.startsWith('@')) {
+          s = "'" + s;
+        }
+        return '"' + s + '"';
+      }
+
+      RAW_DATA.forEach(function(r) {
+        var id = getLeadId(r);
+        var st = statuses[id] || 'Pendiente';
+        var modStr = r.alerta_modalidad ? r.modalidad + ' (' + r.alerta_modalidad + ')' : r.modalidad;
+        var row = [
+          sanitizeCsv(id),
+          sanitizeCsv(r.plataforma + ' (' + r['país/ubicación'] + ')'),
+          sanitizeCsv(r.nombre || 'No especificado'),
+          sanitizeCsv(r.materia),
+          sanitizeCsv(r['nivel educativo']),
+          sanitizeCsv(modStr),
+          sanitizeCsv(r.costo_contacto),
+          sanitizeCsv(st),
+          sanitizeCsv(r['enlace al anuncio']),
+          sanitizeCsv(r['mensaje/descripción']),
+          sanitizeCsv(r['método de contacto directo']),
+          sanitizeCsv(r['fecha de publicación'])
+        ];
+        csv += row.join(',') + '\n';
+      });
+
+      if (typeof Blob !== 'undefined' && typeof URL !== 'undefined') {
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'alumnos_ciencias_exactas_con_estados.csv';
+        a.click();
+        showToast('📥 Archivo Exportado', 'Se descargó el CSV con tu seguimiento de estados actualizado.');
+      }
+    }
+
+    // FULL JSON BACKUP & RESTORE
+    function downloadJsonBackup() {
+      var payload = {
+        version: "3.1-Audited",
+        exported_at: new Date().toISOString(),
+        statuses: getStoredStatuses(),
+        pitch: getStoredPitch()
+      };
+      var str = JSON.stringify(payload, null, 2);
+      if (typeof Blob !== 'undefined' && typeof URL !== 'undefined') {
+        var blob = new Blob([str], { type: 'application/json' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'crm_prospeccion_backup_' + new Date().toISOString().slice(0, 10) + '.json';
+        a.click();
+        showToast('💾 Respaldo Descargado', 'Copia completa guardada en archivo JSON.');
+      }
+    }
+
+    function restoreJsonBackup(event) {
+      var file = event.target.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          var data = JSON.parse(e.target.result);
+          if (data && data.statuses && typeof data.statuses === 'object') {
+            if (typeof localStorage !== 'undefined') {
+              localStorage.setItem('alumnos_lead_statuses', JSON.stringify(data.statuses));
+              if (data.pitch) localStorage.setItem('alejo_master_pitch_v3', data.pitch);
+            }
+            updateKPICounters();
+            renderPitch();
+            applyFilters();
+            showToast('✓ Respaldo Restaurado', 'Se cargaron todos los estados y notas guardados.');
+          } else {
+            showToast('⚠️ Archivo Inválido', 'El archivo no contiene un respaldo válido de CRM.');
+          }
+        } catch(err) {
+          showToast('⚠️ Error al leer archivo', 'No se pudo procesar el JSON.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // Safe Initial Load
+    renderCountryPills();
+    renderPitch();
+    updateKPICounters();
+    applyFilters();
+  </script>
+</body>
+</html>
