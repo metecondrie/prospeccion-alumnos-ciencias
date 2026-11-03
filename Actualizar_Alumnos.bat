@@ -64,7 +64,7 @@ REM Archivo ejecutor: scripts\run_extraction.py
 REM -------------------------------------------------------------------------------
 echo ===============================================================================
 echo [1/3] RASTREO Y BUSQUEDA EN VIVO EN PLATAFORMAS (Web Scraping)
-echo Conectando a TusClases, Tablon de Anuncios, Cronoshare y Reddit...
+echo Conectando a TusClases, Tablon de Anuncios, Cronoshare, Reddit y Telegram...
 echo Ejecutable: scripts\run_extraction.py
 echo ===============================================================================
 echo.

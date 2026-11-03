@@ -21,6 +21,7 @@ from common_filter import validate_listing_record, validate_url_liveness
 from extract_tablon import extract_tablon_listings
 from extract_tusclases import extract_tusclases_listings
 from extract_cronoshare_workana import extract_cronoshare_workana_listings
+from extract_telegram import extract_telegram_listings
 
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 OUTPUT_JSON_PATH = os.path.join(DATA_DIR, "extracted_listings.json")
@@ -33,8 +34,18 @@ def run_full_pipeline() -> List[Dict[str, Any]]:
 
     all_raw_listings: List[Dict[str, Any]] = []
 
+    # 0. Preservar registros históricos ya extraídos
+    if os.path.exists(OUTPUT_JSON_PATH):
+        try:
+            with open(OUTPUT_JSON_PATH, "r", encoding="utf-8") as f:
+                existing_hist = json.load(f)
+                if isinstance(existing_hist, list):
+                    all_raw_listings.extend(existing_hist)
+        except Exception:
+            pass
+
     # 1. Tablón de Anuncios Spain
-    print("\n[1/3] Extracting from Tablón de Anuncios (?demanda=1)...")
+    print("\n[1/4] Extracting from Tablón de Anuncios (?demanda=1)...")
     try:
         tablon_items = extract_tablon_listings(max_listings=25)
         print(f" -> Tablón de Anuncios returned {len(tablon_items)} verified listings.")
@@ -43,7 +54,7 @@ def run_full_pipeline() -> List[Dict[str, Any]]:
         print(f" -> [ERROR] Tablón extraction failed: {e}", file=sys.stderr)
 
     # 2. TusClases Network (Spain, Argentina, Mexico, Colombia, Chile, Peru)
-    print("\n[2/3] Extracting from TusClases Network (Spain & LATAM)...")
+    print("\n[2/4] Extracting from TusClases Network (Spain & LATAM)...")
     try:
         tusclases_items = extract_tusclases_listings(max_listings=150, max_per_target=25)
         print(f" -> TusClases Network returned {len(tusclases_items)} verified listings.")
@@ -51,14 +62,23 @@ def run_full_pipeline() -> List[Dict[str, Any]]:
     except Exception as e:
         print(f" -> [ERROR] TusClases extraction failed: {e}", file=sys.stderr)
 
-    # 3. Cronoshare & Student Communities
-    print("\n[3/3] Extracting from Cronoshare & Student Communities...")
+    # 3. Cronoshare & Student Communities (Reddit)
+    print("\n[3/4] Extracting from Cronoshare & Reddit Communities...")
     try:
         crono_items = extract_cronoshare_workana_listings(max_listings=50)
         print(f" -> Cronoshare & Communities returned {len(crono_items)} verified listings.")
         all_raw_listings.extend(crono_items)
     except Exception as e:
         print(f" -> [ERROR] Cronoshare/Communities extraction failed: {e}", file=sys.stderr)
+
+    # 4. Telegram Student Channels & Groups
+    print("\n[4/4] Extracting from Telegram Student Channels & Groups...")
+    try:
+        tg_items = extract_telegram_listings(max_listings=25)
+        print(f" -> Telegram Channels returned {len(tg_items)} verified listings.")
+        all_raw_listings.extend(tg_items)
+    except Exception as e:
+        print(f" -> [ERROR] Telegram extraction failed: {e}", file=sys.stderr)
 
     print("\n" + "=" * 60)
     print(f"RAW EXTRACTED TOTAL: {len(all_raw_listings)} listings")

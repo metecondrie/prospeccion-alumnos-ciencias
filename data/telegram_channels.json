@@ -1,0 +1,35 @@
+{
+  "description": "Canales y grupos públicos de Telegram donde estudiantes buscan profesores de ciencias exactas",
+  "channels": [
+    {
+      "username": "clasesparticulares",
+      "name": "Clases Particulares Telegram",
+      "country": "España / LATAM",
+      "active": true
+    },
+    {
+      "username": "clases_particulares",
+      "name": "TeachApp Clases Particulares",
+      "country": "España / LATAM",
+      "active": true
+    },
+    {
+      "username": "profesoresparticulares",
+      "name": "Profesores y Clases Particulares",
+      "country": "Argentina / Uruguay",
+      "active": true
+    },
+    {
+      "username": "comunidad_cbc",
+      "name": "Comunidad CBC UBA",
+      "country": "Argentina",
+      "active": true
+    },
+    {
+      "username": "uba_estudiantes",
+      "name": "Estudiantes UBA",
+      "country": "Argentina",
+      "active": true
+    }
+  ]
+}
