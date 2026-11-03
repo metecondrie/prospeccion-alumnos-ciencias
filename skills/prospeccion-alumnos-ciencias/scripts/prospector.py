@@ -29,14 +29,16 @@ def load_env_file():
     """Carga variables desde el archivo .env si no están presentes en el entorno."""
     script_dir = os.path.dirname(os.path.abspath(__file__))
     candidates = [
-        os.path.join(script_dir, "..", "..", "..", ".env"),
         os.path.join(os.getcwd(), ".env"),
+        os.path.join(script_dir, "..", ".env"),
+        os.path.join(script_dir, "..", "..", "..", ".env"),
         r"E:\OneDrive\Escritorio\Prospeccion_Alumnos_Ciencias\.env"
     ]
     for p in candidates:
-        if os.path.exists(p):
+        abs_p = os.path.abspath(p)
+        if os.path.exists(abs_p) and ("Nueva carpeta" in abs_p or "Prospeccion_Alumnos_Ciencias" in abs_p):
             try:
-                with open(p, "r", encoding="utf-8", errors="ignore") as f:
+                with open(abs_p, "r", encoding="utf-8", errors="ignore") as f:
                     for line in f:
                         line = line.strip()
                         if line and not line.startswith("#") and "=" in line:
