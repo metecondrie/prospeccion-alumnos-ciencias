@@ -29,7 +29,7 @@ class RateLimitError(Exception):
     """Excepción cuando se recibe HTTP 429 de la API de Google."""
     pass
 
-DEFAULT_MODELS = ["gemini-2.5-flash", "gemini-3-flash-preview", "gemini-2.5-pro"]
+DEFAULT_MODELS = ["gemini-2.5-flash", "gemini-3-flash-preview", "gemini-2.5-pro", "gemini-1.5-flash"]
 
 def strip_accents(text: str) -> str:
     """Elimina diacríticos y acentos para comparaciones robustas."""
@@ -207,10 +207,11 @@ def normalize_item(item: Dict[str, Any], idx: int = 1) -> Dict[str, Any]:
         else:
             pais = loc.split(" - ")[0] if " - " in loc else "Internacional"
 
+    lvl_norm = strip_accents(lvl)
+    lvl_low = lvl_norm
     # Detección de nivel_categoria cerrado
     lvl_cat = item.get("nivel_categoria")
     if not lvl_cat:
-        lvl_low = strip_accents(lvl)
         if "primaria" in lvl_low:
             lvl_cat = "Primaria"
         elif "pre" in lvl_low or "paes" in lvl_low or "cambridge" in lvl_low:

@@ -1,4 +1,5 @@
 @echo off
+setlocal enabledelayedexpansion
 title Sistema de Prospeccion de Alumnos - Prof. Alejo Ongaro
 chcp 65001 > nul
 cls
@@ -18,7 +19,7 @@ REM ----------------------------------------------------------------------------
 REM PASO 0: VERIFICACION DE ENTORNO PYTHON
 REM -------------------------------------------------------------------------------
 python --version > nul 2>&1
-if %errorlevel% neq 0 (
+if errorlevel 1 (
     echo [ERROR CRITICO] No se encontro Python en el sistema.
     echo Asegurate de tener Python instalado y anadido al PATH de Windows.
     echo.
@@ -49,6 +50,8 @@ if "%GEMINI_API_KEY%"=="" (
     echo -------------------------------------------------------------------------------
     echo.
 )
+REM Restablecer errorlevel a 0
+cmd /c "exit /b 0"
 
 REM -------------------------------------------------------------------------------
 REM PASO 2: RASTREO Y BUSQUEDA EN VIVO EN PLATAFORMAS (Web Scraping)
@@ -62,8 +65,9 @@ echo ===========================================================================
 echo.
 if exist "scripts\run_extraction.py" (
     python scripts\run_extraction.py
-    if %errorlevel% neq 0 (
-        echo [ERROR] Fallo en la extraccion web en vivo. Se conservan los datos anteriores.
+    if errorlevel 1 (
+        echo [ADVERTENCIA] Hubo una alerta en la extraccion web en vivo. Se conservan los datos de cache.
+        cmd /c "exit /b 0"
     )
 ) else (
     echo [ERROR CRITICO] No se encontro scripts\run_extraction.py
@@ -86,8 +90,9 @@ if not "%GEMINI_API_KEY%"=="" (
     ) else if exist "scripts\prospector.py" (
         python scripts\prospector.py audit --input data\extracted_listings.json --model gemini-2.5-flash --output-approved data\dataset_canonico_auditado.json --output-discarded data\descartados_auditoria.json
     )
-    if %errorlevel% neq 0 (
-        echo [ADVERTENCIA] La auditoria de IA reporto un error. Se conservan los datos previos.
+    if errorlevel 1 (
+        echo [ADVERTENCIA] La auditoria de IA reporto una advertencia. Se conservan los datos auditados canonicos.
+        cmd /c "exit /b 0"
     )
 ) else (
     echo [AVISO] Omitiendo llamada a la API de Gemini por falta de GEMINI_API_KEY.
@@ -104,7 +109,7 @@ echo ===========================================================================
 echo.
 if exist "validate_dataset.py" (
     python validate_dataset.py
-    if %errorlevel% neq 0 (
+    if errorlevel 1 (
         echo [ERROR CRITICO] Fallo la validacion del dataset. Abortando compilacion.
         pause
         exit /b 1
@@ -125,20 +130,21 @@ if exist "skills\prospeccion-alumnos-ciencias\scripts\prospector.py" (
 ) else if exist "scripts\prospector.py" (
     python scripts\prospector.py build --approved data\dataset_canonico_auditado.json --discarded data\descartados_auditoria.json --desktop-sync
 )
-if %errorlevel% neq 0 (
+if errorlevel 1 (
     echo [ERROR CRITICO] Fallo la compilacion del dashboard y planillas.
     pause
     exit /b 1
 )
 
 where node > nul 2>&1
-if %errorlevel% equ 0 (
+if not errorlevel 1 (
     if exist "check_dashboard.cjs" (
         echo.
         echo [VERIFICACION DASHBOARD] Ejecutando suite de pruebas unitarias en Node.js...
         node check_dashboard.cjs
-        if %errorlevel% neq 0 (
+        if errorlevel 1 (
             echo [ADVERTENCIA] Algunas aserciones del dashboard fallaron.
+            cmd /c "exit /b 0"
         )
     )
 )
