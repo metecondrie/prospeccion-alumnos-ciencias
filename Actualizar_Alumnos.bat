@@ -28,25 +28,30 @@ if errorlevel 1 (
 )
 
 REM -------------------------------------------------------------------------------
-REM PASO 1: DETECCION Y CONFIGURACION DE LA API KEY DE GOOGLE GEMINI
+REM PASO 1: DETECCION Y CONFIGURACION DE CLAVES DE IA (MULTIPROVEEDOR)
 REM -------------------------------------------------------------------------------
-REM Intenta leer GEMINI_API_KEY desde variable de entorno o archivo .env local
-if "%GEMINI_API_KEY%"=="" (
-    if exist ".env" (
-        for /f "usebackq tokens=1,* delims==" %%a in (".env") do (
-            if /i "%%a"=="GEMINI_API_KEY" set "GEMINI_API_KEY=%%~b"
-        )
+REM Intenta leer claves desde archivo .env local
+if exist ".env" (
+    for /f "usebackq tokens=1,* delims==" %%a in (".env") do (
+        if not "%%a"=="" if not "%%b"=="" set "%%a=%%~b"
     )
 )
 
-if "%GEMINI_API_KEY%"=="" (
+set HAS_AI_KEY=
+if not "%GEMINI_API_KEY%"=="" set HAS_AI_KEY=1
+if not "%CLOUDFLARE_API_TOKEN%"=="" set HAS_AI_KEY=1
+if not "%GROQ_API_KEY%"=="" set HAS_AI_KEY=1
+if not "%MISTRAL_API_KEY%"=="" set HAS_AI_KEY=1
+
+if "%HAS_AI_KEY%"=="" (
     echo -------------------------------------------------------------------------------
-    echo [CONFIGURACION DE IA - GOOGLE GEMINI FLASH]
-    echo No se encontro una variable de entorno GEMINI_API_KEY ni un archivo .env.
-    echo Para que Gemini clasifique los avisos y descarte academias y empleo:
+    echo [CONFIGURACION DE IA - ARQUITECTURA MULTIPROVEEDOR]
+    echo No se encontro ninguna clave de IA configurada en el sistema ni en .env.
+    echo Puedes usar tu clave gratis de Google Gemini (recomendado):
     echo Obtienes tu clave gratis en: https://aistudio.google.com/app/apikey
     echo.
     set /p GEMINI_API_KEY="Ingresa tu GEMINI_API_KEY (o presiona Enter para usar datos auditados): "
+    if not "!GEMINI_API_KEY!"=="" set HAS_AI_KEY=1
     echo -------------------------------------------------------------------------------
     echo.
 )
@@ -76,15 +81,15 @@ if exist "scripts\run_extraction.py" (
 )
 
 REM -------------------------------------------------------------------------------
-REM PASO 3: AUDITORIA SEMANTICA CON IA (Google Gemini Flash)
+REM PASO 3: AUDITORIA SEMANTICA Y FILTRADO MULTIPROVEEDOR CON IA
 REM -------------------------------------------------------------------------------
 echo.
 echo ===============================================================================
-echo [2/3] AUDITORIA SEMANTICA Y FILTRADO CON IA (Google Gemini Flash)
-echo Analizando intencion de los anuncios capturados con Gemini...
+echo [2/3] AUDITORIA SEMANTICA MULTIPROVEEDOR CON IA
+echo Clasificando con Google Gemini (Titular), Cloudflare, Groq o Mistral...
 echo ===============================================================================
 echo.
-if not "%GEMINI_API_KEY%"=="" (
+if not "%HAS_AI_KEY%"=="" (
     if exist "skills\prospeccion-alumnos-ciencias\scripts\prospector.py" (
         python skills\prospeccion-alumnos-ciencias\scripts\prospector.py audit --input data\extracted_listings.json --model gemini-3.5-flash-lite --output-approved data\dataset_canonico_auditado.json --output-discarded data\descartados_auditoria.json
     ) else if exist "scripts\prospector.py" (
@@ -95,7 +100,7 @@ if not "%GEMINI_API_KEY%"=="" (
         cmd /c "exit /b 0"
     )
 ) else (
-    echo [AVISO] Omitiendo llamada a la API de Gemini por falta de GEMINI_API_KEY.
+    echo [AVISO] Omitiendo llamada a la API de IA por falta de claves configuradas.
     echo Se conservan y utilizan los anuncios auditados en data\dataset_canonico_auditado.json.
 )
 

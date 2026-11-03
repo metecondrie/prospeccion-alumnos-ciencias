@@ -83,19 +83,9 @@ def safe_hyperlink(url: str) -> str:
     escaped = url_clean.replace('"', '""')
     return f'=HYPERLINK("{escaped}", "🔗 Abrir Anuncio")'
 
-def call_gemini_batch(items: List[Dict[str, Any]], model: str = "gemini-3.5-flash-lite", api_key: str = None, max_retries: int = 3):
-    """
-    Evalúa un lote de anuncios con modelos oficiales de Google AI Studio.
-    Forzado en modo responseMimeType: 'application/json'.
-    """
-    if not api_key:
-        api_key = os.environ.get("GEMINI_API_KEY")
-    if not api_key:
-        raise ValueError("GEMINI_API_KEY no encontrada en variables de entorno ni en configuración.")
-
-    models_to_try = [model] + [m for m in DEFAULT_MODELS if m != model]
-
-    prompt = f"""Eres un auditor estricto de anuncios clasificados educativos para un profesor particular de ciencias exactas.
+def get_audit_prompt(items: List[Dict[str, Any]]) -> str:
+    """Genera el prompt canónico de auditoría para cualquier proveedor de IA."""
+    return f"""Eres un auditor estricto de anuncios clasificados educativos para un profesor particular de ciencias exactas.
 Tu objetivo es discriminar con rigor si cada anuncio fue escrito por un ESTUDIANTE o PADRE REAL buscando contratar clases particulares (is_student: true), o si por el contrario es un INSTITUTO, ACADEMIA, OFERTA LABORAL o PROFESOR OFRECIENDO CLASES (is_student: false).
 
 CRITERIOS ESTRICTOS DE EXCLUSIÓN (is_student: false):
@@ -121,6 +111,31 @@ Devuelve estrictamente un JSON válido con esta estructura:
   }}
 ]"""
 
+def parse_json_response(raw: str) -> List[Dict[str, Any]]:
+    """Limpia markdown y extrae la lista de resultados JSON de cualquier modelo LLM."""
+    raw_clean = str(raw or "").strip()
+    if raw_clean.startswith("```"):
+        raw_clean = re.sub(r"^```(?:json)?\s*", "", raw_clean)
+        raw_clean = re.sub(r"\s*```$", "", raw_clean)
+    parsed = json.loads(raw_clean)
+    if isinstance(parsed, dict):
+        for k in ("results", "data", "items", "anuncios", "evaluaciones"):
+            if k in parsed and isinstance(parsed[k], list):
+                parsed = parsed[k]
+                break
+    if isinstance(parsed, list):
+        return parsed
+    raise ValueError(f"La respuesta no contiene una lista JSON de anuncios evaluados: {raw_clean[:120]}")
+
+def call_gemini_batch(items: List[Dict[str, Any]], model: str = "gemini-3.5-flash-lite", api_key: str = None, max_retries: int = 3) -> List[Dict[str, Any]]:
+    """Evalúa un lote de anuncios con modelos de Google AI Studio (responseMimeType: application/json)."""
+    if not api_key:
+        api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        raise ValueError("GEMINI_API_KEY no encontrada.")
+
+    models_to_try = [model] + [m for m in DEFAULT_MODELS if m != model]
+    prompt = get_audit_prompt(items)
     payload = json.dumps({
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {"responseMimeType": "application/json"}
@@ -133,44 +148,175 @@ Devuelve estrictamente un JSON válido con esta estructura:
             req = urllib.request.Request(
                 endpoint,
                 data=payload,
-                headers={
-                    "Content-Type": "application/json",
-                    "x-goog-api-key": api_key
-                }
+                headers={"Content-Type": "application/json", "x-goog-api-key": api_key}
             )
             try:
-                with urllib.request.urlopen(req, timeout=30) as resp:
+                with urllib.request.urlopen(req, timeout=15) as resp:
                     resp_data = json.loads(resp.read().decode("utf-8"))
                     raw_text = resp_data["candidates"][0]["content"]["parts"][0]["text"]
-                    results = json.loads(raw_text)
-                    if isinstance(results, list):
-                        return results
+                    return parse_json_response(raw_text)
             except urllib.error.HTTPError as e:
                 err_body = e.read().decode("utf-8", errors="replace")
                 if e.code == 429:
-                    backoff = attempt * 3.0
-                    print(f"[RateLimit 429] Modelo {target_model} saturado. Reintentando en {backoff}s...", file=sys.stderr)
+                    backoff = attempt * 2.5
+                    print(f"    [RateLimit 429] Gemini {target_model} saturado. Reintentando en {backoff}s...", file=sys.stderr)
                     time.sleep(backoff)
                     last_error = RateLimitError(f"HTTP 429: {err_body}")
                 elif e.code == 404:
-                    print(f"[HTTP 404] Modelo {target_model} no disponible en este endpoint. Probando siguiente modelo...", file=sys.stderr)
                     last_error = e
                     break
                 elif e.code in (500, 502, 503, 504):
-                    backoff = attempt * 2.0
-                    print(f"[HTTP {e.code}] Error temporal del servidor. Reintentando en {backoff}s...", file=sys.stderr)
-                    time.sleep(backoff)
+                    time.sleep(attempt * 2.0)
                     last_error = e
                 else:
-                    print(f"[HTTP {e.code}] Error en {target_model}: {err_body}", file=sys.stderr)
                     last_error = e
                     break
             except Exception as e:
-                print(f"[Error de conexión] {str(e)}", file=sys.stderr)
                 last_error = e
-                time.sleep(2.0)
+                time.sleep(1.5)
 
-    raise RuntimeError(f"Fallo en la inferencia con todos los modelos Gemini evaluados. Último error: {last_error}")
+    raise RuntimeError(f"Fallo en Gemini ({last_error})")
+
+def call_cloudflare_batch(items: List[Dict[str, Any]], account_id: str, api_token: str, model: str = "@cf/meta/llama-3.1-8b-instruct-fp8-fast", max_retries: int = 2) -> List[Dict[str, Any]]:
+    """Suplente 1: Evalúa lote con Cloudflare Workers AI (10.000 neuronas/día gratis)."""
+    prompt = get_audit_prompt(items)
+    endpoint = f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1/chat/completions"
+    payload = json.dumps({
+        "model": model,
+        "messages": [
+            {"role": "system", "content": "Eres un auditor estricto de anuncios educativos. Responde estrictamente con un JSON válido."},
+            {"role": "user", "content": prompt}
+        ],
+        "response_format": {"type": "json_object"}
+    }).encode("utf-8")
+    req = urllib.request.Request(
+        endpoint,
+        data=payload,
+        headers={"Authorization": f"Bearer {api_token}", "Content-Type": "application/json"}
+    )
+    for attempt in range(1, max_retries + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                raw_text = data["choices"][0]["message"]["content"]
+                return parse_json_response(raw_text)
+        except Exception as e:
+            if attempt == max_retries:
+                raise e
+            time.sleep(1.5)
+
+def call_groq_batch(items: List[Dict[str, Any]], api_key: str, model: str = "openai/gpt-oss-20b", max_retries: int = 2) -> List[Dict[str, Any]]:
+    """Suplente 2: Evalúa lote con Groq LPU ultra veloz (OpenAI compatible)."""
+    prompt = get_audit_prompt(items)
+    endpoint = "https://api.groq.com/openai/v1/chat/completions"
+    payload = json.dumps({
+        "model": model,
+        "messages": [
+            {"role": "system", "content": "Eres un auditor estricto de anuncios educativos. Responde estrictamente con un JSON válido."},
+            {"role": "user", "content": prompt}
+        ],
+        "response_format": {"type": "json_object"},
+        "temperature": 0.1
+    }).encode("utf-8")
+    req = urllib.request.Request(
+        endpoint,
+        data=payload,
+        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+    )
+    for attempt in range(1, max_retries + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                raw_text = data["choices"][0]["message"]["content"]
+                time.sleep(10.0)  # Pausa preventiva para respetar 8K TPM de Groq
+                return parse_json_response(raw_text)
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and model != "qwen/qwen3.8-27b":
+                return call_groq_batch(items, api_key, model="qwen/qwen3.8-27b", max_retries=1)
+            if attempt == max_retries:
+                raise e
+            time.sleep(attempt * 3.0)
+        except Exception as e:
+            if attempt == max_retries:
+                raise e
+            time.sleep(2.0)
+
+def call_mistral_batch(items: List[Dict[str, Any]], api_key: str, model: str = "ministral-8b-latest", max_retries: int = 2) -> List[Dict[str, Any]]:
+    """Suplente 3: Evalúa lote con Mistral AI (Tekken tokenizer, alta fidelidad en español)."""
+    prompt = get_audit_prompt(items)
+    endpoint = "https://api.mistral.ai/v1/chat/completions"
+    payload = json.dumps({
+        "model": model,
+        "messages": [
+            {"role": "system", "content": "Eres un auditor estricto de anuncios educativos. Responde estrictamente con un JSON válido."},
+            {"role": "user", "content": prompt}
+        ],
+        "response_format": {"type": "json_object"},
+        "temperature": 0.1
+    }).encode("utf-8")
+    req = urllib.request.Request(
+        endpoint,
+        data=payload,
+        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+    )
+    for attempt in range(1, max_retries + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                raw_text = data["choices"][0]["message"]["content"]
+                time.sleep(1.0)
+                return parse_json_response(raw_text)
+        except Exception as e:
+            if attempt == max_retries:
+                raise e
+            time.sleep(2.0)
+
+def call_multiprovider_batch(items: List[Dict[str, Any]], primary_model: str = "gemini-3.5-flash-lite", api_key: str = None) -> List[Dict[str, Any]]:
+    """
+    Despachador multiproveedor con failover automático en cascada:
+    1. Google Gemini (gemini-3.5-flash-lite -> gemini-3.1-flash-lite -> gemini-3.8-flash)
+    2. Cloudflare Workers AI (@cf/meta/llama-3.1-8b-instruct-fp8-fast)
+    3. Groq LPU (openai/gpt-oss-20b -> qwen/qwen3.8-27b)
+    4. Mistral AI (ministral-8b-latest)
+    """
+    providers = []
+    
+    # 1. Google Gemini (Titular)
+    g_key = api_key or os.environ.get("GEMINI_API_KEY")
+    if g_key:
+        providers.append(("Google Gemini", lambda it: call_gemini_batch(it, model=primary_model, api_key=g_key)))
+        
+    # 2. Cloudflare Workers AI (Suplente 1)
+    cf_account = os.environ.get("CLOUDFLARE_ACCOUNT_ID")
+    cf_token = os.environ.get("CLOUDFLARE_API_TOKEN")
+    if cf_account and cf_token:
+        providers.append(("Cloudflare Workers AI", lambda it: call_cloudflare_batch(it, cf_account, cf_token)))
+        
+    # 3. Groq (Suplente 2)
+    groq_key = os.environ.get("GROQ_API_KEY")
+    if groq_key:
+        providers.append(("Groq LPU", lambda it: call_groq_batch(it, groq_key)))
+        
+    # 4. Mistral AI (Suplente 3)
+    mistral_key = os.environ.get("MISTRAL_API_KEY")
+    if mistral_key:
+        providers.append(("Mistral AI", lambda it: call_mistral_batch(it, mistral_key)))
+        
+    if not providers:
+        raise ValueError("No se encontraron claves de IA configuradas (GEMINI_API_KEY, CLOUDFLARE_API_TOKEN, GROQ_API_KEY o MISTRAL_API_KEY).")
+        
+    errors = []
+    for provider_name, provider_fn in providers:
+        try:
+            results = provider_fn(items)
+            if results and isinstance(results, list):
+                print(f"    [IA OK] Lote resuelto por: {provider_name}")
+                return results
+        except Exception as e:
+            print(f"    [Failover] {provider_name} falló ({e}). Conmutando al siguiente proveedor...", file=sys.stderr)
+            errors.append((provider_name, str(e)))
+            
+    raise RuntimeError(f"Todos los proveedores de IA configurados fallaron para este lote: {errors}")
 
 def normalize_item(item: Dict[str, Any], idx: int = 1) -> Dict[str, Any]:
     """Normaliza un lead asegurando campos compatibles con el CRM y la visualización."""
@@ -305,7 +451,7 @@ def cmd_audit(args):
 
         print(f"  Procesando lote {i // batch_size + 1} de {(len(raw_items) + batch_size - 1) // batch_size}...")
         try:
-            results = call_gemini_batch(items_payload, model=args.model, api_key=args.api_key)
+            results = call_multiprovider_batch(items_payload, primary_model=args.model, api_key=args.api_key)
             result_map = {r["id"]: r for r in results if isinstance(r, dict) and "id" in r}
             for item in batch:
                 res = result_map.get(item["id"], {
