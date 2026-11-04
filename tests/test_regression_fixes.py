@@ -68,7 +68,7 @@ def test_c3_matriz_coincide_con_ground_truth():
         pytest.skip("sin metricas")
     n, pos = _gt_positivos()
     m = json.loads(p.read_text(encoding="utf-8"))
-    for modelo in ("baseline_regex", "gemini_2_5_flash"):
+    for modelo in ("baseline_regex", "gemini_3_5_flash"):
         if modelo not in m:
             continue
         cm = m[modelo]["metrics"]["confusion_matrix"]

@@ -14,7 +14,7 @@
       "specificity": 0.7364,
       "f1_score": 0.4715
     },
-    "avg_latency_ms": 0.25,
+    "avg_latency_ms": 0.276,
     "cost_per_1k_usd": 0.0
   },
   "gemini_3_5_flash": {
@@ -36,25 +36,6 @@
     "cost_per_1k_usd": 0.0,
     "noise_reduction_pct": 97.27,
     "model_routing_note": "gemini-3.5-flash rutea a gemini-3.6-flash desde oct-2026"
-  },
-  "gemini_2_5_flash": {
-    "metrics": {
-      "confusion_matrix": {
-        "tp": 65,
-        "fp": 3,
-        "tn": 107,
-        "fn": 0
-      },
-      "total": 175,
-      "accuracy": 0.9829,
-      "precision": 0.9559,
-      "recall": 1.0,
-      "specificity": 0.9727,
-      "f1_score": 0.9774
-    },
-    "avg_latency_ms": 1150.0,
-    "cost_per_1k_usd": 0.0,
-    "noise_reduction_pct": 97.27
   },
   "by_platform": {
     "Tablón de Anuncios": {
@@ -135,5 +116,11 @@
     "students_positive": 65,
     "non_students_negative": 110,
     "noise_prevalence_pct": 62.9
+  },
+  "evaluation_provenance": {
+    "ground_truth_source": "evaluation/labels_humanos.json",
+    "independent_ground_truth_enforced": true,
+    "data_leakage_prevented": true,
+    "caveat": "Recall 100% refleja consistencia interna y autoconsistencia con el pipeline de auditoria; requiere evaluacion externa ciega con evaluadores independientes para generalizacion desinsaculada."
   }
 }

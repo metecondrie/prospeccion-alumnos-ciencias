@@ -43,14 +43,14 @@ jobs:
         with:
           node-version: "20"
 
-      - name: "[1/4] Validar dataset canónico"
+      - name: "[1/4] Integración: Validar dataset canónico"
         run: python validate_dataset.py
 
-      - name: "[2/4] Tests del filtro heurístico"
-        run: python -m unittest discover -s tests -p "test_common_filter.py" -v
-
-      - name: "[3/4] Tests del dashboard (Node)"
+      - name: "[2/4] Integración: Tests del dashboard CRM (Node.js)"
         run: node tests/check_dashboard.cjs
 
-      - name: "[4/4] Suite completa de tests (98 pruebas)"
+      - name: "[3/4] Suite Unittest completa"
         run: python -m unittest discover -s tests -p "test_*.py" -v
+
+      - name: "[4/4] Suite Pytest completa (Regresión, Embudo, Persistencia y Seguridad)"
+        run: pytest -v

@@ -1,3 +1,5 @@
 #!/bin/sh
-# Bloquea el push si algun test falla (incluye tests/test_correcciones.py).
-python -m pytest -q || { echo "PUSH BLOQUEADO: tests en rojo"; exit 1; }
+# Bloquea el push si falla cualquier suite: pytest, unittest o integracion.
+python validate_dataset.py || { echo "PUSH BLOQUEADO: validacion de dataset fallida"; exit 1; }
+python -m unittest discover -s tests -p "test_*.py" -q || { echo "PUSH BLOQUEADO: suite unittest en rojo"; exit 1; }
+python -m pytest -q || { echo "PUSH BLOQUEADO: suite pytest en rojo"; exit 1; }

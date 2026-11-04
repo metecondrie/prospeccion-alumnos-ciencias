@@ -40,7 +40,7 @@ if SCRIPT_DIR not in sys.path:
 from prospector import load_env_file, call_multiprovider_batch, normalize_item
 from common_filter import normalize_subject, normalize_level, sanitize_text
 from extract_telegram import send_telegram_notification
-from storage import atomic_write_json, safe_read_json, FileLock, compute_stable_id
+from storage import atomic_write_json, safe_read_json, atomic_modify_json, FileLock, compute_stable_id
 
 try:
     from telethon.errors import FloodWaitError
@@ -119,11 +119,15 @@ def save_approved_lead(lead: Dict[str, Any]) -> bool:
     saved_any = False
     for target_path in targets:
         os.makedirs(os.path.dirname(target_path), exist_ok=True)
-        existing = safe_read_json(target_path, default=[])
-        seen_ids = {it.get("id") for it in existing if isinstance(it, dict)}
-        if lead.get("id") not in seen_ids:
-            existing.append(lead)
-            atomic_write_json(target_path, existing)
+        def _append_if_new(existing):
+            if not isinstance(existing, list):
+                existing = []
+            seen_ids = {it.get("id") for it in existing if isinstance(it, dict)}
+            if lead.get("id") not in seen_ids:
+                existing.append(lead)
+            return existing
+        res = atomic_modify_json(target_path, _append_if_new, default=[])
+        if any(isinstance(it, dict) and it.get("id") == lead.get("id") for it in res):
             saved_any = True
 
     if saved_any:
@@ -144,15 +148,17 @@ def is_persona_deduped_24h(persona_id: str, current_time: Optional[float] = None
 
 
 def record_persona_seen(persona_id: str, current_time: Optional[float] = None) -> None:
-    """Registra la marca de tiempo de contacto para persona_id."""
+    """Registra la marca de tiempo de contacto para persona_id con operación atómica Read-Modify-Write."""
     if not persona_id:
         return
     now_ts = current_time if current_time is not None else time.time()
     os.makedirs(os.path.dirname(os.path.abspath(DEDUPE_FILE)), exist_ok=True)
-    dedupe_map = safe_read_json(DEDUPE_FILE, default={})
-    dedupe_map[str(persona_id)] = now_ts
-    pruned = {k: v for k, v in dedupe_map.items() if (now_ts - float(v)) < 172800}
-    atomic_write_json(DEDUPE_FILE, pruned)
+    def _update_dedupe(dedupe_map):
+        if not isinstance(dedupe_map, dict):
+            dedupe_map = {}
+        dedupe_map[str(persona_id)] = now_ts
+        return {k: v for k, v in dedupe_map.items() if (now_ts - float(v)) < 172800}
+    atomic_modify_json(DEDUPE_FILE, _update_dedupe, default={})
 
 
 def compute_heuristic_score(text: str) -> float:
@@ -189,18 +195,22 @@ def enqueue_for_daily_digest(
     score: float,
     edad_msg_min: float
 ) -> None:
-    """Encola leads calificados que no alcanzaron el umbral de push para el digest de las 20:00 ART."""
+    """Encola leads calificados que no alcanzaron el umbral de push para el digest de las 20:00 ART con RMW atómico."""
     os.makedirs(os.path.dirname(os.path.abspath(DIGEST_QUEUE_FILE)), exist_ok=True)
-    queue: List[Dict[str, Any]] = safe_read_json(DIGEST_QUEUE_FILE, default=[])
-    queue.append({
+    entry = {
         "lead": lead,
         "chat_title": chat_title,
         "sender_user": sender_user,
         "score": score,
         "edad_msg_min": edad_msg_min,
         "enqueued_at": datetime.now(timezone.utc).isoformat()
-    })
-    atomic_write_json(DIGEST_QUEUE_FILE, queue)
+    }
+    def _enqueue(queue):
+        if not isinstance(queue, list):
+            queue = []
+        queue.append(entry)
+        return queue
+    atomic_modify_json(DIGEST_QUEUE_FILE, _enqueue, default=[])
     log_event(f"   📋 [DIGEST 20:00 ART] Lead encolado para resumen diario (Score: {score:.2f} < {UMBRAL_PUSH}).")
 
 
@@ -235,7 +245,7 @@ def send_daily_digest(force: bool = False) -> int:
 
     success = send_telegram_notification(bot_token, chat_id, msg)
     if success or force:
-        atomic_write_json(DIGEST_QUEUE_FILE, [])
+        atomic_modify_json(DIGEST_QUEUE_FILE, lambda q: [], default=[])
         log_event(f"📰 [DIGEST ENVIADO] {len(queue)} oportunidades entregadas a Telegram.")
         return len(queue)
     return 0

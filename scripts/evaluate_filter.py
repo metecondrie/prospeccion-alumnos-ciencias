@@ -85,7 +85,7 @@ def generate_markdown_report(gemini_m: Dict[str, Any], regex_m: Dict[str, Any], 
 
 **Fecha**: 4 de noviembre de 2026  
 **Universo Auditado**: {total} anuncios crudos capturados en portales de clasificados (ES, AR, CL, CO, MX, PE)  
-**Ground Truth Verificado**: {pos} solicitudes legítimas de estudiantes / {neg} ofertas inadmisibles (academias, empleo docente, profesores ofreciendo clases)  
+**Distribución del Dataset Auditado (Autoconsistencia)**: {pos} solicitudes legítimas de estudiantes / {neg} ofertas inadmisibles (academias, empleo docente, profesores ofreciendo clases)  
 **Tasa de Ruido Inicial en Portales**: **{(neg / total) * 100:.1f}%**
 
 ---
@@ -104,7 +104,7 @@ def generate_markdown_report(gemini_m: Dict[str, Any], regex_m: Dict[str, Any], 
 
 ## 2. Matrices de Confusión
 
-### A. Modelo de Producción: Google Gemini 2.5 Flash
+### A. Modelo de Producción: Google Gemini 3.5 / 3.6 Flash
 ```text
                          Predicción: ALUMNO       Predicción: DESCARTE
 Real: ALUMNO ({pos})             41 (TP)                   0 (FN)
@@ -127,7 +127,7 @@ Real: DESCARTE ({neg})           88 (FP)                  22 (TN)
 ## 3. Impacto Operativo y Reducción de Ruido
 
 * **Ruido en la Fuente Cruda:** De los 175 avisos rastreados, el **76.6% ({neg} avisos)** no eran alumnos contratantes.
-* **Ruido en el Inbox Filtrado:** Con Gemini 2.5 Flash, el ruido residual en el CRM desciende a **1.1%**.
+* **Ruido en el Inbox Filtrado:** Con Gemini 3.5 / 3.6 Flash, el ruido residual en el CRM desciende a **1.1%**.
 * **Ahorro de Tiempo Docente:** 
   - Tiempo de revisión manual estimado para 175 avisos: ~150 minutos.
   - Tiempo de gestión en el CRM curado de 41 prospectos: ~15 minutos.
@@ -140,7 +140,7 @@ def main():
     print("=== EVALUACIÓN CUANTITATIVA DEL PIPELINE (DATA SCIENCE REPORT) ===")
     gemini_m, regex_m, total, pos, neg = evaluate_models()
     print(f"Total analizado: {total} anuncios | Positivos reales: {pos} | Negativos reales: {neg}")
-    print("\n[PRODUCCIÓN - GEMINI 2.5 FLASH]")
+    print("\n[PRODUCCIÓN - GEMINI 3.5 / 3.6 FLASH]")
     print(f"  Precisión:     {gemini_m['precision']*100:.1f}%")
     print(f"  Recall:        {gemini_m['recall']*100:.1f}%")
     print(f"  Especificidad: {gemini_m['specificity']*100:.1f}%")

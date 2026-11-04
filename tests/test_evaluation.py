@@ -31,7 +31,7 @@ class TestEvaluationBenchmark(unittest.TestCase):
     def test_run_evaluation_generates_valid_json_and_markdown(self):
         performance = run_evaluation()
         self.assertIn("baseline_regex", performance)
-        self.assertIn("gemini_2_5_flash", performance)
+        self.assertIn("gemini_3_5_flash", performance)
         self.assertIn("by_platform", performance)
 
         json_path = PROJECT_ROOT / "evaluation" / "metricas_clasificador.json"
@@ -41,7 +41,7 @@ class TestEvaluationBenchmark(unittest.TestCase):
         self.assertTrue(md_path.exists())
 
         # Gemini debe tener recall de 100% y F1 superior al 95%
-        gemini_f1 = performance["gemini_2_5_flash"]["metrics"]["f1_score"]
+        gemini_f1 = performance["gemini_3_5_flash"]["metrics"]["f1_score"]
         regex_f1 = performance["baseline_regex"]["metrics"]["f1_score"]
         self.assertGreater(gemini_f1, regex_f1)
         self.assertGreater(gemini_f1, 0.95)

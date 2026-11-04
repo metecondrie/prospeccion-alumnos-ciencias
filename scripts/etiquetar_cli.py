@@ -23,7 +23,7 @@ if SCRIPT_DIR not in sys.path:
     sys.path.insert(0, SCRIPT_DIR)
 
 from prospector import normalize_item
-from storage import atomic_write_json, safe_read_json
+from storage import atomic_write_json, safe_read_json, atomic_modify_json
 
 
 def load_and_sample_listings(
@@ -115,30 +115,23 @@ def run_labeling_session(
                     print("\n\nSesión interrumpida por el usuario. Guardando estado...")
                     user_input = "q"
 
-            if user_input == "1":
+            if user_input in ("1", "0"):
+                label_val = int(user_input)
                 new_entry = {
                     "id": item["id"],
-                    "label": 1,
+                    "label": label_val,
                     "annotator": annotator,
                     "ts": datetime.now(timezone.utc).isoformat()
                 }
-                existing_labels.append(new_entry)
-                atomic_write_json(output_path, existing_labels)
+                def _append_label(labels):
+                    if not isinstance(labels, list):
+                        labels = []
+                    labels.append(new_entry)
+                    return labels
+                existing_labels = atomic_modify_json(output_path, _append_label, default=[])
                 new_count += 1
-                print(f"  -> [OK] Guardado como ALUMNO (1). Total sesión: {new_count}")
-                break
-
-            elif user_input == "0":
-                new_entry = {
-                    "id": item["id"],
-                    "label": 0,
-                    "annotator": annotator,
-                    "ts": datetime.now(timezone.utc).isoformat()
-                }
-                existing_labels.append(new_entry)
-                atomic_write_json(output_path, existing_labels)
-                new_count += 1
-                print(f"  -> [OK] Guardado como DESCARTADO (0). Total sesión: {new_count}")
+                tipo_str = "ALUMNO (1)" if label_val == 1 else "DESCARTADO (0)"
+                print(f"  -> [OK] Guardado como {tipo_str}. Total sesión: {new_count}")
                 break
 
             elif user_input == "s":

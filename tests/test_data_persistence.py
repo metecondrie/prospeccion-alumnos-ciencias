@@ -21,6 +21,8 @@ from storage import (
     FileLock,
     atomic_write_json,
     safe_read_json,
+    atomic_modify_json,
+    locked_path,
     atomic_write_text,
     merge_crm_tracking,
     compute_stable_id
@@ -121,6 +123,28 @@ class TestStorageIntegrity(unittest.TestCase):
         self.assertEqual(item_101.get("notas_seguimiento"), "Prefiere clases por Zoom los sábados a las 10hs")
         self.assertEqual(item_101.get("fecha_contacto"), "2026-11-02")
         self.assertEqual(item_101.get("materia"), "Matemática")
+
+    def test_atomic_modify_json_concurrent_rmw(self):
+        target_file = self.dir_path / "concurrent_counter.json"
+        atomic_write_json(str(target_file), {"counter": 0})
+
+        def increment_worker():
+            for _ in range(10):
+                def _inc(data):
+                    val = data.get("counter", 0)
+                    time.sleep(0.002)
+                    data["counter"] = val + 1
+                    return data
+                atomic_modify_json(str(target_file), _inc, default={"counter": 0})
+
+        threads = [threading.Thread(target=increment_worker) for _ in range(4)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
+
+        final = safe_read_json(str(target_file))
+        self.assertEqual(final.get("counter"), 40)
 
     def test_compute_stable_id_deterministic(self):
         id1 = compute_stable_id("TusClases", "Juan P.", "2026-11-01", "Busco profesor de análisis matemático")

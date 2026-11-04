@@ -24,6 +24,8 @@ try:
     from storage import (
         atomic_write_json,
         safe_read_json,
+        atomic_modify_json,
+        locked_path,
         atomic_write_text,
         merge_crm_tracking,
         compute_stable_id as storage_stable_id
@@ -32,6 +34,8 @@ except ImportError:
     from scripts.storage import (
         atomic_write_json,
         safe_read_json,
+        atomic_modify_json,
+        locked_path,
         atomic_write_text,
         merge_crm_tracking,
         compute_stable_id as storage_stable_id
@@ -258,31 +262,37 @@ def save_classifier_predictions(
     output_path: str = "data/predicciones_clasificador.json",
     model_name: str = "gemini-3.5-flash"
 ) -> int:
-    """Persiste las predicciones de la IA en data/predicciones_clasificador.json de forma acumulativa y atómica."""
+    """Persiste las predicciones de la IA en data/predicciones_clasificador.json de forma acumulativa y atómica con RMW protegido."""
     os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
-    existing: List[Dict[str, Any]] = safe_read_json(output_path, default=[])
-    preds_by_id = {p.get("id"): p for p in existing if isinstance(p, dict) and "id" in p}
-
     now_iso = datetime.now(timezone.utc).isoformat()
-    for it in items:
-        lid = it.get("id")
-        if not lid:
-            continue
-        dec = it.get("decision_ia", "")
-        just = it.get("justificacion_ia", "")
-        is_stud = it.get("is_student", dec == "Aprobado")
 
-        preds_by_id[lid] = {
-            "id": lid,
-            "decision_ia": dec,
-            "justificacion_ia": just,
-            "is_student": is_stud,
-            "modelo": model_name,
-            "timestamp": now_iso
-        }
+    def _update_preds(existing):
+        if not isinstance(existing, list):
+            existing = []
+        preds_by_id = {p.get("id"): p for p in existing if isinstance(p, dict) and "id" in p}
+        for it in items:
+            lid = it.get("id")
+            if not lid:
+                continue
+            dec = it.get("decision_ia", "")
+            just = it.get("justificacion_ia", "")
+            is_stud = it.get("is_student", dec == "Aprobado")
+            actual_mod = it.get("actual_model") or it.get("modelo") or model_name
+            actual_prov = it.get("actual_provider") or it.get("provider") or "Google Gemini"
 
-    atomic_write_json(output_path, list(preds_by_id.values()))
-    return len(preds_by_id)
+            preds_by_id[lid] = {
+                "id": lid,
+                "decision_ia": dec,
+                "justificacion_ia": just,
+                "is_student": is_stud,
+                "modelo": actual_mod,
+                "provider": actual_prov,
+                "timestamp": now_iso
+            }
+        return list(preds_by_id.values())
+
+    result = atomic_modify_json(output_path, _update_preds, default=[])
+    return len(result)
 
 
 def check_and_record_source_health(
@@ -301,76 +311,77 @@ def check_and_record_source_health(
     fecha = today_str or datetime.now().strftime("%Y-%m-%d")
     os.makedirs(os.path.dirname(os.path.abspath(output_csv)), exist_ok=True)
 
-    # Leer historial previo
-    history_by_fuente: Dict[str, List[int]] = {}
-    existing_rows = []
-    if os.path.exists(output_csv):
-        try:
-            with open(output_csv, "r", encoding="utf-8-sig") as f:
-                reader = csv.DictReader(f)
-                for r in reader:
-                    existing_rows.append(r)
-                    f_name = r.get("fuente", "").strip()
+    with locked_path(output_csv):
+        # Leer historial previo bajo bloqueo exclusivo
+        history_by_fuente: Dict[str, List[int]] = {}
+        existing_rows = []
+        if os.path.exists(output_csv):
+            try:
+                with open(output_csv, "r", encoding="utf-8-sig") as f:
+                    reader = csv.DictReader(f)
+                    for r in reader:
+                        existing_rows.append(r)
+                        f_name = r.get("fuente", "").strip()
+                        try:
+                            n_val = int(r.get("n", 0))
+                            history_by_fuente.setdefault(f_name, []).append(n_val)
+                        except ValueError:
+                            pass
+            except Exception:
+                pass
+
+        # Conteo actual por fuente
+        current_counts = Counter()
+        for it in listings:
+            plat = it.get("plataforma") or "Desconocida"
+            current_counts[plat] += 1
+
+        all_fuentes = sorted(set(list(history_by_fuente.keys()) + list(current_counts.keys())))
+        if not all_fuentes:
+            all_fuentes = ["TusClases", "Tablón de Anuncios", "Cronoshare", "Reddit", "Telegram"]
+
+        alerts = []
+        new_records = []
+
+        bot_token = os.environ.get("TELEGRAM_BOT_TOKEN")
+        chat_id = os.environ.get("TELEGRAM_CHAT_ID")
+
+        for fuente in all_fuentes:
+            n = current_counts.get(fuente, 0)
+            past_n = history_by_fuente.get(fuente, [])
+            recent_7 = past_n[-7:] if past_n else []
+            mediana_ult7 = float(statistics.median(recent_7)) if recent_7 else float(n)
+
+            # Regla estricta: n == 0 OR n < 0.3 * mediana_ult7
+            is_broken = (n == 0) or (mediana_ult7 > 0 and n < 0.3 * mediana_ult7)
+
+            if is_broken:
+                alert_msg = f"FUENTE_ROTA {fuente} (n={n}, mediana_ult7={mediana_ult7:.1f})"
+                alerts.append({
+                    "fuente": fuente,
+                    "n": n,
+                    "mediana_ult7": mediana_ult7,
+                    "mensaje": alert_msg
+                })
+                print(f"🚨 [ALERTA FUENTE] {alert_msg}", file=sys.stderr)
+                if bot_token and chat_id:
                     try:
-                        n_val = int(r.get("n", 0))
-                        history_by_fuente.setdefault(f_name, []).append(n_val)
-                    except ValueError:
+                        from extract_telegram import send_telegram_notification
+                        send_telegram_notification(bot_token, chat_id, f"🚨 <b>FUENTE_ROTA</b> {fuente}\nExtracción: {n} anuncios (Mediana 7d: {mediana_ult7:.1f})")
+                    except Exception:
                         pass
-        except Exception:
-            pass
 
-    # Conteo actual por fuente
-    current_counts = Counter()
-    for it in listings:
-        plat = it.get("plataforma") or "Desconocida"
-        current_counts[plat] += 1
+            new_records.append({"fecha": fecha, "fuente": fuente, "n": n})
 
-    all_fuentes = sorted(set(list(history_by_fuente.keys()) + list(current_counts.keys())))
-    if not all_fuentes:
-        all_fuentes = ["TusClases", "Tablón de Anuncios", "Cronoshare", "Reddit", "Telegram"]
-
-    alerts = []
-    new_records = []
-
-    bot_token = os.environ.get("TELEGRAM_BOT_TOKEN")
-    chat_id = os.environ.get("TELEGRAM_CHAT_ID")
-
-    for fuente in all_fuentes:
-        n = current_counts.get(fuente, 0)
-        past_n = history_by_fuente.get(fuente, [])
-        recent_7 = past_n[-7:] if past_n else []
-        mediana_ult7 = float(statistics.median(recent_7)) if recent_7 else float(n)
-
-        # Regla estricta: n == 0 OR n < 0.3 * mediana_ult7
-        is_broken = (n == 0) or (mediana_ult7 > 0 and n < 0.3 * mediana_ult7)
-
-        if is_broken:
-            alert_msg = f"FUENTE_ROTA {fuente} (n={n}, mediana_ult7={mediana_ult7:.1f})"
-            alerts.append({
-                "fuente": fuente,
-                "n": n,
-                "mediana_ult7": mediana_ult7,
-                "mensaje": alert_msg
-            })
-            print(f"🚨 [ALERTA FUENTE] {alert_msg}", file=sys.stderr)
-            if bot_token and chat_id:
-                try:
-                    from extract_telegram import send_telegram_notification
-                    send_telegram_notification(bot_token, chat_id, f"🚨 <b>FUENTE_ROTA</b> {fuente}\nExtracción: {n} anuncios (Mediana 7d: {mediana_ult7:.1f})")
-                except Exception:
-                    pass
-
-        new_records.append({"fecha": fecha, "fuente": fuente, "n": n})
-
-    seen_keys = {(r.get("fecha"), r.get("fuente")) for r in existing_rows}
-    file_exists = os.path.exists(output_csv) and os.path.getsize(output_csv) > 0
-    with open(output_csv, "a", encoding="utf-8-sig", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=["fecha", "fuente", "n"], lineterminator="\r\n")
-        if not file_exists:
-            writer.writeheader()
-        for rec in new_records:
-            if (rec["fecha"], rec["fuente"]) not in seen_keys:
-                writer.writerow(rec)
+        seen_keys = {(r.get("fecha"), r.get("fuente")) for r in existing_rows}
+        file_exists = os.path.exists(output_csv) and os.path.getsize(output_csv) > 0
+        with open(output_csv, "a", encoding="utf-8-sig", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=["fecha", "fuente", "n"], lineterminator="\r\n")
+            if not file_exists:
+                writer.writeheader()
+            for rec in new_records:
+                if (rec["fecha"], rec["fuente"]) not in seen_keys:
+                    writer.writerow(rec)
 
     return alerts
 
@@ -482,6 +493,10 @@ def cmd_audit(args):
                 })
                 item["decision_ia"] = res.get("decision_ia", "Aprobado" if res.get("is_student") else "Descartado")
                 item["justificacion_ia"] = res.get("justificacion_ia", "")
+                item["actual_provider"] = res.get("actual_provider") or res.get("provider") or "Google Gemini"
+                item["actual_model"] = res.get("actual_model") or res.get("modelo") or args.model
+                item["provider"] = item["actual_provider"]
+                item["modelo"] = item["actual_model"]
                 if res.get("is_student") is True:
                     approved.append(item)
                     new_approved_count += 1
@@ -635,15 +650,18 @@ def cmd_build(args):
                     print(f"[Aviso] Sincronización secundaria omitida: {e}")
 
 def cmd_run(args):
-    """Ejecuta el pipeline completo de prospección y compilación."""
+    """Ejecuta el pipeline completo de prospección y compilación con extracción fresca por defecto."""
     print("=== EJECUCIÓN DEL PIPELINE COMPLETO PROSPECTOR ===")
     raw_path = "data/extracted_listings.json"
     
-    # Si no existe o se pide refresh, invocar extractor web
-    if not os.path.exists(raw_path):
-        print("-> data/extracted_listings.json no encontrado. Iniciando extracción web...")
+    # Fresh extraction es el comportamiento por defecto; solo usa caché si se indica explícitamente
+    use_cached = getattr(args, "cached", False) or getattr(args, "skip_extraction", False)
+    if not use_cached or not os.path.exists(raw_path):
+        print("-> Extracción fresca predeterminada: ejecutando scripts/run_extraction.py...")
         import subprocess
         subprocess.run([sys.executable, "scripts/run_extraction.py"], check=True)
+    else:
+        print("-> Modo caché activado (--cached): reutilizando data/extracted_listings.json existente.")
 
     args.input = raw_path
     args.output_approved = "data/dataset_canonico_auditado.json"
@@ -685,10 +703,12 @@ def main():
     p_build.set_defaults(func=cmd_build)
 
     # Subcomando run
-    p_run = subparsers.add_parser("run", help="Ejecuta todo el flujo de auditoría y compilación")
+    p_run = subparsers.add_parser("run", help="Ejecuta todo el flujo de auditoría y compilación (extracción fresca por defecto)")
     p_run.add_argument("--model", default="gemini-3.5-flash")
     p_run.add_argument("--batch-size", type=int, default=10)
     p_run.add_argument("--api-key", default=None)
+    p_run.add_argument("--cached", action="store_true", help="Reutiliza listings en caché sin ejecutar extracción web fresca")
+    p_run.add_argument("--skip-extraction", action="store_true", help="Alias de --cached")
     p_run.add_argument("--desktop-sync", action="store_true")
     p_run.set_defaults(func=cmd_run)
 

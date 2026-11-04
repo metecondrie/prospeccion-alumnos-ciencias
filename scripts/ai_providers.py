@@ -18,13 +18,19 @@ import time
 import unicodedata
 import urllib.request
 import urllib.error
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional, Callable
 
 class RateLimitError(Exception):
     """Excepción cuando se recibe HTTP 429 de la API de Google."""
     pass
 
 DEFAULT_MODELS = ["gemini-3.5-flash", "gemini-3.6-flash"]
+OBSOLETE_MODELS = {
+    "gemini-2.5-flash",
+    "gemini-2.5",
+    "gemini-1.5-flash",
+    "gemini-1.0-pro"
+}
 
 def strip_accents(text: str) -> str:
     """Elimina diacríticos y acentos para comparaciones robustas."""
@@ -80,6 +86,7 @@ def parse_json_response(raw: str) -> List[Dict[str, Any]]:
 
 def call_gemini_batch(items: List[Dict[str, Any]], model: str = "gemini-3.5-flash", api_key: str = None, max_retries: int = 3) -> List[Dict[str, Any]]:
     """Evalúa un lote de anuncios con modelos de Google AI Studio (responseMimeType: application/json)."""
+    PROVIDER_REGISTRY.validate_model(model)
     if not api_key:
         api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
@@ -105,7 +112,14 @@ def call_gemini_batch(items: List[Dict[str, Any]], model: str = "gemini-3.5-flas
                 with urllib.request.urlopen(req, timeout=15) as resp:
                     resp_data = json.loads(resp.read().decode("utf-8"))
                     raw_text = resp_data["candidates"][0]["content"]["parts"][0]["text"]
-                    return parse_json_response(raw_text)
+                    results = parse_json_response(raw_text)
+                    for r in results:
+                        if isinstance(r, dict):
+                            r["actual_provider"] = "Google Gemini"
+                            r["actual_model"] = target_model
+                            r["provider"] = "Google Gemini"
+                            r["modelo"] = target_model
+                    return results
             except urllib.error.HTTPError as e:
                 err_body = e.read().decode("utf-8", errors="replace")
                 if e.code == 429:
@@ -130,6 +144,7 @@ def call_gemini_batch(items: List[Dict[str, Any]], model: str = "gemini-3.5-flas
 
 def call_cloudflare_batch(items: List[Dict[str, Any]], account_id: str, api_token: str, model: str = "@cf/meta/llama-3.1-8b-instruct-fp8-fast", max_retries: int = 2) -> List[Dict[str, Any]]:
     """Suplente 1: Evalúa lote con Cloudflare Workers AI (10.000 neuronas/día gratis)."""
+    PROVIDER_REGISTRY.validate_model(model)
     prompt = get_audit_prompt(items)
     endpoint = f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1/chat/completions"
     payload = json.dumps({
@@ -150,7 +165,14 @@ def call_cloudflare_batch(items: List[Dict[str, Any]], account_id: str, api_toke
             with urllib.request.urlopen(req, timeout=20) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
                 raw_text = data["choices"][0]["message"]["content"]
-                return parse_json_response(raw_text)
+                results = parse_json_response(raw_text)
+                for r in results:
+                    if isinstance(r, dict):
+                        r["actual_provider"] = "Cloudflare Workers AI"
+                        r["actual_model"] = model
+                        r["provider"] = "Cloudflare Workers AI"
+                        r["modelo"] = model
+                return results
         except Exception as e:
             if attempt == max_retries:
                 raise e
@@ -158,6 +180,7 @@ def call_cloudflare_batch(items: List[Dict[str, Any]], account_id: str, api_toke
 
 def call_groq_batch(items: List[Dict[str, Any]], api_key: str, model: str = "llama-3.1-8b-instant", max_retries: int = 2) -> List[Dict[str, Any]]:
     """Suplente 2: Evalúa lote con Groq (inferencia ultra-rápida, compatible con OpenAI)."""
+    PROVIDER_REGISTRY.validate_model(model)
     prompt = get_audit_prompt(items)
     endpoint = "https://api.groq.com/openai/v1/chat/completions"
     payload = json.dumps({
@@ -180,7 +203,14 @@ def call_groq_batch(items: List[Dict[str, Any]], api_key: str, model: str = "lla
                 data = json.loads(resp.read().decode("utf-8"))
                 raw_text = data["choices"][0]["message"]["content"]
                 time.sleep(10.0)  # Pausa preventiva para respetar 8K TPM de Groq
-                return parse_json_response(raw_text)
+                results = parse_json_response(raw_text)
+                for r in results:
+                    if isinstance(r, dict):
+                        r["actual_provider"] = "Groq"
+                        r["actual_model"] = model
+                        r["provider"] = "Groq"
+                        r["modelo"] = model
+                return results
         except urllib.error.HTTPError as e:
             if e.code == 429 and model != "llama-3.3-70b-versatile":
                 return call_groq_batch(items, api_key, model="llama-3.3-70b-versatile", max_retries=1)
@@ -194,6 +224,7 @@ def call_groq_batch(items: List[Dict[str, Any]], api_key: str, model: str = "lla
 
 def call_mistral_batch(items: List[Dict[str, Any]], api_key: str, model: str = "mistral-small-latest", max_retries: int = 2) -> List[Dict[str, Any]]:
     """Suplente 3: Evalúa lote con Mistral AI (alta fidelidad léxica en español)."""
+    PROVIDER_REGISTRY.validate_model(model)
     prompt = get_audit_prompt(items)
     endpoint = "https://api.mistral.ai/v1/chat/completions"
     payload = json.dumps({
@@ -216,7 +247,14 @@ def call_mistral_batch(items: List[Dict[str, Any]], api_key: str, model: str = "
                 data = json.loads(resp.read().decode("utf-8"))
                 raw_text = data["choices"][0]["message"]["content"]
                 time.sleep(1.0)
-                return parse_json_response(raw_text)
+                results = parse_json_response(raw_text)
+                for r in results:
+                    if isinstance(r, dict):
+                        r["actual_provider"] = "Mistral AI"
+                        r["actual_model"] = model
+                        r["provider"] = "Mistral AI"
+                        r["modelo"] = model
+                return results
         except Exception as e:
             if attempt == max_retries:
                 raise e
@@ -256,72 +294,153 @@ def rule_based_audit(item: Dict[str, Any]) -> Dict[str, Any]:
             "id": item_id,
             "is_student": False,
             "decision_ia": "Descartado",
-            "justificacion_ia": "Descartado por regla heurística: detectado patrón de docente, oferta de empleo o academia comercial."
+            "justificacion_ia": "Descartado por regla heurística: detectado patrón de docente, oferta de empleo o academia comercial.",
+            "actual_provider": "Heuristic",
+            "actual_model": "deterministic-rules",
+            "provider": "Heuristic",
+            "modelo": "deterministic-rules"
         }
     elif is_student:
         return {
             "id": item_id,
             "is_student": True,
             "decision_ia": "Aprobado",
-            "justificacion_ia": "Aprobado por regla heurística: detectada demanda genuina de estudiante o padre buscando profesor particular."
+            "justificacion_ia": "Aprobado por regla heurística: detectada demanda genuina de estudiante o padre buscando profesor particular.",
+            "actual_provider": "Heuristic",
+            "actual_model": "deterministic-rules",
+            "provider": "Heuristic",
+            "modelo": "deterministic-rules"
         }
     else:
         return {
             "id": item_id,
             "is_student": False,
             "decision_ia": "Descartado",
-            "justificacion_ia": "Descartado por regla heurística: el mensaje no contiene demanda explícita de contratación de clases de ciencias exactas."
+            "justificacion_ia": "Descartado por regla heurística: el mensaje no contiene demanda explícita de contratación de clases de ciencias exactas.",
+            "actual_provider": "Heuristic",
+            "actual_model": "deterministic-rules",
+            "provider": "Heuristic",
+            "modelo": "deterministic-rules"
         }
+
+
+class ProviderConfig:
+    """Configuración descriptiva de un proveedor en el registro unificado."""
+    def __init__(
+        self,
+        name: str,
+        default_model: str,
+        supported_models: List[str],
+        priority: int
+    ):
+        self.name = name
+        self.default_model = default_model
+        self.supported_models = supported_models
+        self.priority = priority
+
+
+class ProviderRegistry:
+    """
+    Registro canónico unificado de proveedores de Inteligencia Artificial.
+    Administra la validación de modelos, la conmutación en caso de fallo (failover)
+    y el registro riguroso del proveedor y modelo efectivo utilizado en cada inferencia.
+    """
+    def __init__(self):
+        self._providers: Dict[str, ProviderConfig] = {}
+        self._register_defaults()
+
+    def _register_defaults(self):
+        self.register(ProviderConfig("Google Gemini", "gemini-3.5-flash", ["gemini-3.5-flash", "gemini-3.6-flash"], priority=1))
+        self.register(ProviderConfig("Cloudflare Workers AI", "@cf/meta/llama-3.1-8b-instruct-fp8-fast", ["@cf/meta/llama-3.1-8b-instruct-fp8-fast", "@cf/meta/llama-3.1-8b-instruct"], priority=2))
+        self.register(ProviderConfig("Groq", "llama-3.1-8b-instant", ["llama-3.1-8b-instant", "llama-3.3-70b-versatile"], priority=3))
+        self.register(ProviderConfig("Mistral AI", "mistral-small-latest", ["mistral-small-latest", "open-mistral-7b"], priority=4))
+        self.register(ProviderConfig("Heuristic", "deterministic-rules", ["deterministic-rules", "heuristic"], priority=5))
+
+    def register(self, config: ProviderConfig) -> None:
+        self._providers[config.name] = config
+
+    def get(self, name: str) -> Optional[ProviderConfig]:
+        return self._providers.get(name)
+
+    def list_providers(self) -> List[ProviderConfig]:
+        return sorted(self._providers.values(), key=lambda p: p.priority)
+
+    def validate_model(self, model: str) -> str:
+        """Valida que el modelo no pertenezca a versiones deprecadas u obsoletas."""
+        if not model:
+            return "gemini-3.5-flash"
+        m_clean = model.strip().lower()
+        if m_clean in OBSOLETE_MODELS:
+            raise ValueError(
+                f"El modelo '{model}' ha sido revocado y declarado OBSOLETO. "
+                f"Utilice 'gemini-3.5-flash' o 'gemini-3.6-flash'."
+            )
+        return model
+
+    def dispatch(
+        self,
+        items: List[Dict[str, Any]],
+        primary_model: str = "gemini-3.5-flash",
+        api_key: Optional[str] = None
+    ) -> List[Dict[str, Any]]:
+        """
+        Ejecuta la auditoría en lote contra la cadena de proveedores activos.
+        Estampa actual_provider y actual_model en cada registro evaluado y emite log unificado.
+        """
+        valid_model = self.validate_model(primary_model)
+        if valid_model == "heuristic":
+            return [rule_based_audit(it) for it in items]
+
+        # Cadena activa de proveedores configurados
+        active_chain = []
+        g_key = api_key or os.environ.get("GEMINI_API_KEY")
+        if g_key:
+            active_chain.append(("Google Gemini", lambda it: call_gemini_batch(it, model=valid_model, api_key=g_key), valid_model))
+
+        cf_acc = os.environ.get("CLOUDFLARE_ACCOUNT_ID")
+        cf_tok = os.environ.get("CLOUDFLARE_API_TOKEN")
+        if cf_acc and cf_tok:
+            active_chain.append(("Cloudflare Workers AI", lambda it: call_cloudflare_batch(it, cf_acc, cf_tok), "@cf/meta/llama-3.1-8b-instruct-fp8-fast"))
+
+        groq_k = os.environ.get("GROQ_API_KEY")
+        if groq_k:
+            active_chain.append(("Groq", lambda it: call_groq_batch(it, groq_k), "llama-3.1-8b-instant"))
+
+        mis_k = os.environ.get("MISTRAL_API_KEY")
+        if mis_k:
+            active_chain.append(("Mistral AI", lambda it: call_mistral_batch(it, mis_k), "mistral-small-latest"))
+
+        if not active_chain:
+            print("    [Aviso] No se detectaron claves de API de IA. Activando motor de auditoría heurística determinista...")
+            return [rule_based_audit(it) for it in items]
+
+        errors = []
+        for prov_name, prov_fn, model_used in active_chain:
+            try:
+                results = prov_fn(items)
+                if results and isinstance(results, list):
+                    print(f"    [IA OK] Lote resuelto por proveedor='{prov_name}' con modelo='{model_used}'")
+                    for r in results:
+                        if isinstance(r, dict):
+                            r["actual_provider"] = prov_name
+                            r["actual_model"] = model_used
+                            r["provider"] = prov_name
+                            r["modelo"] = model_used
+                    return results
+            except Exception as e:
+                print(f"    [Failover] {prov_name} falló ({e}). Conmutando al siguiente proveedor...", file=sys.stderr)
+                errors.append((prov_name, str(e)))
+
+        print("    [Fallback] Todos los proveedores externos fallaron. Activando motor de auditoría heurística determinista...")
+        return [rule_based_audit(it) for it in items]
+
+
+# Instancia única canónica del registro de proveedores
+PROVIDER_REGISTRY = ProviderRegistry()
+
 
 def call_multiprovider_batch(items: List[Dict[str, Any]], primary_model: str = "gemini-3.5-flash", api_key: str = None) -> List[Dict[str, Any]]:
     """
-    Despachador multiproveedor con failover automático en cascada:
-    1. Google Gemini (gemini-3.5-flash -> gemini-3.6-flash, 3.5 rutea a 3.6 desde oct-2026)
-    2. Cloudflare Workers AI (@cf/meta/llama-3.1-8b-instruct-fp8-fast)
-    3. Groq (llama-3.1-8b-instant -> llama-3.3-70b-versatile)
-    4. Mistral AI (mistral-small-latest)
-    5. Heuristic Fallback (Reglas deterministas locales de PLN)
+    Despachador multiproveedor con failover automático en cascada gobernado por PROVIDER_REGISTRY.
     """
-    if primary_model == "heuristic":
-        return [rule_based_audit(it) for it in items]
-
-    providers = []
-    
-    # 1. Google Gemini (Titular)
-    g_key = api_key or os.environ.get("GEMINI_API_KEY")
-    if g_key:
-        providers.append(("Google Gemini", lambda it: call_gemini_batch(it, model=primary_model, api_key=g_key)))
-        
-    # 2. Cloudflare Workers AI (Suplente 1)
-    cf_account = os.environ.get("CLOUDFLARE_ACCOUNT_ID")
-    cf_token = os.environ.get("CLOUDFLARE_API_TOKEN")
-    if cf_account and cf_token:
-        providers.append(("Cloudflare Workers AI", lambda it: call_cloudflare_batch(it, cf_account, cf_token)))
-        
-    # 3. Groq (Suplente 2)
-    groq_key = os.environ.get("GROQ_API_KEY")
-    if groq_key:
-        providers.append(("Groq", lambda it: call_groq_batch(it, groq_key)))
-        
-    # 4. Mistral AI (Suplente 3)
-    mistral_key = os.environ.get("MISTRAL_API_KEY")
-    if mistral_key:
-        providers.append(("Mistral AI", lambda it: call_mistral_batch(it, mistral_key)))
-        
-    if not providers:
-        print("    [Aviso] No se detectaron claves de API de IA. Activando motor de auditoría heurística determinista...")
-        return [rule_based_audit(it) for it in items]
-
-    errors = []
-    for provider_name, provider_fn in providers:
-        try:
-            results = provider_fn(items)
-            if results and isinstance(results, list):
-                print(f"    [IA OK] Lote resuelto por: {provider_name}")
-                return results
-        except Exception as e:
-            print(f"    [Failover] {provider_name} falló ({e}). Conmutando al siguiente proveedor...", file=sys.stderr)
-            errors.append((provider_name, str(e)))
-
-    print("    [Fallback] Todos los proveedores externos fallaron. Activando motor de auditoría heurística determinista...")
-    return [rule_based_audit(it) for it in items]
+    return PROVIDER_REGISTRY.dispatch(items, primary_model=primary_model, api_key=api_key)

@@ -13,7 +13,8 @@ import time
 import shutil
 import hashlib
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from contextlib import contextmanager
+from typing import Any, Callable, Dict, List, Optional
 
 # Directorio raíz del proyecto
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -134,6 +135,54 @@ def atomic_write_json(file_path: str, data: Any, indent: int = 2) -> None:
 
         # Reemplazo atómico
         os.replace(str(tmp_file), str(path))
+
+
+@contextmanager
+def locked_path(file_path: str, timeout: float = 10.0):
+    """Context manager que retiene FileLock sobre un archivo durante una operación compuesta."""
+    path = Path(file_path).resolve()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lock_file = path.with_suffix(path.suffix + ".lock")
+    with FileLock(str(lock_file), timeout=timeout):
+        yield path
+
+
+def atomic_modify_json(
+    file_path: str,
+    modifier_fn: Callable[[Any], Any],
+    default: Any = None,
+    indent: int = 2,
+    timeout: float = 10.0
+) -> Any:
+    """
+    Ejecuta un ciclo atómico completo Read-Modify-Write bajo un mismo FileLock exclusivo.
+    Garantiza que ningún otro proceso pueda intercalar lecturas o escrituras intermedias,
+    previniendo condiciones de carrera y pérdida de datos.
+    """
+    path = Path(file_path).resolve()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lock_file = path.with_suffix(path.suffix + ".lock")
+
+    with FileLock(str(lock_file), timeout=timeout):
+        current_data = safe_read_json(str(path), default=default)
+        updated_data = modifier_fn(current_data)
+
+        tmp_file = path.with_suffix(f".tmp_{os.getpid()}_{time.time_ns()}")
+        bak_file = path.with_suffix(path.suffix + ".bak")
+
+        with open(tmp_file, "w", encoding="utf-8") as f:
+            json.dump(updated_data, f, ensure_ascii=False, indent=indent)
+            f.flush()
+            os.fsync(f.fileno())
+
+        if path.exists() and path.stat().st_size > 0:
+            try:
+                shutil.copy2(str(path), str(bak_file))
+            except Exception:
+                pass
+
+        os.replace(str(tmp_file), str(path))
+        return updated_data
 
 
 def safe_read_json(file_path: str, default: Any = None) -> Any:
