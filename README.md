@@ -19,7 +19,7 @@ Combina extracción web periódica en portales públicos clasificados, escucha e
 
 * **Extracción Multicanal:** Scraping concurrente de demandas públicas de alumnos en TusClases (España, Argentina, México, Colombia, Chile, Perú), Tablón de Anuncios, Cronoshare y foros de Reddit (175 anuncios crudos procesados).
 * **Escucha Pasiva en Telegram (`scripts/telegram_centinela.py`):** Monitorización de eventos en vivo en grupos universitarios públicos (UTN, FIUBA, UNLP, CBC) para detectar estudiantes solicitando apoyo académico, con alertas push opcionales al móvil.
-* **Filtrado Semántico con IA:** Clasificación de intención para descartar ofertas de empleo docente, academias comerciales y anuncios no relacionados, utilizando Google Gemini 2.5 Flash Lite (con respaldo en Groq LPU) y validación estructurada en JSON.
+* **Filtrado Semántico con IA:** Clasificación de intención para descartar ofertas de empleo docente, academias comerciales y anuncios no relacionados, utilizando Google Gemini 2.5 Flash (con respaldo en Groq LPU) y validación estructurada en JSON.
 * **Panel CRM Local Autónomo (`dashboard.html`):** Interfaz web local que opera 100% en el navegador (sin servidor backend), con persistencia en `localStorage`, notas por alumno, registro de contacto y filtrado dinámico.
 * **Cobertura de Pruebas Automatizadas:** 64 pruebas exhaustivas con `pytest` y `unittest` que verifican integridad de esquemas CSV (RFC 4180), coherencia taxonómica y validación determinista del dataset.
 

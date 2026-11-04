@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Prospector CLI - Sistema Autónomo de Captación y Auditoría de Alumnos de Ciencias Exactas
-Modelos IA: gemini-2.5-flash / gemini-3-flash-preview / gemini-2.5-pro
+Modelos IA: Google Gemini 2.5 Flash / Groq LPU
 Destinatario: Docente de Ciencias Exactas
 """
 
@@ -55,7 +55,7 @@ class RateLimitError(Exception):
     """Excepción cuando se recibe HTTP 429 de la API de Google."""
     pass
 
-DEFAULT_MODELS = ["gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-3.8-flash", "gemma-4-31b-it"]
+DEFAULT_MODELS = ["gemini-2.5-flash", "gemini-2.5-pro"]
 
 def strip_accents(text: str) -> str:
     """Elimina diacríticos y acentos para comparaciones robustas."""
@@ -154,7 +154,7 @@ def parse_json_response(raw: str) -> List[Dict[str, Any]]:
         return parsed
     raise ValueError(f"La respuesta no contiene una lista JSON de anuncios evaluados: {raw_clean[:120]}")
 
-def call_gemini_batch(items: List[Dict[str, Any]], model: str = "gemini-3.5-flash-lite", api_key: str = None, max_retries: int = 3) -> List[Dict[str, Any]]:
+def call_gemini_batch(items: List[Dict[str, Any]], model: str = "gemini-2.5-flash", api_key: str = None, max_retries: int = 3) -> List[Dict[str, Any]]:
     """Evalúa un lote de anuncios con modelos de Google AI Studio (responseMimeType: application/json)."""
     if not api_key:
         api_key = os.environ.get("GEMINI_API_KEY")
@@ -298,7 +298,7 @@ def call_mistral_batch(items: List[Dict[str, Any]], api_key: str, model: str = "
                 raise e
             time.sleep(2.0)
 
-def call_multiprovider_batch(items: List[Dict[str, Any]], primary_model: str = "gemini-3.5-flash-lite", api_key: str = None) -> List[Dict[str, Any]]:
+def call_multiprovider_batch(items: List[Dict[str, Any]], primary_model: str = "gemini-2.5-flash", api_key: str = None) -> List[Dict[str, Any]]:
     """
     Despachador multiproveedor con failover automático en cascada:
     1. Google Gemini (gemini-3.5-flash-lite -> gemini-3.1-flash-lite -> gemini-3.8-flash)
@@ -718,7 +718,7 @@ def main():
     # Subcomando audit
     p_audit = subparsers.add_parser("audit", help="Audita anuncios con Gemini Flash")
     p_audit.add_argument("--input", default="data/extracted_listings.json")
-    p_audit.add_argument("--model", default="gemini-3.5-flash-lite")
+    p_audit.add_argument("--model", default="gemini-2.5-flash")
     p_audit.add_argument("--batch-size", type=int, default=10)
     p_audit.add_argument("--api-key", default=None)
     p_audit.add_argument("--output-approved", default="data/dataset_canonico_auditado.json")
@@ -736,7 +736,7 @@ def main():
 
     # Subcomando run
     p_run = subparsers.add_parser("run", help="Ejecuta todo el flujo de auditoría y compilación")
-    p_run.add_argument("--model", default="gemini-3.5-flash-lite")
+    p_run.add_argument("--model", default="gemini-2.5-flash")
     p_run.add_argument("--batch-size", type=int, default=10)
     p_run.add_argument("--api-key", default=None)
     p_run.add_argument("--desktop-sync", action="store_true")
