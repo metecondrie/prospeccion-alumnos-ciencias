@@ -133,28 +133,50 @@ class Mapas:
         self.nombre_cache[name] = PSEUDONYMS_POOL[h % len(PSEUDONYMS_POOL)]
         return self.nombre_cache[name]
 
-    def transformar_url(self, url: str) -> str:
-        """Desidentifica URLs externas individuales para que no revelen perfiles vivos."""
+    def transformar_url(self, url: str, record_id: str = "", plataforma: str = "", materia: str = "") -> str:
+        """Desidentifica URLs externas individuales para que no revelen perfiles vivos con formato sintético canónico."""
         if not url or not isinstance(url, str):
+            return url
+        if url.startswith("https://anuncio-ejemplo-anonimizado.local/"):
             return url
         if url in self.url_cache:
             return self.url_cache[url]
 
-        h = hashlib.md5(url.encode("utf-8")).hexdigest()[:8]
         u_low = url.lower()
+        p_low = (plataforma or "").lower()
 
-        if "tusclases" in u_low or "clasesparticulares.cl" in u_low:
-            new_u = f"https://demo.prospeccion-alumnos.internal/tusclases/demanda-{h}"
-        elif "tablon" in u_low:
-            new_u = f"https://demo.prospeccion-alumnos.internal/tablon/demanda-{h}"
-        elif "cronoshare" in u_low:
-            new_u = f"https://demo.prospeccion-alumnos.internal/cronoshare/demanda-{h}"
-        elif "reddit" in u_low:
-            new_u = f"https://demo.prospeccion-alumnos.internal/reddit/demanda-{h}"
-        elif "t.me" in u_low:
-            new_u = f"https://demo.prospeccion-alumnos.internal/telegram/demanda-{h}"
+        if "cronoshare" in p_low or "cronoshare" in u_low:
+            m = re.search(r"/(?:empleo/)?(clases-particulares-[a-z0-9_-]+)", u_low)
+            if m:
+                crono_slug = m.group(1)
+            else:
+                m_low = (materia or "").lower()
+                if "matem" in m_low or "algebra" in m_low or "calculo" in m_low:
+                    crono_slug = "clases-particulares-matematicas"
+                elif "fisi" in m_low:
+                    crono_slug = "clases-particulares-fisica"
+                elif "quim" in m_low:
+                    crono_slug = "clases-particulares-quimica"
+                elif "biol" in m_low:
+                    crono_slug = "clases-particulares-biologia"
+                else:
+                    crono_slug = "clases-particulares-ciencias"
+            new_u = f"https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/{crono_slug}"
         else:
-            new_u = f"https://demo.prospeccion-alumnos.internal/anuncio/demanda-{h}"
+            if "tablon" in p_low or "tablon" in u_low:
+                plat_slug = "tablon"
+            elif "reddit" in p_low or "reddit" in u_low:
+                plat_slug = "reddit"
+            elif "telegram" in p_low or "t.me" in u_low:
+                plat_slug = "telegram"
+            elif "tusclases" in p_low or "clasesparticulares" in p_low or "tusclases" in u_low or "clasesparticulares" in u_low:
+                plat_slug = "tus-clases"
+            else:
+                plat_slug = "portal-clases"
+
+            seed = str(record_id or url).strip()
+            h = hashlib.sha256(seed.encode("utf-8")).hexdigest()[:10]
+            new_u = f"https://anuncio-ejemplo-anonimizado.local/{plat_slug}/{h}"
 
         self.url_cache[url] = new_u
         return new_u
@@ -225,13 +247,16 @@ def procesar_json(ruta: str, mapas: Mapas):
     if isinstance(data, list):
         for item in data:
             if isinstance(item, dict):
+                rid = item.get("id", "")
+                plat = item.get("plataforma", "")
+                mat = item.get("materia", "")
                 if "nombre" in item:
                     item["nombre"] = mapas.transformar_nombre(item["nombre"])
                 if "persona_id" in item:
                     item["persona_id"] = mapas.transformar_valor("persona_id", item["persona_id"])
                 for k, v in item.items():
                     if k in ["enlace al anuncio", "enlace_anuncio", "enlace"]:
-                        item[k] = mapas.transformar_url(v)
+                        item[k] = mapas.transformar_url(v, record_id=rid, plataforma=plat, materia=mat)
                     elif k not in ["nombre", "persona_id"] and isinstance(v, str):
                         item[k] = mapas.transformar_texto(v)
 

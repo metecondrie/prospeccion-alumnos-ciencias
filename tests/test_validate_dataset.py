@@ -17,7 +17,7 @@ from validate_dataset import (
 SAMPLE_VALID_RECORD = {
     "id": "lead_demo_001",
     "plataforma": "TusClases Argentina",
-    "enlace al anuncio": "https://www.tusclases.com.ar/anuncio/demo-01",
+    "enlace al anuncio": "https://anuncio-ejemplo-anonimizado.local/tus-clases/demo-01",
     "materia": "Física",
     "nivel educativo": "Universitario",
     "país/ubicación": "Argentina",
@@ -41,13 +41,13 @@ class TestValidateDataset(unittest.TestCase):
         base_records = [copy.deepcopy(SAMPLE_VALID_RECORD) for _ in range(5)]
         for i, r in enumerate(base_records):
             r["id"] = f"lead_base_{i}"
-            r["enlace al anuncio"] = f"https://www.tusclases.com.ar/anuncio/base-{i}"
+            r["enlace al anuncio"] = f"https://anuncio-ejemplo-anonimizado.local/tus-clases/base-{i}"
 
         # Agregar 10 nuevos alumnos válidos
         for i in range(10):
             new_student = copy.deepcopy(SAMPLE_VALID_RECORD)
             new_student["id"] = f"lead_incremental_{i}"
-            new_student["enlace al anuncio"] = f"https://www.tablondeanuncios.com/anuncio/inc-{i}"
+            new_student["enlace al anuncio"] = f"https://anuncio-ejemplo-anonimizado.local/tablon/inc-{i}"
             new_student["materia"] = "Matemáticas" if i % 2 == 0 else "Química"
             base_records.append(new_student)
 
@@ -64,7 +64,7 @@ class TestValidateDataset(unittest.TestCase):
     def test_duplicate_id_raises_assertion(self):
         rec1 = copy.deepcopy(SAMPLE_VALID_RECORD)
         rec2 = copy.deepcopy(SAMPLE_VALID_RECORD)
-        rec2["enlace al anuncio"] = "https://www.tusclases.com.ar/anuncio/demo-02"
+        rec2["enlace al anuncio"] = "https://anuncio-ejemplo-anonimizado.local/tus-clases/demo-02"
         # Mismo ID 'lead_demo_001'
         with self.assertRaises(AssertionError) as ctx:
             validate_dataset_schema([rec1, rec2])

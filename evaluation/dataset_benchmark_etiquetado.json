@@ -4,7 +4,7 @@
     "plataforma": "Tablón de Anuncios",
     "materia": "Matemáticas",
     "mensaje": "Cálculo de rendimiento de fábricas de ladrillo Publicado 02/11/2026 en el Tablón de Anuncios de Benidorm Precio a convenir Necesito clases de refuerzo en calculo de rendimiento de fábricas de ladrillo. Actualmente estoy cursando segundo de FP superior de proyectos de edificacion Contactar Enviar Renovar anuncio Recibir por email anuncios como éste",
-    "enlace": "https://www.tablondeanuncios.com/clases-particulares-calculo/calculo_de_rendimiento_de_fabricas_de_ladrillo-5363777.htm",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tablon/8f57521dfa",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -13,7 +13,7 @@
     "plataforma": "Tablón de Anuncios",
     "materia": "Matemáticas",
     "mensaje": "Necesito clases particulares mate para eso Publicado 30/10/2026 en el Tablón de Anuncios de Lakuntza Precio a convenir Necesito recibir clases de apoyo de mate en 2 de la ESO Contactar Enviar Mapa Renovar anuncio Recibir por email anuncios como éste",
-    "enlace": "https://www.tablondeanuncios.com/clases-particulares-cursos/necesito_clases_particulares_mate_para_eso-5258472.htm",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tablon/16a13d284d",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -22,7 +22,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas, Física, Química",
     "mensaje": "Matemáticas Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/202bf18f9d",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -31,7 +31,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas, Física, Química",
     "mensaje": "Inglés Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/ingles.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/da10ffdcb7",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -40,7 +40,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas, Física, Química",
     "mensaje": "Francés Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/frances.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/8773adf453",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -49,7 +49,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas, Física, Química",
     "mensaje": "Repaso General Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/repaso-general.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/97ce613878",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -58,7 +58,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas, Física, Química",
     "mensaje": "Física Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/fisica.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/0ee65df7c6",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -67,7 +67,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas, Física, Química",
     "mensaje": "Lengua Castellana y Literatura Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/lengua-castellana-y-literatura.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/257d120ca9",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -76,7 +76,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas, Física, Química",
     "mensaje": "Química Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/quimica.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/7e9760391c",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -85,7 +85,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas, Física, Química",
     "mensaje": "Alemán Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/aleman.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/a9c705cede",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -94,7 +94,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas, Física, Química",
     "mensaje": "Piano Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Piano Ofertas de trabajo para profesores",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/piano.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/2cb3aabf2c",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -103,7 +103,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas",
     "mensaje": "A Coruña A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizkaia Burgos Cáceres Cádiz Cantabria Córdoba Gipuzkoa Granada Guadalajara Huelva Las Palmas León Madrid Málaga Murcia Navarra Pontevedra Sevilla Tarragona Tenerife Toledo Valencia Valladolid Zaragoza",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas/a-coruna.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/64da2b5200",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -112,7 +112,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas",
     "mensaje": "Albacete A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizkaia Burgos Cáceres Cádiz Cantabria Córdoba Gipuzkoa Granada Guadalajara Huelva Las Palmas León Madrid Málaga Murcia Navarra Pontevedra Sevilla Tarragona Tenerife Toledo Valencia Valladolid Zaragoza",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas/albacete.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/60f2f888e6",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -121,7 +121,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas",
     "mensaje": "Alicante A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizkaia Burgos Cáceres Cádiz Cantabria Córdoba Gipuzkoa Granada Guadalajara Huelva Las Palmas León Madrid Málaga Murcia Navarra Pontevedra Sevilla Tarragona Tenerife Toledo Valencia Valladolid Zaragoza",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas/alicante.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/608ae00dcd",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -130,7 +130,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas",
     "mensaje": "Almería A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizkaia Burgos Cáceres Cádiz Cantabria Córdoba Gipuzkoa Granada Guadalajara Huelva Las Palmas León Madrid Málaga Murcia Navarra Pontevedra Sevilla Tarragona Tenerife Toledo Valencia Valladolid Zaragoza",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas/almeria.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/054d91d8ae",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -139,7 +139,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas",
     "mensaje": "Asturias A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizkaia Burgos Cáceres Cádiz Cantabria Córdoba Gipuzkoa Granada Guadalajara Huelva Las Palmas León Madrid Málaga Murcia Navarra Pontevedra Sevilla Tarragona Tenerife Toledo Valencia Valladolid Zaragoza",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas/asturias.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/4d75e495af",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -148,7 +148,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas",
     "mensaje": "Badajoz A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizkaia Burgos Cáceres Cádiz Cantabria Córdoba Gipuzkoa Granada Guadalajara Huelva Las Palmas León Madrid Málaga Murcia Navarra Pontevedra Sevilla Tarragona Tenerife Toledo Valencia Valladolid Zaragoza",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas/badajoz.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/99140b535a",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -157,7 +157,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas",
     "mensaje": "Balears A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizkaia Burgos Cáceres Cádiz Cantabria Córdoba Gipuzkoa Granada Guadalajara Huelva Las Palmas León Madrid Málaga Murcia Navarra Pontevedra Sevilla Tarragona Tenerife Toledo Valencia Valladolid Zaragoza",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas/balears.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/f0d9a06d7e",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -166,7 +166,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas",
     "mensaje": "Barcelona A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizkaia Burgos Cáceres Cádiz Cantabria Córdoba Gipuzkoa Granada Guadalajara Huelva Las Palmas León Madrid Málaga Murcia Navarra Pontevedra Sevilla Tarragona Tenerife Toledo Valencia Valladolid Zaragoza",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas/barcelona.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/5200cee0cc",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -175,7 +175,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas",
     "mensaje": "Bizkaia A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizkaia Burgos Cáceres Cádiz Cantabria Córdoba Gipuzkoa Granada Guadalajara Huelva Las Palmas León Madrid Málaga Murcia Navarra Pontevedra Sevilla Tarragona Tenerife Toledo Valencia Valladolid Zaragoza",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas/vizcaya.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/609f3786e7",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -184,7 +184,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas",
     "mensaje": "Burgos A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizkaia Burgos Cáceres Cádiz Cantabria Córdoba Gipuzkoa Granada Guadalajara Huelva Las Palmas León Madrid Málaga Murcia Navarra Pontevedra Sevilla Tarragona Tenerife Toledo Valencia Valladolid Zaragoza",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas/burgos.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/49dce63394",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -193,7 +193,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas",
     "mensaje": "Cáceres A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizkaia Burgos Cáceres Cádiz Cantabria Córdoba Gipuzkoa Granada Guadalajara Huelva Las Palmas León Madrid Málaga Murcia Navarra Pontevedra Sevilla Tarragona Tenerife Toledo Valencia Valladolid Zaragoza",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas/caceres.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/4ca36803cd",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -202,7 +202,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas",
     "mensaje": "Cádiz A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizkaia Burgos Cáceres Cádiz Cantabria Córdoba Gipuzkoa Granada Guadalajara Huelva Las Palmas León Madrid Málaga Murcia Navarra Pontevedra Sevilla Tarragona Tenerife Toledo Valencia Valladolid Zaragoza",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas/cadiz.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/23abd42225",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -211,7 +211,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas",
     "mensaje": "Cantabria A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizkaia Burgos Cáceres Cádiz Cantabria Córdoba Gipuzkoa Granada Guadalajara Huelva Las Palmas León Madrid Málaga Murcia Navarra Pontevedra Sevilla Tarragona Tenerife Toledo Valencia Valladolid Zaragoza",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas/cantabria.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/a75d24f4a4",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -220,7 +220,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas",
     "mensaje": "Córdoba A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizkaia Burgos Cáceres Cádiz Cantabria Córdoba Gipuzkoa Granada Guadalajara Huelva Las Palmas León Madrid Málaga Murcia Navarra Pontevedra Sevilla Tarragona Tenerife Toledo Valencia Valladolid Zaragoza",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas/cordoba.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/9f66337888",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -229,7 +229,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas",
     "mensaje": "Gipuzkoa A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizkaia Burgos Cáceres Cádiz Cantabria Córdoba Gipuzkoa Granada Guadalajara Huelva Las Palmas León Madrid Málaga Murcia Navarra Pontevedra Sevilla Tarragona Tenerife Toledo Valencia Valladolid Zaragoza",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas/guipuzcoa.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/906112713c",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -238,7 +238,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas",
     "mensaje": "Granada A Coruña Albacete Alicante Almería Asturias Badajoz Balears Barcelona Bizkaia Burgos Cáceres Cádiz Cantabria Córdoba Gipuzkoa Granada Guadalajara Huelva Las Palmas León Madrid Málaga Murcia Navarra Pontevedra Sevilla Tarragona Tenerife Toledo Valencia Valladolid Zaragoza",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/matematicas/granada.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/c659990227",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -247,7 +247,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Matemáticas",
     "mensaje": "Busco docente de matemáticas universitarias para clases particulares online Bruno S. Busco docente de matemáticas universitarias para clases particulares online",
-    "enlace": "https://www.tusclases.com.ar/estudiante-matematica/buenos-aires-ciudad-capital-federal/busco-docente-matematicas-universitarias-clases-particulares-online-2466634.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/3cc389c86b",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -256,7 +256,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Matemáticas",
     "mensaje": "Licenciatura higiene y seguridad laboral Lilen Licenciatura higiene y seguridad laboral",
-    "enlace": "https://www.tusclases.com.ar/estudiante-matematica/san-antonio-oeste/licenciatura-higiene-seguridad-laboral-2465115.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/403a2193a8",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -265,7 +265,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Matemáticas",
     "mensaje": "Estoy buscando profesora de matemática presencial para el tercer año del secundario Emilio R. Estoy buscando profesora de matemática presencial para el tercer año del secundario",
-    "enlace": "https://www.tusclases.com.ar/estudiante-matematica/la-plata/estoy-buscando-profesora-matematica-presencial-tercer-ano-secundario-2459605.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/c0b5f5f45c",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -274,7 +274,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Matemáticas, Física",
     "mensaje": "Clases online de matemática y física Sofía A. Clases online de matemática y física",
-    "enlace": "https://www.tusclases.com.ar/estudiantes/online/matematica/clases-online-matematica-fisica-online-2456445",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/ba6ebff51b",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -283,7 +283,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Matemáticas",
     "mensaje": "Busco tutor/a online para examen cambridge a-level (pure mathematics 1) Tomás K. Cairo Busco tutor/a online para examen cambridge a-level (pure mathematics 1)",
-    "enlace": "https://www.tusclases.com.ar/estudiante-matematica/san-justo/busco-tutor-online-examen-cambridge-level-pure-mathematics-2446991.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/c451500119",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -292,7 +292,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Matemáticas",
     "mensaje": "We are seeking a qualified specialist to create mathematical examination questions for the oxford institute Stephen koly We are seeking a qualified specialist to create mathematical examination questions for the oxford institute",
-    "enlace": "https://www.tusclases.com.ar/estudiantes/online/matematica/are-seeking-qualified-specialist-create-mathematical-examination-questions-for-the-oxford-institute-2438106",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/5e11090b7a",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -301,7 +301,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Matemáticas",
     "mensaje": "Busco profe que me enseñe función lineal soy inteligente y aprendo rápido porra voy a 3 año de secundaria Bautista Busco profe que me enseñe función lineal soy inteligente y aprendo rápido porra voy a 3 año de secundaria",
-    "enlace": "https://www.tusclases.com.ar/estudiante-matematica/cordoba-ciudad/busco-profe-ensene-funcion-lineal-inteligente-aprendo-rapido-porra-voy-ano-secundaria-2422026.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/c9ef87c022",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -310,7 +310,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Matemáticas",
     "mensaje": "Profe para matematica 2 nivel universitario Lucas B. Profe para matematica 2 nivel universitario",
-    "enlace": "https://www.tusclases.com.ar/estudiante-matematica/buenos-aires-ciudad-capital-federal/profe-matematica-nivel-universitario-2420540.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/4dfc390407",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -319,7 +319,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Matemáticas",
     "mensaje": "Estoy buscando un profesor de geometria discriptiva Tipi Tap Estoy buscando un profesor de geometria discriptiva",
-    "enlace": "https://www.tusclases.com.ar/estudiante-matematica/buenos-aires-ciudad-capital-federal/estoy-buscando-profesor-geometria-discriptiva-2419744.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/a18091fae8",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -328,7 +328,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Física",
     "mensaje": "Solicitud de estudiante buscando profesor de Física: Inglés Inglés Física",
-    "enlace": "https://www.tusclases.com.ar/alumnos/ingles.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/3642168751",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -337,7 +337,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Física",
     "mensaje": "Solicitud de estudiante buscando profesor de Física: Física Inglés Física",
-    "enlace": "https://www.tusclases.com.ar/alumnos/fisica.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/6ba9274e6e",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -346,7 +346,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Física",
     "mensaje": "Busco profesor para preparar final de máquinas hidráulicas – uade Belén M. Busco profesor para preparar final de máquinas hidráulicas – uade",
-    "enlace": "https://www.tusclases.com.ar/estudiante-fisica/buenos-aires-ciudad-capital-federal/busco-profesor-preparar-final-maquinas-hidraulicas-uade-2461220.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/24b94a9dda",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -355,7 +355,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Física",
     "mensaje": "(no termo: busco profesor para preparar final de máquinas hidráulicas – uade) Belén M. (no termo: busco profesor para preparar final de máquinas hidráulicas – uade)",
-    "enlace": "https://www.tusclases.com.ar/estudiante-fisica/buenos-aires-ciudad-capital-federal/-termo-busco-profesor-preparar-final-maquinas-hidraulicas-uade-2461207.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/12a5ae4d8d",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -364,7 +364,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Física",
     "mensaje": "Busco profesor para preparar final de máquinas hidráulicas – uade Belén M. Busco profesor para preparar final de máquinas hidráulicas – uade",
-    "enlace": "https://www.tusclases.com.ar/estudiante-fisica/buenos-aires-ciudad-capital-federal/busco-profesor-preparar-final-maquinas-hidraulicas-uade-2461205.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/322da3cfa7",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -373,7 +373,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Física, Química",
     "mensaje": "Busco profesor que me pueda dar termodinámica (especializado en química) Andrés C. Busco profesor que me pueda dar termodinámica (especializado en química)",
-    "enlace": "https://www.tusclases.com.ar/estudiante-fisica/buenos-aires-ciudad-capital-federal/busco-profesor-pueda-dar-termodinamica-especializado-quimica-2457357.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/11d3e1f4d5",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -382,7 +382,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Física",
     "mensaje": "Busco profesor/a de fisica e introduccion a la biofisica (53) Natalia E. Busco profesor/a de fisica e introduccion a la biofisica (53)",
-    "enlace": "https://www.tusclases.com.ar/estudiante-fisica/buenos-aires-ciudad-capital-federal/busco-profesor-fisica-introduccion-biofisica-2451416.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/41ccf0c358",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -391,7 +391,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Física",
     "mensaje": "Necesito clases presenciales de física soy de wilde, puedo desplazarme, el tema son ondas electromagneticas Paula Q. Necesito clases presenciales de física soy de wilde, puedo desplazarme, el tema son ondas electromagneticas",
-    "enlace": "https://www.tusclases.com.ar/estudiante-fisica/wilde/necesito-clases-presenciales-fisica-wilde-puedo-desplazarme-tema-son-ondas-electromagneticas-2450773.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/e2906f398e",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -400,7 +400,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Física",
     "mensaje": "Hola, soy Diego M.. necesito clases particulares de biofísica cbc Diego M. Maisler Hola, soy Diego M.. necesito clases particulares de biofísica cbc",
-    "enlace": "https://www.tusclases.com.ar/estudiante-fisica/buenos-aires-ciudad-capital-federal/victoria-necesito-clases-particulares-biofisica-cbc-2449080.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/15a26577cf",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -409,7 +409,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Física",
     "mensaje": "Necesito particular para varias materias Julia C. Necesito particular para varias materias",
-    "enlace": "https://www.tusclases.com.ar/estudiante-fisica/rosario-santa-fe/necesito-particular-varias-materias-2442431.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/2b2abc2af0",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -418,7 +418,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Física",
     "mensaje": "Hello we are looking for online spanish experts to teach lessons Moris Hello we are looking for online spanish experts to teach lessons",
-    "enlace": "https://www.tusclases.com.ar/estudiante-fisica/san-rafael-mendoza/hello-are-looking-for-online-spanish-experts-teach-lessons-2438428.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/2fd4c5661e",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -427,7 +427,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Física",
     "mensaje": "Busco profesor que me prepare para los parcias de electro y termo Octavio H. Busco profesor que me prepare para los parcias de electro y termo",
-    "enlace": "https://www.tusclases.com.ar/estudiante-fisica/san-rafael-mendoza/busco-profesor-prepare-parcias-san-rafael-mendoza-2438146.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/685506a0c9",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -436,7 +436,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Física",
     "mensaje": "Busco profesor de electrónica digitales analógico de quinto año tecnica Ezequiel Busco profesor de electrónica digitales analógico de quinto año tecnica",
-    "enlace": "https://www.tusclases.com.ar/estudiante-fisica/buenos-aires-ciudad-capital-federal/busco-profesor-electronica-digitales-analogico-quinto-ano-tecnica-2425788.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/779faaa5e7",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -445,7 +445,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Matemáticas, Física",
     "mensaje": "Busco profesor de matemáticas y fisica académico Matías N. Busco profesor de matemáticas y fisica académico",
-    "enlace": "https://www.tusclases.com.ar/estudiante-fisica/city-bell/busco-profesor-matematicas-fisica-academico-2421788.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/fda988aa87",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -454,7 +454,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Química",
     "mensaje": "Profesor universitario de quimica general e inorganica Bruno Profesor universitario de quimica general e inorganica",
-    "enlace": "https://www.tusclases.com.ar/estudiante-quimica/bahia-blanca/profesor-universitario-quimica-general-inorganica-2454082.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/bd88c508b3",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -463,7 +463,7 @@
     "plataforma": "TusClases México",
     "materia": "Matemáticas",
     "mensaje": "Busco profesor que me ponga mega nerd en materias de eco. (cálculo, econometria, etc) estudiaré economía,yquieroentrarconciertocon Mariana D. Busco profesor que me ponga mega nerd en materias de eco. (cálculo, econometria, etc) estudiaré economía,yquieroentrarconciertocon",
-    "enlace": "https://www.tusclases.mx/estudiantes/matematicas/ciudad-de-mexico-cdmx/busco-profesor-ponga-mega-nerd-materias-eco-calculo-econometria-estudiare-economia-yquieroentrarconciertocon-2448951",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/bd6fea46a7",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -472,7 +472,7 @@
     "plataforma": "TusClases México",
     "materia": "Biología",
     "mensaje": "Busco maestra de anatomía o área de salud y fisiología también Esteban V. Busco maestra de anatomía o área de salud y fisiología también",
-    "enlace": "https://www.tusclases.mx/estudiantes/anatomia/ciudad-de-mexico-cdmx/busco-maestra-anatomia-area-salud-fisiologia-tambien-2455084",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/ae2fd89c17",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -481,7 +481,7 @@
     "plataforma": "TusClases México",
     "materia": "Matemáticas",
     "mensaje": "We are seeking experienced mathematics tutors to assist with solving mathematical problems Tom We are seeking experienced mathematics tutors to assist with solving mathematical problems",
-    "enlace": "https://www.tusclases.mx/estudiantes/matematicas/ciudad-de-mexico-cdmx/are-seeking-experienced-mathematics-tutors-assist-with-solving-mathematical-problems-2429427",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/1a655fd452",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -490,7 +490,7 @@
     "plataforma": "TusClases Colombia",
     "materia": "Química",
     "mensaje": "Requiero docente con enfoque medico-salud Florencia G. gomez Requiero docente con enfoque medico-salud",
-    "enlace": "https://www.tusclases.co/estudiantes/quimica/subachoque/requiero-docente-enfoque-medico-salud-2440961",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/e4db206b6e",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -499,7 +499,7 @@
     "plataforma": "TusClases Colombia",
     "materia": "Matemáticas",
     "mensaje": "Se solicita profesor de matemáticas para grado 7 Federico P. Se solicita profesor de matemáticas para grado 7",
-    "enlace": "https://www.tusclases.co/estudiantes/matematicas/manizales/solicita-profesor-matematicas-grado-2440578",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/ee5ca6da98",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -508,7 +508,7 @@
     "plataforma": "TusClases Colombia",
     "materia": "Matemáticas",
     "mensaje": "Spanish tutor needed for a simple remote task from english to spanish Vera Spanish tutor needed for a simple remote task from english to spanish",
-    "enlace": "https://www.tusclases.co/estudiantes/estadistica/la-calera/-decided-learn-spanish-and-hoping-connect-with-native-speaker-for-private-lessons-2461258",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/6b1d4ea084",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -517,7 +517,7 @@
     "plataforma": "TusClases Colombia",
     "materia": "Matemáticas",
     "mensaje": "Inglés Inglés Matemáticas",
-    "enlace": "https://www.tusclases.co/estudiantes/ingles/",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/87cefac489",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -526,7 +526,7 @@
     "plataforma": "TusClases Colombia",
     "materia": "Matemáticas",
     "mensaje": "Matemáticas Inglés Matemáticas",
-    "enlace": "https://www.tusclases.co/estudiantes/matematicas/",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/0d5a1cc242",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -535,7 +535,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas",
     "mensaje": "Busco profesor particular de matemática m1 y m2 para preparar la paes Carlos T. Morales Busco profesor particular de matemática m1 y m2 para preparar la paes",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/paes/los-vilos/busco-profesor-particular-matematica-preparar-paes-2466516.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/821cd45348",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -544,7 +544,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Física",
     "mensaje": "Busco profesor de física básica para ejercicios de dinámica Diego M. Busco profesor de física básica para ejercicios de dinámica",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/fisica/vina-del-mar/busco-profesor-fisica-basica-ejercicios-dinamica-2466158.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/bd4bfe0d46",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -553,7 +553,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas",
     "mensaje": "Busco clases particulares de matemáticas enseñanza media (presenciales) Alex R. Zárate (Mamá de Julián) Busco clases particulares de matemáticas enseñanza media (presenciales)",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/conchali/busco-clases-particulares-matematicas-ensenanza-media-presenciales-2465948.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/db4627a9e1",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -562,7 +562,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas",
     "mensaje": "Pofesor de matemática para preparar paes Rodrigo J. Cornejo Pofesor de matemática para preparar paes",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/santiago-ciudad/pofesor-matematica-preparar-paes-online-2465382.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/a4d4245e89",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -571,7 +571,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Química",
     "mensaje": "Busco profesora de química para prepararme con los contenidos de la paes regular admisión 2027 Helena B. Aburi Troncoso Busco profesora de química para prepararme con los contenidos de la paes regular admisión 2027",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/quimica/nunoa/busco-profesora-quimica-prepararme-contenidos-paes-regular-admision-2027-2464467.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/363ac953fc",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -580,7 +580,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Biología",
     "mensaje": "Repasar contenido paes ciencias con mención en biología Rodrigo J. Farias Repasar contenido paes ciencias con mención en biología",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/paes/santiago-ciudad/repasar-contenido-paes-ciencias-mencion-biologia-2464464.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/eeb049447e",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -589,7 +589,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Física",
     "mensaje": "Busco profesora para preparar contenidos de física para la paes regular admisión 2027 Helena B. Aburi Troncoso Busco profesora para preparar contenidos de física para la paes regular admisión 2027",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/fisica/nunoa/busco-profesora-preparar-contenidos-fisica-paes-regular-admision-2027-2464471.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/c106bc59d2",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -598,7 +598,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas, Química",
     "mensaje": "Matemáticas Matemáticas Inglés Química",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/bd68023d22",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -607,7 +607,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas, Química",
     "mensaje": "Inglés Matemáticas Inglés Química",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/ingles/",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/9a931188da",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -616,7 +616,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas, Química",
     "mensaje": "Química Matemáticas Inglés Química",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/quimica/",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/d2d7da2174",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -625,7 +625,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Física",
     "mensaje": "Busco profesor de fisica 2 nivel universitario pucp urgente Laura F. Busco profesor de fisica 2 nivel universitario pucp urgente",
-    "enlace": "https://www.tusclases.pe/estudiantes/fisica/lima-ciudad/busco-profesor-fisica-nivel-universitario-pucp-urgente-2467463",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/7e2403b235",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -634,7 +634,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Matemáticas",
     "mensaje": "Estoy buscando profesor de estadistica nivel universitario pucp Laura F. Estoy buscando profesor de estadistica nivel universitario pucp",
-    "enlace": "https://www.tusclases.pe/estudiantes/estadistica/lima-ciudad/estoy-buscando-profesor-estadistica-nivel-universitario-pucp-2467574",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/7548df5029",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -643,7 +643,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Física",
     "mensaje": "Estoy buscando profesor de mecanica para ingenieros nivel universitario pucp Laura F. Estoy buscando profesor de mecanica para ingenieros nivel universitario pucp",
-    "enlace": "https://www.tusclases.pe/estudiantes/mecanica/lima-ciudad/estoy-buscando-profesor-mecanica-ingenieros-nivel-universitario-pucp-2467576",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/63c499ee83",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -652,7 +652,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Física",
     "mensaje": "Profesora de fisica nivel preuniversitario Olga Ramirez Profesora de fisica nivel preuniversitario",
-    "enlace": "https://www.tusclases.pe/estudiantes/fisica/salamanca/profesora-fisica-nivel-preuniversitario-2419816",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/01f46524da",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -661,7 +661,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Física",
     "mensaje": "Busco profesor para fisica elemental, urgentemente Solamenteharvey Busco profesor para fisica elemental, urgentemente",
-    "enlace": "https://www.tusclases.pe/estudiantes/fisica/chiclayo/busco-profesor-fisica-elemental-urgentemente-2454636",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/b112dd0a7b",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -670,7 +670,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Matemáticas",
     "mensaje": "Matemáticas Matemáticas Inglés",
-    "enlace": "https://www.tusclases.pe/estudiantes/matematicas/",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/be554d9f1f",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -679,7 +679,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Matemáticas",
     "mensaje": "Inglés Matemáticas Inglés",
-    "enlace": "https://www.tusclases.pe/estudiantes/ingles/",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/e53dd2d4de",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -688,7 +688,7 @@
     "plataforma": "Cronoshare",
     "materia": "Matemáticas, Física",
     "mensaje": "Clases particulares de matemáticas para ingeniería mecánica en universidad Benidorm (Alacant/Alicante). Soy alumno de Ingeniería Mecánica que no tiene nada de base matemática y quiere ayuda para abarcar esta asignatura.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-matematicas",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -697,7 +697,7 @@
     "plataforma": "Cronoshare",
     "materia": "Matemáticas",
     "mensaje": "Clases de con inglés, matemáticas para 3° primaria Barcelona (Barcelona). Quiero un refuerzo para mi hija de 7 años en matemáticas, ella las hace en inglés en el colegio.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-matematicas",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -706,7 +706,7 @@
     "plataforma": "Cronoshare",
     "materia": "Matemáticas",
     "mensaje": "Clases particulares de matemáticas para 1º bachillerato Lleida (Lleida). Necesito clases esta semana a ser posible antes del viernes, si no antes del 19 ya que empieza mi semana de exámenes.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-matematicas",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -715,7 +715,7 @@
     "plataforma": "Cronoshare",
     "materia": "Matemáticas",
     "mensaje": "Profesor particular para clases de matemáticas para 2º bachillerato El Palmar (Murcia). Precisamos un servicio de Clases Particulares Matemáticas.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-matematicas",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -724,7 +724,7 @@
     "plataforma": "Cronoshare",
     "materia": "Matemáticas, Física, Química",
     "mensaje": "Clases particulares de matemáticas, física, química para 4º eso Madrid (Madrid). Busco profesora para reforzar materias de cuarto de la eso , mates y física-Química , a domicilio",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-matematicas",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -733,7 +733,7 @@
     "plataforma": "Cronoshare",
     "materia": "Matemáticas",
     "mensaje": "Clases online de matemáticas en euskera para 1º bachillerato Online. Las clases tienen que ser en euskera.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-matematicas",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -742,7 +742,7 @@
     "plataforma": "Cronoshare",
     "materia": "Matemáticas",
     "mensaje": "Profesor de matemáticas para 1º bachillerato Sevilla (Sevilla). Se precisa un servicio de Clases Particulares Matemáticas.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-matematicas",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -751,7 +751,7 @@
     "plataforma": "Cronoshare",
     "materia": "Matemáticas",
     "mensaje": "Clases online de mantenimiento electromecánico industrial para FP 2º Online. Necesito un servicio de Clases Particulares Matemáticas.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-matematicas",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -760,7 +760,7 @@
     "plataforma": "Cronoshare",
     "materia": "Matemáticas",
     "mensaje": "Profesor particular de álgebra para grado universitario Online. Estamos buscando un servicio de Clases Particulares Matemáticas.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-matematicas",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -769,7 +769,7 @@
     "plataforma": "Cronoshare",
     "materia": "Matemáticas",
     "mensaje": "Clases de matemáticas para grado universitario Montellano (Sevilla). Busco un servicio de Clases Particulares Matemáticas.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-matematicas",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -778,7 +778,7 @@
     "plataforma": "Cronoshare",
     "materia": "Matemáticas",
     "mensaje": "Clases de matemáticas online Online. Vamos a contratar un servicio de Clases matemáticas online.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-matematicas",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -787,7 +787,7 @@
     "plataforma": "Cronoshare",
     "materia": "Matemáticas, Física",
     "mensaje": "Profesor particular para clases de matemáticas, física para 2º bachillerato Online. Se requiere un servicio de Clases Particulares Matemáticas.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-matematicas",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -796,7 +796,7 @@
     "plataforma": "Cronoshare",
     "materia": "Matemáticas",
     "mensaje": "Clases de castellano, matemáticas para 2º bachillerato Online. Sería un refuerzo para todo el curso de segundo bachillerato para llevar al día castellano y matemáticas.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-matematicas",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -805,7 +805,7 @@
     "plataforma": "Cronoshare",
     "materia": "Matemáticas",
     "mensaje": "Clases de matemáticas para 3º eso Sant Josep de sa Talaia (Islas Baleares). Debo aprobar el examen de recuperacion de mates 3eso y no se por donde empezar",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-matematicas",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -814,7 +814,7 @@
     "plataforma": "Cronoshare",
     "materia": "Matemáticas",
     "mensaje": "Clases particulares de matemáticas para 1º ESO Zaragoza (Zaragoza). Necesitaría profesor de matemáticas para niña que comenzará 1 ESO",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-matematicas",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-matematicas",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -823,7 +823,7 @@
     "plataforma": "Cronoshare",
     "materia": "Física",
     "mensaje": "Clases de física para 2º bachillerato Galapagar (Madrid). Mi hijo hace deporte a nivel alto, entonces tiene pocas horas de estudio, nos urge bastante, en las demás asignaturas va bien, pero la física se le está cruzando",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-fisica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-fisica",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -832,7 +832,7 @@
     "plataforma": "Cronoshare",
     "materia": "Física",
     "mensaje": "Clases particulares de ingeniería online para alumna de telecomunicaciones urgente Online. Mi hija está en primero de telecomunicaciones. Le apasiona la física y no está entendiendo nada. Está bloqueada porque dice que la carrera no le gusta, pero no creemos que haya tenido tiempo para averiguarlo. Se le están atravesando todas las asignaturas y...",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-fisica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-fisica",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -841,7 +841,7 @@
     "plataforma": "Cronoshare",
     "materia": "Física",
     "mensaje": "Profesor de física para ingeniería Madrid (Madrid). Busco profesor de física para preparación urgente de examen extraordinario (grado en videojuegos udit). Nivel: universitario (física i) Necesidad: repasar todo el temario + ejercicios tipo examen Modalidad: a domicilio en madrid 28035 Disponibilidad: esta semana y próxima (intensivo) Objetivo: ...",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-fisica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-fisica",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -850,7 +850,7 @@
     "plataforma": "Cronoshare",
     "materia": "Física",
     "mensaje": "Profesor particular para clases de física para 3º eso Zaragoza (Zaragoza). Necesitamos un servicio de Clases Particulares Física.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-fisica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-fisica",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -859,7 +859,7 @@
     "plataforma": "Cronoshare",
     "materia": "Matemáticas, Física",
     "mensaje": "Profesor particular para clases de física para 1º bachillerato Bertamirans (A Coruña). Busco profesor/a para física y matemáticas de 1° bachillerato en bertamiráns. Mientras tengan antes disponibilidad mejor.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-fisica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-fisica",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -868,7 +868,7 @@
     "plataforma": "Cronoshare",
     "materia": "Física, Química",
     "mensaje": "Clases particulares de física para 3º eso Barcelona (Barcelona). Necesito urgente ayuda para que mi hija apruebe el examen de recuperación del segundo trimestre de fisica y quimica, y aprobar los exámenes del tercer trimestre por favor",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-fisica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-fisica",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -877,7 +877,7 @@
     "plataforma": "Cronoshare",
     "materia": "Física",
     "mensaje": "Profesor para clases particulares de física para ingeniería Online. Busco un servicio de Clases Particulares Física.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-fisica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-fisica",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -886,7 +886,7 @@
     "plataforma": "Cronoshare",
     "materia": "Física",
     "mensaje": "Profesor de física para 1º universidad Toledo (Toledo). Estamos buscando un servicio de Clases Particulares Física.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-fisica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-fisica",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -895,7 +895,7 @@
     "plataforma": "Cronoshare",
     "materia": "Física, Química",
     "mensaje": "Profesor particular de física para grado en quimica Santiago de Compostela (A Coruña). Requerimos un servicio de Clases Particulares Física.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-fisica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-fisica",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -904,7 +904,7 @@
     "plataforma": "Cronoshare",
     "materia": "Química",
     "mensaje": "Profesor de química para 2º bachillerato Las Palmas de Gran Canaria (Las Palmas). Busco un servicio de Clases Particulares Química.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-quimica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-quimica",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -913,7 +913,7 @@
     "plataforma": "Cronoshare",
     "materia": "Química",
     "mensaje": "Clases de química Valencia (Valencia). Se requiere un servicio de Clases particulares bioquímica.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-quimica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-quimica",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -922,7 +922,7 @@
     "plataforma": "Cronoshare",
     "materia": "Química",
     "mensaje": "Clases particulares de química para 2 de farmacia y biotecnología Online. Estudia actualmente en el ceu",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-quimica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-quimica",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -931,7 +931,7 @@
     "plataforma": "Cronoshare",
     "materia": "Química",
     "mensaje": "Profesor para clases particulares de química para 4° eso Online. Busco un servicio de Clases Particulares Química.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-quimica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-quimica",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -940,7 +940,7 @@
     "plataforma": "Cronoshare",
     "materia": "Química",
     "mensaje": "Profesor particular para clases de química para ingeniería Online. Clases de química para primero de ciencias ambientales.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-quimica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-quimica",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -949,7 +949,7 @@
     "plataforma": "Cronoshare",
     "materia": "Química",
     "mensaje": "Clases particulares de química Online. Necesito un servicio de Clases Particulares Química.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-quimica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-quimica",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -958,7 +958,7 @@
     "plataforma": "Cronoshare",
     "materia": "Química",
     "mensaje": "Clases de química para grado en bioquímica Sevilla (Sevilla). Precisamos un servicio de Clases Particulares Química.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-quimica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-quimica",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -967,7 +967,7 @@
     "plataforma": "Cronoshare",
     "materia": "Química",
     "mensaje": "Profesor particular para clases de química para universidad 1° curso Palma de Mallorca (Islas Baleares). Necesito profesor de bioquímica para 1° curso de carrera de nutrición",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-quimica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-quimica",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -976,7 +976,7 @@
     "plataforma": "Cronoshare",
     "materia": "Física, Química, Biología",
     "mensaje": "Profesor particular para clases de química para eso Guadalajara (Guadalajara). Las clases serían de biología y física y química.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-quimica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-quimica",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -985,7 +985,7 @@
     "plataforma": "Cronoshare",
     "materia": "Química",
     "mensaje": "Profesor particular de química para grado Castro-Urdiales (Cantabria). Interesada en las rutas metabólicas, la de cahill, vía de la pentosa fosfato, lípidos, uridilato.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-quimica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-quimica",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -994,7 +994,7 @@
     "plataforma": "Cronoshare",
     "materia": "Química",
     "mensaje": "Clases de química para ingeniería Tarragona (Tarragona). Estudiante de primero de química en la urv, necesitaría ayuda con química 2 y complementos de química",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-quimica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-quimica",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1003,7 +1003,7 @@
     "plataforma": "Cronoshare",
     "materia": "Química",
     "mensaje": "Profesor particular para clases de química para 1º bachillerato Online. Necesito un servicio de Clases de química.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-quimica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-quimica",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1012,7 +1012,7 @@
     "plataforma": "Cronoshare",
     "materia": "Química",
     "mensaje": "Profesor particular para clases de química para 2º bachillerato Móstoles (Madrid). Tengo que presentarme al acceso universidad para mayores de 25 en principio es hasta febrero que son los examenes pero si me confirman otra fecha puede alargarse hasta marzo",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-quimica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-quimica",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1021,7 +1021,7 @@
     "plataforma": "Cronoshare",
     "materia": "Biología",
     "mensaje": "Clases particulares para acceso a la universidad mayores de 25 años Irun (Guipúzcoa). Necesito un servicio de Clases Particulares Biología.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-biologia",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-biologia",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -1030,7 +1030,7 @@
     "plataforma": "Cronoshare",
     "materia": "Química, Biología",
     "mensaje": "Profesor para clases particulares de biología Vilafranca del Penedès (Barcelona). Clases de bioquímica/biologia básica.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-biologia",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-biologia",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -1039,7 +1039,7 @@
     "plataforma": "Cronoshare",
     "materia": "Biología",
     "mensaje": "Profesor particular de biología Alzira (Valencia). Alumna de segundo de eso, necesita refuerzo en todas l'as asignaturas excepto música, valenciano y dibujo.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-biologia",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-biologia",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -1048,7 +1048,7 @@
     "plataforma": "Cronoshare",
     "materia": "Biología",
     "mensaje": "Profesor particular para clases de biología Palma de Mallorca (Islas Baleares). Pedimos un servicio de Clases Particulares Biología.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-biologia",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-biologia",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -1057,7 +1057,7 @@
     "plataforma": "Cronoshare",
     "materia": "Biología",
     "mensaje": "Profesor de biología Algemesí (Valencia). Estudio una fp de dietética y quiero entrar en enfermería, no he realizado bachillerato , las clases serían para mí y otra compañera",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-biologia",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-biologia",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -1066,7 +1066,7 @@
     "plataforma": "Cronoshare",
     "materia": "Biología",
     "mensaje": "Profesor de biología Sueca (Valencia). Necesito un servicio de Clases Particulares Biología.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-biologia",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-biologia",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -1075,7 +1075,7 @@
     "plataforma": "Cronoshare",
     "materia": "Biología",
     "mensaje": "Profesor para clases particulares de biología Alicante/Alacant (Alacant/Alicante). Se precisa un servicio de Clases Particulares Biología.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-biologia",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-biologia",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -1084,7 +1084,7 @@
     "plataforma": "Reddit (r/empleos_AR)",
     "materia": "Química",
     "mensaje": "Busco profe particular química: Buenas. Cómo va? Eso, para química 005 uba xxi submitted by /u/ndqexplidaresdar [link] [comments]",
-    "enlace": "https://www.reddit.com/r/empleos_AR/comments/1x4ic4i/busco_profe_particular_química/",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/reddit/5df0c3139d",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1093,7 +1093,7 @@
     "plataforma": "TusClasesParticulares",
     "materia": "Matemáticas, Física, Química",
     "mensaje": "Primaria Matemáticas Inglés Francés Repaso General Física Lengua Castellana y Literatura Química Alemán Primaria Ofertas de trabajo para profesores",
-    "enlace": "https://www.tusclasesparticulares.com/alumnos/primaria.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/8e4ce4adc2",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1102,7 +1102,7 @@
     "plataforma": "TusClases Argentina",
     "materia": "Física",
     "mensaje": "Busco personal trainer de educacion fisica los domingos Ximena Busco personal trainer de educacion fisica los domingos",
-    "enlace": "https://www.tusclases.com.ar/estudiante-educacion/buenos-aires-ciudad-capital-federal/busco-personal-trainer-educacion-fisica-domingos-2467165.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/cd22e47352",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1111,7 +1111,7 @@
     "plataforma": "TusClases México",
     "materia": "Matemáticas",
     "mensaje": "Busco un profesor o un estudiante que necesite apoyo académico Anim Busco un profesor o un estudiante que necesite apoyo académico",
-    "enlace": "https://www.tusclases.mx/estudiantes/matematicas/bachiniva/busco-profesor-estudiante-necesite-apoyo-academico-2436937",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/21bd2673ac",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1120,7 +1120,7 @@
     "plataforma": "TusClases México",
     "materia": "Matemáticas",
     "mensaje": "Busco un tutor o estudiante que brinde apoyo académico a mi hijo/a Anim Busco un tutor o estudiante que brinde apoyo académico a mi hijo/a",
-    "enlace": "https://www.tusclases.mx/estudiantes/matematicas/alvaro-obregon/busco-tutor-estudiante-brinde-apoyo-academico-hijo-2436941",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/9ee7eb838f",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1129,7 +1129,7 @@
     "plataforma": "TusClases México",
     "materia": "Matemáticas",
     "mensaje": "Hola busco un profesor integral para matemáticas básica, español y ciencias sociales para mi hijo de 14 años, que va súper atrasad Sol Robles Hola busco un profesor integral para matemáticas básica, español y ciencias sociales para mi hijo de 14 años, que va súper atrasad",
-    "enlace": "https://www.tusclases.mx/estudiantes/matematicas/alvaro-obregon/busco-profesor-integral-matematicas-basica-espanol-ciencias-sociales-hijo-anos-super-atrasad-2451646",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/407115716d",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1138,7 +1138,7 @@
     "plataforma": "TusClases México",
     "materia": "Matemáticas, Física, Química",
     "mensaje": "Clases de matemáticas -fisica y quimica personalizadas Rocio A. Clases de matemáticas -fisica y quimica personalizadas",
-    "enlace": "https://www.tusclases.mx/estudiantes/online/matematicas/clases-matematicas-fisica-quimica-personalizadas-2443768",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/d2145bfede",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1147,7 +1147,7 @@
     "plataforma": "TusClases México",
     "materia": "Matemáticas",
     "mensaje": "Busco clases en línea de matemáticas para mi hijo Liliana Busco clases en línea de matemáticas para mi hijo",
-    "enlace": "https://www.tusclases.mx/estudiantes/matematicas/puebla/busco-clases-linea-matematicas-hijo-2463817",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/cd392f323b",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1156,7 +1156,7 @@
     "plataforma": "TusClases México",
     "materia": "Matemáticas",
     "mensaje": "Profesor(a) matemáticas para iniciar la lic en economía Aileen Profesor(a) matemáticas para iniciar la lic en economía",
-    "enlace": "https://www.tusclases.mx/estudiantes/matematicas/tlalpan/profesor-matematicas-iniciar-lic-economia-2442467",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/8fd59da9d0",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1165,7 +1165,7 @@
     "plataforma": "TusClases México",
     "materia": "Matemáticas",
     "mensaje": "webs ofreciendo sus servicios declases de matemáticas Es importante tomar en consideración que gracias a los tiempos modernos en los que vivimos además de ser maestro de matemáticas a domicilio , también tendrás la posibilidad de dar clases de manera en línea. Lo mejor de todo es que no implica grandes esfuerzos, ya que el proceso de encontrar a...",
-    "enlace": "https://www.tusclases.mx/estudiantes/matematicas/",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/7dd41f1a16",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1174,7 +1174,7 @@
     "plataforma": "TusClases Colombia",
     "materia": "Matemáticas",
     "mensaje": "Busco un profesor o un estudiante que me brinde apoyo académico Banca Busco un profesor o un estudiante que me brinde apoyo académico",
-    "enlace": "https://www.tusclases.co/estudiantes/matematicas/barranquilla/busco-profesor-estudiante-brinde-apoyo-academico-2429456",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/61cf554d3f",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1183,7 +1183,7 @@
     "plataforma": "TusClases Colombia",
     "materia": "Matemáticas",
     "mensaje": "Asesorias en area de matemáticas Ruby Maria Asesorias en area de matemáticas",
-    "enlace": "https://www.tusclases.co/estudiantes/online/matematicas/asesorias-area-matematicas-online-2461063",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/4d3a6964cc",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1192,7 +1192,7 @@
     "plataforma": "TusClases Colombia",
     "materia": "Matemáticas",
     "mensaje": "Matemáticas grado 10 seno coceno tangente Valeria Arteaga Matemáticas grado 10 seno coceno tangente",
-    "enlace": "https://www.tusclases.co/estudiantes/matematicas/pasto/matematicas-grado-seno-coceno-tangente-2461045",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/e39af8862e",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1201,7 +1201,7 @@
     "plataforma": "TusClases Colombia",
     "materia": "Matemáticas",
     "mensaje": "Hello! we're looking for spanish teacher who can translate a document from english into spanish Michael Hello! we're looking for spanish teacher who can translate a document from english into spanish",
-    "enlace": "https://www.tusclases.co/estudiantes/matematicas/cucuta/hello-looking-for-spanish-teacher-who-can-translate-document-from-english-into-spanish-2454684",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/b8ff1fee1b",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1210,7 +1210,7 @@
     "plataforma": "TusClases Colombia",
     "materia": "Matemáticas",
     "mensaje": "Busco un profesor o estudiante que pueda brindar apoyo académico a mi hijo Banca Busco un profesor o estudiante que pueda brindar apoyo académico a mi hijo",
-    "enlace": "https://www.tusclases.co/estudiantes/matematicas/cucuta/busco-profesor-estudiante-pueda-brindar-apoyo-academico-hijo-2429463",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/b0d26df5d8",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1219,7 +1219,7 @@
     "plataforma": "TusClases Colombia",
     "materia": "Matemáticas",
     "mensaje": "Busco profesor de matemáticas aplicadas nativo Federico P. Busco profesor de matemáticas aplicadas nativo",
-    "enlace": "https://www.tusclases.co/estudiantes/matematicas/sucre-ciudad-sucre/busco-profesor-matematicas-aplicadas-nativo-2465081",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/0facd211be",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1228,7 +1228,7 @@
     "plataforma": "TusClases Colombia",
     "materia": "Matemáticas",
     "mensaje": "Busco tutora de matemáticas para mi hija de 9 años debe ser presencial en alameda del rio barranquilla César Chireno Busco tutora de matemáticas para mi hija de 9 años debe ser presencial en alameda del rio barranquilla",
-    "enlace": "https://www.tusclases.co/estudiantes/matematicas/barranquilla/busco-tutora-matematicas-hija-anos-debe-ser-presencial-alameda-rio-barranquilla-2451181",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/70107d499f",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1237,7 +1237,7 @@
     "plataforma": "TusClases Colombia",
     "materia": "Matemáticas",
     "mensaje": "Busco profesora para dos niños de 4 y 6 años Wilson Castano Busco profesora para dos niños de 4 y 6 años",
-    "enlace": "https://www.tusclases.co/estudiantes/matematicas/subachoque/busco-profesora-dos-ninos-anos-subachoque-2457547",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/9d4e1e2f04",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1246,7 +1246,7 @@
     "plataforma": "TusClases Colombia",
     "materia": "Física",
     "mensaje": "Busco ingeniero o desarrollador de software. (programacion) Karol Busco ingeniero o desarrollador de software. (programacion)",
-    "enlace": "https://www.tusclases.co/estudiantes/fisica/bogota/profesor-fisica-experiencia-nivel-preuniversitario-universitario-2428341",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/da66bd957b",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1255,7 +1255,7 @@
     "plataforma": "TusClases Colombia",
     "materia": "Física",
     "mensaje": "Necesito una profesor que explique muy bien Viviana Margoth Rosero Rivas Necesito una profesor que explique muy bien",
-    "enlace": "https://www.tusclases.co/estudiantes/fisica/pasto/necesito-profesor-explique-bien-pasto-2437798",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/3ac5ec3f45",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1264,7 +1264,7 @@
     "plataforma": "TusClases Colombia",
     "materia": "Física",
     "mensaje": "Estoy buscando profesor/a con manejo de transferencia de calor, matlab Leo Estoy buscando profesor/a con manejo de transferencia de calor, matlab",
-    "enlace": "https://www.tusclases.co/estudiantes/fisica/la-argentina/estoy-buscando-profesor-manejo-transferencia-calor-matlab-2458512",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/a3df4014e6",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1273,7 +1273,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas",
     "mensaje": "Clases para nivel segundo medio para mi hija de 16 años Iver Alday Sepúlveda Clases para nivel segundo medio para mi hija de 16 años",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/vina-del-mar/clases-nivel-segundo-medio-hija-anos-2461667.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/208403acc4",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1282,7 +1282,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas",
     "mensaje": "Busco profesor (a) matemáticas (funciones y progresión aritmica) clase presencial Jocelyn Busco profesor (a) matemáticas (funciones y progresión aritmica) clase presencial",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/colina/busco-profesor-matematicas-funciones-progresion-aritmica-2460721.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/8a54f321f2",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1291,7 +1291,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas",
     "mensaje": "Busco profe que me ayuden en cálculo diferencial Joaquin Busco profe que me ayuden en cálculo diferencial",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/santiago-ciudad/busco-profe-ayuden-calculo-diferencial-2448848.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/f03a501d25",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1300,7 +1300,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas",
     "mensaje": "Realizó clases particulares de matematica Paola Realizó clases particulares de matematica",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/online/matematicas/clases-particulares-matematica-online-2445248",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/7efba007cc",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1309,7 +1309,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas",
     "mensaje": "Busco profe de matemáticas para la carrera de administración de empresas Martín balbi Busco profe de matemáticas para la carrera de administración de empresas",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/nunoa/busco-profe-matematicas-carrera-administracion-empresas-2442694.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/3337e9e66b",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1318,7 +1318,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas",
     "mensaje": "Clases particulares a domicilio , chicureo Cristián jaque Clases particulares a domicilio , chicureo",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/colina/clases-particulares-domicilio-chicureo-2441673.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/a98dcfb863",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1327,7 +1327,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas, Física",
     "mensaje": "Clase de matemática y fisica de curso 8 basico Manuel tapia Clase de matemática y fisica de curso 8 basico",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/ovalle/clase-matematica-curso-basico-ovalle-2440271.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/aed080ec82",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1336,7 +1336,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas",
     "mensaje": "The oxford institute needs an expert to curate and prepare our mathematical assessment papers Trede The oxford institute needs an expert to curate and prepare our mathematical assessment papers",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/comuna-de-concepcion/the-oxford-institute-needs-expert-curate-and-prepare-our-mathematical-assessment-papers-2438126.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/1d546beb6e",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1345,7 +1345,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas",
     "mensaje": "Busco profesora de matemáticas para ayudar a mi hija en tema paes Fabiola Rioseco Busco profesora de matemáticas para ayudar a mi hija en tema paes",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/comuna-de-concepcion/busco-profesora-matematicas-ayudar-hija-tema-paes-2434222.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/6cfd1c1539",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1354,7 +1354,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas",
     "mensaje": "Busco profesor para aprender sobre calculo Camilo Busco profesor para aprender sobre calculo",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/coronel/busco-profesor-aprender-sobre-calculo-2433242.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/b8cf9790bd",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1363,7 +1363,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas",
     "mensaje": "Profesor a domicilio para estudiante universitaria (ramo cálculo) Hannelore Schaff Profesor a domicilio para estudiante universitaria (ramo cálculo)",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/san-bernardo/profesor-domicilio-estudiante-universitaria-ramo-calculo-2433069.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/bd1e9e0ebb",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1372,7 +1372,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas",
     "mensaje": "Busco profesora de matemáticas en copiapó Claudia Pérez Busco profesora de matemáticas en copiapó",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/copiapo/busco-profesora-matematicas-copiapo-2428519.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/93e5455b73",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1381,7 +1381,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas",
     "mensaje": "Profesor de matemática para universitario Rosa Hidalgo Profesor de matemática para universitario",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/puerto-montt/profesor-matematica-universitario-online-2424968.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/81f7867440",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1390,7 +1390,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Matemáticas",
     "mensaje": "Necesito profesor/a que enseñe hoy, uso de calculadora grafica Yasna Necesito profesor/a que enseñe hoy, uso de calculadora grafica",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/matematicas/comuna-de-san-pedro-de-la-paz/necesito-profesor-ensene-hoy-uso-calculadora-grafica-2417236.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/af271fea12",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1399,7 +1399,7 @@
     "plataforma": "TusClases Chile",
     "materia": "Física",
     "mensaje": "Hola, estoy buscando profesor de fisica para la universidad Joaquin Hola, estoy buscando profesor de fisica para la universidad",
-    "enlace": "https://www.tusclasesparticulares.cl/estudiantes/fisica/santiago-ciudad/estoy-buscando-profesor-fisica-universidad-2456716.aspx",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/f43eaf29de",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1408,7 +1408,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Matemáticas",
     "mensaje": "Estoy buscando un profesor(a) particular de matemáticas Sara Estoy buscando un profesor(a) particular de matemáticas",
-    "enlace": "https://www.tusclases.pe/estudiantes/matematicas/lima-ciudad/estoy-buscando-profesor-particular-matematicas-2462317",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/7b1e467343",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1417,7 +1417,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Matemáticas",
     "mensaje": "We are looking for maths teacher who can assist us with our mathematical problems that need to be solved Erick We are looking for maths teacher who can assist us with our mathematical problems that need to be solved",
-    "enlace": "https://www.tusclases.pe/estudiantes/matematicas/lima-ciudad/are-looking-for-maths-teacher-who-can-assist-with-our-mathematical-problems-that-need-solved-2427953",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/53797bccab",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1426,7 +1426,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Matemáticas",
     "mensaje": "Urgente busco profesora para mi hijo que cursa el primer año de secundaría Mauro Frank Urgente busco profesora para mi hijo que cursa el primer año de secundaría",
-    "enlace": "https://www.tusclases.pe/estudiantes/matematicas/comas/urgente-busco-profesora-hijo-cursa-primer-ano-secundaria-2446829",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/e116dfe449",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1435,7 +1435,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Matemáticas",
     "mensaje": "Necesito una profesora para niños con problemas de aprendizaje Claudia Necesito una profesora para niños con problemas de aprendizaje",
-    "enlace": "https://www.tusclases.pe/estudiantes/matematicas/carmen-de-la-legua-reynoso/necesito-profesora-ninos-problemas-aprendizaje-2417991",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/a3ea57953e",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1444,7 +1444,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Matemáticas",
     "mensaje": "Busco profesor de matematica basicas para reforzar los estudias escolares Ricardo Busco profesor de matematica basicas para reforzar los estudias escolares",
-    "enlace": "https://www.tusclases.pe/estudiantes/matematicas/nuevo-chimbote/busco-profesor-matematica-basicas-reforzar-estudias-escolares-2425850",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/f8f967a56f",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1453,7 +1453,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Matemáticas",
     "mensaje": "Se busca profesora de matematicas nivel preuniversitario Olga Ramirez Se busca profesora de matematicas nivel preuniversitario",
-    "enlace": "https://www.tusclases.pe/estudiantes/matematicas/lima-ciudad/busca-profesora-matematicas-nivel-preuniversitario-2445312",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/cf2d7edb95",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1462,7 +1462,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Matemáticas",
     "mensaje": "Busco profesor (a) con la especialidad de aprendizaje para niños neurodivergentes Carolina Busco profesor (a) con la especialidad de aprendizaje para niños neurodivergentes",
-    "enlace": "https://www.tusclases.pe/estudiantes/matematicas/los-olivos/busco-profesor-especialidad-aprendizaje-ninos-neurodivergentes-2458720",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/079d5356b6",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1471,7 +1471,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Matemáticas",
     "mensaje": "Profesor pa siente y chistoso de mate 👻 Gianfranco Profesor pa siente y chistoso de mate 👻",
-    "enlace": "https://www.tusclases.pe/estudiantes/matematicas/lima-ciudad/profesor-siente-chistoso-mate-online-2450843",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/5b41c51860",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1480,7 +1480,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Matemáticas, Química, Biología",
     "mensaje": "Estoy buscando un maestro para mi hija que le enseñe lo que es quimica, matematica,biologia,y algebra Valery Jaramillo Ortega Estoy buscando un maestro para mi hija que le enseñe lo que es quimica, matematica,biologia,y algebra",
-    "enlace": "https://www.tusclases.pe/estudiantes/matematicas/uchiza/estoy-buscando-maestro-hija-ensene-quimica-matematica-biologia-algebra-2463613",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/195976b32e",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1489,7 +1489,7 @@
     "plataforma": "TusClases Perú",
     "materia": "Matemáticas",
     "mensaje": "Busco profesora de matemáticas para 2do secundaria presencial a domicilio Oscar Busco profesora de matemáticas para 2do secundaria presencial a domicilio",
-    "enlace": "https://www.tusclases.pe/estudiantes/matematicas/san-juan-de-miraflores/busco-profesora-matematicas-2do-secundaria-presencial-domicilio-2442413",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/tus-clases/5d06761b2d",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1498,7 +1498,7 @@
     "plataforma": "Cronoshare",
     "materia": "Química",
     "mensaje": "Clases de química Valencia (Valencia). Necesito un servicio de Clases particulares bioquímica.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-quimica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-quimica",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1507,7 +1507,7 @@
     "plataforma": "Cronoshare",
     "materia": "Química",
     "mensaje": "Clases particulares de química Online. Estamos buscando un servicio de Clases Particulares Química.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-quimica",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-quimica",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1516,7 +1516,7 @@
     "plataforma": "Cronoshare",
     "materia": "Biología",
     "mensaje": "Profesor de biología Sueca (Valencia). Solicitamos un servicio de Clases Particulares Biología.",
-    "enlace": "https://www.cronoshare.com/empleo/clases-particulares-biologia",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-biologia",
     "ground_truth_label": 1,
     "motivo_etiqueta": "Estudiante genuino solicitando clases particulares o tutoría en ciencias exactas."
   },
@@ -1525,7 +1525,7 @@
     "plataforma": "Reddit (r/UBA)",
     "materia": "Matemáticas, Física",
     "mensaje": "Como estudian ingenieria [UBA]: ¿cómo hacen para estudiar y aprobar materias? Buenas gente, ¿cómo andan? Estoy cursando Ingeniería Mecánica y hace un tiempo vengo dándole vueltas al tema de cómo estudiar mejor. Siento que una cosa es sentarse a estudiar y meterle horas, y otra muy distinta es saber estudiar de una manera que realmente te sirva p...",
-    "enlace": "https://www.reddit.com/r/UBA/comments/1xdrpwh/como_estudian_ingenieria_uba/",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/reddit/138349d002",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1534,7 +1534,7 @@
     "plataforma": "Reddit (r/UBA)",
     "materia": "Matemáticas, Química",
     "mensaje": "Como abarcan ustedes los ejercicios de matemáticas? [Lic. Ciencias de datos]: Estoy cursando el CBC de una carrera que tiene mucha, mucha matemática pero no sé cómo debería afrontar los ejercicios. Me explico: Cuando no entiendo algo de la guia (algebra y Quimica) tiendo a consultarle a ChatGPT o cualquier otra para que me explique el ejercicio,...",
-    "enlace": "https://www.reddit.com/r/UBA/comments/1x56dyb/como_abarcan_ustedes_los_ejercicios_de/",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/reddit/4c379165b4",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1543,7 +1543,7 @@
     "plataforma": "Reddit (r/UBA)",
     "materia": "Matemáticas, Física",
     "mensaje": "Deber una materia del cbc (Ingeniería): Holaa! Tengo una duda, en este cuatrimestre me cambié a Ingeniería y quería saber si quedándome una pendiente que es pensamiento computacional podría ingresar a la carrera de igual forma ¿?. En intensivo de verano voy a rendir Análisis matemático ya que en este cuatrimestre estoy cursando Álgebra y Física....",
-    "enlace": "https://www.reddit.com/r/UBA/comments/1x2qamm/deber_una_materia_del_cbc_ingeniería/",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/reddit/7393b8616a",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1552,7 +1552,7 @@
     "plataforma": "Reddit (r/UBA)",
     "materia": "Física",
     "mensaje": "Profe particular de física (CBC): Hola! Estoy buscando clases particulares de física VIRTUAL para el segundo parcial del cbc. Los temas son dinámica, trabajo y energía, hidrostática. submitted by /u/Comfortable-Soup-787 [link] [comments]",
-    "enlace": "https://www.reddit.com/r/UBA/comments/1wuvxb9/profe_particular_de_física_cbc/",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/reddit/b831eacc68",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1561,7 +1561,7 @@
     "plataforma": "Reddit (r/UBA)",
     "materia": "Matemáticas",
     "mensaje": "Queja profesor (Económicas, Contador Público): Para un poco de contexto, estoy cursando Estadística del 2do tramo de FCE en una sede regional. La clase es de 9hs a 11hs. Todas las clases el profesor llega tarde, y me refiero a entre 20 a 35 minutos. En las últimas dos semanas llega pasadas las 9y40 sin ningún tipo de descaro. Nadie en el curso, ...",
-    "enlace": "https://www.reddit.com/r/UBA/comments/1wsnhdl/queja_profesor_económicas_contador_público/",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/reddit/7834f0be9f",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   },
@@ -1570,7 +1570,7 @@
     "plataforma": "Reddit (r/UBA)",
     "materia": "Matemáticas",
     "mensaje": "creo q realmente necesito ayuda [cbc med vet]: confesión vergonzosa estoy haciendo el cbc desde principio de año. empecé x uba xxi por cuestiones de distancias y comodidad, fue cuestión de siquiera intentar empezar con matemática, que supe que no iba a poder, así que la deje para este cuatri que estoy haciendo presencial. x cuestiones d la vida ...",
-    "enlace": "https://www.reddit.com/r/UBA/comments/1w0gigv/creo_q_realmente_necesito_ayuda_cbc_med_vet/",
+    "enlace": "https://anuncio-ejemplo-anonimizado.local/reddit/3b5f8f8fd3",
     "ground_truth_label": 0,
     "motivo_etiqueta": "No cumple criterios de intención de alumno (consulta general o ruido en plataforma)."
   }

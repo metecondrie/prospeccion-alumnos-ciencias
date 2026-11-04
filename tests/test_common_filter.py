@@ -92,7 +92,7 @@ class TestCommonFilter(unittest.TestCase):
     def test_record_validation(self):
         valid_record = {
             "plataforma": "Tablón de Anuncios",
-            "enlace_anuncio": "https://www.tablondeanuncios.com/clases-particulares/demanda-ciencias-demo.htm",
+            "enlace_anuncio": "https://anuncio-ejemplo-anonimizado.local/tablon/demanda-ciencias-demo",
             "materia": "Matemáticas",
             "nivel_educativo": "Secundario",
             "pais_ubicacion": "España - Lakuntza (Navarra)",

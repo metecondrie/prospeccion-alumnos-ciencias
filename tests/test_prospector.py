@@ -45,8 +45,8 @@ class TestProspectorCore(unittest.TestCase):
         self.assertEqual(sanitize_csv(None), "")
 
     def test_safe_hyperlink(self):
-        valid_url = "https://www.tusclases.com.ar/anuncio-123.aspx"
-        expected = '=HYPERLINK("https://www.tusclases.com.ar/anuncio-123.aspx", "🔗 Abrir Anuncio")'
+        valid_url = "https://anuncio-ejemplo-anonimizado.local/tus-clases/anuncio-123"
+        expected = '=HYPERLINK("https://anuncio-ejemplo-anonimizado.local/tus-clases/anuncio-123", "🔗 Abrir Anuncio")'
         self.assertEqual(safe_hyperlink(valid_url), expected)
 
         # URL con comillas dobles debe escaparse
@@ -153,7 +153,7 @@ class TestProspectorCore(unittest.TestCase):
         recruitment_ad = {
             "id": "lead_103",
             "mensaje": "Se busca docente de matemáticas para instituto secundario en zona norte.",
-            "enlace": "https://cronoshare.com/empleo/clases-particulares-matematicas"
+            "enlace": "https://anuncio-ejemplo-anonimizado.local/cronoshare/categoria/clases-particulares-matematicas"
         }
         res_recruitment = rule_based_audit(recruitment_ad)
         self.assertFalse(res_recruitment["is_student"])

@@ -143,3 +143,49 @@ def test_c10c_sin_claves_en_archivos_rastreados():
         if p.resolve() != ESTE and p.suffix in EXT and pat.search(p.read_text(encoding="utf-8", errors="ignore")):
             malos.append(p.name)
     assert not malos, f"posible clave en: {malos}"
+
+# --- C11 URLs sintéticas y privacidad de slugs ----------------------------------------
+def test_c11_urls_sinteticas_y_slugs_sin_pii():
+    try:
+        from tests.test_pii_security import FORBIDDEN_NAME_HASHES
+    except ImportError:
+        import sys
+        sys.path.insert(0, str(ROOT))
+        from tests.test_pii_security import FORBIDDEN_NAME_HASHES
+    import hashlib
+
+    pat_real_url = re.compile(r"tusclases|tablondeanuncios|cronoshare\.com|reddit\.com", re.I)
+    token_split = re.compile(r"[/_\-?&=.]")
+
+    malas_urls = []
+    slug_tokens_pii = []
+
+    # Recorrer datasets, entregables y archivos estructurados del árbol
+    for p in ROOT.rglob("*"):
+        if not p.is_file():
+            continue
+        if any(x in p.parts for x in [".git", ".venv", "node_modules", "scratch", ".pytest_cache", "audit_work"]):
+            continue
+        if p.suffix in {".json", ".csv", ".html"} or p.parent.name == "data":
+            txt = p.read_text(encoding="utf-8", errors="ignore")
+            # (a) 0 URLs reales (regex tusclases|tablondeanuncios|cronoshare.com|reddit.com)
+            urls = re.findall(r"https?://[^\s\"\'<>]+", txt)
+            for u in urls:
+                if pat_real_url.search(u):
+                    malas_urls.append((str(p.relative_to(ROOT)), u))
+                # (b) 0 tokens de slugs cuyo sha256 coincida con el set prohibido de test_pii_security
+                if "anuncio-ejemplo-anonimizado.local" in u:
+                    slug_part = u.split("anuncio-ejemplo-anonimizado.local", 1)[1]
+                    for tok in token_split.split(slug_part):
+                        tok_clean = tok.strip().lower()
+                        if tok_clean:
+                            h = hashlib.sha256(tok_clean.encode("utf-8")).hexdigest()
+                            if h in FORBIDDEN_NAME_HASHES:
+                                slug_tokens_pii.append((str(p.relative_to(ROOT)), u, tok))
+
+    assert not malas_urls, f"URLs reales detectadas: {malas_urls}"
+    assert not slug_tokens_pii, f"Tokens de slugs con PII detectados: {slug_tokens_pii}"
+
+
+test_c11 = test_c11_urls_sinteticas_y_slugs_sin_pii
+
