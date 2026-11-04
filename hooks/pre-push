@@ -1,0 +1,3 @@
+#!/bin/sh
+# Bloquea el push si algun test falla (incluye tests/test_correcciones.py).
+python -m pytest -q || { echo "PUSH BLOQUEADO: tests en rojo"; exit 1; }
