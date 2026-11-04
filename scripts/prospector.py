@@ -734,7 +734,7 @@ def cmd_run(args):
     
     # Fresh extraction es el comportamiento por defecto; solo usa caché si se indica explícitamente
     use_cached = getattr(args, "cached", False) or getattr(args, "skip_extraction", False)
-    if not use_cached or not os.path.exists(raw_path):
+    if not use_cached:
         print("-> Extracción fresca predeterminada: ejecutando scripts/run_extraction.py...")
         import subprocess
         subprocess.run([sys.executable, "scripts/run_extraction.py"], check=True)
@@ -745,10 +745,10 @@ def cmd_run(args):
     args.output_approved = "data/dataset_canonico_auditado.json"
     args.output_discarded = "data/descartados_auditoria.json"
     
-    if os.environ.get("GEMINI_API_KEY"):
+    if _external_ai_configured(getattr(args, "api_key", None)):
         cmd_audit(args)
     else:
-        print("[Aviso] GEMINI_API_KEY no detectada. Usando dataset_canonico_auditado.json existente.")
+        print("[Aviso] Ningún proveedor de IA configurado (Gemini, Groq, Mistral, Cloudflare). Usando dataset_canonico_auditado.json existente.")
     
     args.approved = args.output_approved
     args.discarded = args.output_discarded

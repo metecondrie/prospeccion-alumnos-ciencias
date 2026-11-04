@@ -31,11 +31,16 @@ def load_and_sample_listings(
     sample_size: int = 100,
     seed: int = 42
 ) -> List[Dict[str, Any]]:
-    """Carga data/extracted_listings.json, normaliza con IDs estables y toma muestra determinista."""
-    if not os.path.exists(input_path):
-        raise FileNotFoundError(f"Archivo de anuncios crudos no encontrado: {input_path}")
+    """Carga data/extracted_listings.json (o benchmark si no existe en CI), normaliza con IDs estables y toma muestra determinista."""
+    target_path = input_path
+    if not os.path.exists(target_path):
+        benchmark_fallback = os.path.join(PROJECT_ROOT, "evaluation", "dataset_benchmark_etiquetado.json")
+        if os.path.exists(benchmark_fallback):
+            target_path = benchmark_fallback
+        else:
+            raise FileNotFoundError(f"Archivo de anuncios crudos no encontrado: {input_path}")
 
-    with open(input_path, "r", encoding="utf-8") as f:
+    with open(target_path, "r", encoding="utf-8") as f:
         raw_items = json.load(f)
 
     # Asignar IDs normalizados y deterministas

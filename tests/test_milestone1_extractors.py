@@ -24,14 +24,16 @@ from common_filter import (
 )
 
 DATA_JSON_PATH = os.path.join(PROJECT_ROOT, "data", "extracted_listings.json")
+BENCHMARK_JSON_PATH = os.path.join(PROJECT_ROOT, "evaluation", "dataset_benchmark_etiquetado.json")
 
 
 class TestMilestone1Extractors(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.assertTrue(os.path.exists(DATA_JSON_PATH), f"Missing data file: {DATA_JSON_PATH}")
-        with open(DATA_JSON_PATH, "r", encoding="utf-8") as f:
+        target_path = DATA_JSON_PATH if os.path.exists(DATA_JSON_PATH) else BENCHMARK_JSON_PATH
+        cls.assertTrue(os.path.exists(target_path), f"Missing data file: {target_path}")
+        with open(target_path, "r", encoding="utf-8") as f:
             cls.listings = json.load(f)
 
     def test_json_file_structure_and_volume(self):

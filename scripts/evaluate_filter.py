@@ -44,6 +44,10 @@ def calculate_metrics(tp: int, fp: int, tn: int, fn: int) -> Dict[str, float]:
 def evaluate_models():
     # 1. Cargar datos
     raw_path = os.path.join(PROJECT_ROOT, "data", "extracted_listings.json")
+    if not os.path.exists(raw_path):
+        benchmark_fallback = os.path.join(PROJECT_ROOT, "evaluation", "dataset_benchmark_etiquetado.json")
+        if os.path.exists(benchmark_fallback):
+            raw_path = benchmark_fallback
     canon_path = os.path.join(PROJECT_ROOT, "data", "dataset_canonico_auditado.json")
     discard_path = os.path.join(PROJECT_ROOT, "data", "descartados_auditoria.json")
 

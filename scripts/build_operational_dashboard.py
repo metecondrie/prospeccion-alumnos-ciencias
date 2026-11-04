@@ -20,6 +20,11 @@ if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8")
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+SCRIPTS_DIR = PROJECT_ROOT / "scripts"
+if str(SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS_DIR))
+
+from prospector import sanitize_csv, safe_hyperlink
 
 SYNTHETIC_HOST = "anuncio-ejemplo-anonimizado.local"
 REAL_URL_SNAPSHOT_REV = "f1855dd~1"
@@ -141,24 +146,24 @@ def build_operational_crm():
         for r in real_leads:
             url = r.get("enlace al anuncio", "")
             writer.writerow({
-                "ID_Prospecto": r.get("id", ""),
-                "Origen": f"{r.get('plataforma','')} ({r.get('país/ubicación','')})",
-                "Nombre_Alumno": r.get("nombre") or "No especificado",
-                "Materia": r.get("materia", ""),
-                "Tema_Especifico": r.get("tema", ""),
-                "Nivel_Educativo": r.get("nivel educativo", ""),
-                "Nivel_Categoria": r.get("nivel_categoria", ""),
-                "Modalidad": r.get("modalidad", "Online"),
-                "Alerta_Modalidad": r.get("alerta_modalidad", ""),
-                "Canal": r.get("canal", "directo"),
-                "Costo_Contacto": r.get("costo_contacto", "Gratuito"),
+                "ID_Prospecto": sanitize_csv(r.get("id", "")),
+                "Origen": sanitize_csv(f"{r.get('plataforma','')} ({r.get('país/ubicación','')})"),
+                "Nombre_Alumno": sanitize_csv(r.get("nombre") or "No especificado"),
+                "Materia": sanitize_csv(r.get("materia", "")),
+                "Tema_Especifico": sanitize_csv(r.get("tema", "")),
+                "Nivel_Educativo": sanitize_csv(r.get("nivel educativo", "")),
+                "Nivel_Categoria": sanitize_csv(r.get("nivel_categoria", "")),
+                "Modalidad": sanitize_csv(r.get("modalidad", "Online")),
+                "Alerta_Modalidad": sanitize_csv(r.get("alerta_modalidad", "")),
+                "Canal": sanitize_csv(r.get("canal", "directo")),
+                "Costo_Contacto": sanitize_csv(r.get("costo_contacto", "Gratuito")),
                 "Estado_Gestion": "Pendiente",
-                "Link_Anuncio": f'=HYPERLINK("{url}", "🔗 Abrir Anuncio")',
-                "Anuncio_en_Si": r.get("mensaje/descripción", ""),
-                "Forma_Contacto": r.get("método de contacto directo", ""),
-                "Fecha_Publicacion": r.get("fecha de publicación", ""),
-                "Fecha_Captura": r.get("fecha_captura", ""),
-                "Criterio_IA": r.get("justificacion_ia", "")
+                "Link_Anuncio": safe_hyperlink(url),
+                "Anuncio_en_Si": sanitize_csv(r.get("mensaje/descripción", "")),
+                "Forma_Contacto": sanitize_csv(r.get("método de contacto directo", "")),
+                "Fecha_Publicacion": sanitize_csv(r.get("fecha de publicación", "")),
+                "Fecha_Captura": sanitize_csv(r.get("fecha_captura", "")),
+                "Criterio_IA": sanitize_csv(r.get("justificacion_ia", ""))
             })
     print(f"[OK] Generado CSV operativo: {op_csv_path}")
 
