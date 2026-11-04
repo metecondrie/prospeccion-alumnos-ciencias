@@ -85,7 +85,7 @@
   ],
   "retroalimentacion_al_modelo_y_pipeline": [
     {
-      "componente": "Filtro Semántico IA (Gemini 2.5 Flash)",
+      "componente": "Filtro Semántico IA (Gemini 3.5 / 3.6 Flash)",
       "mejora_aplicada": "Adición de 134 avisos descartados como dataset de exclusión forense (data/descartados_auditoria.json)",
       "impacto": "Reducción de falsos positivos en academias a 0% en el lote auditado"
     },

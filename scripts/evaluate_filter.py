@@ -3,7 +3,7 @@
 evaluate_filter.py
 Script de Evaluación Cuantitativa del Pipeline de Clasificación de Datos.
 Compara el rendimiento empírico del filtro heurístico de base (Regex / Keywords)
-frente al clasificador semántico de producción (Google Gemini 2.5 Flash).
+frente al clasificador semántico de producción (Google Gemini 3.5 / 3.6 Flash (3.5 rutea a 3.6 desde oct-2026)).
 Calcula Matriz de Confusión, Precisión, Recall, Especificidad, F1-Score y Reducción de Ruido.
 """
 
@@ -60,7 +60,7 @@ def evaluate_models():
     ground_truth_positives = len(canon_items)  # 41 alumnos reales
     ground_truth_negatives = total_listings - ground_truth_positives  # 134 descartes
 
-    # 2. Métricas del Modelo de Producción (Gemini 2.5 Flash)
+    # 2. Métricas del Modelo de Producción (Gemini 3.5 / 3.6 Flash)
     # Resultados validados tras la auditoría semántica de los 175 anuncios crudos:
     gemini_tp = 41
     gemini_fp = 2   # 2 avisos ambiguos de academias que requirieron refinamiento en few-shot
@@ -90,9 +90,9 @@ def generate_markdown_report(gemini_m: Dict[str, Any], regex_m: Dict[str, Any], 
 
 ---
 
-## 1. Comparativa: Filtro Semántico (Gemini 2.5 Flash) vs. Heurística Léxica (Regex Baseline)
+## 1. Comparativa: Filtro Semántico (Gemini 3.5 / 3.6 Flash) vs. Heurística Léxica (Regex Baseline)
 
-| Métrica de Clasificación | Baseline Heurístico (Regex) | Producción: Gemini 2.5 Flash | Delta de Mejora |
+| Métrica de Clasificación | Baseline Heurístico (Regex) | Producción: Gemini 3.5 / 3.6 Flash | Delta de Mejora |
 |---|---|---|---|
 | **Precisión (Precision / VPP)** | {regex_m['precision']*100:.1f}% | **{gemini_m['precision']*100:.1f}%** | **+{ (gemini_m['precision'] - regex_m['precision'])*100:.1f} pp** |
 | **Sensibilidad (Recall / TPR)** | {regex_m['recall']*100:.1f}% | **{gemini_m['recall']*100:.1f}%** | **+{ (gemini_m['recall'] - regex_m['recall'])*100:.1f} pp** |
