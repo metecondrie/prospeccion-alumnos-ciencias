@@ -1,10 +1,6 @@
 """
 Independent Empirical Challenge & Stress-Test Suite
-Author: challenger_1 (Role: critic, specialist)
-Workspace: c:\\Users\\alele\\Downloads\\Nueva carpeta
-Deliverables targeted:
-  1. alumnos_ciencias_exactas.csv
-  2. directorio_plataformas.md
+Suite de pruebas empíricas y de robustez para el dataset canónico y directorio.
 """
 
 import unittest

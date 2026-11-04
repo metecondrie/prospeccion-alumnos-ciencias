@@ -1,9 +1,14 @@
 # Prospección de Alumnos y CRM Local (Ciencias Exactas)
 
+[![CI](https://github.com/metecondrie/prospeccion-alumnos-ciencias/actions/workflows/ci.yml/badge.svg)](https://github.com/metecondrie/prospeccion-alumnos-ciencias/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Tests Passing](https://img.shields.io/badge/Tests-64%20passed%20(100%25)-success.svg)](tests/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Architecture](https://img.shields.io/badge/Architecture-Web%20Scraping%20%2B%20Telegram%20Stream-lightgrey.svg)](docs/DOCUMENTACION_TECNICA.md)
+
+> **TL;DR (EN):** Lead-generation pipeline for a STEM tutor: multi-site scraper (175 raw listings), two-stage filter (regex → LLM semantic audit with multi-provider failover), real-time Telegram sentinel with push alerts, and a local CRM dashboard. 41 verified student leads, $0/mo operating cost, all public data anonymized. Full test harness included.
+
+---
 
 Herramienta de software libre orientada a docentes particulares de ciencias exactas (Matemática, Física, Química y Biología) para la captación ética, filtrado semántico asistido por IA y gestión de prospectos de nivel universitario y secundario superior.
 
@@ -13,11 +18,11 @@ Combina extracción web periódica en portales públicos clasificados, escucha e
 
 ## 📋 Características Principales
 
-* **Extracción Multicanal:** Scraping concurrente de demandas públicas de alumnos en TusClases (España, Argentina, México, Colombia, Chile, Perú), Tablón de Anuncios, Cronoshare y foros de Reddit.
+* **Extracción Multicanal:** Scraping concurrente de demandas públicas de alumnos en TusClases (España, Argentina, México, Colombia, Chile, Perú), Tablón de Anuncios, Cronoshare y foros de Reddit (175 anuncios crudos procesados).
 * **Escucha Pasiva en Telegram (`scripts/telegram_centinela.py`):** Monitorización de eventos en vivo en grupos universitarios públicos (UTN, FIUBA, UNLP, CBC) para detectar estudiantes solicitando apoyo académico, con alertas push opcionales al móvil.
-* **Filtrado Semántico con IA:** Clasificación de intención para descartar ofertas de empleo docente, academias comerciales y anuncios no relacionados, utilizando modelos LLM (Google Gemini / Groq) con validación estructurada en JSON.
+* **Filtrado Semántico con IA:** Clasificación de intención para descartar ofertas de empleo docente, academias comerciales y anuncios no relacionados, utilizando Google Gemini 2.5 Flash Lite (con respaldo en Groq LPU) y validación estructurada en JSON.
 * **Panel CRM Local Autónomo (`dashboard.html`):** Interfaz web local que opera 100% en el navegador (sin servidor backend), con persistencia en `localStorage`, notas por alumno, registro de contacto y filtrado dinámico.
-* **Cobertura de Pruebas Automatizadas:** 64 pruebas con `pytest` que verifican integridad de esquemas CSV (RFC 4180), coherencia taxonómica y validación determinista del dataset.
+* **Cobertura de Pruebas Automatizadas:** 64 pruebas exhaustivas con `pytest` y `unittest` que verifican integridad de esquemas CSV (RFC 4180), coherencia taxonómica y validación determinista del dataset.
 
 ---
 
@@ -30,8 +35,12 @@ El proyecto mantiene una estructura modular y limpia:
 ├── dashboard.html              # Interfaz web CRM autónoma (HTML5 / Tailwind CSS)
 ├── alumnos_ciencias_exactas.csv# Base de datos tabular canónica (8 columnas, RFC 4180)
 ├── dashboard_crm.csv           # Planilla extendida para importación en hojas de cálculo
-├── requirements.txt            # Dependencias de Python
+├── requirements.txt            # Dependencias de producción
+├── requirements-dev.txt        # Dependencias de testing (pytest)
 ├── LICENSE                     # Licencia MIT
+│
+├── .github/workflows/          # Integración Continua (CI)
+│   └── ci.yml                  # Automatización de pruebas en GitHub Actions
 │
 ├── bin/                        # Lanzadores de conveniencia para Windows (.bat)
 │   ├── actualizar_alumnos.bat
@@ -40,10 +49,10 @@ El proyecto mantiene una estructura modular y limpia:
 │   └── unirme_a_grupos.bat
 │
 ├── data/                       # Esquemas de datos y canales auditados
-│   ├── dataset_canonico_auditado.json  # Base de datos de prospectos validados
+│   ├── dataset_canonico_auditado.json  # Base de datos de prospectos validados (41 leads)
 │   ├── descartados_auditoria.json      # Registro de anuncios descartados
-│   ├── extracted_listings.json         # Extracciones crudas
-│   └── telegram_channels.json          # Comunidades y canales objetivo
+│   ├── extracted_listings.json         # Extracciones crudas (175 listings)
+│   └── telegram_channels.json          # Directorio de comunidades auditadas
 │
 ├── docs/                       # Documentación técnica y metodológica
 │   ├── DOCUMENTACION_TECNICA.md
@@ -54,13 +63,14 @@ El proyecto mantiene una estructura modular y limpia:
 ├── scripts/                    # Módulos de extracción, filtrado y escucha
 │   ├── prospector.py           # CLI central, evaluación con IA y compilador
 │   ├── telegram_centinela.py   # Listener MTProto en tiempo real
-│   ├── auto_join_groups.py     # Gestor de suscripción con filtro de actividad
+│   ├── auto_join_groups.py     # Gestor de suscripción con filtro de liveness
 │   ├── run_extraction.py       # Orquestador concurrente de scrapers web
 │   ├── extract_tusclases.py    # Extractor para red TusClases
 │   ├── extract_tablon.py       # Extractor de Tablón de Anuncios
-│   └── extract_cronoshare_workana.py # Extractor Cronoshare y Reddit RSS
+│   ├── extract_cronoshare_workana.py # Extractor Cronoshare y Reddit RSS
+│   └── anonymize_for_public.py # Generador determinístico de muestras públicas
 │
-└── tests/                      # Suite de pruebas automatizadas (pytest)
+└── tests/                      # Suite de pruebas automatizadas (pytest / unittest)
     ├── test_e2e_deliverables.py
     ├── test_empirical_challenger.py
     ├── test_common_filter.py
@@ -76,11 +86,12 @@ El proyecto mantiene una estructura modular y limpia:
 
 ```bash
 pip install -r requirements.txt
+pip install -r requirements-dev.txt
 ```
 
 ### 2. Configuración Opcional (`.env`)
 
-Crea un archivo `.env` en la raíz si deseas habilitar la auditoría con IA o las alertas de Telegram:
+Crea un archivo `.env` en la raíz a partir de `.env.example`:
 
 ```env
 # Clave opcional de IA (Google AI Studio o Groq)
@@ -112,22 +123,31 @@ python main.py test
 
 ---
 
-## ⚖️ Consideraciones Éticas y Cumplimiento de ToS
+## 🔒 Privacidad y Uso Responsable
 
-* **Enfoque Exclusivo en Adultos:** El sistema descarta activamente anuncios dirigidos a menores de edad sin representación parental (primaria y primeros cursos de secundaria). Se enfoca prioritariamente en estudiantes universitarios (CBC, FIUBA, UTN, UNLP, FP Superior).
-* **Escucha Pasiva sin Spam:** El módulo de Telegram opera únicamente en modo escucha pasiva en grupos públicos de libre acceso en los que el usuario ya participa. **No realiza envío automatizado de mensajes directos (DMs) ni acciones no solicitadas.** Todo contacto posterior se realiza de forma manual y contextual por el docente.
-* **Gobernanza de Datos:** Los datasets compartidos contienen datos anonimizados o extraídos de tablones estrictamente públicos, respetando principios de minimización de datos.
+* Los datos de este repositorio son una **muestra anonimizada** (seudónimos determinísticos generados con `scripts/anonymize_for_public.py`). Los registros operativos reales son privados y no se publican.
+* La información proviene de **anuncios públicos** donde las personas solicitan explícitamente ser contactadas por profesores particulares, y se usa exclusivamente para ese fin.
+* No se almacenan datos sensibles. Si un aviso corresponde a un menor de edad, el contacto se realiza siempre a través del medio que publicó el responsable del anuncio.
+* El scraping respeta el acceso público de los sitios (sin eludir logins ni medidas de protección) y la escucha de Telegram opera solo sobre grupos a los que la cuenta se unió manualmente, con límites de tasa (*rate-limiting* y protección contra *FloodWait*).
+* ¿Ves tu aviso en la muestra y preferís que no esté? Escribime y lo elimino.
 
 ---
 
-## 🧪 Pruebas Automatizadas
-
-Para ejecutar las comprobaciones de integridad y esquema offline:
+## 🧪 Cómo correr las verificaciones
 
 ```bash
-pytest tests/
-python validate_dataset.py
+pip install -r requirements.txt        # Dependencias de producción
+pip install -r requirements-dev.txt    # Dependencias de testing
+python validate_dataset.py             # Integridad criptográfica del dataset
+python -m unittest discover -s tests   # Suite completa Python (64 tests)
+node tests/check_dashboard.cjs         # Suite del dashboard CRM (Node.js)
 ```
+
+---
+
+## 🧑‍💻 Sobre este proyecto y mi rol
+
+Diseñé y dirigí este proyecto de punta a punta: definí el problema de negocio (asimetría 90/10 en portales de clasificados donde la mayoría son academias o docentes buscando alumnos), diseñé la arquitectura del pipeline y audité cada entrega con criterios de aceptación verificables. La implementación fue asistida por IA (Google Antigravity); la verificación de datos, las correcciones estructurales y las decisiones de calidad y privacidad fueron humanas a lo largo de múltiples iteraciones.
 
 ---
 

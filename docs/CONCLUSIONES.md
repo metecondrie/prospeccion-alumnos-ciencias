@@ -1,11 +1,11 @@
 # Informe de Conclusiones: Prospección de Alumnos de Ciencias Exactas (Auditado)
 
 **Proyecto**: Captación de alumnos de ciencias exactas (Matemáticas, Física, Química y Biología) en España e Hispanoamérica.  
-**Docente destinatario**: Prof. Alejo Ongaro (`alejoongaro@gmail.com`)  
+**Docente destinatario**: Prof. Alejo Ongaro (`contacto.docente@ciencias.org`)  
 **Fecha de emisión**: 4 de noviembre de 2026  
 **Entorno de ejecución**: Antigravity Multi-Agent Engine con Auditoría Semántica y Verificación Criptográfica  
 **Carpeta en Drive**: `Prospeccion Alumnos Ciencias Exactas - Teamwork`  
-**Panel Interactivo en Escritorio**: `E:\OneDrive\Escritorio\Prospeccion_Alumnos_Ciencias\dashboard.html`  
+**Panel Interactivo**: `dashboard.html`  
 
 ---
 

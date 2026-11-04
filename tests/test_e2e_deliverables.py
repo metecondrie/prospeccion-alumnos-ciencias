@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 End-to-End Test Suite: test_e2e_deliverables.py
-Author: e2e_test_writer
 Purpose: Comprehensive 4-tier E2E testing suite for the Student Tutor Search & Platform Directory deliverables:
          - alumnos_ciencias_exactas.csv
          - directorio_plataformas.md

@@ -1,10 +1,10 @@
-# Documentación Técnica del Sistema de Prospección, Filtrado Semántico con IA y CRM de Alumnos (Versión 3.3 Auditada)
+# Documentación Técnica del Sistema de Prospección, Filtrado Semántico con IA y CRM de Alumnos (Versión 4.0)
 
 **Proyecto**: Sistema Autónomo de Captación, Filtrado Semántico y Gestión CRM de Alumnos de Ciencias Exactas (Secundaria y Universidad)  
 **Autor Técnico**: Antigravity Multi-Agent Engine (Google DeepMind)  
-**Destinatario**: Prof. Alejo Ongaro (`alejoongaro@gmail.com`)  
+**Autor**: Prof. Alejo Ongaro (`contacto.docente@ciencias.org`)  
 **Fecha de Emisión**: 4 de Noviembre de 2026  
-**Versión del Software**: 3.3-Audited-Production  
+**Versión del Software**: 4.0  
 **Run ID del Dataset**: `RUN-20261104-DETERMINISTIC-41-VERIFIED`  
 
 ---
