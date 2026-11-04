@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 anonymize_for_public.py
-Script de anonimización determinística para el repositorio público de Prospección de Alumnos.
-Reemplaza nombres personales por seudónimos consistentes en datos, planillas, dashboard y documentación,
-garantizando 0 colisiones con nombres reales y protegiendo la privacidad de los estudiantes.
+Script de anonimización determinística para generación de repositorio público limpio.
+Reemplaza nombres y datos personales por seudónimos consistentes en datos, planillas y dashboard,
+asegurando que ninguna PII real quede expuesta en repositorios abiertos.
 """
 
 import os
@@ -27,7 +27,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
 PUBLIC_DIR = os.path.abspath(os.path.join(PROJECT_ROOT, "..", "prospeccion-alumnos-ciencias_publico"))
 
-# Pool de seudónimos libres de colisión con los 24 nombres originales del dataset
+# Pool de seudónimos determinísticos libres de colisión con los 24 nombres originales del dataset
 PSEUDONYMS_POOL = [
     "Alex R.", "Belén M.", "Carlos T.", "Diana P.", "Esteban V.",
     "Florencia G.", "Helena B.", "Ignacio L.", "Julia C.", "Kevin D.",
@@ -182,42 +182,19 @@ def procesar_json(ruta: str, mapas: Mapas):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
-def preview_anonymization(mapas: Mapas):
-    data_path = os.path.join(PROJECT_ROOT, "data", "dataset_canonico_auditado.json")
-    if not os.path.exists(data_path):
-        print("[ERROR] No se encontró el dataset canónico.")
-        return
+def apply_anonymization(target_dir: str, mapas: Mapas):
+    procesar_json(os.path.join(target_dir, "data", "dataset_canonico_auditado.json"), mapas)
+    procesar_json(os.path.join(target_dir, "data", "extracted_listings.json"), mapas)
+    if os.path.exists(os.path.join(target_dir, "data", "descartados_auditoria.json")):
+        procesar_json(os.path.join(target_dir, "data", "descartados_auditoria.json"), mapas)
 
-    with open(data_path, "r", encoding="utf-8") as f:
-        data = json.load(f)
+    # Recompilar CSVs y dashboard.html
+    prospector_py = os.path.join(target_dir, "scripts", "prospector.py")
+    subprocess.run([sys.executable, prospector_py, "build"], cwd=target_dir, check=True)
 
-    names = sorted(list(set(r.get("nombre", "") for r in data if r.get("nombre"))))
-    print("=" * 65)
-    print("   VISTA PREVIA DE ANONIMIZACIÓN DETERMINÍSTICA (CERO COLISIONES)")
-    print("=" * 65)
-    for n in names:
-        pseudo = mapas.transformar_nombre(n)
-        print(f"  {n:25} -> {pseudo}")
-    print(f"\nTotal nombres únicos mapeados: {len(names)}")
-    print("Comandos disponibles:")
-    print("  python scripts/anonymize_for_public.py --in-place   # Aplica en el workspace actual")
-    print("  python scripts/anonymize_for_public.py --escribir   # Genera copia en _publico\n")
-
-
-def apply_in_place(mapas: Mapas):
-    print("--> Aplicando anonimización determinística IN-PLACE sobre el repositorio...")
-    procesar_json(os.path.join(PROJECT_ROOT, "data", "dataset_canonico_auditado.json"), mapas)
-    procesar_json(os.path.join(PROJECT_ROOT, "data", "extracted_listings.json"), mapas)
-    if os.path.exists(os.path.join(PROJECT_ROOT, "data", "descartados_auditoria.json")):
-        procesar_json(os.path.join(PROJECT_ROOT, "data", "descartados_auditoria.json"), mapas)
-
-    # Recompilar CSVs y dashboard.html a través de prospector.py
-    prospector_py = os.path.join(PROJECT_ROOT, "scripts", "prospector.py")
-    subprocess.run([sys.executable, prospector_py, "build"], cwd=PROJECT_ROOT, check=True)
-
-    # Docs
+    # Documentación
     for doc in ["docs/AUDITORIA_CAMBIOS.md", "docs/DOCUMENTACION_TECNICA.md", "docs/CONCLUSIONES.md"]:
-        doc_path = os.path.join(PROJECT_ROOT, doc)
+        doc_path = os.path.join(target_dir, doc)
         if os.path.exists(doc_path):
             with open(doc_path, "r", encoding="utf-8") as f:
                 c = f.read()
@@ -226,7 +203,7 @@ def apply_in_place(mapas: Mapas):
                 f.write(c)
 
     # Dashboard HTML strings & badges
-    dash_path = os.path.join(PROJECT_ROOT, "dashboard.html")
+    dash_path = os.path.join(target_dir, "dashboard.html")
     if os.path.exists(dash_path):
         with open(dash_path, "r", encoding="utf-8") as f:
             c = f.read()
@@ -239,7 +216,77 @@ def apply_in_place(mapas: Mapas):
         with open(dash_path, "w", encoding="utf-8") as f:
             f.write(c)
 
-    print("[OK] Anonimización in-place completada exitosamente.")
+    # Actualizar test de check_dashboard.cjs
+    check_dash = os.path.join(target_dir, "tests", "check_dashboard.cjs")
+    if os.path.exists(check_dash):
+        with open(check_dash, "r", encoding="utf-8") as f:
+            c = f.read()
+        c = c.replace("value='hernan'", "value='belen'")
+        c = c.replace("Búsqueda 'hernan' falló", "Búsqueda 'belen' falló")
+        c = c.replace("(hernan: 3, cordoba: 1, peru: 2)", "(belen: 3, cordoba: 1, peru: 2)")
+        with open(check_dash, "w", encoding="utf-8") as f:
+            f.write(c)
+
+
+def verify_target(target_dir: str):
+    real_names = [
+        "Hernán", "Hernan", "Agustina", "Sebastián", "Sebastian", "Victoria",
+        "Adriana", "Antonella", "Daniela", "Leonardo", "Mateo", "Paulina",
+        "Roxana", "Salvador", "Valentina", "Camila", "Ignacia", "Isabella",
+        "Harvey", "Greta", "Pilar"
+    ]
+    residual = 0
+    for root, dirs, files in os.walk(target_dir):
+        if any(skip in root for skip in [".git", "node_modules", "__pycache__", "scratch"]):
+            continue
+        for f in files:
+            p = os.path.join(root, f)
+            try:
+                with open(p, "r", encoding="utf-8", errors="ignore") as fp:
+                    txt = fp.read()
+                for n in real_names:
+                    matches = list(re.finditer(r"\b" + re.escape(n) + r"\b", txt))
+                    for m in matches:
+                        line_start = txt.rfind("\n", 0, m.start()) + 1
+                        line_end = txt.find("\n", m.start())
+                        if line_end == -1: line_end = len(txt)
+                        line = txt[line_start:line_end].strip()
+                        if "http://" in line or "https://" in line or "scripts/anonymize" in p.replace("\\", "/"):
+                            continue
+                        residual += 1
+            except Exception:
+                pass
+
+    print(f"\n[OK] {residual} nombres reales residuales")
+    assert residual == 0, f"Error: Quedan {residual} nombres reales sin anonimizar."
+
+    print("\nEjecutando las 3 suites de verificación sobre la copia...")
+    
+    # Suite 1
+    r1 = subprocess.call([sys.executable, "validate_dataset.py"], cwd=target_dir)
+    if r1 == 0:
+        print("[OK] Suite 1/3: validate_dataset.py (100% verde)")
+    else:
+        print("[FALLO] Suite 1/3: validate_dataset.py falló")
+
+    # Suite 2
+    r2 = subprocess.call([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"], cwd=target_dir)
+    if r2 == 0:
+        print("[OK] Suite 2/3: Unittest discover (100% verde)")
+    else:
+        print("[FALLO] Suite 2/3: Unittest discover falló")
+
+    # Suite 3
+    r3 = subprocess.call(["node", "tests/check_dashboard.cjs"], cwd=target_dir)
+    if r3 == 0:
+        print("[OK] Suite 3/3: Dashboard CRM Node.js (100% verde)")
+    else:
+        print("[FALLO] Suite 3/3: Dashboard CRM Node.js falló")
+
+    if r1 == 0 and r2 == 0 and r3 == 0 and residual == 0:
+        print("\n✅ [OK] Repositorio público anonimizado y 100% verificado.")
+        return True
+    return False
 
 
 def generate_public_repo(mapas: Mapas):
@@ -251,7 +298,14 @@ def generate_public_repo(mapas: Mapas):
     exclude_items = {".env", ".git", "centinela_session.session", "logs", "__pycache__", ".pytest_cache", ".agents", "scratch", "backup_audit_*"}
 
     for item in os.listdir(PROJECT_ROOT):
-        if item in exclude_items or item.endswith(".session") or item.endswith(".log"):
+        if (
+            item in exclude_items
+            or item.startswith("backup")
+            or item.startswith(".agent")
+            or item.endswith(".session")
+            or item.endswith(".log")
+            or item == "node_modules"
+        ):
             continue
         src = os.path.join(PROJECT_ROOT, item)
         dst = os.path.join(PUBLIC_DIR, item)
@@ -260,15 +314,8 @@ def generate_public_repo(mapas: Mapas):
         else:
             shutil.copy2(src, dst)
 
-    apply_in_place(mapas)
-    print("Ejecutando verificaciones automáticas sobre la copia pública...")
-    ret_val = subprocess.call([sys.executable, "validate_dataset.py"], cwd=PUBLIC_DIR)
-    ret_test = subprocess.call([sys.executable, "-m", "pytest", "tests/"], cwd=PUBLIC_DIR)
-
-    if ret_val == 0 and ret_test == 0:
-        print("\n✅ [OK] Repositorio público anonimizado y 100% verificado.")
-    else:
-        print("\n⚠️ [AVISO] Se detectaron observaciones en las pruebas de la copia pública.")
+    apply_anonymization(PUBLIC_DIR, mapas)
+    verify_target(PUBLIC_DIR)
 
 
 def main():
@@ -280,11 +327,12 @@ def main():
     mapas = Mapas()
 
     if args.in_place:
-        apply_in_place(mapas)
+        apply_anonymization(PROJECT_ROOT, mapas)
+        verify_target(PROJECT_ROOT)
     elif args.escribir:
         generate_public_repo(mapas)
     else:
-        preview_anonymization(mapas)
+        print("Uso: python scripts/anonymize_for_public.py --escribir")
 
 
 if __name__ == "__main__":
