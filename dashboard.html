@@ -371,17 +371,17 @@
 
       <div class="bg-indigo-50/70 border border-indigo-100 rounded-2xl p-4 space-y-2.5">
         <p class="text-xs font-bold text-indigo-950 flex items-center gap-1.5">
-          <span>⚡</span> ¿Cómo ejecutar el escaneo desde tu computadora?
+          <span>⚡</span> ¿Cómo ejecutar el escaneo desde tu entorno?
         </p>
         <ol class="text-xs text-indigo-900 list-decimal list-inside space-y-1.5 leading-normal">
-          <li>Abre tu carpeta de Escritorio: <br><code class="px-2 py-0.5 bg-white border border-indigo-200 rounded font-mono text-[11px] select-all">E:\OneDrive\Escritorio\Prospeccion_Alumnos_Ciencias</code></li>
-          <li>Haz <strong>doble clic</strong> en el archivo ejecutable <strong><code class="font-bold text-indigo-700">Actualizar_Alumnos.bat</code></strong>.</li>
-          <li>¡Listo! El script rastreará los portales, agregará los alumnos nuevos a este panel (sin tocar los que ya contactaste) y recargará tu navegador.</li>
+          <li>Abre la raíz del proyecto en tu terminal o consola: <br><code class="px-2 py-0.5 bg-white border border-indigo-200 rounded font-mono text-[11px] select-all">python main.py run</code></li>
+          <li>En Windows también puedes ejecutar el lanzador: <strong><code class="font-bold text-indigo-700">bin/actualizar_alumnos.bat</code></strong>.</li>
+          <li>El pipeline rastreará los portales clasificados, auditará con IA y actualizará los prospectos conservando el estado de tu CRM.</li>
         </ol>
       </div>
 
       <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
-        <span class="text-slate-500">¿O prefieres que lo corra yo? Pídemelo en el chat y lo hago al instante.</span>
+        <span class="text-slate-500">Pipeline automatizable con cron, Windows Task Scheduler o GitHub Actions.</span>
         <button onclick="closeScanModal()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition">Entendido</button>
       </div>
     </div>

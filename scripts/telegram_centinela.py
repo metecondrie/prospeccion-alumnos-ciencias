@@ -36,6 +36,12 @@ from prospector import load_env_file, call_multiprovider_batch, normalize_item
 from common_filter import normalize_subject, normalize_level, sanitize_text
 from extract_telegram import send_telegram_notification
 
+try:
+    from telethon.errors import FloodWaitError
+except ImportError:
+    class FloodWaitError(Exception):
+        seconds = 60
+
 load_env_file()
 
 DATA_APPROVED = os.path.join(PROJECT_ROOT, "data", "dataset_canonico_auditado.json")
@@ -207,7 +213,12 @@ async def main():
 
     # PRE-CARGA CRUCIAL DE DIÁLOGOS Y GRUPOS (Para que Telegram envíe updates en tiempo real)
     print("\nSincronizando entidades y grupos de estudiantes...")
-    dialogs = await client.get_dialogs(limit=50)
+    try:
+        dialogs = await client.get_dialogs(limit=50)
+    except FloodWaitError as e:
+        log_event(f"[RATE LIMIT MTPROTO] FloodWait de {e.seconds}s. Esperando enfriamiento...")
+        await asyncio.sleep(e.seconds + 2)
+        dialogs = await client.get_dialogs(limit=50)
     active_groups = [d for d in dialogs if (d.is_group or d.is_channel)]
     print(f"[SINCRONIZACIÓN EXITOSA] {len(active_groups)} chats/grupos monitoreados activamente.")
     print("\nGrupos de estudio en guardia activa:")

@@ -96,10 +96,10 @@ def sanitize_csv(val) -> str:
         return ""
     if isinstance(val, bool):
         return "true" if val else "false"
-    s = str(val).strip()
+    s = str(val)
     if s and s[0] in ("=", "+", "-", "@", "\t", "\r"):
         return "'" + s
-    return s
+    return s.strip()
 
 def safe_hyperlink(url: str) -> str:
     """Construye una fórmula HYPERLINK segura para Excel/Sheets con comillas escapadas."""
@@ -298,13 +298,65 @@ def call_mistral_batch(items: List[Dict[str, Any]], api_key: str, model: str = "
                 raise e
             time.sleep(2.0)
 
+def rule_based_audit(item: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Clasificador heurístico determinista de respaldo (Fallback sin conexión / sin API key).
+    Evalúa patrones léxicos de intenciones educativas sin requerir inferencia LLM externa.
+    """
+    msg = strip_accents(str(item.get("mensaje", "") or item.get("mensaje/descripción", "")))
+    url = str(item.get("enlace", "") or item.get("enlace al anuncio", "")).lower()
+
+    # Patrones de exclusión (docentes, ofertas de trabajo, academias)
+    teacher_patterns = [
+        r"\bdoy clases\b", r"\bofrezco clases\b", r"\bimparto clases\b",
+        r"\bprimera clase gratis\b", r"\bprofesor con \d+\b", r"\bdocente con experiencia\b",
+        r"\bse busca docente\b", r"\bbuscamos profesor\b", r"\boferta de trabajo\b",
+        r"\bvacante\b", r"\bacaddemia\b", r"\bcolegio\b", r"\binstituto\b",
+        r"/empleo/", r"estudiantes/ingles/"
+    ]
+    is_teacher = any(re.search(pat, msg) for pat in teacher_patterns) or "/empleo/" in url
+
+    # Patrones de inclusión (estudiantes / familias buscando profesor)
+    student_patterns = [
+        r"\bnecesito clases\b", r"\bnecesito profesor\b", r"\bnecesito profe\b",
+        r"\bbusco profesor\b", r"\bbusco docente\b", r"\bbusco clases\b",
+        r"\bclases particulares de\b", r"\bpreparar examen\b", r"\bpreparar final\b",
+        r"\bapoyo escolar\b", r"\bsoy alumno\b", r"\bsoy estudiante\b",
+        r"\bestoy cursando\b", r"\bpara mi hij[oa]\b", r"\bapoyo en\b", r"\bayuda con\b"
+    ]
+    is_student = any(re.search(pat, msg) for pat in student_patterns)
+
+    item_id = item.get("id", "item")
+    if is_teacher:
+        return {
+            "id": item_id,
+            "is_student": False,
+            "decision_ia": "Descartado",
+            "justificacion_ia": "Descartado por regla heurística: detectado patrón de docente, oferta de empleo o academia comercial."
+        }
+    elif is_student:
+        return {
+            "id": item_id,
+            "is_student": True,
+            "decision_ia": "Aprobado",
+            "justificacion_ia": "Aprobado por regla heurística: detectada demanda genuina de estudiante o padre buscando profesor particular."
+        }
+    else:
+        return {
+            "id": item_id,
+            "is_student": False,
+            "decision_ia": "Descartado",
+            "justificacion_ia": "Descartado por regla heurística: el mensaje no contiene demanda explícita de contratación de clases de ciencias exactas."
+        }
+
 def call_multiprovider_batch(items: List[Dict[str, Any]], primary_model: str = "gemini-2.5-flash", api_key: str = None) -> List[Dict[str, Any]]:
     """
     Despachador multiproveedor con failover automático en cascada:
-    1. Google Gemini (gemini-3.5-flash-lite -> gemini-3.1-flash-lite -> gemini-3.8-flash)
+    1. Google Gemini (gemini-2.5-flash -> gemini-2.5-pro)
     2. Cloudflare Workers AI (@cf/meta/llama-3.1-8b-instruct-fp8-fast)
     3. Groq LPU (openai/gpt-oss-20b -> qwen/qwen3.8-27b)
     4. Mistral AI (ministral-8b-latest)
+    5. Heuristic Fallback (Reglas deterministas locales de PLN)
     """
     providers = []
     
@@ -330,8 +382,9 @@ def call_multiprovider_batch(items: List[Dict[str, Any]], primary_model: str = "
         providers.append(("Mistral AI", lambda it: call_mistral_batch(it, mistral_key)))
         
     if not providers:
-        raise ValueError("No se encontraron claves de IA configuradas (GEMINI_API_KEY, CLOUDFLARE_API_TOKEN, GROQ_API_KEY o MISTRAL_API_KEY).")
-        
+        print("    [Aviso] No se detectaron claves de API de IA. Activando motor de auditoría heurística determinista...")
+        return [rule_based_audit(it) for it in items]
+
     errors = []
     for provider_name, provider_fn in providers:
         try:
@@ -342,8 +395,9 @@ def call_multiprovider_batch(items: List[Dict[str, Any]], primary_model: str = "
         except Exception as e:
             print(f"    [Failover] {provider_name} falló ({e}). Conmutando al siguiente proveedor...", file=sys.stderr)
             errors.append((provider_name, str(e)))
-            
-    raise RuntimeError(f"Todos los proveedores de IA configurados fallaron para este lote: {errors}")
+
+    print("    [Fallback] Todos los proveedores externos fallaron. Activando motor de auditoría heurística determinista...")
+    return [rule_based_audit(it) for it in items]
 
 def normalize_item(item: Dict[str, Any], idx: int = 1) -> Dict[str, Any]:
     """Normaliza un lead asegurando campos compatibles con el CRM y la visualización."""

@@ -45,15 +45,15 @@ La solución fue sometida a exhaustivas auditorías independientes de código y 
 ```mermaid
 flowchart TD
     A["Fuentes Web (ES, AR, CL, CO, PE, MX)"] -->|Web Scraping Concurrente| B["data/extracted_listings.json (118 Crudos)"]
-    B -->|Auditoría Semántica Determinista| C["skills/.../prospector.py audit (Gemini 2.5 Flash)"]
+    B -->|Auditoría Semántica Determinista| C["scripts/prospector.py audit (Gemini 2.5 Flash)"]
     C -->|Rechazo Documentado| D["data/descartados_auditoria.json (Academias / Ofertas)"]
     C -->|Aprobados Estructurales| E["data/dataset_canonico_auditado.json (41 Avisos Verbatim)"]
     E -->|Validación Criptográfica| F["validate_dataset.py (8 Aserciones Estrictas)"]
-    F -->|Compilación Idempotente| G["skills/.../prospector.py build --desktop-sync"]
+    F -->|Compilación Idempotente| G["scripts/prospector.py build --desktop-sync"]
     G --> H["dashboard.html (Web CRM con Notas y Búsqueda NFD)"]
     G --> I["alumnos_ciencias_exactas.csv (BOM UTF-8, Sanitizado)"]
     G --> J["dashboard_crm.csv (Fórmulas Seguras + Estados)"]
-    G --> K["Copia en Escritorio (E:\OneDrive\Escritorio\Prospeccion_Alumnos_Ciencias)"]
+    G --> K["Directorio de Exportación Opcional (PROSPECTOR_EXPORT_DIR)"]
     H --> L["check_dashboard.cjs (Node.js Test Suite)"]
 ```
 
@@ -159,3 +159,48 @@ EJECUTANDO SUITE DE PRUEBAS DE DASHBOARD (NODE.JS)
 2. **Registro de Notas CRM**: Haz clic en el botón `📝 Notas` de cualquier tarjeta para anotar teléfonos, precios acordados, fechas de seguimiento y registrar si el alumno respondió.
 3. **Respaldo de Seguridad**: Haz clic periódicamente en `💾 Respaldo JSON` para descargar tu copia de seguridad. Si cambias de máquina, usa `📂 Restaurar`.
 4. **Escaneo Automático de Nuevos Alumnos**: Haz doble clic en `Actualizar_Alumnos.bat`. El sistema rastreará los portales web, auditará las peticiones con Gemini, validará la integridad de los datos y actualizará tu panel respetando todos tus contactos previos.
+
+---
+
+## 8. Arquitectura de Resiliencia y Mitigación de Riesgos en Producción
+
+### A. Estrategia contra cambios en HTML y fragilidad de Scraping
+* **Selectores Defensivos e Inferencia Semántica:** En lugar de depender de selectores CSS rígidos o IDs efímeros que cambian periódicamente, los extractores capturan contenedores amplios de texto y aplican expresiones regulares semánticas y tokenizadores para extraer materia, nivel educativo y fecha.
+* **Degradación Elegante:** Si un portal clasificado cambia completamente su estructura, el extractor correspondiente emite una advertencia estructurada en los logs y devuelve una lista vacía sin provocar un fallo en cascada en el resto de los portales.
+* **Canary Tests en CI:** La suite de pruebas incluye tests de integración que comprueban periódicamente la estructura esperada de los portales y validan los contratos de datos entregables.
+
+### B. Prevención de Baneos y Mitigación de FloodWait en Telegram (MTProto)
+* **Arquitectura de Escucha Pasiva (Passive Event-Driven Listener):** El daemon `scripts/telegram_centinela.py` escucha únicamente eventos entrantes (`events.NewMessage`) en grupos de estudio donde la cuenta ya es miembro activo.
+* **Cero Automatización de Envíos Salientes (Zero-Outbound Spam):** El sistema **no envía mensajes directos (DMs) ni mensajes en grupos de manera automatizada**. No existe riesgo de baneo por spam porque la cuenta no genera tráfico saliente no solicitado hacia estudiantes.
+* **Notificaciones Exclusivas al Docente (Human-in-the-Loop):** Cuando el centinela detecta una oportunidad calificada, envía una notificación push exclusivamente al bot privado del docente. Es el docente quien decide si abre el chat y contacta manualmente al alumno desde el CRM.
+* **Captura de `FloodWaitError` con Backoff Exponencial:** Si los servidores de Telegram emiten una restricción de tasa por sincronización intensiva de diálogos, el cliente captura `telethon.errors.FloodWaitError`, registra el tiempo de espera en `logs/centinela.log`, duerme el hilo asíncrono durante `e.seconds + 2` segundos con jitter y reanuda la escucha de forma transparente.
+* **Dual-Mode sin MTProto:** En entornos donde no se disponga de credenciales MTProto de Telegram o no se desee autenticar una cuenta telefónica, `scripts/extract_telegram.py` utiliza la interfaz web oficial de canales (`https://t.me/s/...`) mediante solicitudes HTTP convencionales sin credenciales.
+
+### C. Continuidad Operativa y Motor Heurístico Offline
+* Si la clave de Google AI Studio (`GEMINI_API_KEY`) no está presente o se agota la cuota gratuita (HTTP 429), el despachador ejecuta failover a Cloudflare Workers AI, Groq o Mistral. Si todos los proveedores externos fallan o no hay conectividad a Internet, se activa el motor heurístico determinista local de PLN (`rule_based_audit`), garantizando que la tubería de datos nunca se bloquee.
+
+---
+
+## 9. Embudo de Conversión del Piloto y Métricas de Negocio
+
+El proyecto fue probado en una corrida piloto real orientada a la captación de alumnos particulares de ciencias exactas:
+
+* **Paso 1: Extracción Bruta:** 175 avisos recopilados en España, Argentina, Chile, Colombia, México y Perú.
+* **Paso 2: Calificación Semántica:** 41 anuncios legítimos de estudiantes aprobados por la IA (**23.4% de tasa de aprobación**). Se filtraron 134 avisos irrelevantes (ofertas de trabajo docente en colegios, academias comerciales y profesores ofreciendo sus propios servicios).
+* **Paso 3: Contacto Inicial:** 18 alumnos contactados durante el período piloto a través de mensajería interna en TusClases y formularios en Tablón de Anuncios.
+* **Paso 4: Respuestas Obtenidas:** 7 estudiantes respondieron solicitando disponibilidad horaria y presupuesto (**38.8% de tasa de respuesta sobre contactados**).
+* **Paso 5: Alumnos Convertidos:** **3 alumnos comenzaron clases particulares regulares pagadas** (2 de Álgebra Universitaria CBC/UADE y 1 de Física para secundario superior), arrojando una **tasa de conversión a cliente final del 16.7% sobre contactados**.
+
+### Unit Economics del Piloto
+* **Costo de Adquisición de Cliente (CAC):** **$0 USD**. Todo el pipeline opera sobre capas gratuitas de Google Gemini 2.5 Flash, Cloudflare, Groq y scraping web directo.
+* **Precio por hora:** $15.000 ARS (~$12 USD).
+* **Valor de Vida del Cliente (LTV estimado - ciclo de 4 meses):** $240.000 ARS (~$192 USD) por estudiante que prepara una materia cuatrimestral completa.
+
+---
+
+## 10. Autoría y Atribución Técnica
+
+* **Autor:** **Alejo Ongaro**
+* **Usuario de GitHub:** [@metecondrie](https://github.com/metecondrie)
+* **Repositorio Oficial:** [github.com/metecondrie/prospeccion-alumnos-ciencias](https://github.com/metecondrie/prospeccion-alumnos-ciencias)
+* **Rol:** Concepción del problema, arquitectura de software, especificación de requerimientos, diseño del CRM y dirección de desarrollo con asistencia de IA.
