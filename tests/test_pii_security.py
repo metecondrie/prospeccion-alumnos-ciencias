@@ -9,6 +9,7 @@ import os
 import sys
 import re
 import hashlib
+import subprocess
 import unittest
 from pathlib import Path
 
@@ -107,6 +108,44 @@ class TestPiiSecurity(unittest.TestCase):
 
         for pat in API_KEY_PATTERNS:
             self.assertFalse(bool(pat.search(content)), "Se detectó una clave real en .env.example")
+
+    def test_no_real_portal_links_in_tracked_data_or_deliverables(self):
+        """Verifica que ningún archivo trackeado de datos o entregables contenga links reales a portales."""
+        try:
+            res = subprocess.run(["git", "ls-files"], cwd=PROJECT_ROOT, capture_output=True, text=True, check=True)
+            tracked = [PROJECT_ROOT / f for f in res.stdout.splitlines() if f]
+        except Exception:
+            self.skipTest("git no disponible")
+
+        # Portales auditados: tusclases, tablondeanuncios, cronoshare, reddit
+        portal_real_pattern = re.compile(
+            r"https?://[^\s\"\'<>]+(?:tusclases|tablondeanuncios|cronoshare\.com|reddit\.com)",
+            re.IGNORECASE
+        )
+
+        # Verificar en todos los archivos trackeados de datos (.json), entregables (.csv) y web (.html)
+        target_tracked = [p for p in tracked if p.suffix in [".json", ".csv", ".html"]]
+        violations = []
+
+        for file_path in target_tracked:
+            if not file_path.exists():
+                continue
+            content = file_path.read_text(encoding="utf-8", errors="ignore")
+            matches = portal_real_pattern.findall(content)
+            if matches:
+                violations.append((str(file_path.relative_to(PROJECT_ROOT)), matches))
+
+        self.assertEqual(len(violations), 0, f"Se detectaron links reales a portales en archivos trackeados: {violations}")
+
+    def test_raw_extractions_not_tracked(self):
+        """Verifica que el dataset crudo de extracción no esté trackeado en el repositorio público."""
+        try:
+            res = subprocess.run(["git", "ls-files"], cwd=PROJECT_ROOT, capture_output=True, text=True, check=True)
+            tracked = res.stdout.splitlines()
+        except Exception:
+            self.skipTest("git no disponible")
+
+        self.assertNotIn("data/extracted_listings.json", tracked, "data/extracted_listings.json crudo no debe estar trackeado en git")
 
 
 if __name__ == "__main__":

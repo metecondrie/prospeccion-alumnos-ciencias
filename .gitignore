@@ -42,7 +42,9 @@ centinela_session*
 data/centinela_dedupe.json
 data/centinela_digest_queue.json
 
-# Raw scraping datasets, unanonymized CSVs and live sentinel outputs
+# Raw scraping datasets, unanonymized CSVs, raw extractions and live sentinel outputs
 *raw*.json
 *_real.csv
 data/leads_centinela_en_vivo.json
+data/extracted_listings.json
+*extracted_listings*.json

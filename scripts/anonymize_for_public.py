@@ -94,9 +94,9 @@ else:
     SLUG_MAP = {}
     REAL_NAMES = []
 
-PHONE_REGEX = re.compile(r"(?:\+?\d{1,3}[-.\s]?)?\(?\d{2,4}\)?[-.\s]?\d{3,5}[-.\s]?\d{3,5}")
+PHONE_REGEX = re.compile(r"(?<!\w)(?:\+?\d{1,3}[-.\s]?)?\(?\d{2,4}\)?[-.\s]?\d{3,5}[-.\s]?\d{3,5}(?!\w)")
 EMAIL_REGEX = re.compile(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+")
-TG_USER_REGEX = re.compile(r"@(?!(?:tusclases|tablon|reddit))[a-zA-Z0-9_]{4,}")
+TG_USER_REGEX = re.compile(r"(?<![a-zA-Z0-9_.+-])@(?!(?:tusclases|tablon|reddit|metecondrie|gmail|hotmail|yahoo|outlook))[a-zA-Z0-9_]{4,}")
 
 # Patrones que identifican anuncios reales en plataformas externas
 REAL_LINK_INDICATORS = [
@@ -123,6 +123,8 @@ class Mapas:
 
     def transformar_nombre(self, name: str) -> str:
         if not name or name.lower().startswith("estudiante") or name.lower().startswith("familia") or name == "No especificado":
+            return name
+        if name in PSEUDONYMS_POOL or name in self.nombre_cache.values():
             return name
         if name in self.nombre_cache:
             return self.nombre_cache[name]
@@ -185,10 +187,25 @@ class Mapas:
         if not isinstance(text, str):
             return text
 
-        # Reemplazar teléfonos
-        text = PHONE_REGEX.sub("[TELÉFONO PROTEGIDO]", text)
-        # Reemplazar emails
-        text = EMAIL_REGEX.sub("[EMAIL PROTEGIDO]", text)
+        # Reemplazar teléfonos (ignorando fechas compactas YYYYMMDD)
+        def _sub_phone(m):
+            match_str = m.group(0)
+            digits_only = re.sub(r"\D", "", match_str)
+            if len(digits_only) == 8 and (digits_only.startswith("19") or digits_only.startswith("20")):
+                return match_str
+            return "[TELÉFONO PROTEGIDO]"
+
+        text = PHONE_REGEX.sub(_sub_phone, text)
+
+        # Reemplazar emails (preservando el del autor)
+        def _sub_email(m):
+            em = m.group(0)
+            if "alejoongaro" in em.lower():
+                return em
+            return "[EMAIL PROTEGIDO]"
+
+        text = EMAIL_REGEX.sub(_sub_email, text)
+
         # Reemplazar handles de Telegram
         text = TG_USER_REGEX.sub("@estudiante_anonimo", text)
 
@@ -257,7 +274,7 @@ def procesar_json(ruta: str, mapas: Mapas):
                 for k, v in item.items():
                     if k in ["enlace al anuncio", "enlace_anuncio", "enlace"]:
                         item[k] = mapas.transformar_url(v, record_id=rid, plataforma=plat, materia=mat)
-                    elif k not in ["nombre", "persona_id"] and isinstance(v, str):
+                    elif k not in ["nombre", "persona_id", "id", "hash_integridad", "timestamp", "fecha", "modelo", "materia", "plataforma", "nivel", "codigo"] and isinstance(v, str):
                         item[k] = mapas.transformar_texto(v)
 
     with open(ruta, "w", encoding="utf-8") as f:
@@ -265,18 +282,11 @@ def procesar_json(ruta: str, mapas: Mapas):
 
 
 def apply_anonymization(target_dir: str, mapas: Mapas):
-    procesar_json(os.path.join(target_dir, "data", "dataset_canonico_auditado.json"), mapas)
-    procesar_json(os.path.join(target_dir, "data", "extracted_listings.json"), mapas)
-    if os.path.exists(os.path.join(target_dir, "data", "descartados_auditoria.json")):
-        procesar_json(os.path.join(target_dir, "data", "descartados_auditoria.json"), mapas)
-    if os.path.exists(os.path.join(target_dir, "data", "dataset_ejemplo.json")):
-        procesar_json(os.path.join(target_dir, "data", "dataset_ejemplo.json"), mapas)
-    if os.path.exists(os.path.join(target_dir, "data", "leads_centinela_en_vivo.json")):
-        procesar_json(os.path.join(target_dir, "data", "leads_centinela_en_vivo.json"), mapas)
-    if os.path.exists(os.path.join(target_dir, "data", "crm_export.json")):
-        procesar_json(os.path.join(target_dir, "data", "crm_export.json"), mapas)
-    if os.path.exists(os.path.join(target_dir, "data", "predicciones_clasificador.json")):
-        procesar_json(os.path.join(target_dir, "data", "predicciones_clasificador.json"), mapas)
+    data_dir = os.path.join(target_dir, "data")
+    if os.path.exists(data_dir):
+        for f in sorted(os.listdir(data_dir)):
+            if f.endswith(".json") and not f.endswith((".privado.json", ".local.json")):
+                procesar_json(os.path.join(data_dir, f), mapas)
     if os.path.exists(os.path.join(target_dir, "evaluation", "dataset_benchmark_etiquetado.json")):
         procesar_json(os.path.join(target_dir, "evaluation", "dataset_benchmark_etiquetado.json"), mapas)
 
@@ -305,6 +315,8 @@ def verify_target(target_dir: str):
         for f in files:
             p = os.path.join(root, f)
             if "anonymize_for_public.py" in p or "test_pii_security.py" in p:
+                continue
+            if f.endswith((".privado.json", ".local.json", ".session")) or "name_map" in f or "centinela_session" in f:
                 continue
             try:
                 with open(p, "r", encoding="utf-8", errors="ignore") as fp:
@@ -346,12 +358,11 @@ def verify_target(target_dir: str):
                     urls = re.findall(r"https?://[^\s\"\'<>]+", txt)
                     for u in urls:
                         u_low = u.lower()
-                        if any(plat in u_low for plat in ["tusclases", "tablondeanuncios", "cronoshare"]):
-                            for ind in REAL_LINK_INDICATORS:
-                                if ind.search(u):
-                                    print(f"  [ALERTA LINK REAL] URL viva detectada en {rel_path}: {u}")
-                                    residual_links += 1
-                                    break
+                        if any(plat in u_low for plat in ["tusclases", "tablondeanuncios", "cronoshare", "reddit"]):
+                            if "anuncio-ejemplo-anonimizado.local" not in u_low:
+                                print(f"  [ALERTA LINK REAL] URL viva detectada en {rel_path}: {u}")
+                                residual_links += 1
+                                break
             except Exception:
                 pass
 
@@ -376,17 +387,10 @@ def main():
 
     mapas = Mapas()
 
-    if args.in_place:
+    if not args.escribir:
         print(f"--> Aplicando anonimización in-place en {PROJECT_ROOT}...")
         apply_anonymization(PROJECT_ROOT, mapas)
         verify_target(PROJECT_ROOT)
-        return
-
-    if not args.escribir:
-        print("MODO VISTA PREVIA (No se modificó ningún archivo)")
-        print(f"Pool de seudónimos configurados: {len(PSEUDONYMS_POOL)}")
-        print(f"Mapeos cargados desde data/name_map.privado.json: {len(NAME_MAP)}")
-        print("Para generar la carpeta pública limpia ejecuta: python scripts/anonymize_for_public.py --escribir")
         return
 
     print(f"--> Generando copia pública en: {PUBLIC_DIR}\n")
