@@ -90,10 +90,10 @@ echo Clasificando con Google Gemini (Titular), Cloudflare, Groq o Mistral...
 echo ===============================================================================
 echo.
 if not "%HAS_AI_KEY%"=="" (
-    if exist "skills\prospeccion-alumnos-ciencias\scripts\prospector.py" (
-        python skills\prospeccion-alumnos-ciencias\scripts\prospector.py audit --input data\extracted_listings.json --model gemini-3.5-flash-lite --output-approved data\dataset_canonico_auditado.json --output-discarded data\descartados_auditoria.json
+    if exist "scripts\prospector.py" (
+        python scripts\prospector.py audit --input data\extracted_listings.json --model gemini-2.5-flash --output-approved data\dataset_canonico_auditado.json --output-discarded data\descartados_auditoria.json
     ) else if exist "scripts\prospector.py" (
-        python scripts\prospector.py audit --input data\extracted_listings.json --model gemini-3.5-flash-lite --output-approved data\dataset_canonico_auditado.json --output-discarded data\descartados_auditoria.json
+        python scripts\prospector.py audit --input data\extracted_listings.json --model gemini-2.5-flash --output-approved data\dataset_canonico_auditado.json --output-discarded data\descartados_auditoria.json
     )
     if errorlevel 1 (
         echo [ADVERTENCIA] La auditoria de IA reporto una advertencia. Se conservan los datos auditados canonicos.
@@ -130,8 +130,8 @@ echo [3/3] COMPILACION DE DASHBOARD CRM Y PLANILLAS
 echo Actualizando dashboard.html, alumnos_ciencias_exactas.csv y dashboard_crm.csv...
 echo ===============================================================================
 echo.
-if exist "skills\prospeccion-alumnos-ciencias\scripts\prospector.py" (
-    python skills\prospeccion-alumnos-ciencias\scripts\prospector.py build --approved data\dataset_canonico_auditado.json --discarded data\descartados_auditoria.json --desktop-sync
+if exist "scripts\prospector.py" (
+    python scripts\prospector.py build --approved data\dataset_canonico_auditado.json --discarded data\descartados_auditoria.json --desktop-sync
 ) else if exist "scripts\prospector.py" (
     python scripts\prospector.py build --approved data\dataset_canonico_auditado.json --discarded data\descartados_auditoria.json --desktop-sync
 )

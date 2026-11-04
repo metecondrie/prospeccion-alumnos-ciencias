@@ -207,5 +207,17 @@ class TestProspectorCore(unittest.TestCase):
         for conv in data["detalle_conversiones_exitosas"]:
             self.assertIn(conv["lead_id"], canon_ids, f"El lead convertido {conv['lead_id']} debe existir en el dataset canónico")
 
+    def test_evaluate_filter_benchmark_metrics(self):
+        # Valida que el evaluador cuantitativo de datos funcione y certifique la superioridad sobre el baseline
+        from evaluate_filter import evaluate_models
+        gemini_m, regex_m, total, pos, neg = evaluate_models()
+        self.assertEqual(total, 175)
+        self.assertEqual(pos, 41)
+        self.assertEqual(neg, 134)
+        self.assertGreater(gemini_m["precision"], 0.90, "La precisión del filtro semántico debe superar el 90%")
+        self.assertGreater(gemini_m["recall"], 0.90, "El recall del filtro semántico debe superar el 90%")
+        self.assertGreater(gemini_m["f1_score"], 0.90, "El F1-Score debe superar el 90%")
+        self.assertGreater(gemini_m["precision"], regex_m["precision"], "Gemini debe superar ampliamente al baseline regex")
+
 if __name__ == "__main__":
     unittest.main()

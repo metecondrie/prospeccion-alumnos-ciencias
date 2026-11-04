@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Prospector CLI - Sistema Autónomo de Captación y Auditoría de Alumnos de Ciencias Exactas
-Modelos IA: Google Gemini 2.5 Flash / Groq LPU
+Modelos IA: Google Gemini 2.5 Flash / Groq
 Destinatario: Docente de Ciencias Exactas
 """
 
@@ -232,8 +232,8 @@ def call_cloudflare_batch(items: List[Dict[str, Any]], account_id: str, api_toke
                 raise e
             time.sleep(1.5)
 
-def call_groq_batch(items: List[Dict[str, Any]], api_key: str, model: str = "openai/gpt-oss-20b", max_retries: int = 2) -> List[Dict[str, Any]]:
-    """Suplente 2: Evalúa lote con Groq LPU ultra veloz (OpenAI compatible)."""
+def call_groq_batch(items: List[Dict[str, Any]], api_key: str, model: str = "llama-3.1-8b-instant", max_retries: int = 2) -> List[Dict[str, Any]]:
+    """Suplente 2: Evalúa lote con Groq (inferencia ultra-rápida, compatible con OpenAI)."""
     prompt = get_audit_prompt(items)
     endpoint = "https://api.groq.com/openai/v1/chat/completions"
     payload = json.dumps({
@@ -258,8 +258,8 @@ def call_groq_batch(items: List[Dict[str, Any]], api_key: str, model: str = "ope
                 time.sleep(10.0)  # Pausa preventiva para respetar 8K TPM de Groq
                 return parse_json_response(raw_text)
         except urllib.error.HTTPError as e:
-            if e.code == 429 and model != "qwen/qwen3.8-27b":
-                return call_groq_batch(items, api_key, model="qwen/qwen3.8-27b", max_retries=1)
+            if e.code == 429 and model != "llama-3.3-70b-versatile":
+                return call_groq_batch(items, api_key, model="llama-3.3-70b-versatile", max_retries=1)
             if attempt == max_retries:
                 raise e
             time.sleep(attempt * 3.0)
@@ -269,7 +269,7 @@ def call_groq_batch(items: List[Dict[str, Any]], api_key: str, model: str = "ope
             time.sleep(2.0)
 
 def call_mistral_batch(items: List[Dict[str, Any]], api_key: str, model: str = "ministral-8b-latest", max_retries: int = 2) -> List[Dict[str, Any]]:
-    """Suplente 3: Evalúa lote con Mistral AI (Tekken tokenizer, alta fidelidad en español)."""
+    """Suplente 3: Evalúa lote con Mistral AI (alta fidelidad léxica en español)."""
     prompt = get_audit_prompt(items)
     endpoint = "https://api.mistral.ai/v1/chat/completions"
     payload = json.dumps({
@@ -354,7 +354,7 @@ def call_multiprovider_batch(items: List[Dict[str, Any]], primary_model: str = "
     Despachador multiproveedor con failover automático en cascada:
     1. Google Gemini (gemini-2.5-flash -> gemini-2.5-pro)
     2. Cloudflare Workers AI (@cf/meta/llama-3.1-8b-instruct-fp8-fast)
-    3. Groq LPU (openai/gpt-oss-20b -> qwen/qwen3.8-27b)
+    3. Groq (llama-3.1-8b-instant -> llama-3.3-70b-versatile)
     4. Mistral AI (ministral-8b-latest)
     5. Heuristic Fallback (Reglas deterministas locales de PLN)
     """
@@ -374,7 +374,7 @@ def call_multiprovider_batch(items: List[Dict[str, Any]], primary_model: str = "
     # 3. Groq (Suplente 2)
     groq_key = os.environ.get("GROQ_API_KEY")
     if groq_key:
-        providers.append(("Groq LPU", lambda it: call_groq_batch(it, groq_key)))
+        providers.append(("Groq", lambda it: call_groq_batch(it, groq_key)))
         
     # 4. Mistral AI (Suplente 3)
     mistral_key = os.environ.get("MISTRAL_API_KEY")
