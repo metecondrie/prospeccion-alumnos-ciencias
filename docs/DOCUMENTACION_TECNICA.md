@@ -28,9 +28,9 @@ La solución fue sometida a exhaustivas auditorías independientes de código y 
 | **A03** | **P0** | Manejo honesto de Cronoshare | 7 anuncios clasificados con `canal: "creditos"`, `enlace_tipo: "categoria"` y `es_permalink: false`. CTA propio `🔍 Buscar en Cronoshare (Requiere Créditos)`. No copia el pitch automáticamente. | Badge `🟡 Requiere Créditos Pagos (Cronos)` visible en tarjeta y tabla. |
 | **A04** | **P0** | Idempotencia en build y regex de HTML | Reemplazo regex por línea completa `var RAW_DATA = [^\r\n]+;` evitando roturas por punto y coma internos. Escape HTML (`\u003c`, `\u003e`). | Build repetible sin duplicar variables ni corromper sintaxis. |
 | **A05** | **P1** | Filtro de nivel educativo contaminado | Introducción de `nivel_categoria` cerrado (`Universitario`, `Pre-Universitario`, `Secundario`, `Terciario / FP`, `Primaria`, `Acceso`). Filtro por igualdad estricta. | "Universitario" devuelve **exactamente 16 prospectos puros** (0 pre-universitarios). |
-| **A06** | **P1** | Búsqueda sin acentos | Normalización NFD con eliminación de diacríticos (`.normalize('NFD').replace(/[\u0300-\u036f]/g, '')`). | Buscar "hernan", "cordoba", "peru", "matematicas" encuentra sus respectivos registros. |
+| **A06** | **P1** | Búsqueda sin acentos | Normalización NFD con eliminación de diacríticos (`.normalize('NFD').replace(/[\u0300-\u036f]/g, '')`). | Buscar "Belén M.", "cordoba", "peru", "matematicas" encuentra sus respectivos registros. |
 | **A07** | **P1** | Notas y seguimiento CRM | Modal completo de CRM para registrar notas, teléfono/WhatsApp, precio acordado, fechas y respuesta. | Campos incluidos en `localStorage` (`alumnos_lead_details`), Respaldo JSON y exportación CSV. |
-| **A08** | **P1** | Agrupación de anuncios repetidos | Detección de `persona_id`: Hernán UADE (3 avisos) y Agustina Chile (2 avisos) etiquetados claramente para evitar contactos múltiples. | Insignias visibles de alerta en tarjeta y tabla. |
+| **A08** | **P1** | Agrupación de anuncios repetidos | Detección de `persona_id`: Belén M. UADE (3 avisos) y Helena B. Chile (2 avisos) etiquetados claramente para evitar contactos múltiples. | Insignias visibles de alerta en tarjeta y tabla. |
 | **A09** | **P1** | Seguridad en enlaces y ventanas | `window.open(url, '_blank', 'noopener,noreferrer')` y `rel="noopener noreferrer"` en todos los hipervínculos externos. | Prevención de tabnabbing y seguridad web cumplida. |
 | **A10** | **P1** | Banderas y diseño responsive | Banderas con insignias de código de país (`AR`, `ES`, `CL`, `CO`, `MX`, `PE`) legibles en Windows/Linux/Mac. Header responsive con flex-wrap a 375 px. | UI adaptable y sin caracteres rotos. |
 | **A11** | **P1** | Modelos oficiales de Google AI Studio | Endpoints oficiales de alta cuota: `gemini-3.5-flash-lite` (predeterminado, 500 RPD / 15 RPM), `gemini-3.1-flash-lite`, `gemini-3.8-flash` y `gemma-4-31b-it` (fallback). | Eliminación total de errores HTTP 429 por saturación de cuota y HTTP 404 por modelos deprecados. |
@@ -63,8 +63,8 @@ flowchart TD
 
 * **Total de Anuncios Calificados**: **41**
 * **Estudiantes Únicos (`persona_id`)**: **38**
-  - Hernán (UADE, Máquinas Hidráulicas): 3 anuncios (`2461220`, `2461207`, `2461205`)
-  - Agustina (Chile, PAES Química y Física): 2 anuncios (`2464467`, `2464471`)
+  - Belén M. (UADE, Máquinas Hidráulicas): 3 anuncios (`2461220`, `2461207`, `2461205`)
+  - Helena B. (Chile, PAES Química y Física): 2 anuncios (`2464467`, `2464471`)
   - 36 estudiantes restantes: 1 anuncio cada uno
 * **URLs Únicas**: **37** (los 7 registros de Cronoshare corresponden a 3 categorías temáticas)
 * **Canal de Contacto**:
@@ -122,7 +122,7 @@ VALIDACIÓN INTEGRAL DE DATASET CANÓNICO - AUDITORÍA
 ==================================================
 -> Verificando total de registros: 41...
    [OK] 41 IDs estrictamente únicos e inmutables.
-   [OK] 38 personas únicas verificadas (Hernán x3 avisos, Agustina x2 avisos).
+   [OK] 38 personas únicas verificadas (Belén M. x3 avisos, Helena B. x2 avisos).
    [OK] 37 URLs únicas verificadas.
    [OK] 41/41 URLs presentes textualmente en el scrape crudo (0 inventadas).
    [OK] Distribución de niveles educativos exacta (Universitario: 16, Pre-Univ: 6, Secundario: 16, Otros: 3).
@@ -142,7 +142,7 @@ EJECUTANDO SUITE DE PRUEBAS DE DASHBOARD (NODE.JS)
   [OK] Filtro por país Argentina: exactamente 19 prospectos.
   [OK] Filtro por materia Química: exactamente 5 prospectos.
   [OK] Filtro nivel cerrado Universitario: exactamente 16 prospectos puros.
-  [OK] Búsqueda sin acentos verificada (hernan: 3, cordoba: 1, peru: 2).
+  [OK] Búsqueda sin acentos verificada (Belén M.: 3, cordoba: 1, peru: 2).
   [OK] Sustitución inteligente de saludo y tema (excluye 'Alumno UADE').
   [OK] Manejo transparente de Cronoshare (CTA crediticio separado).
   [OK] Exportación CSV con BOM UTF-8 y campos de CRM.

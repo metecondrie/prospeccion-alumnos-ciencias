@@ -129,15 +129,15 @@ assert.ok(h.text('filtered-count').includes('16 de 41'), `Filtro Universitario c
 console.log("  [OK] Filtro nivel cerrado Universitario: exactamente 16 prospectos puros.");
 
 // 4. Búsqueda sin acentos (Normalización NFD)
-h.run("resetFilters();document.getElementById('search-input').value='hernan';applyFilters()");
-assert.ok(h.text('filtered-count').includes('3 de 41'), `Búsqueda 'hernan' falló: ${h.text('filtered-count')}`);
+h.run("resetFilters();document.getElementById('search-input').value='belen';applyFilters()");
+assert.ok(h.text('filtered-count').includes('3 de 41'), `Búsqueda 'belen' falló: ${h.text('filtered-count')}`);
 
 h.run("resetFilters();document.getElementById('search-input').value='cordoba';applyFilters()");
 assert.ok(h.text('filtered-count').includes('1 de 41'), `Búsqueda 'cordoba' falló: ${h.text('filtered-count')}`);
 
 h.run("resetFilters();document.getElementById('search-input').value='peru';applyFilters()");
 assert.ok(h.text('filtered-count').includes('2 de 41'), `Búsqueda 'peru' falló: ${h.text('filtered-count')}`);
-console.log("  [OK] Búsqueda sin acentos verificada (hernan: 3, cordoba: 1, peru: 2).");
+console.log("  [OK] Búsqueda sin acentos verificada (belen: 3, cordoba: 1, peru: 2).");
 
 // 5. Saludo genérico en pitch para nombres no personales
 h = harness();

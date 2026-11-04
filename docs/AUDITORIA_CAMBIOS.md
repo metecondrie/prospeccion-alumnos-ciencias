@@ -39,7 +39,7 @@
 4. Validar después de sustituir: si queda cualquier `{...}` o `{{...}}`, mostrar un aviso rojo en el banner y no copiar.
 
 **Aceptación:**
-- Con `localStorage` limpio, el banner muestra “¡Hola Sebastián!” y “Ciencias Exactas”.
+- Con `localStorage` limpio, el banner muestra “¡Hola Bruno S.!” y “Ciencias Exactas”.
 - Al hacer clic en “Enviar Mensaje” en cualquier lead, el portapapeles contiene nombre, materia y nivel resueltos, sin llaves.
 - Un pitch guardado con llaves simples se migra sin perder el texto.
 
@@ -93,7 +93,7 @@ No son fichas individuales: no identifican a la persona ni permiten un contacto 
 
 ### P0.4 — La documentación técnica está una fase atrás
 
-**Síntoma verificado:** `DOCUMENTACION_TECNICA_PROYECTO.md` describe 43 registros; los archivos tienen 39. La diferencia es exactamente la que explica `Conclusiones`: 2 URLs de categoría de Colombia y 2 avisos duplicados de Hernán (3 a 1). La doc quedó congelada antes de esa curaduría.
+**Síntoma verificado:** `DOCUMENTACION_TECNICA_PROYECTO.md` describe 43 registros; los archivos tienen 39. La diferencia es exactamente la que explica `Conclusiones`: 2 URLs de categoría de Colombia y 2 avisos duplicados de Belén M. (3 a 1). La doc quedó congelada antes de esa curaduría.
 
 Errores concretos:
 
@@ -169,21 +169,21 @@ Hay 5 diferencias entre el CSV y `RAW_DATA`: el CSV mete la alerta dentro de `mo
 
 El 41% usa saludo genérico. Está bien no inventar nombres, pero el pitch debería tener un fallback explícito (“Hola”) y no dejar `{nombre_saludo}` vacío entre signos.
 
-**Aceptación:** con nombre vacío, el saludo es “¡Hola!”; con nombre, “¡Hola Sebastián!”.
+**Aceptación:** con nombre vacío, el saludo es “¡Hola!”; con nombre, “¡Hola Bruno S.!”.
 
 ### P1.7 — Hay una persona duplicada y dos probables
 
-- **Agustina (Ñuñoa):** dos avisos que se complementan (“pack con Física” / “pack con Química”), mismos datos y IDs consecutivos. Es la misma persona: contactarla dos veces con el mismo pitch queda mal.
-- **Valentina (Santiago):** dos avisos PAES (Matemáticas y Biología). Probable misma persona.
-- **Mateo, Victoria y “Familia”** también se repiten, pero con ciudad o nivel distinto: probablemente son personas distintas. No agrupar sin verificar.
+- **Helena B. (Ñuñoa):** dos avisos que se complementan (“pack con Física” / “pack con Química”), mismos datos y IDs consecutivos. Es la misma persona: contactarla dos veces con el mismo pitch queda mal.
+- **Rodrigo J. (Santiago):** dos avisos PAES (Matemáticas y Biología). Probable misma persona.
+- **Lucas B., Diego M. y “Familia”** también se repiten, pero con ciudad o nivel distinto: probablemente son personas distintas. No agrupar sin verificar.
 
 **Corrección:** agrupar por `persona_id` cuando coincidan nombre + ciudad + señales del aviso; mostrar “2 necesidades” en una sola tarjeta y un solo botón de contacto.
 
-**Aceptación:** Agustina aparece una vez con dos materias; no se le envía el mismo mensaje dos veces.
+**Aceptación:** Helena B. aparece una vez con dos materias; no se le envía el mismo mensaje dos veces.
 
 ### P1.8 — El pitch no usa el tema específico
 
-El directorio dice que nombrar el tema exacto mejora la respuesta, pero el dashboard solo interpola materia y nivel. Para Hernán el mensaje dice “clases de Física” cuando el aviso es de Máquinas Hidráulicas; para el aviso de econometría dice “Matemáticas”.
+El directorio dice que nombrar el tema exacto mejora la respuesta, pero el dashboard solo interpola materia y nivel. Para Belén M. el mensaje dice “clases de Física” cuando el aviso es de Máquinas Hidráulicas; para el aviso de econometría dice “Matemáticas”.
 
 **Corrección:** agregar `tema` y `{{tema}}` al pitch. Ejemplo: “vi tu búsqueda sobre Máquinas Hidráulicas (UADE)”.
 
@@ -232,11 +232,11 @@ Verificado en captura: las banderas se ven como “AR”, “ES”, “CL”, �
 
 ### P1.13 — Búsqueda sin acentos y sin orden
 
-Buscar “Hernan” no encuentra “Hernán”; “Peru” no encuentra “Perú”. Además, no hay orden por fecha, urgencia ni estado, aunque la doc promete tabla ordenable.
+Buscar “Belén M.” no encuentra “Belén M.”; “Peru” no encuentra “Perú”. Además, no hay orden por fecha, urgencia ni estado, aunque la doc promete tabla ordenable.
 
 **Corrección:** normalizar con `String.prototype.normalize('NFD').replace(/[\u0300-\u036f]/g, '')`; agregar orden por columna y un orden por defecto (urgencia y fecha de captura).
 
-**Aceptación:** “Hernan”, “Peru” y “Cordoba” encuentran sus leads; la tabla ordena por cualquier columna.
+**Aceptación:** “Belén M.”, “Peru” y “Cordoba” encuentran sus leads; la tabla ordena por cualquier columna.
 
 ---
 
@@ -268,7 +268,7 @@ Un solo registro por lead, con estos campos. El CSV fuente es la fuente de verda
 id                  L001
 plataforma          TusClases Argentina
 canal               mensajeria | formulario | dm | creditos
-nombre              Sebastián
+nombre              Bruno S.
 persona_id          P012          (para agrupar varios avisos de la misma persona)
 materia             ["Matemáticas"]  (array normalizado)
 tema                "Matemática 2 universitaria"
@@ -311,7 +311,7 @@ Estados: `Pendiente`, `Preparado`, `Contactado`, `Respondió`, `En negociación`
    - Agregar “Limitaciones”: fechas de captura, 41% sin nombre, 7 links de categoría, 5 temas fuera de alcance, precisión no medida.
 2. `Conclusiones_del_Proyecto.md`
    - Corregir `contacto.docente@ciencias.org` → `contacto.docente@ciencias.org`.
-   - Aclarar que los 39 son avisos, no necesariamente 39 personas (Agustina tiene 2).
+   - Aclarar que los 39 son avisos, no necesariamente 39 personas (Helena B. tiene 2).
 3. `directorio_plataformas.md`
    - Distinguir “regla 90/10” y “80% / 70%” como heurísticas internas, no como datos medidos.
 4. Agregar un `README.md` con: qué es, cómo abrir el dashboard, dónde está la planilla, cómo se actualiza el dataset y cómo se hace backup.
@@ -325,7 +325,7 @@ Estados: `Pendiente`, `Preparado`, `Contactado`, `Respondió`, `En negociación`
 - [ ] Copiar el mensaje de un lead sin nombre: dice “¡Hola!” y no deja espacios raros.
 - [ ] Cambiar el estado de un lead de Cronoshare: los otros 6 no cambian.
 - [ ] Filtrar “Universitario”: no aparecen “Pre-Universitario” ni PAES.
-- [ ] Buscar “Hernan”, “Peru”, “Cordoba”: encuentran sus leads.
+- [ ] Buscar “Belén M.”, “Peru”, “Cordoba”: encuentran sus leads.
 - [ ] Exportar JSON, borrar `localStorage`, importar: se recuperan estados, notas y pitch.
 - [ ] Exportar CSV y volver a generar el dashboard: los 39 registros y las 5 alertas son idénticos.
 - [ ] Un nombre con apóstrofo y un mensaje con `<script>` no rompen la UI.

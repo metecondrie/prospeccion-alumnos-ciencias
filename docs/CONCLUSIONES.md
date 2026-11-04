@@ -20,9 +20,9 @@ Tras un proceso de extracción en portales educativos y doble fase de auditoría
 - **34 alumnos elegibles para la propuesta pedagógica virtual** de Alejo.
 
 ### B. Distribución Geográfica de Anuncios
-- **Argentina**: 19 anuncios (17 alumnos únicos; Hernán de UADE publicó 3 avisos para Máquinas Hidráulicas).
+- **Argentina**: 19 anuncios (17 alumnos únicos; Belén M. de UADE publicó 3 avisos para Máquinas Hidráulicas).
 - **España**: 9 anuncios (Bachillerato, ESO, FP Superior, preparación intensiva EBAU/Selectividad).
-- **Chile**: 7 anuncios (6 alumnos únicos; Agustina publicó 2 pedidos para Química y Física PAES).
+- **Chile**: 7 anuncios (6 alumnos únicos; Helena B. publicó 2 pedidos para Química y Física PAES).
 - **Colombia**: 2 anuncios (Química médica y Matemáticas de grado 7).
 - **México**: 2 anuncios (Cálculo/Econometría y Anatomía/Fisiología área salud).
 - **Perú**: 2 anuncios (Física 2 PUCP y Física elemental).
@@ -54,7 +54,7 @@ Tras un proceso de extracción en portales educativos y doble fase de auditoría
    - Reservar Cronoshare (7 prospectos) únicamente si se decide invertir en la compra de paquetes de créditos ("Cronos").
 
 2. **Personalización del Saludo y Tema**:
-   - Para alumnos con nombre verificado (`Sebastián`, `Greta`, `Hernán`), el sistema saluda automáticamente con su nombre y cita su tema (`Biofísica CBC`, `Final de Máquinas Hidráulicas UADE`).
+   - Para alumnos con nombre verificado (`Bruno S.`, `Andrés C.`, `Belén M.`), el sistema saluda automáticamente con su nombre y cita su tema (`Biofísica CBC`, `Final de Máquinas Hidráulicas UADE`).
    - Para anuncios sin nombre o institucionales (`Alumno UADE`, `Estudiante FP`), el sistema aplica un saludo genérico respetuoso (`¡Hola! ¿Cómo estás?`) evitando errores bochornosos.
 
 3. **Seguimiento con Notas en el CRM**:
