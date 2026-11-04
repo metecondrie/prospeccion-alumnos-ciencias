@@ -2,7 +2,7 @@
 """
 Prospector CLI - Sistema Autónomo de Captación y Auditoría de Alumnos de Ciencias Exactas
 Modelos IA: gemini-2.5-flash / gemini-3-flash-preview / gemini-2.5-pro
-Destinatario: Prof. Alejo Ongaro (alejoongaro@gmail.com)
+Destinatario: Docente de Ciencias Exactas
 """
 
 import os
@@ -590,7 +590,7 @@ def cmd_build(args):
     ]
 
     with open(args.output_csv, "w", encoding="utf-8-sig", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=canonical_headers)
+        writer = csv.DictWriter(f, fieldnames=canonical_headers, lineterminator="\r\n")
         writer.writeheader()
         for r in approved_leads:
             # Normalizar nivel al contrato canónico: 'Secundario' o 'Universitario'
@@ -646,7 +646,7 @@ def cmd_build(args):
     if crm_csv_path == args.output_csv:
         crm_csv_path = "dashboard_crm.csv"
     with open(crm_csv_path, "w", encoding="utf-8-sig", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=crm_headers)
+        writer = csv.DictWriter(f, fieldnames=crm_headers, lineterminator="\r\n")
         writer.writeheader()
         writer.writerows(crm_rows)
 

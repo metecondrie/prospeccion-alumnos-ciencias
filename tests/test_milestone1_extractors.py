@@ -96,6 +96,7 @@ class TestMilestone1Extractors(unittest.TestCase):
         platforms = set(r["plataforma"] for r in self.listings)
         self.assertGreaterEqual(len(platforms), 4, f"Expected at least 4 platforms, got: {platforms}")
 
+    @unittest.skipUnless(os.environ.get("RUN_LIVE_TESTS"), "Live HTTP sampling skipped in CI")
     def test_sample_url_liveness(self):
         """Sample check at least 3 live URLs to verify real HTTP 200 liveness and active status."""
         import random

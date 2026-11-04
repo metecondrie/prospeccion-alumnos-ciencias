@@ -1,0 +1,5 @@
+# Auto-detect text files and normalize line endings
+* text=auto
+
+# Enforce RFC 4180 CRLF line terminators on all CSV files across platforms
+*.csv text eol=crlf

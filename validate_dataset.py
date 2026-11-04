@@ -10,6 +10,7 @@ import sys
 import json
 import csv
 import re
+from collections import Counter
 from urllib.parse import unquote
 
 # Reconfigurar salida UTF-8 en consolas Windows
@@ -39,12 +40,12 @@ def run_validation():
     # 3. Validar personas únicas (persona_id)
     personas = [r["persona_id"] for r in data]
     unique_personas = set(personas)
-    hernan_count = personas.count("hernan_uade_hidraulica")
-    agustina_count = personas.count("agustina_aburi_nunoa")
+    counts = Counter(personas)
+    most_common = counts.most_common(2)
     assert len(unique_personas) >= 38, f"ERROR: Se esperaban al menos 38 personas únicas, hay {len(unique_personas)}"
-    assert hernan_count >= 3, f"ERROR: Hernán debe tener al menos 3 publicaciones, tiene {hernan_count}"
-    assert agustina_count >= 2, f"ERROR: Agustina debe tener al menos 2 publicaciones, tiene {agustina_count}"
-    print(f"   [OK] Personas únicas verificadas (Hernán x{hernan_count} avisos, Agustina x{agustina_count} avisos).")
+    assert most_common[0][1] >= 3, f"ERROR: La persona con más anuncios debe tener al menos 3 publicaciones, tiene {most_common[0][1]}"
+    assert most_common[1][1] >= 2, f"ERROR: La segunda persona con más anuncios debe tener al menos 2 publicaciones, tiene {most_common[1][1]}"
+    print(f"   [OK] Personas únicas verificadas (Clusters de autor: x{most_common[0][1]} avisos, x{most_common[1][1]} avisos).")
 
     # 4. Validar unicidad de URLs
     urls = [r["enlace al anuncio"] for r in data]

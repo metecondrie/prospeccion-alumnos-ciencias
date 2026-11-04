@@ -457,6 +457,7 @@ class TestAdversarialStudentAuthenticity(unittest.TestCase):
 class TestLiveUrlSampling(unittest.TestCase):
     """Stress tests live HTTP availability across multiple distinct platforms in CSV."""
 
+    @unittest.skipUnless(os.environ.get("RUN_LIVE_TESTS"), "Live HTTP calls skipped in CI")
     def test_live_http_get_across_platforms(self):
         """Fetch live HTTP GET responses from at least 5 distinct platform URLs."""
         with open(CSV_PATH, "r", encoding="utf-8-sig") as f:

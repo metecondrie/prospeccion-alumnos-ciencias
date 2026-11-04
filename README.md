@@ -2,7 +2,6 @@
 
 [![CI](https://github.com/metecondrie/prospeccion-alumnos-ciencias/actions/workflows/ci.yml/badge.svg)](https://github.com/metecondrie/prospeccion-alumnos-ciencias/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![Tests Passing](https://img.shields.io/badge/Tests-64%20passed%20(100%25)-success.svg)](tests/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Architecture](https://img.shields.io/badge/Architecture-Web%20Scraping%20%2B%20Telegram%20Stream-lightgrey.svg)](docs/DOCUMENTACION_TECNICA.md)
 
@@ -58,7 +57,8 @@ El proyecto mantiene una estructura modular y limpia:
 │   ├── DOCUMENTACION_TECNICA.md
 │   ├── DIRECTORIO_PLATAFORMAS.md
 │   ├── CONCLUSIONES.md
-│   └── INFORME_BENCHMARKING.md
+│   ├── INFORME_BENCHMARKING.md
+│   └── AUDITORIA_CAMBIOS.md    # Historial de cambios y auditorías de diseño
 │
 ├── scripts/                    # Módulos de extracción, filtrado y escucha
 │   ├── prospector.py           # CLI central, evaluación con IA y compilador
@@ -147,7 +147,7 @@ node tests/check_dashboard.cjs         # Suite del dashboard CRM (Node.js)
 
 ## 🧑‍💻 Sobre este proyecto y mi rol
 
-Diseñé y dirigí este proyecto de punta a punta: definí el problema de negocio (asimetría 90/10 en portales de clasificados donde la mayoría son academias o docentes buscando alumnos), diseñé la arquitectura del pipeline y audité cada entrega con criterios de aceptación verificables. La implementación fue asistida por IA (Google Antigravity); la verificación de datos, las correcciones estructurales y las decisiones de calidad y privacidad fueron humanas a lo largo de múltiples iteraciones.
+Diseñé y dirigí este proyecto de punta a punta: definí el problema de negocio (asimetría 90/10 en portales de clasificados donde la mayoría son academias o docentes buscando alumnos), diseñé la arquitectura del pipeline y audité cada entrega con criterios de aceptación verificables. La implementación fue asistida por IA (Google Antigravity); la verificación de datos, las correcciones estructurales y las decisiones de calidad y privacidad fueron humanas a lo largo de múltiples iteraciones (ver [historial de auditoría y decisiones de diseño](docs/AUDITORIA_CAMBIOS.md)).
 
 ---
 

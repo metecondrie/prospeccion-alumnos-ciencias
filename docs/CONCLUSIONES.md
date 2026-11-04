@@ -64,8 +64,7 @@ Tras un proceso de extracción en portales educativos y doble fase de auditoría
 
 ## 3. Recursos Disponibles y Sincronizados
 
-1. 💻 **Dashboard Interactivo**: `dashboard.html` (disponible tanto en tu carpeta de proyecto como en tu Escritorio).
-2. 📊 **Google Sheets en Vivo**: [Planilla de Alumnos de Ciencias Exactas](https://docs.google.com/spreadsheets/d/1Q5aOcxfSNJ7ri05gY9YF0QjmLIcQiIjgEVB-y5Sf2wY/edit).
-3. 📁 **Google Drive**: Carpeta compartida `Prospeccion Alumnos Ciencias Exactas - Teamwork`.
-4. 📄 **Documentación Técnica Auditada**: `DOCUMENTACION_TECNICA_PROYECTO.md`.
-5. 📖 **Directorio de Plataformas**: `directorio_plataformas.md`.
+1. 💻 **Dashboard Interactivo**: `dashboard.html` (interfaz local autónoma en el navegador).
+2. 📊 **Planilla CRM Tabular**: `dashboard_crm.csv` (exportable para Google Sheets o Excel con 18 columnas).
+3. 📄 **Documentación Técnica Auditada**: `DOCUMENTACION_TECNICA.md`.
+4. 📖 **Directorio de Plataformas**: `directorio_plataformas.md`.
