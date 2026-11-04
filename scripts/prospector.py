@@ -30,13 +30,12 @@ def load_env_file():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     candidates = [
         os.path.join(os.getcwd(), ".env"),
+        os.path.join(script_dir, ".env"),
         os.path.join(script_dir, "..", ".env"),
-        os.path.join(script_dir, "..", "..", "..", ".env"),
-        r"E:\OneDrive\Escritorio\Prospeccion_Alumnos_Ciencias\.env"
     ]
     for p in candidates:
         abs_p = os.path.abspath(p)
-        if os.path.exists(abs_p) and ("Nueva carpeta" in abs_p or "Prospeccion_Alumnos_Ciencias" in abs_p):
+        if os.path.exists(abs_p):
             try:
                 with open(abs_p, "r", encoding="utf-8", errors="ignore") as f:
                     for line in f:
@@ -578,20 +577,39 @@ def cmd_build(args):
         with open(args.discarded, "r", encoding="utf-8") as f:
             discarded_leads = json.load(f)
 
-    # 1. Generar alumnos_ciencias_exactas.csv
+    # 1. Generar alumnos_ciencias_exactas.csv (Formato Canónico Estricto de 8 columnas según especificación)
     canonical_headers = [
-        "id", "plataforma", "país/ubicación", "pais", "nombre", "persona_id",
-        "materia", "nivel educativo", "nivel_categoria", "tema", "modalidad", "modalidad_solicitada",
-        "elegible_virtual", "alerta_modalidad", "idioma", "enlace_tipo", "canal",
-        "costo_contacto", "enlace al anuncio", "es_permalink", "fecha de publicación",
-        "fecha_captura", "mensaje/descripción", "método de contacto directo", "decision_ia", "justificacion_ia"
+        "plataforma",
+        "enlace al anuncio",
+        "materia",
+        "nivel educativo",
+        "país/ubicación",
+        "fecha de publicación",
+        "mensaje/descripción",
+        "método de contacto directo",
     ]
 
     with open(args.output_csv, "w", encoding="utf-8-sig", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=canonical_headers)
         writer.writeheader()
         for r in approved_leads:
-            writer.writerow({k: sanitize_csv(r.get(k, "")) for k in canonical_headers})
+            # Normalizar nivel al contrato canónico: 'Secundario' o 'Universitario'
+            raw_cat = r.get("nivel_categoria", "")
+            if raw_cat in ["Universitario", "Pre-Universitario", "Terciario / FP", "Acceso"]:
+                canonical_level = "Universitario"
+            else:
+                canonical_level = "Secundario"
+
+            writer.writerow({
+                "plataforma": sanitize_csv(r.get("plataforma", "")),
+                "enlace al anuncio": sanitize_csv(r.get("enlace al anuncio", "")),
+                "materia": sanitize_csv(r.get("materia", "")),
+                "nivel educativo": canonical_level,
+                "país/ubicación": sanitize_csv(r.get("país/ubicación", "")),
+                "fecha de publicación": sanitize_csv(r.get("fecha de publicación") or r.get("fecha_captura") or "2026-11-01"),
+                "mensaje/descripción": sanitize_csv(r.get("mensaje/descripción", "")),
+                "método de contacto directo": sanitize_csv(r.get("método de contacto directo", ""))
+            })
 
     # 2. Generar dashboard_crm.csv con TODAS las columnas protegidas contra inyección
     crm_headers = [
@@ -652,20 +670,20 @@ def cmd_build(args):
 
     print(f"[OK] Archivos generados con éxito: {args.output_html}, {args.output_csv}, {crm_csv_path}")
 
-    # Sincronización en Escritorio (solo si se ejecuta fuera de él)
+    # Sincronización en directorio secundario opcional (vía variable de entorno)
     if args.desktop_sync:
-        desktop = os.environ.get("DESKTOP_DIR") or r"E:\OneDrive\Escritorio\Prospeccion_Alumnos_Ciencias"
-        if os.path.exists(desktop):
+        export_target = os.environ.get("PROSPECTOR_EXPORT_DIR")
+        if export_target and os.path.exists(export_target):
             current_abs = os.path.abspath(".")
-            desktop_abs = os.path.abspath(desktop)
-            if current_abs.lower() != desktop_abs.lower():
+            target_abs = os.path.abspath(export_target)
+            if current_abs.lower() != target_abs.lower():
                 try:
-                    shutil.copy2(args.output_html, f"{desktop}\\{os.path.basename(args.output_html)}")
-                    shutil.copy2(args.output_csv, f"{desktop}\\{os.path.basename(args.output_csv)}")
-                    shutil.copy2(crm_csv_path, f"{desktop}\\{os.path.basename(crm_csv_path)}")
-                    print(f"[OK] Sincronizado en Escritorio: {desktop}")
+                    shutil.copy2(args.output_html, os.path.join(export_target, os.path.basename(args.output_html)))
+                    shutil.copy2(args.output_csv, os.path.join(export_target, os.path.basename(args.output_csv)))
+                    shutil.copy2(crm_csv_path, os.path.join(export_target, os.path.basename(crm_csv_path)))
+                    print(f"[OK] Sincronizado en directorio secundario: {export_target}")
                 except Exception as e:
-                    print(f"[Aviso] Sincronización en Escritorio omitida: {e}")
+                    print(f"[Aviso] Sincronización secundaria omitida: {e}")
 
 def cmd_run(args):
     """Ejecuta el pipeline completo de prospección y compilación."""

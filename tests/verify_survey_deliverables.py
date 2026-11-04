@@ -350,7 +350,9 @@ def verify_all(workspace=None, sample_urls=False, verbose=False):
         workspace = os.path.abspath(os.path.join(script_dir, ".."))
 
     csv_path = os.path.join(workspace, "alumnos_ciencias_exactas.csv")
-    dir_path = os.path.join(workspace, "directorio_plataformas.md")
+    dir_path = os.path.join(workspace, "docs", "directorio_plataformas.md")
+    if not os.path.exists(dir_path):
+        dir_path = os.path.join(workspace, "directorio_plataformas.md")
 
     print("================================================================")
     print("      STUDENT TUTOR DIRECTORY & DATABASE VERIFICATION AUDIT     ")

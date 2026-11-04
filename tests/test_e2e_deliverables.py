@@ -31,7 +31,9 @@ from datetime import datetime, timedelta
 # Path configurations
 WORKSPACE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 CSV_PATH = os.path.join(WORKSPACE_DIR, "alumnos_ciencias_exactas.csv")
-DIR_PATH = os.path.join(WORKSPACE_DIR, "directorio_plataformas.md")
+DIR_PATH = os.path.join(WORKSPACE_DIR, "docs", "directorio_plataformas.md")
+if not os.path.exists(DIR_PATH):
+    DIR_PATH = os.path.join(WORKSPACE_DIR, "directorio_plataformas.md")
 
 # Canonical Interface Specifications
 CANONICAL_HEADERS = [

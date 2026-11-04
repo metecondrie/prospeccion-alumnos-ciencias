@@ -27,7 +27,7 @@ Permitir al profesor particular o equipo docente identificar inmediatamente dón
 
 ## 2. Tabla Comparativa de Plataformas de Demandas
 
-| Plataforma | URL Principal | URL Directa a Demandas | Cobertura (Países) | Sistema de Publicación | Método de Contacto | Modelo de Acceso | Nivel de Actividad |
+| Plataforma | URL Principal | URL Directa a Demandas | Países Cubiertos | Sistema de Publicación | Método de Contacto | Modelo de Acceso | Nivel de Actividad |
 |---|---|---|---|---|---|---|:---:|
 | **TusClasesParticulares (España)** | [tusclasesparticulares.com](https://www.tusclasesparticulares.com) | [tusclasesparticulares.com/buscar/alumnos.aspx](https://www.tusclasesparticulares.com/buscar/alumnos.aspx) | España | Búsqueda entrante de alumnos (solicitud privada) y vacantes formativas | Mensajería interna (botón 'Contactar') | Freemium (gratuito con registro docente) | Muy Alto |
 | **TusClases Argentina** | [tusclases.com.ar](https://www.tusclases.com.ar) | [tusclases.com.ar/alumnos/](https://www.tusclases.com.ar/alumnos/) | Argentina | Solicitud de clase publicada por alumno | Mensajería interna directa | Freemium (registro gratuito) | Muy Alto |

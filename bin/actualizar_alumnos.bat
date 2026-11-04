@@ -13,7 +13,7 @@ echo.
 echo [DIRECTORIO DE TRABAJO] %~dp0
 echo.
 
-cd /d "%~dp0"
+cd /d "%~dp0\.."
 
 REM -------------------------------------------------------------------------------
 REM PASO 0: VERIFICACION DE ENTORNO PYTHON

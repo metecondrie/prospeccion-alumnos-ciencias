@@ -22,7 +22,7 @@ if hasattr(sys.stderr, 'reconfigure'):
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
-DESKTOP_DIR = r"E:\OneDrive\Escritorio\Prospeccion_Alumnos_Ciencias"
+EXPORT_SYNC_DIR = os.environ.get("PROSPECTOR_EXPORT_DIR", "")
 
 if SCRIPT_DIR not in sys.path:
     sys.path.insert(0, SCRIPT_DIR)
@@ -51,9 +51,10 @@ async def main():
     # Buscar sesión
     session_candidates = [
         SESSION_FILE,
-        os.path.join(DESKTOP_DIR, "centinela_session"),
         os.path.join(os.getcwd(), "centinela_session")
     ]
+    if EXPORT_SYNC_DIR:
+        session_candidates.insert(1, os.path.join(EXPORT_SYNC_DIR, "centinela_session"))
     target_session = None
     for cand in session_candidates:
         if os.path.exists(cand + ".session"):

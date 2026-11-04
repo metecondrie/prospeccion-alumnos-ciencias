@@ -5,7 +5,8 @@ Bot Centinela en Tiempo Real para Telegram (Telethon Client).
 Escucha mensajes en vivo en todos los grupos y supergrupos de estudiantes donde esté unida la cuenta,
 detecta solicitudes de alumnos en ciencias exactas, audita con IA (Gemini / Groq / Mistral) en 1 segundo
 y envía una alerta push instantánea al celular del Prof. Alejo con el enlace para contactar al alumno.
-Incluye sistema de logging continuo a archivo (logs/centinela.log) y latido en vivo (heartbeat).
+Incluye precarga de caché de grupos de Telegram, feedback en vivo de cada mensaje recibido,
+sistema de logging continuo a archivo (logs/centinela.log) y latido en vivo (heartbeat).
 """
 
 import os
@@ -26,7 +27,7 @@ if hasattr(sys.stderr, 'reconfigure'):
 # Ensure scripts dir is on sys.path
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
-DESKTOP_DIR = r"E:\OneDrive\Escritorio\Prospeccion_Alumnos_Ciencias"
+EXPORT_SYNC_DIR = os.environ.get("PROSPECTOR_EXPORT_DIR", "")
 
 if SCRIPT_DIR not in sys.path:
     sys.path.insert(0, SCRIPT_DIR)
@@ -60,11 +61,11 @@ def log_event(text: str, print_to_console: bool = True):
     try:
         with open(LOG_FILE, "a", encoding="utf-8") as f:
             f.write(formatted + "\n")
-        # Espejar en escritorio si existe la carpeta
-        desktop_logs = os.path.join(DESKTOP_DIR, "logs")
-        if os.path.exists(DESKTOP_DIR):
-            os.makedirs(desktop_logs, exist_ok=True)
-            with open(os.path.join(desktop_logs, "centinela.log"), "a", encoding="utf-8") as f:
+        # Espejar en directorio secundario si está configurado
+        if EXPORT_SYNC_DIR and os.path.exists(EXPORT_SYNC_DIR):
+            secondary_logs = os.path.join(EXPORT_SYNC_DIR, "logs")
+            os.makedirs(secondary_logs, exist_ok=True)
+            with open(os.path.join(secondary_logs, "centinela.log"), "a", encoding="utf-8") as f:
                 f.write(formatted + "\n")
     except Exception:
         pass
@@ -75,13 +76,14 @@ FAST_TRIGGERS = [
     r"\bprofesor\b", r"\bprofesora\b", r"\bprofe\b", r"\bparticular\b",
     r"\bclases\b", r"\btutor\b", r"\btutora\b", r"\benseñ\b", r"\bexplic\b",
     r"\bparcial\b", r"\bfinal\b", r"\bexamen\b", r"\bparcialito\b",
-    r"\bcbc\b", r"\buba\s*xxi\b", r"\bapoyo\b", r"\bayuda\b"
+    r"\bcbc\b", r"\buba\s*xxi\b", r"\bapoyo\b", r"\bayuda\b", r"\btest\b"
 ]
 
 FAST_SUBJECTS = [
     r"\bmatem[aá]tic", r"\bf[ií]sic", r"\bqu[ií]mic", r"\bbiolog[ií]",
     r"\ban[aá]lisis\b", r"\b[aá]lgebra\b", r"\bbiof[ií]sic", r"\bc[aá]lculo\b",
-    r"\bgeometr[ií]a\b", r"\baritm[eé]tica\b", r"\bprobabilidad\b", r"\bestad[ií]stic\b"
+    r"\bgeometr[ií]a\b", r"\baritm[eé]tica\b", r"\bprobabilidad\b", r"\bestad[ií]stic\b",
+    r"\bciencias\b", r"\btest\b"
 ]
 
 
@@ -96,9 +98,9 @@ def fast_match(text: str) -> bool:
 def save_approved_lead(lead: Dict[str, Any]):
     """Guarda el nuevo alumno en data/dataset_canonico_auditado.json de forma incremental y sincronizada."""
     targets = [DATA_APPROVED]
-    desktop_target = os.path.join(DESKTOP_DIR, "data", "dataset_canonico_auditado.json")
-    if os.path.exists(os.path.dirname(desktop_target)):
-        targets.append(desktop_target)
+    if EXPORT_SYNC_DIR and os.path.exists(EXPORT_SYNC_DIR):
+        secondary_target = os.path.join(EXPORT_SYNC_DIR, "data", "dataset_canonico_auditado.json")
+        targets.append(secondary_target)
 
     for target_path in targets:
         os.makedirs(os.path.dirname(target_path), exist_ok=True)
@@ -180,9 +182,10 @@ async def main():
     # Buscar sesión en candidatos
     session_candidates = [
         os.path.join(PROJECT_ROOT, "centinela_session"),
-        os.path.join(DESKTOP_DIR, "centinela_session"),
         os.path.join(os.getcwd(), "centinela_session")
     ]
+    if EXPORT_SYNC_DIR:
+        session_candidates.insert(1, os.path.join(EXPORT_SYNC_DIR, "centinela_session"))
     target_session = None
     for cand in session_candidates:
         if os.path.exists(cand + ".session"):
@@ -201,11 +204,23 @@ async def main():
     print(f"\n[CENTINELA CONECTADO Y AUTENTICADO]")
     print(f"Cuenta: {me.first_name} (@{me.username or 'sin_username'}) | ID: {me.id}")
     print(f"Registro en tiempo real: {LOG_FILE}")
+
+    # PRE-CARGA CRUCIAL DE DIÁLOGOS Y GRUPOS (Para que Telegram envíe updates en tiempo real)
+    print("\nSincronizando entidades y grupos de estudiantes...")
+    dialogs = await client.get_dialogs(limit=50)
+    active_groups = [d for d in dialogs if (d.is_group or d.is_channel)]
+    print(f"[SINCRONIZACIÓN EXITOSA] {len(active_groups)} chats/grupos monitoreados activamente.")
+    print("\nGrupos de estudio en guardia activa:")
+    for g in active_groups[:8]:
+        uname = getattr(g.entity, 'username', None)
+        uname_str = f"(@{uname})" if uname else ""
+        print(f"  • {g.title} {uname_str}")
+
     print("\nEscuchando mensajes en vivo en todos tus grupos de estudiantes...")
     print("Emitiendo latido de actividad cada 60 segundos...")
     print("Presiona Ctrl + C en cualquier momento para detener.\n" + "-" * 70)
 
-    log_event(f"[CONEXION EXITOSA] Usuario: {me.first_name} (@{me.username}) ID: {me.id}")
+    log_event(f"[CONEXION EXITOSA] Usuario: {me.first_name} (@{me.username}) ID: {me.id} | Grupos: {len(active_groups)}")
 
     # Iniciar tarea en segundo plano de latido (heartbeat)
     asyncio.create_task(heartbeat_loop(client))
@@ -220,23 +235,24 @@ async def main():
         is_own = bool(event.out)
         STATS["messages_scanned"] += 1
 
-        # Registrar de forma silenciosa en el archivo cada 10 mensajes para auditoría
-        if STATS["messages_scanned"] % 10 == 0:
-            log_event(f"[AUDITORIA INTERNA] Total mensajes recibidos en grupos: {STATS['messages_scanned']}", print_to_console=False)
-
-        if len(text) < 15:
-            return
-
-        # 1. Filtro rápido de regex para descartar charlas que no buscan profe
-        if not fast_match(text):
-            return
-
-        STATS["ai_audits"] += 1
         chat = await event.get_chat()
         chat_title = getattr(chat, 'title', 'Grupo Telegram')
         sender = await event.get_sender()
         sender_name = f"{getattr(sender, 'first_name', '')} {getattr(sender, 'last_name', '')}".strip() or "Estudiante"
         sender_user = getattr(sender, 'username', '')
+
+        now_time = datetime.now().strftime("%H:%M:%S")
+
+        if len(text) < 10:
+            return
+
+        # 1. Filtro rápido de regex para descartar charlas que no buscan profe
+        if not fast_match(text):
+            # Feedback sutil en consola para confirmar que el mensaje fue recibido y evaluado
+            print(f"[{now_time}] 💬 Msg en '{chat_title[:25]}' de {sender_name[:15]}: (charla general)")
+            return
+
+        STATS["ai_audits"] += 1
 
         prefix = "🧪 [MENSAJE DE PRUEBA PROPIO]" if is_own else "🔥 [POTENCIAL ALUMNO DETECTADO]"
         log_event(f"\n{prefix} Grupo: '{chat_title}' | Autor: {sender_name} (@{sender_user})")
@@ -266,7 +282,7 @@ async def main():
                         "plataforma": candidate_item["plataforma"],
                         "país/ubicación": candidate_item["ubicacion"],
                         "nombre": sender_name,
-                        "persona_id": sender_user or f"user_{sender.id}",
+                        "persona_id": sender_user or f"user_{getattr(sender, 'id', '0')}",
                         "materia": candidate_item["materia"],
                         "nivel educativo": normalize_level(text),
                         "enlace al anuncio": candidate_item["enlace"],

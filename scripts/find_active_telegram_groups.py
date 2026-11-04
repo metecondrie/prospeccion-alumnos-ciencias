@@ -13,8 +13,8 @@ load_env_file()
 api_id = int(os.environ.get('TELEGRAM_API_ID', 0))
 api_hash = os.environ.get('TELEGRAM_API_HASH', '')
 session_file = 'centinela_session'
-if not os.path.exists(session_file + '.session'):
-    session_file = r'E:\OneDrive\Escritorio\Prospeccion_Alumnos_Ciencias\centinela_session'
+if os.environ.get('PROSPECTOR_EXPORT_DIR') and os.path.exists(os.path.join(os.environ.get('PROSPECTOR_EXPORT_DIR'), 'centinela_session.session')):
+    session_file = os.path.join(os.environ.get('PROSPECTOR_EXPORT_DIR'), 'centinela_session')
 
 now = datetime.now(timezone.utc)
 
