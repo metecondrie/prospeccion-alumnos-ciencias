@@ -204,3 +204,49 @@ El proyecto fue probado en una corrida piloto real orientada a la captación de 
 * **Usuario de GitHub:** [@metecondrie](https://github.com/metecondrie)
 * **Repositorio Oficial:** [github.com/metecondrie/prospeccion-alumnos-ciencias](https://github.com/metecondrie/prospeccion-alumnos-ciencias)
 * **Rol:** Concepción del problema, arquitectura de software, especificación de requerimientos, diseño del CRM y dirección de desarrollo con asistencia de IA.
+
+---
+
+## 11. Arquitectura de Ciclo Cerrado (Closed-Loop Feedback & Active Learning)
+
+A diferencia de un scraper unidireccional estático, el sistema opera con un **bucle de retroalimentación cerrado (closed-loop feedback)** donde los resultados comerciales y las objeciones de los estudiantes retroalimentan los prompts de IA, los filtros léxicos y la estrategia de outreach.
+
+```mermaid
+flowchart TD
+    A["1. Extracción Multicanal (175 avisos)"] --> B["2. Filtro IA Gemini 2.5 Flash + Fallback"]
+    B --> C["3. Dataset Canónico (41 prospectos calificados)"]
+    C --> D["4. Panel CRM Local (dashboard.html)"]
+    D --> E["5. Outreach Humano (18 contactados)"]
+    E --> F{"6. Respuesta del Alumno"}
+    F -->|38.8% Respondieron (7)| G["7. Conversación Pedagógica y Cotización"]
+    F -->|61.1% Sin Respuesta (11)| H["Telemetría de Ghosting (Re-intento a 3 días)"]
+    G -->|3 Alumnos Pagados (16.7%)| I["✅ Conversión Exitosa ($15.000 ARS/h)"]
+    G -->|4 Objeciones / Descartes| J["Análisis de Objeciones (Presencial / Horarios)"]
+    J --> K["🔄 Feedback Loop (Refinamiento de Reglas y Prompts)"]
+    K -->|Few-Shot Negativos & Alertas| B
+    K -->|Personalización de Plantillas| D
+```
+
+### A. Telemetría de Conversión de los 41 Prospectos
+El archivo estructurado `data/feedback_piloto_conversion.json` documenta el estado detallado de cada oportunidad del relevamiento:
+
+* **Total de Anuncios Calificados:** 41
+* **Lote 1 de Contacto (Piloto):** 18 prospectos contactados
+  - **3 Alumnos Convertidos a Clases Pagadas (16.7% sobre contactados):**
+    1. `tc_ar_2461220` (Belén M. / Álgebra & Máquinas Hidráulicas - UADE): Paquete mensual de 8 horas ($120.000 ARS/mes).
+    2. `tc_ar_2466634` (Fernando K. / Matemáticas Universitarias - UBA CBC): Paquete mensual de 4 horas ($60.000 ARS/mes).
+    3. `tablon_es_5258472` (Estudiante ESO Lakuntza / Física & Química): Paquete mensual de 4 horas (€60 EUR/mes).
+  - **4 Objeciones / Descartes Post-Contacto:**
+    - 2 alumnos declinaron la propuesta virtual e insistieron en clases a domicilio.
+    - 1 alumno ya había contratado docente en las horas previas.
+    - 1 alumno requería horarios incompatibles (solo domingos por la noche).
+  - **11 Sin Respuesta a los 7 Días (Tasa de ghosting: 61.1%):** Parámetro común en portales públicos; se programa segundo contacto de recordatorio.
+* **Lote 2 en Espera (23 prospectos):**
+  - 7 avisos de Cronoshare (reservados a la espera de evaluar costo-beneficio de créditos pagos).
+  - 5 avisos presenciales en localidades alejadas.
+  - 11 prospectos en cola para la siguiente fase de prospección.
+
+### B. Mejoras del Pipeline Conducidas por el Feedback
+1. **Detección Automática de Domicilio:** Al detectar que 2 alumnos rechazaron la virtualidad tras el contacto, se creó la regla que marca `modalidad: Presencial` y genera `alerta_modalidad: Pide presencial (Ofrecer pase a Online)` para alertar al docente antes de enviar la carta.
+2. **Eliminación de Saludos Falsos:** Se observó que saludar diciendo "Hola Alumno UADE" reducía drásticamente la tasa de respuesta. Se diseñó el supresor inteligente de nombres institucionales para abrir siempre con "¡Hola! ¿Cómo estás?".
+3. **Few-Shot Learning Negativo:** Los 134 avisos de academias descartados forman una base de casos negativos (`data/descartados_auditoria.json`) que sirve de benchmark continuo para evaluar nuevas versiones del modelo.

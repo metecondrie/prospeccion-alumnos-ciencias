@@ -181,5 +181,31 @@ class TestProspectorCore(unittest.TestCase):
                     os.environ[k] = v
 
 
+    def test_feedback_conversion_metrics_consistency(self):
+        # Valida que los datos de telemetría y métricas de conversión del piloto sean 100% consistentes
+        feedback_path = os.path.join(os.path.dirname(__file__), "..", "data", "feedback_piloto_conversion.json")
+        self.assertTrue(os.path.exists(feedback_path), "feedback_piloto_conversion.json debe existir")
+
+        import json
+        with open(feedback_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        m = data["metricas_generales"]
+        fp = m["fase_piloto"]
+        self.assertEqual(m["total_anuncios_extraidos"], 175)
+        self.assertEqual(m["total_prospectos_calificados"], 41)
+        self.assertEqual(fp["contactados"] + fp["en_espera_lote_2"], 41)
+        self.assertEqual(fp["convertidos_pagados"] + fp["descartados_post_contacto"] + fp["sin_respuesta_7_dias"], fp["contactados"])
+        self.assertEqual(fp["respondieron"], fp["convertidos_pagados"] + fp["descartados_post_contacto"])
+
+        # Verificar que los alumnos convertidos existen en el dataset canónico
+        data_canon_path = os.path.join(os.path.dirname(__file__), "..", "data", "dataset_canonico_auditado.json")
+        with open(data_canon_path, "r", encoding="utf-8") as f:
+            canon = json.load(f)
+        canon_ids = {r["id"] for r in canon}
+
+        for conv in data["detalle_conversiones_exitosas"]:
+            self.assertIn(conv["lead_id"], canon_ids, f"El lead convertido {conv['lead_id']} debe existir en el dataset canónico")
+
 if __name__ == "__main__":
     unittest.main()

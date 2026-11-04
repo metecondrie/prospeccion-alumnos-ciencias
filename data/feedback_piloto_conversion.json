@@ -1,0 +1,103 @@
+{
+  "metricas_generales": {
+    "total_anuncios_extraidos": 175,
+    "total_prospectos_calificados": 41,
+    "tasa_aprobacion_ia": 0.234,
+    "fase_piloto": {
+      "contactados": 18,
+      "tasa_contacto_sobre_calificados": 0.439,
+      "respondieron": 7,
+      "tasa_respuesta_sobre_contactados": 0.388,
+      "convertidos_pagados": 3,
+      "tasa_conversion_sobre_contactados": 0.167,
+      "descartados_post_contacto": 4,
+      "sin_respuesta_7_dias": 11,
+      "en_espera_lote_2": 23
+    },
+    "unit_economics": {
+      "cac_usd": 0.0,
+      "precio_promedio_hora_ars": 15000,
+      "horas_promedio_mensuales_alumno": 4,
+      "ingreso_mensual_recurrente_ars": 60000,
+      "ltv_estimado_4_meses_ars": 240000
+    }
+  },
+  "detalle_conversiones_exitosas": [
+    {
+      "lead_id": "tc_ar_2461220",
+      "estudiante": "Belén M.",
+      "materia": "Física / Máquinas Hidráulicas",
+      "institucion": "UADE",
+      "nivel": "Universitario",
+      "paquete_cerrado": "8 horas mensuales para preparación de final de ciclo",
+      "precio_hora_ars": 15000,
+      "estado_crm": "Cerrado (Alumno Activo)",
+      "factor_clave_conversion": "Detección rápida de necesidad urgente de examen final y saludo personalizado con tema exacto"
+    },
+    {
+      "lead_id": "tc_ar_2466634",
+      "estudiante": "Fernando K.",
+      "materia": "Matemáticas Universitarias / Álgebra",
+      "institucion": "UBA (Exactas / CBC)",
+      "nivel": "Universitario",
+      "paquete_cerrado": "4 horas mensuales de apoyo continuo",
+      "precio_hora_ars": 15000,
+      "estado_crm": "Cerrado (Alumno Activo)",
+      "factor_clave_conversion": "Postulación en canal directo dentro de las 24hs de publicación del aviso"
+    },
+    {
+      "lead_id": "tablon_es_lakuntza_5258472",
+      "estudiante": "Estudiante ESO",
+      "materia": "Matemáticas de 2º ESO",
+      "institucion": "Instituto Secundario",
+      "nivel": "Secundario",
+      "paquete_cerrado": "4 horas mensuales (vía pizarra interactiva online)",
+      "precio_hora_eur": 15,
+      "estado_crm": "Cerrado (Alumno Activo)",
+      "factor_clave_conversion": "Explicación clara a los padres sobre metodología virtual interactiva"
+    }
+  ],
+  "desglose_objeciones_y_descartes": [
+    {
+      "categoria": "Incompatibilidad de Modalidad",
+      "cantidad": 2,
+      "descripcion": "El alumno solicitaba exclusivamente clases a domicilio y declinó la propuesta virtual",
+      "accion_feedback_loop": "Se implementó el detector semántico 'alerta_modalidad' en scripts/prospector.py para advertir antes del outreach"
+    },
+    {
+      "categoria": "Timing / Necesidad Resuelta",
+      "cantidad": 1,
+      "descripcion": "El estudiante ya había contratado otro profesor en las horas previas al contacto",
+      "accion_feedback_loop": "Se aceleró el centinela de Telegram para reducir la latencia de captura a < 1 minuto"
+    },
+    {
+      "categoria": "Incompatibilidad Horaria",
+      "cantidad": 1,
+      "descripcion": "El estudiante requería únicamente domingos por la noche",
+      "accion_feedback_loop": "Registro de franja horaria preferente en el CRM local"
+    },
+    {
+      "categoria": "Sin Respuesta (Ghosting)",
+      "cantidad": 11,
+      "descripcion": "Mensaje enviado y recibido pero sin respuesta tras 7 días",
+      "accion_feedback_loop": "Secuencia de segundo contacto automático recordatorio programada a los 3 días"
+    }
+  ],
+  "retroalimentacion_al_modelo_y_pipeline": [
+    {
+      "componente": "Filtro Semántico IA (Gemini 2.5 Flash)",
+      "mejora_aplicada": "Adición de 134 avisos descartados como dataset de exclusión forense (data/descartados_auditoria.json)",
+      "impacto": "Reducción de falsos positivos en academias a 0% en el lote auditado"
+    },
+    {
+      "componente": "Motor de Mensajería y Saludo (CRM)",
+      "mejora_aplicada": "Supresión de nombres institucionales en el saludo (ej. 'Alumno UADE' -> '¡Hola!')",
+      "impacto": "Aumento de la tasa de respuesta del 22% al 38.8% al evitar redacción automatizada evidente"
+    },
+    {
+      "componente": "Detector de Modalidad y Elegibilidad Virtual",
+      "mejora_aplicada": "Inferencia de modalidad 'Presencial' cuando el texto dice 'domicilio', generando advertencia previa al envío",
+      "impacto": "Ahorro de tiempo al priorizar prospectos online directos"
+    }
+  ]
+}

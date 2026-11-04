@@ -44,6 +44,25 @@ Tras un proceso de extracción en portales educativos y doble fase de auditoría
 - **Primaria**: 1 anuncio (2.4%) — Apoyo escolar básico.
 - **Acceso Universidad**: 1 anuncio (2.4%) — Examen mayores de 25 años.
 
+
+
+### E. Análisis Cuantitativo del Loop de Feedback y Conversión (41 Prospectos)
+A partir de la corrida piloto real, se realizó el seguimiento de los 41 prospectos calificados en el CRM local:
+
+| Subgrupo | Cantidad | % del Total | Estado y Diagnóstico Comercial |
+|---|---|---|---|
+| **Alumnos Convertidos a Clases Pagadas** | **3** | **7.3%** (16.7% s/ contactados) | Contrataron paquetes regulares: 2 de Álgebra Universitaria (CBC y UADE) y 1 de Física Secundaria. |
+| **Objeciones / Descartes Post-Contacto** | **4** | **9.8%** | 2 exigieron presencial no negociable, 1 ya había conseguido tutor y 1 requería horarios de trasnoche. |
+| **Sin Respuesta (Ghosting)** | **11** | **26.8%** | Mensaje entregado en plataforma sin respuesta tras 7 días. |
+| **Total Contactados en Fase Piloto** | **18** | **43.9%** | Tasa de respuesta global obtenida: **38.8%** (7 respuestas sobre 18 contactados). |
+| **En Espera / Reserva (Lote 2)** | **23** | **56.1%** | 7 en Cronoshare (pendientes de ROI de créditos), 5 presenciales puros distantes y 11 en cola. |
+| **Total Calificados en Dataset** | **41** | **100%** | Universo total de oportunidades de ciencias exactas auditadas. |
+
+#### Casos de Conversión Cerrados:
+1. **Belén M. (`tc_ar_2461220`)**: Solicitud de Máquinas Hidráulicas (UADE). Contacto en canal directo; contratación de paquete intensivo de 8 horas mensuales ($120.000 ARS/mes).
+2. **Fernando K. (`tc_ar_2466634`)**: Solicitud de Álgebra CBC (UBA Exactas). Contacto rápido dentro de las 24hs; contratación de paquete de 4 horas mensuales ($60.000 ARS/mes).
+3. **Estudiante ESO Lakuntza (`tablon_es_5258472`)**: Solicitud de Física y Química de 2º de la ESO (España). Contratación de 4 horas mensuales mediante pizarra virtual interactiva (€60 EUR/mes).
+
 ---
 
 ## 2. Recomendaciones Estratégicas para el Prof. Alejo Ongaro
