@@ -26,6 +26,18 @@
       "active": true
     },
     {
+      "username": "medicinaunlpArgentina",
+      "name": "Medicina UNLP (La Plata)",
+      "country": "Argentina - UNLP La Plata",
+      "active": true
+    },
+    {
+      "username": "universidad_nacional_de_laplata",
+      "name": "Universidad Nacional de La Plata (UNLP)",
+      "country": "Argentina - UNLP La Plata",
+      "active": true
+    },
+    {
       "username": "ubaxxicbc",
       "name": "CBC UBA XXI Oficial",
       "country": "Argentina - CBC UBA",
@@ -57,6 +69,21 @@
     }
   ],
   "discussion_groups_to_join": [
+    {
+      "username": "IngMedUNLP2023",
+      "title": "Ingreso y Estudiantes Medicina UNLP (Biofísica, Química y Biología)",
+      "members": 103
+    },
+    {
+      "username": "chatUNLP",
+      "title": "Comunidad de Estudiantes UNLP - La Plata",
+      "members": 92
+    },
+    {
+      "username": "unlpIng",
+      "title": "UNLP Ingeniería (Álgebra, Análisis, Física y Química)",
+      "members": 14
+    },
     {
       "username": "ingresoutnfrba",
       "title": "Ingreso - UTN FRBA (Matemática y Física)",
