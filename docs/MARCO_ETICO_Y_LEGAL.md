@@ -56,5 +56,5 @@ Para que este repositorio pueda exhibirse abiertamente como demostración técni
 ## 5. Protocolo de Opt-Out y Derecho de Supresión
 
 Si eres el autor de alguno de los anuncios públicos indexados en la muestra anonimizada y prefieres que sea retirado de inmediato del dataset de demostración:
-* Escribe un correo a: `contacto.docente@ciencias.org` o abre un issue en [GitHub Issues](https://github.com/metecondrie/prospeccion-alumnos-ciencias/issues).
+* Escribe un correo a: `alejoongaro@gmail.com` o abre un issue en [GitHub Issues](https://github.com/metecondrie/prospeccion-alumnos-ciencias/issues).
 * El registro será eliminado en menos de 24 horas hábiles sin necesidad de justificación alguna.

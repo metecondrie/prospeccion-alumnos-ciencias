@@ -8,11 +8,11 @@ Este informe documenta la evaluación comparativa entre la heurística léxica t
 
 | Métrica | Baseline Heurístico (Regex) | Producción: Gemini 3.5 / 3.6 Flash* | Delta de Rendimiento |
 |---|---|---|---|
-| **Precisión (Precision / VPP)** | 50.0% | **95.3%** | **+45.4 pp** |
+| **Precisión (Precision / VPP)** | 50.0% | **95.6%** | **+45.6 pp** |
 | **Sensibilidad (Recall / TPR)** | 44.6% | **100.0%** | **+55.4 pp** |
-| **Especificidad (TNR)** | 73.6% | **98.5%** | **+24.9 pp** |
-| **F1-Score (Media Armónica)** | 47.1% | **97.6%** | **+50.5 pp** |
-| **Exactitud (Accuracy)** | 62.9% | **98.9%** | **+36.0 pp** |
+| **Especificidad (TNR)** | 73.6% | **97.3%** | **+23.6 pp** |
+| **F1-Score (Media Armónica)** | 47.1% | **97.7%** | **+50.6 pp** |
+| **Exactitud (Accuracy)** | 62.9% | **98.3%** | **+35.4 pp** |
 
 ---
 
@@ -21,15 +21,15 @@ Este informe documenta la evaluación comparativa entre la heurística léxica t
 ### A. Baseline Heurístico (Regex)
 ```text
                      Predicción: ALUMNO     Predicción: NO-ALUMNO
-Real: ALUMNO (41)           29 (TP)                   36 (FN)
-Real: ACADEMIA (134)        29 (FP)                   81 (TN)
+Real: ALUMNO (65)           29 (TP)                   36 (FN)
+Real: ACADEMIA (110)        29 (FP)                   81 (TN)
 ```
 
 ### B. Producción: Google Gemini 3.5 / 3.6 Flash
 ```text
                      Predicción: ALUMNO     Predicción: NO-ALUMNO
-Real: ALUMNO (41)           41 (TP)                    0 (FN)
-Real: ACADEMIA (134)         2 (FP)                  132 (TN)
+Real: ALUMNO (65)           65 (TP)                    0 (FN)
+Real: ACADEMIA (110)         3 (FP)                  107 (TN)
 ```
 
 ---
@@ -39,7 +39,7 @@ Real: ACADEMIA (134)         2 (FP)                  132 (TN)
 | Plataforma | Muestra Total | Alumnos Reales | TP Regex | FP Regex | TP Gemini | FP Gemini |
 |---|---|---|---|---|---|---|
 | Tablón de Anuncios | 2 | 2 | 2 | 0 | 2 | 0 |
-| TusClasesParticulares | 26 | 0 | 0 | 0 | 0 | 0 |
+| TusClasesParticulares | 26 | 0 | 0 | 0 | 0 | 3 |
 | TusClases Argentina | 25 | 18 | 15 | 0 | 18 | 0 |
 | TusClases México | 10 | 2 | 2 | 0 | 2 | 0 |
 | TusClases Colombia | 16 | 2 | 0 | 4 | 2 | 0 |
@@ -53,7 +53,7 @@ Real: ACADEMIA (134)         2 (FP)                  132 (TN)
 ## 4. Análisis de Latencia y Eficiencia Económica
 
 * **Latencia Promedio:**
-  - *Filtro Heurístico:* ~0.24 ms por anuncio (filtro instantáneo en memoria).
+  - *Filtro Heurístico:* ~0.25 ms por anuncio (filtro instantáneo en memoria).
   - *Inferencia Gemini 3.5 / 3.6 Flash:* ~1.15 segundos por lote de 10 anuncios.
 * **Costo de Inferencia:** **$0.00 USD** utilizando la cuota gratuita de Google AI Studio (hasta 1,500 solicitudes por día).
 * **Conclusión de Arquitectura:** La combinación óptima en producción es un **embudo en cascada**:

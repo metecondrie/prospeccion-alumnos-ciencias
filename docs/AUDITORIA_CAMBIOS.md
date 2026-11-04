@@ -115,7 +115,7 @@ Errores concretos:
 2. Corregir la tabla de métricas y la de columnas.
 3. Quitar del inventario los scripts inexistentes o agregarlos si se recuperan de Drive. Si no aparecen, declarar “pipeline no reproducible” y pedir el crudo.
 4. Implementar el ordenamiento por columnas o borrar esa afirmación.
-5. Corregir el correo de `Conclusiones_del_Proyecto.md`: dice `contacto.docente@ciencias.org`; debe ser `contacto.docente@ciencias.org`.
+5. Corregir el correo de `Conclusiones_del_Proyecto.md`: configurar correo real `alejoongaro@gmail.com`.
 
 **Aceptación:**
 - `grep -c "43"` en la doc no devuelve referencias al dataset actual.
@@ -310,7 +310,7 @@ Estados: `Pendiente`, `Preparado`, `Contactado`, `Respondió`, `En negociación`
    - Explicar la cadena 118 → 84 → 43 → 39.
    - Agregar “Limitaciones”: fechas de captura, 41% sin nombre, 7 links de categoría, 5 temas fuera de alcance, precisión no medida.
 2. `Conclusiones_del_Proyecto.md`
-   - Corregir `contacto.docente@ciencias.org` → `contacto.docente@ciencias.org`.
+   - Configurar correo directo `alejoongaro@gmail.com`.
    - Aclarar que los 39 son avisos, no necesariamente 39 personas (Helena B. tiene 2).
 3. `directorio_plataformas.md`
    - Distinguir “regla 90/10” y “80% / 70%” como heurísticas internas, no como datos medidos.

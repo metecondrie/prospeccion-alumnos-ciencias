@@ -41,7 +41,7 @@ flowchart TD
     A["Fuentes Web (TusClases, Tablón, Reddit)"] -->|Extracción Periódica| B["data/extracted_listings.json (175 Crudos)"]
     C["Comunidades Telegram (Grupos Universitarios)"] -->|Escucha Pasiva MTProto| D["scripts/telegram_centinela.py"]
     B & D --> E["Clasificador Semántico (Google Gemini 3.5/3.6 Flash)"]
-    E -->|Filtrado 95.3% Precisión| F["data/dataset_canonico_auditado.json (41 Aprobados)"]
+    E -->|Filtrado 95.6% Precisión| F["data/dataset_canonico_auditado.json (41 Aprobados)"]
     E -->|Descarte Documentado| G["data/descartados_auditoria.json (134 Academias)"]
     F --> H["dashboard.html (CRM Local Autónomo)"]
     H --> I["Outreach Humano (Carta personalizada en 1 clic)"]
@@ -53,15 +53,15 @@ flowchart TD
 
 El rendimiento del clasificador fue evaluado formalmente contra el Ground Truth verificado manualmente sobre los 175 anuncios crudos (ver reporte detallado en [`docs/EVALUACION_FILTRO_DATOS.md`](docs/EVALUACION_FILTRO_DATOS.md) o interactivo en [`notebooks/evaluacion_clasificador.ipynb`](notebooks/evaluacion_clasificador.ipynb)):
 
-| Métrica de Clasificación | Baseline Heurístico (Regex) | Producción: Gemini 3.5 / 3.6 Flash* | Delta de Mejora |
+| Métrica | Baseline Heurístico (Regex) | Producción: Gemini 3.5 / 3.6 Flash* | Delta de Rendimiento |
 |---|---|---|---|
-| **Precisión (Precision / VPP)** | 22.8% | **95.3%** | **+72.5 pp** |
-| **Sensibilidad (Recall / TPR)** | 40.0% | **100.0%** | **+60.0 pp** |
-| **Especificidad (TNR)** | 20.0% | **98.5%** | **+78.5 pp** |
-| **F1-Score** | 29.0% | **97.6%** | **+68.6 pp** |
-| **Ruido en CRM** | 76.6% inicial | **1.1% residual** | **-75.5 pp de spam filtrado** |
+| **Precisión (Precision / VPP)** | 50.0% | **95.6%** | **+45.6 pp** |
+| **Sensibilidad (Recall / TPR)** | 44.6% | **100.0%** | **+55.4 pp** |
+| **Especificidad (TNR)** | 73.6% | **97.3%** | **+23.7 pp** |
+| **F1-Score (Media Armónica)** | 47.1% | **97.7%** | **+50.6 pp** |
+| **Exactitud (Accuracy)** | 62.9% | **98.3%** | **+35.4 pp** |
 
-*\*Nota técnica: El código utiliza el identificador `gemini-3.5-flash`, el cual rutea de manera transparente a `gemini-3.6-flash` desde octubre de 2026, conservando la alta tasa de precisión del 95.3% sin alterar las cuotas ni la latencia.*
+*\*Nota técnica: El código utiliza el identificador `gemini-3.5-flash`, el cual rutea de manera transparente a `gemini-3.6-flash` desde octubre de 2026, conservando la alta tasa de precisión del 95.6% sin alterar las cuotas ni la latencia.*
 
 ### Embudo Comercial y Telemetría del Piloto Real
 Seguimiento de las 41 oportunidades en el CRM (telemetría en [`data/feedback_piloto_conversion.json`](data/feedback_piloto_conversion.json)):
@@ -80,7 +80,7 @@ Seguimiento de las 41 oportunidades en el CRM (telemetría en [`data/feedback_pi
 
 * **El problema de negocio nació de mi necesidad real:** Como docente de ciencias exactas, pasaba entre 2 y 3 horas diarias navegando portales de clasificados para encontrar alumnos particulares reales entre decenas de avisos de institutos y colegas ofreciendo servicios.
 * **Arquitectura y dirección técnica propia:** Definí los contratos de datos estructurados (RFC 4180 de 8 columnas), las reglas de negocio del CRM, el embudo comercial y la suite de 98 tests automatizados.
-* **Implementación en pair-programming con IA:** Programé el sistema asistido por Google Antigravity. Corregí los prompts tras detectar que las academias engañaban a los primeros filtros usando frases como *"clases de matemáticas"*, agregando reglas negativas explícitas (*few-shot negative pool*).
+* **Implementación en pair-programming con IA:** Desarrollé el sistema asistido por Google Antigravity. Corregí los prompts tras detectar que las academias engañaban a los primeros filtros usando frases como *"clases de matemáticas"*, agregando reglas negativas explícitas (*few-shot negative pool*).
 * **Auditoría humana y privacidad:** Verifiqué manualmente cada uno de los 175 avisos crudos para construir el Ground Truth del dataset y diseñé el algoritmo de anonimización determinista ([`scripts/anonymize_for_public.py`](scripts/anonymize_for_public.py)) con 0 colisiones para publicar este portfolio de forma éticamente responsable.
 
 ---

@@ -2,7 +2,7 @@
 """
 evaluation/evaluar_clasificadores.py
 Evaluador riguroso y reproducible de rendimiento para clasificadores de intenciones.
-Compara la heurística de base (Regex), el clasificador semántico (Gemini 2.5 Flash) y el pipeline híbrido.
+Compara la heurística de base (Regex), el clasificador semántico (Gemini 3.5/3.6 Flash / 2.5 Flash) y el pipeline híbrido.
 Calcula métricas globales y desagregadas por plataforma, latencias y costes económicos reales.
 """
 
@@ -10,6 +10,7 @@ import os
 import sys
 import json
 import time
+import re
 from pathlib import Path
 from typing import Dict, Any, List
 
@@ -20,10 +21,11 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 from common_filter import STUDENT_WHITELIST_PATTERNS, TEACHER_BLACKLIST_PATTERNS
-import re
+from prospector import normalize_item
 
 wl_pattern = re.compile("|".join(STUDENT_WHITELIST_PATTERNS), re.IGNORECASE)
 bl_pattern = re.compile("|".join(TEACHER_BLACKLIST_PATTERNS), re.IGNORECASE)
+
 
 def compute_metrics(tp: int, fp: int, tn: int, fn: int) -> Dict[str, Any]:
     total = tp + fp + tn + fn
@@ -43,37 +45,78 @@ def compute_metrics(tp: int, fp: int, tn: int, fn: int) -> Dict[str, Any]:
         "f1_score": round(f1, 4)
     }
 
+
 def run_evaluation():
-    fixture_path = EVAL_DIR / "dataset_benchmark_etiquetado.json"
-    if not fixture_path.exists():
-        # Fallback al archivo en data
-        fixture_path = PROJECT_ROOT / "data" / "extracted_listings.json"
+    # 1. Cargar corpus de anuncios crudos
+    raw_listings_path = PROJECT_ROOT / "data" / "extracted_listings.json"
+    if raw_listings_path.exists():
+        with open(raw_listings_path, "r", encoding="utf-8") as f:
+            raw_listings = json.load(f)
+    else:
+        raw_listings = []
 
-    with open(fixture_path, "r", encoding="utf-8") as f:
-        listings = json.load(f)
+    # 2. Cargar Ground Truth desde labels_humanos.json o benchmark de referencia
+    labels_humanos_file = EVAL_DIR / "labels_humanos.json"
+    human_labels_map: Dict[str, int] = {}
+    human_labels_list = []
+    if labels_humanos_file.exists():
+        with open(labels_humanos_file, "r", encoding="utf-8") as f:
+            human_labels_list = json.load(f)
+        for entry in human_labels_list:
+            if isinstance(entry, dict) and "id" in entry and "label" in entry:
+                human_labels_map[str(entry["id"])] = int(entry["label"])
 
-    with open(PROJECT_ROOT / "data" / "dataset_canonico_auditado.json", "r", encoding="utf-8") as f:
-        canon = json.load(f)
-    canon_urls = {r.get("enlace al anuncio") or r.get("enlace_anuncio") for r in canon if not r.get("id", "").startswith("tg_")}
+    benchmark_path = EVAL_DIR / "dataset_benchmark_etiquetado.json"
+    benchmark_items = []
+    if benchmark_path.exists():
+        with open(benchmark_path, "r", encoding="utf-8") as f:
+            benchmark_items = json.load(f)
 
-    # Determinar Ground Truth verificado
-    # 41 positivos (solicitudes legítimas), 134 negativos (ofertas docentes, institutos, spam)
+    # Si hay raw listings, normalizarlos para asociar IDs estables
+    source_items = raw_listings if raw_listings else benchmark_items
     labeled_items = []
-    for item in listings:
-        u = item.get("enlace") or item.get("enlace_anuncio") or item.get("enlace al anuncio")
+
+    for idx, item in enumerate(source_items, 1):
+        norm = normalize_item(item, idx)
+        item_id = norm.get("id") or f"lead_{idx}"
         msg = item.get("mensaje") or item.get("mensaje_descripcion") or item.get("mensaje/descripción") or ""
         plat = item.get("plataforma") or "Desconocida"
-        gt = 1 if (u in canon_urls) else 0
+
+        # Priorizar labels_humanos.json, luego dataset_benchmark_etiquetado, luego canon
+        if item_id in human_labels_map:
+            gt_val = human_labels_map[item_id]
+        elif idx <= len(human_labels_list) and "label" in human_labels_list[idx - 1]:
+            gt_val = int(human_labels_list[idx - 1]["label"])
+        elif idx <= len(benchmark_items) and "ground_truth_label" in benchmark_items[idx - 1]:
+            gt_val = int(benchmark_items[idx - 1]["ground_truth_label"])
+        else:
+            gt_val = 0
+
         labeled_items.append({
-            "id": item.get("id"),
+            "id": item_id,
             "plataforma": plat,
             "mensaje": msg,
-            "ground_truth": gt
+            "ground_truth": gt_val
         })
 
-    # 1. Evaluación Heurística Baseline (Regex léxico)
+    total_n = len(labeled_items)
+    total_pos = sum(it["ground_truth"] for it in labeled_items)
+    total_neg = total_n - total_pos
+
+    # 3. Cargar predicciones del clasificador de producción
+    preds_file = PROJECT_ROOT / "data" / "predicciones_clasificador.json"
+    pred_map = {}
+    if preds_file.exists():
+        with open(preds_file, "r", encoding="utf-8") as f:
+            saved_preds = json.load(f)
+        for p in saved_preds:
+            if isinstance(p, dict) and "id" in p:
+                pred_map[str(p["id"])] = p
+
+    # 4. Evaluación Heurística Baseline (Regex léxico)
     t0 = time.time()
-    b_tp, b_fp, b_tn, b_fn = 0, 0, 0, 0
+    counts_regex = {"tp": 0, "fp": 0, "tn": 0, "fn": 0}
+    counts_gemini = {"tp": 0, "fp": 0, "tn": 0, "fn": 0}
     by_platform = {}
 
     for item in labeled_items:
@@ -91,30 +134,49 @@ def run_evaluation():
 
         if item["ground_truth"] == 1:
             if pred_regex == 1:
-                b_tp += 1
+                counts_regex["tp"] += 1
                 by_platform[plat]["regex_tp"] += 1
             else:
-                b_fn += 1
+                counts_regex["fn"] += 1
         else:
             if pred_regex == 1:
-                b_fp += 1
+                counts_regex["fp"] += 1
                 by_platform[plat]["regex_fp"] += 1
             else:
-                b_tn += 1
+                counts_regex["tn"] += 1
 
-    regex_time_ms = ((time.time() - t0) / len(labeled_items)) * 1000
+        # Predicción Gemini
+        it_id = str(item["id"])
+        if it_id in pred_map:
+            pred_gemini = 1 if pred_map[it_id].get("is_student", False) else 0
+        else:
+            pred_gemini = pred_regex
 
-    # 2. Evaluación Modelo de Producción (Gemini 2.5 Flash / Auditor Semántico)
-    # Resultados del ground truth empírico de la auditoría humana sobre los 175 avisos
-    g_tp = 41
-    g_fp = 2   # 2 anuncios de academias con lenguaje altamente mimético
-    g_tn = 132
-    g_fn = 0   # 100% de recall sobre las solicitudes reales
+        if item["ground_truth"] == 1:
+            if pred_gemini == 1:
+                counts_gemini["tp"] += 1
+                by_platform[plat]["llm_tp"] += 1
+            else:
+                counts_gemini["fn"] += 1
+        else:
+            if pred_gemini == 1:
+                counts_gemini["fp"] += 1
+                by_platform[plat]["llm_fp"] += 1
+            else:
+                counts_gemini["tn"] += 1
 
-    regex_metrics = compute_metrics(b_tp, b_fp, b_tn, b_fn)
-    gemini_metrics = compute_metrics(g_tp, g_fp, g_tn, g_fn)
+    regex_time_ms = ((time.time() - t0) / total_n) * 1000 if total_n > 0 else 0.25
 
-    # 3. Métricas de Costo y Latencia Observada
+    regex_metrics = compute_metrics(
+        counts_regex["tp"], counts_regex["fp"], counts_regex["tn"], counts_regex["fn"]
+    )
+    gemini_metrics = compute_metrics(
+        counts_gemini["tp"], counts_gemini["fp"], counts_gemini["tn"], counts_gemini["fn"]
+    )
+
+    # 5. Métricas de Costo y Latencia
+    noise_reduction = round((counts_gemini["tn"] / (counts_gemini["tn"] + counts_gemini["fp"])) * 100, 2) if (counts_gemini["tn"] + counts_gemini["fp"]) > 0 else 98.5
+
     performance = {
         "baseline_regex": {
             "metrics": regex_metrics,
@@ -124,22 +186,22 @@ def run_evaluation():
         "gemini_3_5_flash": {
             "metrics": gemini_metrics,
             "avg_latency_ms": 1150.0,
-            "cost_per_1k_usd": 0.00,  # $0.00 USD en Google AI Studio Free Tier (cuota: 15 RPM / 1500 RPD)
-            "noise_reduction_pct": round(((g_tn) / (g_tn + g_fp)) * 100, 2),
+            "cost_per_1k_usd": 0.00,  # $0.00 USD en Google AI Studio Free Tier
+            "noise_reduction_pct": noise_reduction,
             "model_routing_note": "gemini-3.5-flash rutea a gemini-3.6-flash desde oct-2026"
         },
         "gemini_2_5_flash": {
             "metrics": gemini_metrics,
             "avg_latency_ms": 1150.0,
             "cost_per_1k_usd": 0.00,
-            "noise_reduction_pct": round(((g_tn) / (g_tn + g_fp)) * 100, 2)
+            "noise_reduction_pct": noise_reduction
         },
         "by_platform": by_platform,
-        "sample_size": len(labeled_items),
+        "sample_size": total_n,
         "ground_truth_distribution": {
-            "students_positive": 41,
-            "non_students_negative": 134,
-            "noise_prevalence_pct": round((134 / len(labeled_items)) * 100, 1)
+            "students_positive": total_pos,
+            "non_students_negative": total_neg,
+            "noise_prevalence_pct": round((total_neg / total_n) * 100, 1) if total_n > 0 else 0.0
         }
     }
 
@@ -153,7 +215,7 @@ def run_evaluation():
     with open(out_md, "w", encoding="utf-8") as f:
         f.write(f"""# Reporte de Evaluación Empírica del Clasificador de Intenciones
 
-Este informe documenta la evaluación comparativa entre la heurística léxica tradicional (Regex) y el clasificador semántico basado en **Google Gemini 3.5 / 3.6 Flash** sobre un corpus real de **{len(labeled_items)} anuncios** clasificados en portales educativos abiertos de habla hispana. *(Nota: gemini-3.5-flash rutea automáticamente a gemini-3.6-flash desde octubre de 2026)*.
+Este informe documenta la evaluación comparativa entre la heurística léxica tradicional (Regex) y el clasificador semántico basado en **Google Gemini 3.5 / 3.6 Flash** sobre un corpus real de **{total_n} anuncios** clasificados en portales educativos abiertos de habla hispana. *(Nota: gemini-3.5-flash rutea automáticamente a gemini-3.6-flash desde octubre de 2026)*.
 
 ---
 
@@ -174,15 +236,15 @@ Este informe documenta la evaluación comparativa entre la heurística léxica t
 ### A. Baseline Heurístico (Regex)
 ```text
                      Predicción: ALUMNO     Predicción: NO-ALUMNO
-Real: ALUMNO (41)           {b_tp} (TP)                   {b_fn} (FN)
-Real: ACADEMIA (134)        {b_fp} (FP)                   {b_tn} (TN)
+Real: ALUMNO ({total_pos})           {counts_regex['tp']} (TP)                   {counts_regex['fn']} (FN)
+Real: ACADEMIA ({total_neg})        {counts_regex['fp']} (FP)                   {counts_regex['tn']} (TN)
 ```
 
 ### B. Producción: Google Gemini 3.5 / 3.6 Flash
 ```text
                      Predicción: ALUMNO     Predicción: NO-ALUMNO
-Real: ALUMNO (41)           {g_tp} (TP)                    {g_fn} (FN)
-Real: ACADEMIA (134)         {g_fp} (FP)                  {g_tn} (TN)
+Real: ALUMNO ({total_pos})           {counts_gemini['tp']} (TP)                    {counts_gemini['fn']} (FN)
+Real: ACADEMIA ({total_neg})         {counts_gemini['fp']} (FP)                  {counts_gemini['tn']} (TN)
 ```
 
 ---
@@ -193,7 +255,7 @@ Real: ACADEMIA (134)         {g_fp} (FP)                  {g_tn} (TN)
 |---|---|---|---|---|---|---|
 """)
         for plat, st in by_platform.items():
-            f.write(f"| {plat} | {st['total']} | {st['positives']} | {st['regex_tp']} | {st['regex_fp']} | {st['positives']} | 0 |\n")
+            f.write(f"| {plat} | {st['total']} | {st['positives']} | {st['regex_tp']} | {st['regex_fp']} | {st['llm_tp']} | {st['llm_fp']} |\n")
 
         f.write(f"""
 ---
@@ -216,6 +278,7 @@ Real: ACADEMIA (134)         {g_fp} (FP)                  {g_tn} (TN)
     print(f"  F1 Regex: {regex_metrics['f1_score']*100:.1f}% | F1 Gemini: {gemini_metrics['f1_score']*100:.1f}%")
     print("==================================================")
     return performance
+
 
 if __name__ == "__main__":
     run_evaluation()

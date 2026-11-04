@@ -2,7 +2,7 @@
 
 **Proyecto**: Sistema Autónomo de Captación, Filtrado Semántico y Gestión CRM de Alumnos de Ciencias Exactas (Secundaria y Universidad)  
 **Autor Técnico**: Antigravity Multi-Agent Engine (Google DeepMind)  
-**Autor**: Prof. Alejo Ongaro (`contacto.docente@ciencias.org`)  
+**Autor**: Prof. Alejo Ongaro (`alejoongaro@gmail.com`)  
 **Fecha de Emisión**: 4 de Noviembre de 2026  
 **Versión del Software**: 4.0  
 **Run ID del Dataset**: `RUN-20261104-DETERMINISTIC-41-VERIFIED`  

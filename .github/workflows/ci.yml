@@ -6,7 +6,7 @@
 #    1. validate_dataset.py          -> integridad del dataset canónico
 #    2. tests/test_common_filter.py  -> tests unitarios del filtro heurístico
 #    3. tests/check_dashboard.cjs    -> tests del dashboard CRM (Node.js)
-#    4. Suite completa de tests      -> 98 pruebas unitarias y e2e (100% verde)
+#    4. Suite completa de tests      -> 98 pruebas unitarias y e2e (cobertura completa)
 # ============================================================================
 name: CI
 

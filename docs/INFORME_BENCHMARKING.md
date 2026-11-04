@@ -1,7 +1,7 @@
 # Informe Técnico: Auditoría de APIs Gratuitas, Benchmarking Empírico y Arquitectura Multiproveedor
 
 **Proyecto:** Sistema de Prospección de Alumnos de Ciencias Exactas  
-**Docente:** Prof. Alejo Ongaro (`contacto.docente@ciencias.org`)  
+**Docente:** Prof. Alejo Ongaro (`alejoongaro@gmail.com`)  
 **Fecha:** Noviembre de 2026  
 **Auditor:** Antigravity AI Engine  
 

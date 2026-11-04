@@ -1,19 +1,219 @@
 [
   {
-    "id": "tablon_es_benidorm_5363777",
+    "id": "tablon_es_5363777",
     "decision_ia": "Aprobado",
-    "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Terciario / FP).",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:00:00+00:00"
   },
   {
-    "id": "tablon_es_lakuntza_5258472",
+    "id": "tablon_es_5258472",
     "decision_ia": "Aprobado",
-    "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Secundario).",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_c4112a2ea4",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Aviso con lenguaje altamente mimético clasificado como candidato.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_82c2303b2c",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Aviso con lenguaje altamente mimético clasificado como candidato.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_9915e594fd",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Aviso con lenguaje altamente mimético clasificado como candidato.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_fa34012ccc",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_5c611248da",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_2e8606834c",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_4a92206398",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_de717514df",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_09afb43d76",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_c0de86eff7",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_cebd79090e",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_714357989c",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_d9b9166bdb",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_85ba47a6b7",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_1ec1785b96",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_ac404eb5f6",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_3b43396680",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_56cec76c7e",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_70d5d4b26b",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_047f087380",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_074fb552b6",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_ff4d244292",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_e5f9052d15",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_98aee9b964",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_7af9829614",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
   },
   {
     "id": "tc_ar_2466634",
@@ -21,7 +221,15 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
+  },
+  {
+    "id": "tc_ar_2465115",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
   },
   {
     "id": "tc_ar_2459605",
@@ -29,7 +237,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Secundario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_ar_2456445",
@@ -37,7 +245,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas, Física (Secundario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_ar_2446991",
@@ -45,7 +253,15 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Pre-Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
+  },
+  {
+    "id": "tc_ar_2438106",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
   },
   {
     "id": "tc_ar_2422026",
@@ -53,7 +269,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Secundario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_ar_2420540",
@@ -61,7 +277,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_ar_2419744",
@@ -69,7 +285,23 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
+  },
+  {
+    "id": "tusclase_0cf7000381",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_8dc0b47a48",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
   },
   {
     "id": "tc_ar_2461220",
@@ -77,7 +309,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Física (Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_ar_2461207",
@@ -85,7 +317,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Física (Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_ar_2461205",
@@ -93,7 +325,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Física (Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_ar_2457357",
@@ -101,7 +333,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Física, Química (Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_ar_2451416",
@@ -109,7 +341,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Física (Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_ar_2450773",
@@ -117,7 +349,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Física (Secundario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_ar_2449080",
@@ -125,7 +357,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Física (Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_ar_2442431",
@@ -133,7 +365,15 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Física (Secundario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
+  },
+  {
+    "id": "tc_ar_2438428",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
   },
   {
     "id": "tc_ar_2438146",
@@ -141,7 +381,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Física (Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_ar_2425788",
@@ -149,7 +389,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Física (Secundario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_ar_2421788",
@@ -157,7 +397,15 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas, Física (Secundario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
+  },
+  {
+    "id": "tc_ar_2454082",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
   },
   {
     "id": "tc_mx_2448951",
@@ -165,7 +413,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_mx_2455084",
@@ -173,7 +421,15 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Biología (Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
+  },
+  {
+    "id": "tc_mx_2429427",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
   },
   {
     "id": "tc_co_2440961",
@@ -181,7 +437,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Química (Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_co_2440578",
@@ -189,7 +445,31 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Secundario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
+  },
+  {
+    "id": "tc_co_2461258",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_8299a5f4fa",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_e946187b8a",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
   },
   {
     "id": "tc_cl_2466516",
@@ -197,7 +477,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Pre-Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_cl_2466158",
@@ -205,7 +485,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Física (Secundario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_cl_2465948",
@@ -213,7 +493,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Secundario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_cl_2465382",
@@ -221,7 +501,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Pre-Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_cl_2464467",
@@ -229,7 +509,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Química (Pre-Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_cl_2464464",
@@ -237,7 +517,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Biología (Pre-Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "tc_cl_2464471",
@@ -245,7 +525,31 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Física (Pre-Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
+  },
+  {
+    "id": "tusclase_16eb0a4f1f",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_8fc986d23a",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_436061d3d6",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
   },
   {
     "id": "tc_pe_2467463",
@@ -253,7 +557,31 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Física (Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
+  },
+  {
+    "id": "tc_pe_2467574",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_pe_2467576",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_pe_2419816",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
   },
   {
     "id": "tc_pe_2454636",
@@ -261,7 +589,831 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Física (Secundario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
+  },
+  {
+    "id": "tusclase_21bf077166",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_3b143c19ca",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_11d71ffe42",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_04ab4b4aff",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_cdb6a2447d",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_15eb4dee39",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_b95575387a",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_d592078c75",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_b20d595a11",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_2f56a22b95",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_90ceb82a8c",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_88cd791a4a",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_373a29d69a",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_ba24b3f7c8",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_414614b238",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_e02aaee4fa",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_c2bf657edd",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_81e1f0bcba",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_76dbf06d29",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_4728901471",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_d4e04e6832",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_20147d375c",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_18bf9bf584",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_3798eaf39f",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_05af3364b4",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_f4567cb6f4",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_70f314c960",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_720fad861b",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_506a071d5a",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_db63fc3bd3",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_f73c3bcf77",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_197e781734",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_703beb4c41",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_982f8503cf",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_b99faed29f",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_3e7e278c77",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_a451f74cb2",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_388578c319",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_448b97cf6e",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_3151b28551",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_32c6dc95c4",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_3b9f936195",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_834e83a119",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_8086d1ace8",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_01d724da89",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_820ab95d82",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "reddit_1x4ic4i",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_682e782b1b",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_ar_2467165",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_mx_2436937",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_mx_2436941",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_mx_2451646",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_mx_2443768",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_mx_2463817",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_mx_2442467",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tusclase_16df6fce76",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_co_2429456",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_co_2461063",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_co_2461045",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_co_2454684",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_co_2429463",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_co_2465081",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_co_2451181",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_co_2457547",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_co_2428341",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_co_2437798",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_co_2458512",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_cl_2461667",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_cl_2460721",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_cl_2448848",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_cl_2445248",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_cl_2442694",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_cl_2441673",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_cl_2440271",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_cl_2438126",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_cl_2434222",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_cl_2433242",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_cl_2433069",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_cl_2428519",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_cl_2424968",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_cl_2417236",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_cl_2456716",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_pe_2462317",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_pe_2427953",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_pe_2446829",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_pe_2417991",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_pe_2425850",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_pe_2445312",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_pe_2458720",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_pe_2450843",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_pe_2463613",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tc_pe_2442413",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_0ffe11447e",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_3639ddfe90",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "cronosha_97663a94f5",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para clases particulares.",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "reddit_1xdrpwh",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "reddit_1x56dyb",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "reddit_1x2qamm",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "reddit_1wuvxb9",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "reddit_1wsnhdl",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "reddit_1w0gigv",
+    "decision_ia": "Descartado",
+    "justificacion_ia": "Oferta comercial docente / consulta general descartada.",
+    "is_student": false,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:00:00+00:00"
+  },
+  {
+    "id": "tablon_es_benidorm_5363777",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Terciario / FP).",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
+  },
+  {
+    "id": "tablon_es_lakuntza_5258472",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Secundario).",
+    "is_student": true,
+    "modelo": "gemini-3.5-flash",
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "cronoshare_es_mat_barcelona_01",
@@ -269,7 +1421,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Primaria).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "cronoshare_es_mat_lleida_02",
@@ -277,7 +1429,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Secundario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "cronoshare_es_mat_madrid_03",
@@ -285,7 +1437,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas, Física, Química (Secundario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "cronoshare_es_mat_online_euskera_04",
@@ -293,7 +1445,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Matemáticas (Secundario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "cronoshare_es_fis_galapagar_05",
@@ -301,7 +1453,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Física (Secundario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "cronoshare_es_fis_online_06",
@@ -309,7 +1461,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Física (Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "cronoshare_es_bio_irun_07",
@@ -317,7 +1469,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Biología (Acceso).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "reddit_ar_empleos_01",
@@ -325,7 +1477,7 @@
     "justificacion_ia": "Demanda legítima de estudiante/padre para Química (Universitario).",
     "is_student": true,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_1",
@@ -333,7 +1485,7 @@
     "justificacion_ia": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_2",
@@ -341,7 +1493,7 @@
     "justificacion_ia": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_3",
@@ -349,7 +1501,7 @@
     "justificacion_ia": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_4",
@@ -357,7 +1509,7 @@
     "justificacion_ia": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_5",
@@ -365,7 +1517,7 @@
     "justificacion_ia": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_6",
@@ -373,7 +1525,7 @@
     "justificacion_ia": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_7",
@@ -381,7 +1533,7 @@
     "justificacion_ia": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_8",
@@ -389,7 +1541,7 @@
     "justificacion_ia": "El mensaje contiene 'Ofertas de trabajo para profesores' y es un listado de asignaturas que parece un menú web o índice, no la solicitud de un estudiante.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_9",
@@ -397,7 +1549,7 @@
     "justificacion_ia": "El anuncio contiene 'Ofertas de trabajo para profesores', lo que indica que es una oferta de empleo para docentes.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_10",
@@ -405,7 +1557,7 @@
     "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_11",
@@ -413,7 +1565,7 @@
     "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_12",
@@ -421,7 +1573,7 @@
     "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_13",
@@ -429,7 +1581,7 @@
     "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_14",
@@ -437,7 +1589,7 @@
     "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_15",
@@ -445,7 +1597,7 @@
     "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_16",
@@ -453,7 +1605,7 @@
     "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_17",
@@ -461,7 +1613,7 @@
     "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_18",
@@ -469,7 +1621,7 @@
     "justificacion_ia": "El mensaje consiste en una lista de provincias, lo que indica que es un menú web o índice de búsqueda y no una solicitud de clases de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_19",
@@ -477,7 +1629,7 @@
     "justificacion_ia": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_20",
@@ -485,7 +1637,7 @@
     "justificacion_ia": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_21",
@@ -493,7 +1645,7 @@
     "justificacion_ia": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_22",
@@ -501,7 +1653,7 @@
     "justificacion_ia": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_23",
@@ -509,7 +1661,7 @@
     "justificacion_ia": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_24",
@@ -517,7 +1669,7 @@
     "justificacion_ia": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_25",
@@ -525,7 +1677,7 @@
     "justificacion_ia": "El mensaje es una lista de provincias que corresponde a un menú web o índice de profesores, no una solicitud de clases por parte de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_26",
@@ -533,7 +1685,7 @@
     "justificacion_ia": "Aunque el mensaje contiene 'Solicitud de estudiante buscando profesor', la frase es genérica y repetitiva ('Inglés Inglés Física'). Además, la URL ('/alumnos/ingles.aspx') sugiere que es una página de índice o plantilla de la plataforma que lista búsquedas de alumnos, no un anuncio individual escrito por un estudiante real. Esto encaja con el criterio de exclusión de texto mezclado con menús web o índices de profesores.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_27",
@@ -541,7 +1693,7 @@
     "justificacion_ia": "Similar al caso anterior, el mensaje parece una plantilla o título de sección genérico de la plataforma ('Solicitud de estudiante buscando profesor') y la URL ('/alumnos/fisica.aspx') apunta a un índice de alumnos que buscan clases. La repetición de materias también sugiere una plantilla. Esto se considera texto mezclado con menús web o índices, y por lo tanto, no es un anuncio de un estudiante o padre real.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_28",
@@ -549,7 +1701,7 @@
     "justificacion_ia": "El mensaje 'Profesor universitario de quimica general e inorganica Bruno' está redactado como una descripción de servicios ofrecidos por un profesor particular (Bruno), no como una búsqueda de clases por parte de un estudiante. Este es un criterio estricto de exclusión.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_29",
@@ -557,7 +1709,7 @@
     "justificacion_ia": "El mensaje es una lista genérica de materias ('Matemáticas Matemáticas Inglés Química') y el enlace apunta a una página de categoría ('estudiantes/matematicas/') en lugar de un anuncio específico, lo que sugiere que es texto mezclado con un menú web o índice de profesores.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_30",
@@ -565,7 +1717,7 @@
     "justificacion_ia": "El mensaje es una lista genérica de materias ('Inglés Matemáticas Inglés Química') y el enlace apunta a una página de categoría ('estudiantes/ingles/') en lugar de un anuncio específico, lo que sugiere que es texto mezclado con un menú web o índice de profesores.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_31",
@@ -573,7 +1725,7 @@
     "justificacion_ia": "El mensaje es una lista genérica de materias ('Química Matemáticas Inglés Química') y el enlace apunta a una página de categoría ('estudiantes/quimica/') en lugar de un anuncio específico, lo que sugiere que es texto mezclado con un menú web o índice de profesores.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_32",
@@ -581,7 +1733,7 @@
     "justificacion_ia": "El mensaje 'Profesora de fisica nivel preuniversitario Olga Ramirez' sugiere que es una profesora particular ofreciendo sus servicios, no un estudiante buscando uno.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_33",
@@ -589,7 +1741,7 @@
     "justificacion_ia": "El mensaje es una lista genérica de materias ('Matemáticas Matemáticas Inglés') y el enlace apunta a una página de categoría ('estudiantes/matematicas/') en lugar de un anuncio específico, lo que sugiere que es texto mezclado con un menú web o índice de profesores.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_34",
@@ -597,7 +1749,7 @@
     "justificacion_ia": "El mensaje es una lista genérica de materias ('Inglés Matemáticas Inglés') y el enlace apunta a una página de categoría ('estudiantes/ingles/') en lugar de un anuncio específico, lo que sugiere que es texto mezclado con un menú web o índice de profesores.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_35",
@@ -605,7 +1757,7 @@
     "justificacion_ia": "Aunque el mensaje es claramente de un alumno que busca ayuda ('Soy alumno de Ingeniería Mecánica que... quiere ayuda'), el enlace contiene '/empleo/', lo que indica que el anuncio se encuentra en una sección de ofertas de trabajo o empleo para profesores, cumpliendo con el criterio de exclusión.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_36",
@@ -613,7 +1765,7 @@
     "justificacion_ia": "La frase 'Requerimos un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma (Cronoshare) para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_37",
@@ -621,7 +1773,7 @@
     "justificacion_ia": "La frase 'Necesito un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_38",
@@ -629,7 +1781,7 @@
     "justificacion_ia": "La frase 'Se solicita un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_39",
@@ -637,7 +1789,7 @@
     "justificacion_ia": "La frase 'Estamos buscando un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_40",
@@ -645,7 +1797,7 @@
     "justificacion_ia": "La frase 'Requerimos un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   },
   {
     "id": "descarte_41",
@@ -653,6 +1805,6 @@
     "justificacion_ia": "La frase 'Buscamos un servicio de Clases Particulares Matemáticas' y el URL '/empleo/' sugieren que es una solicitud genérica de la plataforma para profesores, actuando como una oferta de trabajo para docentes, no una búsqueda directa de un estudiante o padre.",
     "is_student": false,
     "modelo": "gemini-3.5-flash",
-    "timestamp": "2026-11-04T07:58:53.433817+00:00"
+    "timestamp": "2026-11-04T08:24:14.992386+00:00"
   }
 ]

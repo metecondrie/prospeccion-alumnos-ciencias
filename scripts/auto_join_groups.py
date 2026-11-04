@@ -34,6 +34,7 @@ CONFIG_PATH = os.path.join(PROJECT_ROOT, "data", "telegram_channels.json")
 SESSION_FILE = os.path.join(PROJECT_ROOT, "centinela_session")
 
 MAX_INACTIVE_DAYS = 60  # Solo unirse si hubo mensajes en los últimos 60 días
+MAX_JOINS_DIA = 5       # Tope máximo de uniones diarias para evitar FloodWait y rate limits de Telegram
 
 async def main():
     print("=" * 75)
@@ -90,6 +91,10 @@ async def main():
     now = datetime.now(timezone.utc)
 
     for idx, grp in enumerate(groups_to_join, 1):
+        if joined_count >= MAX_JOINS_DIA:
+            print(f"\n[TOPE DIARIO ALCANZADO] Se alcanzó el límite de {MAX_JOINS_DIA} uniones por sesión/día. Pausando para proteger la cuenta.")
+            break
+
         username = grp.get("username", "").strip().lstrip("@")
         title = grp.get("title", username)
         members = grp.get("members", "Varios")
@@ -98,8 +103,8 @@ async def main():
         try:
             entity = await client.get_entity(username)
             
-            # 1. Verificar actividad reciente antes de gastar cuota de unión
-            msgs = await client.get_messages(entity, limit=1)
+            # 1. Verificar actividad reciente mirando una ventana de mensajes
+            msgs = await client.get_messages(entity, limit=20)
             if msgs and msgs[0].date:
                 days_ago = (now - msgs[0].date).days
                 date_str = msgs[0].date.strftime('%Y-%m-%d')
