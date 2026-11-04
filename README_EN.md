@@ -111,6 +111,9 @@ cp .env.example .env    # Windows: copy .env.example .env
 ### 3. Execution Commands
 
 ```bash
+# Instant offline demo mode (zero external APIs or credentials needed)
+python main.py --demo
+
 # Run complete pipeline (Scraping + Semantic Audit + Dashboard Compilation)
 python main.py run
 # Or directly as module:

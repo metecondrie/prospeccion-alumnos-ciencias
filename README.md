@@ -110,6 +110,9 @@ cp .env.example .env    # En Windows: copy .env.example .env
 ### 3. Comandos de Ejecución
 
 ```bash
+# Modo demostración rápido (100% offline, sin APIs ni credenciales)
+python main.py --demo
+
 # Ejecutar pipeline completo (Scraping + Auditoría IA + Compilación)
 python main.py run
 # O directamente por módulo:

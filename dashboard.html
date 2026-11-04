@@ -395,7 +395,7 @@
       </div>
 
       <p class="text-xs text-slate-600 leading-relaxed">
-        El motor de escaneo se conecta en vivo a <strong>TusClases (ES, AR, CL, CO, MX, PE)</strong>, <strong>Tablón de Anuncios</strong>, <strong>Cronoshare</strong> y <strong>Reddit</strong>, filtrando las ofertas docentes con <strong>Google Gemini 1.5/2.5 Flash</strong>.
+        El motor de escaneo se conecta en vivo a <strong>TusClases (ES, AR, CL, CO, MX, PE)</strong>, <strong>Tablón de Anuncios</strong>, <strong>Cronoshare</strong> y <strong>Reddit</strong>, filtrando las ofertas docentes con <strong>Google Gemini 2.5 Flash</strong> (con respaldo en Groq, Cloudflare y Mistral).
       </p>
 
       <div class="bg-indigo-50/70 border border-indigo-100 rounded-2xl p-4 space-y-2.5">
@@ -403,8 +403,9 @@
           <span>⚡</span> ¿Cómo ejecutar el escaneo desde tu entorno?
         </p>
         <ol class="text-xs text-indigo-900 list-decimal list-inside space-y-1.5 leading-normal">
-          <li>Abre la raíz del proyecto en tu terminal o consola: <br><code class="px-2 py-0.5 bg-white border border-indigo-200 rounded font-mono text-[11px] select-all">python main.py run</code></li>
-          <li>En Windows también puedes ejecutar el lanzador: <strong><code class="font-bold text-indigo-700">bin/actualizar_alumnos.bat</code></strong>.</li>
+          <li>Abre la carpeta del proyecto en tu terminal o consola y ejecuta: <br><code class="px-2 py-0.5 bg-white border border-indigo-200 rounded font-mono text-[11px] select-all">python main.py run</code></li>
+          <li>En Windows también puedes abrir la carpeta del proyecto y ejecutar <strong><code class="font-bold text-indigo-700">bin/actualizar_alumnos.bat</code></strong>.</li>
+          <li>En Linux / macOS puedes ejecutar <strong><code class="font-bold text-indigo-700">bash bin/actualizar_alumnos.sh</code></strong>.</li>
           <li>El pipeline rastreará los portales clasificados, auditará con IA y actualizará los prospectos conservando el estado de tu CRM.</li>
         </ol>
       </div>

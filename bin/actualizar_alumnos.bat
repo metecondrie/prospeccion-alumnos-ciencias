@@ -143,10 +143,10 @@ if errorlevel 1 (
 
 where node > nul 2>&1
 if not errorlevel 1 (
-    if exist "check_dashboard.cjs" (
+    if exist "tests\check_dashboard.cjs" (
         echo.
         echo [VERIFICACION DASHBOARD] Ejecutando suite de pruebas unitarias en Node.js...
-        node check_dashboard.cjs
+        node tests\check_dashboard.cjs
         if errorlevel 1 (
             echo [ADVERTENCIA] Algunas aserciones del dashboard fallaron.
             cmd /c "exit /b 0"
