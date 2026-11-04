@@ -164,7 +164,7 @@ def test_c11_urls_sinteticas_y_slugs_sin_pii():
     for p in ROOT.rglob("*"):
         if not p.is_file():
             continue
-        if any(x in p.parts for x in [".git", ".venv", "node_modules", "scratch", ".pytest_cache", "audit_work"]):
+        if any(x in p.parts for x in [".git", ".venv", "node_modules", "scratch", ".pytest_cache", "audit_work"]) or "operativo" in p.name.lower() or ".local." in p.name.lower():
             continue
         if p.suffix in {".json", ".csv", ".html"} or p.parent.name == "data":
             txt = p.read_text(encoding="utf-8", errors="ignore")

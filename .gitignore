@@ -48,3 +48,9 @@ data/centinela_digest_queue.json
 data/leads_centinela_en_vivo.json
 data/extracted_listings.json
 *extracted_listings*.json
+
+# Local operational CRM with real live portal URLs (never tracked in public repo)
+*operativo*
+dashboard_operativo.html
+data/*operativo*
+
