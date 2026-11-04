@@ -15,7 +15,7 @@ Pipeline de web scraping, clasificación semántica de intenciones con Google Ge
 
 ## 📌 TL;DR
 * **El Problema:** En los portales de clasificados abiertos, el **76.6%** de los anuncios son academias comerciales o profesores ofreciendo servicios, no estudiantes buscando contratar clases.
-* **La Solución:** Rastreó 175 avisos crudos, los evaluó con **Gemini 3.5 / 3.6 Flash** (95.3% de precisión frente al 22.8% de un filtro por palabras clave) y consolidó 41 oportunidades genuinas. *(Nota: el identificador `gemini-3.5-flash` rutea automáticamente a `gemini-3.6-flash` desde octubre de 2026).*
+* **La Solución:** Rastreó 175 avisos crudos, los evaluó con **Gemini 3.5 / 3.6 Flash** (95.3% de precisión frente al 22.8% de un filtro por palabras clave) y consolidó 41 oportunidades genuinas.
 * **Escucha en Vivo:** Centinela pasivo en Telegram (`scripts/telegram_centinela.py`) que monitorea grupos universitarios públicos y emite alertas push inmediatas al celular del docente.
 * **Panel Local:** CRM sin backend (`dashboard.html`) que funciona 100% en el navegador con persistencia en `localStorage`, notas por alumno y cartas personalizadas en 1 clic.
 * **Costo Operativo:** **$0 USD/mes** (opera íntegramente sobre las cuotas gratuitas de Google AI Studio y almacenamiento local). Muestra pública 100% anonimizada sintéticamente.
@@ -70,8 +70,7 @@ El rendimiento del clasificador fue evaluado analizando la **consistencia intern
 | **Exactitud (Accuracy)** | 62.9% | **98.3%** | **+35.4 pp** |
 
 *\*Nota técnica y metodológica:*
-* **Ruteo de modelo:** El código utiliza el identificador `gemini-3.5-flash`, el cual rutea de manera transparente a `gemini-3.6-flash` desde octubre de 2026, conservando la alta tasa de precisión del 95.6% sin alterar las cuotas ni la latencia.
-* **Caveat de métricas y autoconsistencia:** La sensibilidad (Recall) del 100.0% refleja la **autoconsistencia** del clasificador frente a las etiquetas derivadas del propio pipeline auditado por LLM, **NO** una exactitud o precisión independiente con múltiples anotadores humanos. Las métricas expresan la consistencia interna entre la heurística regex y el modelo LLM.
+* **Caveat de métricas y autoconsistencia:** La sensibilidad (Recall) del 100.0% refleja la **autoconsistencia** del clasificador frente a las etiquetas del pipeline (n=175), **NO** una exactitud o precisión independiente con múltiples anotadores humanos. Las métricas expresan la consistencia interna entre la heurística regex y el modelo LLM.
 
 ### Embudo Comercial y Telemetría del Piloto Real
 Seguimiento de las 41 oportunidades en el CRM (telemetría en [`data/feedback_piloto_conversion.json`](data/feedback_piloto_conversion.json)):

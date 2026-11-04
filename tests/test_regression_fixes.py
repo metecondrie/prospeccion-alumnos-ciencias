@@ -189,3 +189,25 @@ def test_c11_urls_sinteticas_y_slugs_sin_pii():
 
 test_c11 = test_c11_urls_sinteticas_y_slugs_sin_pii
 
+
+# --- T1 validación de etiquetas humanas independientes --------------------------------
+def test_t1_labels_humanos_validacion_independiente():
+    p = ROOT / "evaluation/labels_humanos.json"
+    if not p.exists():
+        pytest.skip("evaluation/labels_humanos.json no existe (solo generado via scripts/etiquetar_cli.py)")
+    data = json.loads(p.read_text(encoding="utf-8"))
+    assert len(data) > 0, "labels_humanos.json esta vacio"
+
+    # 1. Timestamps no deben ser identicos (refleja sesion humana real progresiva)
+    timestamps = {r.get("ts") for r in data if r.get("ts")}
+    assert len(timestamps) > 1, f"Todos los registros tienen el mismo timestamp: {timestamps}"
+
+    # 2. Las etiquetas humanas positivas no deben coincidir 1:1 con el dataset canonico
+    canon_p = ROOT / "data/dataset_canonico_auditado.json"
+    if canon_p.exists():
+        canon_data = json.loads(canon_p.read_text(encoding="utf-8"))
+        canon_ids = {r["id"] for r in canon_data if "id" in r}
+        human_pos_ids = {r["id"] for r in data if r.get("label") == 1 and "id" in r}
+        assert human_pos_ids != canon_ids, "Las etiquetas humanas no deben ser una copia identica del dataset canonico"
+
+

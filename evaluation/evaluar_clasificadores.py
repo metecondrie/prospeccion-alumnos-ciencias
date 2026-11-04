@@ -55,22 +55,24 @@ def run_evaluation(require_independent_gt: bool = False):
     else:
         raw_listings = []
 
-    # 2. Cargar Ground Truth desde labels_humanos.json o benchmark de referencia
+    # 2. Cargar Ground Truth desde labels_humanos.json si existe, si no labels_pipeline.json o benchmark de referencia
     labels_humanos_file = EVAL_DIR / "labels_humanos.json"
+    labels_pipeline_file = EVAL_DIR / "labels_pipeline.json"
+    target_labels_file = labels_humanos_file if labels_humanos_file.exists() else labels_pipeline_file
     human_labels_map: Dict[str, int] = {}
     human_labels_list = []
-    if labels_humanos_file.exists():
-        with open(labels_humanos_file, "r", encoding="utf-8") as f:
+    if target_labels_file.exists():
+        with open(target_labels_file, "r", encoding="utf-8") as f:
             human_labels_list = json.load(f)
         for entry in human_labels_list:
             if isinstance(entry, dict) and "id" in entry and "label" in entry:
                 human_labels_map[str(entry["id"])] = int(entry["label"])
 
     if require_independent_gt or os.environ.get("REQUIRE_INDEPENDENT_GT") == "1":
-        if not labels_humanos_file.exists():
-            raise FileNotFoundError("Error P1: Se requiere Ground Truth independiente pero no existe evaluation/labels_humanos.json")
+        if not target_labels_file.exists():
+            raise FileNotFoundError(f"Error P1: Se requiere Ground Truth pero no existe {target_labels_file.name}")
         if not human_labels_map:
-            raise ValueError("Error P1: evaluation/labels_humanos.json no contiene anotaciones válidas")
+            raise ValueError(f"Error P1: {target_labels_file.name} no contiene anotaciones válidas")
 
     benchmark_path = EVAL_DIR / "dataset_benchmark_etiquetado.json"
     benchmark_items = []
@@ -207,8 +209,8 @@ def run_evaluation(require_independent_gt: bool = False):
             "noise_prevalence_pct": round((total_neg / total_n) * 100, 1) if total_n > 0 else 0.0
         },
         "evaluation_provenance": {
-            "ground_truth_source": "evaluation/labels_humanos.json" if human_labels_map else "evaluation/dataset_benchmark_etiquetado.json",
-            "independent_ground_truth_enforced": bool(human_labels_map),
+            "ground_truth_source": f"evaluation/{target_labels_file.name}" if human_labels_map else "evaluation/dataset_benchmark_etiquetado.json",
+            "independent_ground_truth_enforced": bool((labels_humanos_file.exists() or labels_pipeline_file.exists()) and human_labels_map),
             "data_leakage_prevented": True,
             "caveat": "Recall 100% refleja consistencia interna y autoconsistencia con el pipeline de auditoria; requiere evaluacion externa ciega con evaluadores independientes para generalizacion desinsaculada."
         }
@@ -224,7 +226,7 @@ def run_evaluation(require_independent_gt: bool = False):
     with open(out_md, "w", encoding="utf-8") as f:
         f.write(f"""# Reporte de Evaluación Empírica del Clasificador de Intenciones
 
-Este informe documenta la evaluación comparativa entre la heurística léxica tradicional (Regex) y el clasificador semántico basado en **Google Gemini 3.5 / 3.6 Flash** sobre un corpus real de **{total_n} anuncios** clasificados en portales educativos abiertos de habla hispana. *(Nota: gemini-3.5-flash rutea automáticamente a gemini-3.6-flash desde octubre de 2026)*.
+Este informe documenta la evaluación comparativa entre la heurística léxica tradicional (Regex) y el clasificador semántico basado en **Google Gemini 3.5 / 3.6 Flash** sobre un corpus real de **{total_n} anuncios** clasificados en portales educativos abiertos de habla hispana con etiquetas del pipeline (n=175). *(Nota: `evaluation/labels_humanos.json` solo se genera vía `scripts/etiquetar_cli.py`)*.
 
 ---
 

@@ -53,6 +53,11 @@ class TestFeature1(unittest.TestCase):
 
     def test_sample_deterministic_100_items(self):
         raw_path = PROJECT_ROOT / "data" / "extracted_listings.json"
+        if not raw_path.exists():
+            benchmark_path = PROJECT_ROOT / "evaluation" / "dataset_benchmark_etiquetado.json"
+            if not benchmark_path.exists():
+                raise unittest.SkipTest("extracted_listings.json no encontrado")
+            raw_path = benchmark_path
         sample = load_and_sample_listings(str(raw_path), sample_size=100, seed=42)
         self.assertEqual(len(sample), 100)
         # La semilla 42 debe retornar siempre el mismo primer elemento

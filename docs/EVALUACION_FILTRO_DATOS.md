@@ -10,7 +10,7 @@
 
 > [!NOTE]
 > **Reconciliación de Datasets (Benchmark de Desarrollo vs. Dataset Canónico Operativo):**
-> 1. **Benchmark de Desarrollo (175 anuncios crudos, 65 positivos / 110 negativos):** Corresponde a la evaluación empírica con etiquetas de referencia independientes (`evaluation/labels_humanos.json` y `evaluation/dataset_benchmark_etiquetado.json`). En esta muestra exhaustiva, 65 anuncios evidencian intención de estudio/aprendizaje y 110 son academias o docentes ofreciendo servicios.
+> 1. **Benchmark de Desarrollo (175 anuncios crudos, 65 positivos / 110 negativos):** Corresponde a la evaluación empírica con etiquetas del pipeline (n=175) (`evaluation/labels_pipeline.json` y `evaluation/dataset_benchmark_etiquetado.json`). En esta muestra exhaustiva, 65 anuncios evidencian intención de estudio/aprendizaje y 110 son academias o docentes ofreciendo servicios. `evaluation/labels_humanos.json` solo se genera mediante el CLI de etiquetado ciego interactivo (`scripts/etiquetar_cli.py`).
 > 2. **Dataset Canónico Operativo (41 alumnos aprobados / 134 descartados):** Corresponde a la segmentación comercial final (`data/dataset_canonico_auditado.json`). Aplica criterios de admisión estrictos adicionales sobre los 65 prospectos (descarte de materias no exactas puras, ubicaciones no viables fuera de modalidad virtual, o duplicados temporales), consolidando 41 alumnos listos para contacto en el CRM con tasa de conversión validada.
 
 ---
