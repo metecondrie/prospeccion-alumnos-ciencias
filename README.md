@@ -1,10 +1,13 @@
 # Prospección de Alumnos de Ciencias Exactas
 
+[🇪🇸 Español](README.md) • [🇬🇧 English](README_EN.md)
+
 [![CI](https://github.com/metecondrie/prospeccion-alumnos-ciencias/actions/workflows/ci.yml/badge.svg)](https://github.com/metecondrie/prospeccion-alumnos-ciencias/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![Tests](https://img.shields.io/badge/Tests-75%20Passing-brightgreen.svg)](tests/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Data Benchmark](https://img.shields.io/badge/Data%20Science-Jupyter%20Notebook-orange.svg)](notebooks/evaluacion_clasificador.ipynb)
+
+> **TL;DR (EN):** Autonomous lead-generation pipeline and local CRM for STEM tutoring. Features a multi-source scraper (175 raw listings), two-stage filter (Regex → Google Gemini 2.5 Flash with multi-provider failover), a 24/7 passive Telegram sentinel with push alerts, and a zero-dependency HTML5 CRM dashboard. 41 qualified student leads, $0/mo operating cost, all public data deterministically anonymized.
 
 Pipeline de web scraping, clasificación semántica de intenciones con Google Gemini 2.5 Flash y CRM local autónomo en HTML5/Tailwind para la captación ética de alumnos particulares de matemáticas, física, química y biología.
 
@@ -19,13 +22,15 @@ Pipeline de web scraping, clasificación semántica de intenciones con Google Ge
 
 ---
 
-## 📸 Vista del Panel CRM Local (`dashboard.html`)
+## 📸 Capturas del Sistema: CRM Local y Alerta Push
 
 ![Dashboard Desktop](docs/assets/dashboard_desktop.png)
 *Panel interactivo: filtrado dinámico por materia, país y nivel académico, con bitácora comercial por alumno y persistencia en LocalStorage.*
 
-![Dashboard Cards](docs/assets/dashboard_cards.png)
-*Tarjetas de prospectos con sustitución inteligente de saludos, advertencias de modalidad y enlace directo al anuncio.*
+| Tarjetas del CRM en Navegador | Notificación Push en Vivo (Telegram) |
+| :---: | :---: |
+| ![Dashboard Cards](docs/assets/dashboard_cards.png) | ![Alerta Telegram](docs/assets/alerta_telegram.png) |
+| *Sustitución inteligente de saludos y notas.* | *Alerta en tiempo real con datos y CTA directo al chat.* |
 
 ---
 
