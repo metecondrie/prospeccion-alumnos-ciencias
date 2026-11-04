@@ -23,3 +23,8 @@ scratch/
 audit_work/
 backup_audit_*/
 .agents/
+
+# Telegram MTProto session files
+*.session
+*.session-journal
+centinela_session*
