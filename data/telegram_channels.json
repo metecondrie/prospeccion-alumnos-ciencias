@@ -1,15 +1,51 @@
 {
-  "description": "Canales y grupos públicos de Telegram donde estudiantes buscan profesores de ciencias exactas",
+  "description": "Canales y grupos públicos de Telegram donde estudiantes buscan profesores y consultan sobre ciencias exactas",
   "channels": [
     {
-      "username": "clasesparticulares",
-      "name": "Clases Particulares Telegram",
-      "country": "España / LATAM",
+      "username": "MateUBAXXI",
+      "name": "Matemática UBA XXI",
+      "country": "Argentina - UBA XXI",
       "active": true
     },
     {
-      "username": "clases_particulares",
-      "name": "TeachApp Clases Particulares",
+      "username": "analisismatematico66cbc",
+      "name": "Análisis Matemático 66 (UBA/CBC)",
+      "country": "Argentina - CBC UBA",
+      "active": true
+    },
+    {
+      "username": "quimiuba",
+      "name": "Química UBA XXI",
+      "country": "Argentina - UBA XXI",
+      "active": true
+    },
+    {
+      "username": "biouba",
+      "name": "Biología Celular UBA XXI",
+      "country": "Argentina - UBA XXI",
+      "active": true
+    },
+    {
+      "username": "ubaxxicbc",
+      "name": "CBC UBA XXI Oficial",
+      "country": "Argentina - CBC UBA",
+      "active": true
+    },
+    {
+      "username": "exactasuba",
+      "name": "Exactas UBA",
+      "country": "Argentina - UBA Exactas",
+      "active": true
+    },
+    {
+      "username": "FIUBA_Noticias",
+      "name": "FIUBA Noticias e Ingreso",
+      "country": "Argentina - FIUBA",
+      "active": true
+    },
+    {
+      "username": "clasesparticulares",
+      "name": "Clases Particulares Telegram",
       "country": "España / LATAM",
       "active": true
     },
@@ -18,18 +54,38 @@
       "name": "Profesores y Clases Particulares",
       "country": "Argentina / Uruguay",
       "active": true
+    }
+  ],
+  "discussion_groups_to_join": [
+    {
+      "username": "ingresoutnfrba",
+      "title": "Ingreso - UTN FRBA (Matemática y Física)",
+      "members": 328
     },
     {
-      "username": "comunidad_cbc",
-      "name": "Comunidad CBC UBA",
-      "country": "Argentina",
-      "active": true
+      "username": "QuimicaFIUBA",
+      "title": "QUÍMICA GENERAL - FIUBA",
+      "members": 206
     },
     {
-      "username": "uba_estudiantes",
-      "name": "Estudiantes UBA",
-      "country": "Argentina",
-      "active": true
+      "username": "FisicaIFIUBA",
+      "title": "FÍSICA I - GENERAL - FIUBA",
+      "members": 172
+    },
+    {
+      "username": "AnalisisMatematicoIIFIUBA",
+      "title": "ANÁLISIS MATEMÁTICO II - FIUBA",
+      "members": 115
+    },
+    {
+      "username": "ASTAR_fiuba",
+      "title": "ASTAR FIUBA - Estudiantes",
+      "members": 156
+    },
+    {
+      "username": "fisicaUBAXXI",
+      "title": "Física UBA XXI",
+      "members": 6
     }
   ]
 }
