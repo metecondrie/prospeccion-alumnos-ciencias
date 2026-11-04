@@ -62,26 +62,26 @@ class TestProspectorCore(unittest.TestCase):
         # TusClases Argentina
         id_tc_ar = compute_stable_id(
             "TusClases Argentina",
-            "https://www.tusclases.com.ar/estudiante/buenos-aires/anuncio-2466634.aspx",
+            "https://www.tusclases.com.ar/estudiante/buenos-aires/anuncio-9999001.aspx",
             "Busco docente"
         )
-        self.assertEqual(id_tc_ar, "tc_ar_2466634")
+        self.assertEqual(id_tc_ar, "tc_ar_9999001")
 
         # TusClases Chile
         id_tc_cl = compute_stable_id(
             "TusClases Chile",
-            "https://www.clasesparticulares.cl/estudiante/santiago/anuncio-2464467.aspx",
+            "https://www.clasesparticulares.cl/estudiante/santiago/anuncio-9999002.aspx",
             "Busco profe física"
         )
-        self.assertEqual(id_tc_cl, "tc_cl_2464467")
+        self.assertEqual(id_tc_cl, "tc_cl_9999002")
 
         # Tablón de Anuncios
         id_tablon = compute_stable_id(
             "Tablón de Anuncios",
-            "https://www.tablondeanuncios.com/clases-particulares/anuncio-5363777.htm",
+            "https://www.tablondeanuncios.com/clases-particulares/anuncio-9999003.htm",
             "Cálculo"
         )
-        self.assertEqual(id_tablon, "tablon_es_5363777")
+        self.assertEqual(id_tablon, "tablon_es_9999003")
 
         # Fallback criptográfico determinista
         h1 = compute_stable_id("Foro General", "https://ejemplo.com/lead1", "Mensaje de prueba")

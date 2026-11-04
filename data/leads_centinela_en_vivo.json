@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "id": "tg_53441abca899",
+    "plataforma": "Telegram (FIUBA - Estudiantes Exactas)",
+    "país/ubicación": "Argentina - Grupo Telegram Simulado",
+    "nombre": "Lucas B.",
+    "persona_id": "lucas_exactas",
+    "materia": "Matemáticas",
+    "nivel educativo": "Universitario",
+    "enlace al anuncio": "https://t.me/demo_student",
+    "mensaje/descripción": "Hola a todos! Alguien que dé clases particulares de Análisis Matemático II para ingeniería? Necesito preparar el recuperatorio urgente.",
+    "método de contacto directo": "Telegram (@lucas_exactas)",
+    "decision_ia": "Aprobado",
+    "justificacion_ia": "El mensaje proviene claramente de un estudiante que busca contratar un profesor particular de Análisis Matemático II para preparar un examen recuperatorio.",
+    "pais": "Argentina",
+    "nivel_categoria": "Universitario",
+    "tema": "Matemáticas",
+    "modalidad": "A convenir",
+    "modalidad_solicitada": "Clases de Matemáticas",
+    "elegible_virtual": true,
+    "alerta_modalidad": "",
+    "idioma": "Español",
+    "enlace_tipo": "ficha_individual",
+    "canal": "directo",
+    "canal_detalle": "Gratuito directo",
+    "costo_contacto": "Gratuito directo",
+    "costo_detalle": "Gratuito directo",
+    "es_permalink": true,
+    "fecha de publicación": "",
+    "fecha_captura": "2026-11-01"
+  }
+]

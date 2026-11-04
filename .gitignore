@@ -21,6 +21,10 @@ __pycache__/
 Thumbs.db
 desktop.ini
 
+# Private anonymization mapping
+data/name_map.privado.json
+*.privado.json
+
 # Scratch / Temporary files / Audit work
 scratch/
 audit_work/
