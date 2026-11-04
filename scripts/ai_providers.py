@@ -123,6 +123,10 @@ def call_gemini_batch(items: List[Dict[str, Any]], model: str = "gemini-3.5-flas
             except urllib.error.HTTPError as e:
                 err_body = e.read().decode("utf-8", errors="replace")
                 if e.code == 429:
+                    if "GenerateRequestsPerDay" in err_body or "quotaValue" in err_body or "retryDelay" in err_body:
+                        # Cuota diaria agotada en Free Tier (retryDelay en horas). No reintentar en bucle local
+                        last_error = RateLimitError(f"HTTP 429 Cuota Diaria Agotada: {err_body}")
+                        break
                     backoff = attempt * 2.5
                     print(f"    [RateLimit 429] Gemini {target_model} saturado. Reintentando en {backoff}s...", file=sys.stderr)
                     time.sleep(backoff)
@@ -206,9 +210,9 @@ def call_groq_batch(items: List[Dict[str, Any]], api_key: str, model: str = "lla
                 results = parse_json_response(raw_text)
                 for r in results:
                     if isinstance(r, dict):
-                        r["actual_provider"] = "Groq"
+                        r["actual_provider"] = "Groq Cloud"
                         r["actual_model"] = model
-                        r["provider"] = "Groq"
+                        r["provider"] = "Groq Cloud"
                         r["modelo"] = model
                 return results
         except urllib.error.HTTPError as e:
@@ -295,9 +299,9 @@ def rule_based_audit(item: Dict[str, Any]) -> Dict[str, Any]:
             "is_student": False,
             "decision_ia": "Descartado",
             "justificacion_ia": "Descartado por regla heurística: detectado patrón de docente, oferta de empleo o academia comercial.",
-            "actual_provider": "Heuristic",
+            "actual_provider": "Heuristic Engine",
             "actual_model": "deterministic-rules",
-            "provider": "Heuristic",
+            "provider": "Heuristic Engine",
             "modelo": "deterministic-rules"
         }
     elif is_student:
@@ -306,9 +310,9 @@ def rule_based_audit(item: Dict[str, Any]) -> Dict[str, Any]:
             "is_student": True,
             "decision_ia": "Aprobado",
             "justificacion_ia": "Aprobado por regla heurística: detectada demanda genuina de estudiante o padre buscando profesor particular.",
-            "actual_provider": "Heuristic",
+            "actual_provider": "Heuristic Engine",
             "actual_model": "deterministic-rules",
-            "provider": "Heuristic",
+            "provider": "Heuristic Engine",
             "modelo": "deterministic-rules"
         }
     else:
@@ -317,9 +321,9 @@ def rule_based_audit(item: Dict[str, Any]) -> Dict[str, Any]:
             "is_student": False,
             "decision_ia": "Descartado",
             "justificacion_ia": "Descartado por regla heurística: el mensaje no contiene demanda explícita de contratación de clases de ciencias exactas.",
-            "actual_provider": "Heuristic",
+            "actual_provider": "Heuristic Engine",
             "actual_model": "deterministic-rules",
-            "provider": "Heuristic",
+            "provider": "Heuristic Engine",
             "modelo": "deterministic-rules"
         }
 
@@ -352,9 +356,9 @@ class ProviderRegistry:
     def _register_defaults(self):
         self.register(ProviderConfig("Google Gemini", "gemini-3.5-flash", ["gemini-3.5-flash", "gemini-3.6-flash"], priority=1))
         self.register(ProviderConfig("Cloudflare Workers AI", "@cf/meta/llama-3.1-8b-instruct-fp8-fast", ["@cf/meta/llama-3.1-8b-instruct-fp8-fast", "@cf/meta/llama-3.1-8b-instruct"], priority=2))
-        self.register(ProviderConfig("Groq", "llama-3.1-8b-instant", ["llama-3.1-8b-instant", "llama-3.3-70b-versatile"], priority=3))
+        self.register(ProviderConfig("Groq Cloud", "llama-3.1-8b-instant", ["llama-3.1-8b-instant", "llama-3.3-70b-versatile"], priority=3))
         self.register(ProviderConfig("Mistral AI", "mistral-small-latest", ["mistral-small-latest", "open-mistral-7b"], priority=4))
-        self.register(ProviderConfig("Heuristic", "deterministic-rules", ["deterministic-rules", "heuristic"], priority=5))
+        self.register(ProviderConfig("Heuristic Engine", "deterministic-rules", ["deterministic-rules", "heuristic"], priority=5))
 
     def register(self, config: ProviderConfig) -> None:
         self._providers[config.name] = config
@@ -404,7 +408,7 @@ class ProviderRegistry:
 
         groq_k = os.environ.get("GROQ_API_KEY")
         if groq_k:
-            active_chain.append(("Groq", lambda it: call_groq_batch(it, groq_k), "llama-3.1-8b-instant"))
+            active_chain.append(("Groq Cloud", lambda it: call_groq_batch(it, groq_k), "llama-3.1-8b-instant"))
 
         mis_k = os.environ.get("MISTRAL_API_KEY")
         if mis_k:

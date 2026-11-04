@@ -13,7 +13,17 @@ echo.
 echo [DIRECTORIO DE TRABAJO] %~dp0
 echo.
 
-cd /d "%~dp0\.."
+REM Detectar y cambiar al directorio raiz del proyecto de forma robusta
+set "SCRIPT_DIR=%~dp0"
+if exist "%SCRIPT_DIR%scripts\prospector.py" (
+    cd /d "%SCRIPT_DIR%"
+) else if exist "%SCRIPT_DIR%..\scripts\prospector.py" (
+    cd /d "%SCRIPT_DIR%.."
+) else (
+    echo [ERROR CRITICO] No se encontro la carpeta raiz del proyecto.
+    pause
+    exit /b 1
+)
 
 REM -------------------------------------------------------------------------------
 REM PASO 0: VERIFICACION DE ENTORNO PYTHON
@@ -32,7 +42,7 @@ REM PASO 1: DETECCION Y CONFIGURACION DE CLAVES DE IA (MULTIPROVEEDOR)
 REM -------------------------------------------------------------------------------
 REM Intenta leer claves desde archivo .env local
 if exist ".env" (
-    for /f "usebackq tokens=1,* delims==" %%a in (".env") do (
+    for /f "usebackq eol=# tokens=1,* delims==" %%a in (".env") do (
         if not "%%a"=="" if not "%%b"=="" set "%%a=%%~b"
     )
 )
@@ -47,10 +57,10 @@ if "%HAS_AI_KEY%"=="" (
     echo -------------------------------------------------------------------------------
     echo [CONFIGURACION DE IA - ARQUITECTURA MULTIPROVEEDOR]
     echo No se encontro ninguna clave de IA configurada en el sistema ni en .env.
-    echo Puedes usar tu clave gratis de Google Gemini (recomendado):
+    echo Puedes usar tu clave gratis de Google Gemini.
     echo Obtienes tu clave gratis en: https://aistudio.google.com/app/apikey
     echo.
-    set /p GEMINI_API_KEY="Ingresa tu GEMINI_API_KEY (o presiona Enter para usar datos auditados): "
+    set /p GEMINI_API_KEY="Ingresa tu GEMINI_API_KEY o pulsa Enter para continuar: "
     if not "!GEMINI_API_KEY!"=="" set HAS_AI_KEY=1
     echo -------------------------------------------------------------------------------
     echo.
@@ -92,8 +102,6 @@ echo.
 if not "%HAS_AI_KEY%"=="" (
     if exist "scripts\prospector.py" (
         python scripts\prospector.py audit --input data\extracted_listings.json --model gemini-3.5-flash --output-approved data\dataset_canonico_auditado.json --output-discarded data\descartados_auditoria.json
-    ) else if exist "scripts\prospector.py" (
-        python scripts\prospector.py audit --input data\extracted_listings.json --model gemini-3.5-flash --output-approved data\dataset_canonico_auditado.json --output-discarded data\descartados_auditoria.json
     )
     if errorlevel 1 (
         echo [ADVERTENCIA] La auditoria de IA reporto una advertencia. Se conservan los datos auditados canonicos.
@@ -132,13 +140,18 @@ echo ===========================================================================
 echo.
 if exist "scripts\prospector.py" (
     python scripts\prospector.py build --approved data\dataset_canonico_auditado.json --discarded data\descartados_auditoria.json --desktop-sync
-) else if exist "scripts\prospector.py" (
-    python scripts\prospector.py build --approved data\dataset_canonico_auditado.json --discarded data\descartados_auditoria.json --desktop-sync
 )
 if errorlevel 1 (
     echo [ERROR CRITICO] Fallo la compilacion del dashboard y planillas.
     pause
     exit /b 1
+)
+
+REM Sincronizar CRM Operativo con URLs reales directas
+if exist "scripts\build_operational_dashboard.py" (
+    echo.
+    echo [CRM OPERATIVO] Sincronizando dashboard con enlaces directos reales para contacto...
+    python scripts\build_operational_dashboard.py
 )
 
 where node > nul 2>&1
@@ -158,9 +171,13 @@ echo.
 echo ===============================================================================
 echo   [EXITO] PROCESO DE PROSPECCION COMPLETADO EXITOSAMENTE
 echo   Tu panel dashboard.html y tus planillas CSV fueron actualizados.
-echo   Tus estados del CRM (Contactado, Cerrado, etc.) se mantuvieron protegidos.
+echo   Tus estados del CRM - Contactado, Cerrado, etc. - se mantuvieron protegidos.
 echo ===============================================================================
 echo.
 echo Presiona cualquier tecla para abrir o refrescar tu Dashboard en Google Chrome...
 pause > nul
-start "" "dashboard.html"
+if exist "dashboard_operativo.html" (
+    start "" "dashboard_operativo.html"
+) else (
+    start "" "dashboard.html"
+)
