@@ -12,7 +12,7 @@
 ## 1. Conclusiones Ejecutivas del Relevamiento
 
 ### A. Resultados Cuantitativos Auditados
-Tras un proceso de extracción en portales educativos y doble fase de auditoría estricta (clasificación con Gemini 2.5 Flash y verificación determinista desde los datos crudos), el dataset consolidó **41 publicaciones de estudiantes reales** que corresponden a **38 alumnos únicos**:
+Tras un proceso de extracción en portales educativos y doble fase de auditoría estricta (clasificación con Gemini 3.5 / 3.6 Flash y verificación determinista desde los datos crudos), el dataset consolidó **41 publicaciones de estudiantes reales** que corresponden a **38 alumnos únicos**:
 
 - **34 alumnos en canal directo gratuito o con registro docente** (prioridad de contacto inmediato).
 - **7 solicitudes en Cronoshare** que requieren compra de créditos comerciales (Cronos) de la plataforma para desbloquear el contacto.

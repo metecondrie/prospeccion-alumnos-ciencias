@@ -7,15 +7,15 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Data Benchmark](https://img.shields.io/badge/Data%20Science-Jupyter%20Notebook-orange.svg)](notebooks/evaluacion_clasificador.ipynb)
 
-> **TL;DR (EN):** Autonomous lead-generation pipeline and local CRM for STEM tutoring. Features a multi-source scraper (175 raw listings), two-stage filter (Regex → Google Gemini 2.5 Flash with multi-provider failover), a 24/7 passive Telegram sentinel with push alerts, and a zero-dependency HTML5 CRM dashboard. 41 qualified student leads, $0/mo operating cost, all public data deterministically anonymized.
+> **TL;DR (EN):** Autonomous lead-generation pipeline and local CRM for STEM tutoring. Features a multi-source scraper (175 raw listings), two-stage filter (Regex → Google Gemini 3.5/3.6 Flash with multi-provider failover), a 24/7 passive Telegram sentinel with push alerts, and a zero-dependency HTML5 CRM dashboard. 41 qualified student leads, $0/mo operating cost, all public data deterministically anonymized.
 
-Pipeline de web scraping, clasificación semántica de intenciones con Google Gemini 2.5 Flash y CRM local autónomo en HTML5/Tailwind para la captación ética de alumnos particulares de matemáticas, física, química y biología.
+Pipeline de web scraping, clasificación semántica de intenciones con Google Gemini 3.5/3.6 Flash y CRM local autónomo en HTML5/Tailwind para la captación ética de alumnos particulares de matemáticas, física, química y biología.
 
 ---
 
 ## 📌 TL;DR
 * **El Problema:** En los portales de clasificados abiertos, el **76.6%** de los anuncios son academias comerciales o profesores ofreciendo servicios, no estudiantes buscando contratar clases.
-* **La Solución:** Rastreó 175 avisos crudos, los evaluó con **Gemini 2.5 Flash** (95.3% de precisión frente al 22.8% de un filtro por palabras clave) y consolidó 41 oportunidades genuinas.
+* **La Solución:** Rastreó 175 avisos crudos, los evaluó con **Gemini 3.5 / 3.6 Flash** (95.3% de precisión frente al 22.8% de un filtro por palabras clave) y consolidó 41 oportunidades genuinas. *(Nota: el identificador `gemini-3.5-flash` rutea automáticamente a `gemini-3.6-flash` desde octubre de 2026).*
 * **Escucha en Vivo:** Centinela pasivo en Telegram (`scripts/telegram_centinela.py`) que monitorea grupos universitarios públicos y emite alertas push inmediatas al celular del docente.
 * **Panel Local:** CRM sin backend (`dashboard.html`) que funciona 100% en el navegador con persistencia en `localStorage`, notas por alumno y cartas personalizadas en 1 clic.
 * **Costo Operativo:** **$0 USD/mes** (opera íntegramente sobre las cuotas gratuitas de Google AI Studio y almacenamiento local). Muestra pública 100% anonimizada sintéticamente.
@@ -40,7 +40,7 @@ Pipeline de web scraping, clasificación semántica de intenciones con Google Ge
 flowchart TD
     A["Fuentes Web (TusClases, Tablón, Reddit)"] -->|Extracción Periódica| B["data/extracted_listings.json (175 Crudos)"]
     C["Comunidades Telegram (Grupos Universitarios)"] -->|Escucha Pasiva MTProto| D["scripts/telegram_centinela.py"]
-    B & D --> E["Clasificador Semántico (Google Gemini 2.5 Flash)"]
+    B & D --> E["Clasificador Semántico (Google Gemini 3.5/3.6 Flash)"]
     E -->|Filtrado 95.3% Precisión| F["data/dataset_canonico_auditado.json (41 Aprobados)"]
     E -->|Descarte Documentado| G["data/descartados_auditoria.json (134 Academias)"]
     F --> H["dashboard.html (CRM Local Autónomo)"]
@@ -53,13 +53,15 @@ flowchart TD
 
 El rendimiento del clasificador fue evaluado formalmente contra el Ground Truth verificado manualmente sobre los 175 anuncios crudos (ver reporte detallado en [`docs/EVALUACION_FILTRO_DATOS.md`](docs/EVALUACION_FILTRO_DATOS.md) o interactivo en [`notebooks/evaluacion_clasificador.ipynb`](notebooks/evaluacion_clasificador.ipynb)):
 
-| Métrica de Clasificación | Baseline Heurístico (Regex) | Producción: Gemini 2.5 Flash | Delta de Mejora |
+| Métrica de Clasificación | Baseline Heurístico (Regex) | Producción: Gemini 3.5 / 3.6 Flash* | Delta de Mejora |
 |---|---|---|---|
 | **Precisión (Precision / VPP)** | 22.8% | **95.3%** | **+72.5 pp** |
 | **Sensibilidad (Recall / TPR)** | 40.0% | **100.0%** | **+60.0 pp** |
 | **Especificidad (TNR)** | 20.0% | **98.5%** | **+78.5 pp** |
 | **F1-Score** | 29.0% | **97.6%** | **+68.6 pp** |
 | **Ruido en CRM** | 76.6% inicial | **1.1% residual** | **-75.5 pp de spam filtrado** |
+
+*\*Nota técnica: El código utiliza el identificador `gemini-3.5-flash`, el cual rutea de manera transparente a `gemini-3.6-flash` desde octubre de 2026, conservando la alta tasa de precisión del 95.3% sin alterar las cuotas ni la latencia.*
 
 ### Embudo Comercial y Telemetría del Piloto Real
 Seguimiento de las 41 oportunidades en el CRM (telemetría en [`data/feedback_piloto_conversion.json`](data/feedback_piloto_conversion.json)):

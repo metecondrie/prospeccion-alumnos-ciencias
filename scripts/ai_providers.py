@@ -24,7 +24,7 @@ class RateLimitError(Exception):
     """Excepción cuando se recibe HTTP 429 de la API de Google."""
     pass
 
-DEFAULT_MODELS = ["gemini-2.5-flash", "gemini-1.5-flash", "gemini-2.5-pro"]
+DEFAULT_MODELS = ["gemini-3.5-flash", "gemini-3.6-flash", "gemini-2.5-flash"]
 
 def strip_accents(text: str) -> str:
     """Elimina diacríticos y acentos para comparaciones robustas."""
@@ -78,7 +78,7 @@ def parse_json_response(raw: str) -> List[Dict[str, Any]]:
         return parsed
     raise ValueError(f"La respuesta no contiene una lista JSON de anuncios evaluados: {raw_clean[:120]}")
 
-def call_gemini_batch(items: List[Dict[str, Any]], model: str = "gemini-2.5-flash", api_key: str = None, max_retries: int = 3) -> List[Dict[str, Any]]:
+def call_gemini_batch(items: List[Dict[str, Any]], model: str = "gemini-3.5-flash", api_key: str = None, max_retries: int = 3) -> List[Dict[str, Any]]:
     """Evalúa un lote de anuncios con modelos de Google AI Studio (responseMimeType: application/json)."""
     if not api_key:
         api_key = os.environ.get("GEMINI_API_KEY")
@@ -273,10 +273,10 @@ def rule_based_audit(item: Dict[str, Any]) -> Dict[str, Any]:
             "justificacion_ia": "Descartado por regla heurística: el mensaje no contiene demanda explícita de contratación de clases de ciencias exactas."
         }
 
-def call_multiprovider_batch(items: List[Dict[str, Any]], primary_model: str = "gemini-2.5-flash", api_key: str = None) -> List[Dict[str, Any]]:
+def call_multiprovider_batch(items: List[Dict[str, Any]], primary_model: str = "gemini-3.5-flash", api_key: str = None) -> List[Dict[str, Any]]:
     """
     Despachador multiproveedor con failover automático en cascada:
-    1. Google Gemini (gemini-2.5-flash -> gemini-1.5-flash -> gemini-2.5-pro)
+    1. Google Gemini (gemini-3.5-flash -> gemini-3.6-flash, 3.5 rutea a 3.6 desde oct-2026)
     2. Cloudflare Workers AI (@cf/meta/llama-3.1-8b-instruct-fp8-fast)
     3. Groq (llama-3.1-8b-instant -> llama-3.3-70b-versatile)
     4. Mistral AI (mistral-small-latest)

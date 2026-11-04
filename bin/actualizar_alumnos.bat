@@ -91,9 +91,9 @@ echo ===========================================================================
 echo.
 if not "%HAS_AI_KEY%"=="" (
     if exist "scripts\prospector.py" (
-        python scripts\prospector.py audit --input data\extracted_listings.json --model gemini-2.5-flash --output-approved data\dataset_canonico_auditado.json --output-discarded data\descartados_auditoria.json
+        python scripts\prospector.py audit --input data\extracted_listings.json --model gemini-3.5-flash --output-approved data\dataset_canonico_auditado.json --output-discarded data\descartados_auditoria.json
     ) else if exist "scripts\prospector.py" (
-        python scripts\prospector.py audit --input data\extracted_listings.json --model gemini-2.5-flash --output-approved data\dataset_canonico_auditado.json --output-discarded data\descartados_auditoria.json
+        python scripts\prospector.py audit --input data\extracted_listings.json --model gemini-3.5-flash --output-approved data\dataset_canonico_auditado.json --output-discarded data\descartados_auditoria.json
     )
     if errorlevel 1 (
         echo [ADVERTENCIA] La auditoria de IA reporto una advertencia. Se conservan los datos auditados canonicos.

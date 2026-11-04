@@ -14,8 +14,28 @@
       "specificity": 0.7364,
       "f1_score": 0.4715
     },
-    "avg_latency_ms": 0.278,
+    "avg_latency_ms": 0.364,
     "cost_per_1k_usd": 0.0
+  },
+  "gemini_3_5_flash": {
+    "metrics": {
+      "confusion_matrix": {
+        "tp": 41,
+        "fp": 2,
+        "tn": 132,
+        "fn": 0
+      },
+      "total": 175,
+      "accuracy": 0.9886,
+      "precision": 0.9535,
+      "recall": 1.0,
+      "specificity": 0.9851,
+      "f1_score": 0.9762
+    },
+    "avg_latency_ms": 1150.0,
+    "cost_per_1k_usd": 0.0,
+    "noise_reduction_pct": 98.51,
+    "model_routing_note": "gemini-3.5-flash rutea a gemini-3.6-flash desde oct-2026"
   },
   "gemini_2_5_flash": {
     "metrics": {

@@ -33,7 +33,7 @@ La solución fue sometida a exhaustivas auditorías independientes de código y 
 | **A08** | **P1** | Agrupación de anuncios repetidos | Detección de `persona_id`: Belén M. UADE (3 avisos) y Helena B. Chile (2 avisos) etiquetados claramente para evitar contactos múltiples. | Insignias visibles de alerta en tarjeta y tabla. |
 | **A09** | **P1** | Seguridad en enlaces y ventanas | `window.open(url, '_blank', 'noopener,noreferrer')` y `rel="noopener noreferrer"` en todos los hipervínculos externos. | Prevención de tabnabbing y seguridad web cumplida. |
 | **A10** | **P1** | Banderas y diseño responsive | Banderas con insignias de código de país (`AR`, `ES`, `CL`, `CO`, `MX`, `PE`) legibles en Windows/Linux/Mac. Header responsive con flex-wrap a 375 px. | UI adaptable y sin caracteres rotos. |
-| **A11** | **P1** | Modelos oficiales de Google AI Studio | Endpoints oficiales de alta cuota: `gemini-2.5-flash` (predeterminado, 500 RPD / 15 RPM), `gemini-1.5-flash`, `gemini-1.5-pro` y `gemma-2-27b-it` (fallback). | Eliminación total de errores HTTP 429 por saturación de cuota y HTTP 404 por modelos deprecados. |
+| **A11** | **P1** | Modelos oficiales de Google AI Studio | Endpoints oficiales de alta cuota: `gemini-3.5-flash` (predeterminado, 500 RPD / 15 RPM, rutea a 3.6 desde oct-2026), `gemini-3.6-flash` y `gemini-2.5-flash` (fallback). | Eliminación total de errores HTTP 429 por saturación de cuota y HTTP 404 por modelos deprecados. |
 | **A12** | **P1** | Sanitización integral de CSV | Neutralización de fórmulas (`=+-@\t\r`) en todas las columnas y preservación de booleanos reales `true`/`false`. | Prevención de inyección CSV en Excel y Sheets. |
 | **A13** | **P1** | Entorno de dependencias | Entrega de `requirements.txt`, `.env.example` y `.gitignore` limpio de binarios y cachés. | Reproducibilidad garantizada en cualquier entorno Windows/Linux. |
 | **A14** | **P0** | Harness de pruebas con aserciones estrictas | `check_dashboard.cjs` con `node:assert` y salida de error `process.exit(1)` ante cualquier fallo de UI o lógica. | Aprobación 100% en Node.js y Python. |
@@ -45,7 +45,7 @@ La solución fue sometida a exhaustivas auditorías independientes de código y 
 ```mermaid
 flowchart TD
     A["Fuentes Web (ES, AR, CL, CO, PE, MX)"] -->|Web Scraping Concurrente| B["data/extracted_listings.json (118 Crudos)"]
-    B -->|Auditoría Semántica Determinista| C["scripts/prospector.py audit (Gemini 2.5 Flash)"]
+    B -->|Auditoría Semántica Determinista| C["scripts/prospector.py audit (Gemini 3.5/3.6 Flash)"]
     C -->|Rechazo Documentado| D["data/descartados_auditoria.json (Academias / Ofertas)"]
     C -->|Aprobados Estructurales| E["data/dataset_canonico_auditado.json (41 Avisos Verbatim)"]
     E -->|Validación Criptográfica| F["validate_dataset.py (8 Aserciones Estrictas)"]
@@ -192,7 +192,7 @@ El proyecto fue probado en una corrida piloto real orientada a la captación de 
 * **Paso 5: Alumnos Convertidos:** **3 alumnos comenzaron clases particulares regulares pagadas** (2 de Álgebra Universitaria CBC/UADE y 1 de Física para secundario superior), arrojando una **tasa de conversión a cliente final del 16.7% sobre contactados**.
 
 ### Unit Economics del Piloto
-* **Costo de Adquisición de Cliente (CAC):** **$0 USD**. Todo el pipeline opera sobre capas gratuitas de Google Gemini 2.5 Flash, Cloudflare, Groq y scraping web directo.
+* **Costo de Adquisición de Cliente (CAC):** **$0 USD**. Todo el pipeline opera sobre capas gratuitas de Google Gemini 3.5/3.6 Flash, Cloudflare, Groq y scraping web directo.
 * **Precio por hora:** $15.000 ARS (~$12 USD).
 * **Valor de Vida del Cliente (LTV estimado - ciclo de 4 meses):** $240.000 ARS (~$192 USD) por estudiante que prepara una materia cuatrimestral completa.
 
@@ -213,7 +213,7 @@ A diferencia de un scraper unidireccional estático, el sistema opera con un **b
 
 ```mermaid
 flowchart TD
-    A["1. Extracción Multicanal (175 avisos)"] --> B["2. Filtro IA Gemini 2.5 Flash + Fallback"]
+    A["1. Extracción Multicanal (175 avisos)"] --> B["2. Filtro IA Gemini 3.5/3.6 Flash + Fallback"]
     B --> C["3. Dataset Canónico (41 prospectos calificados)"]
     C --> D["4. Panel CRM Local (dashboard.html)"]
     D --> E["5. Outreach Humano (18 contactados)"]

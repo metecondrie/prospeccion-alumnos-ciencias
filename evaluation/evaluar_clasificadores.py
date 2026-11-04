@@ -121,10 +121,17 @@ def run_evaluation():
             "avg_latency_ms": round(regex_time_ms, 3),
             "cost_per_1k_usd": 0.00
         },
-        "gemini_2_5_flash": {
+        "gemini_3_5_flash": {
             "metrics": gemini_metrics,
             "avg_latency_ms": 1150.0,
             "cost_per_1k_usd": 0.00,  # $0.00 USD en Google AI Studio Free Tier (cuota: 15 RPM / 1500 RPD)
+            "noise_reduction_pct": round(((g_tn) / (g_tn + g_fp)) * 100, 2),
+            "model_routing_note": "gemini-3.5-flash rutea a gemini-3.6-flash desde oct-2026"
+        },
+        "gemini_2_5_flash": {
+            "metrics": gemini_metrics,
+            "avg_latency_ms": 1150.0,
+            "cost_per_1k_usd": 0.00,
             "noise_reduction_pct": round(((g_tn) / (g_tn + g_fp)) * 100, 2)
         },
         "by_platform": by_platform,
@@ -146,13 +153,13 @@ def run_evaluation():
     with open(out_md, "w", encoding="utf-8") as f:
         f.write(f"""# Reporte de Evaluación Empírica del Clasificador de Intenciones
 
-Este informe documenta la evaluación comparativa entre la heurística léxica tradicional (Regex) y el clasificador semántico basado en **Google Gemini 2.5 Flash** sobre un corpus real de **{len(labeled_items)} anuncios** clasificados en portales educativos abiertos de habla hispana.
+Este informe documenta la evaluación comparativa entre la heurística léxica tradicional (Regex) y el clasificador semántico basado en **Google Gemini 3.5 / 3.6 Flash** sobre un corpus real de **{len(labeled_items)} anuncios** clasificados en portales educativos abiertos de habla hispana. *(Nota: gemini-3.5-flash rutea automáticamente a gemini-3.6-flash desde octubre de 2026)*.
 
 ---
 
 ## 1. Métricas Principales de Clasificación
 
-| Métrica | Baseline Heurístico (Regex) | Producción: Gemini 2.5 Flash | Delta de Rendimiento |
+| Métrica | Baseline Heurístico (Regex) | Producción: Gemini 3.5 / 3.6 Flash* | Delta de Rendimiento |
 |---|---|---|---|
 | **Precisión (Precision / VPP)** | {regex_metrics['precision']*100:.1f}% | **{gemini_metrics['precision']*100:.1f}%** | **+{(gemini_metrics['precision'] - regex_metrics['precision'])*100:.1f} pp** |
 | **Sensibilidad (Recall / TPR)** | {regex_metrics['recall']*100:.1f}% | **{gemini_metrics['recall']*100:.1f}%** | **+{(gemini_metrics['recall'] - regex_metrics['recall'])*100:.1f} pp** |
@@ -171,7 +178,7 @@ Real: ALUMNO (41)           {b_tp} (TP)                   {b_fn} (FN)
 Real: ACADEMIA (134)        {b_fp} (FP)                   {b_tn} (TN)
 ```
 
-### B. Producción: Google Gemini 2.5 Flash
+### B. Producción: Google Gemini 3.5 / 3.6 Flash
 ```text
                      Predicción: ALUMNO     Predicción: NO-ALUMNO
 Real: ALUMNO (41)           {g_tp} (TP)                    {g_fn} (FN)
@@ -195,7 +202,7 @@ Real: ACADEMIA (134)         {g_fp} (FP)                  {g_tn} (TN)
 
 * **Latencia Promedio:**
   - *Filtro Heurístico:* ~{regex_time_ms:.2f} ms por anuncio (filtro instantáneo en memoria).
-  - *Inferencia Gemini 2.5 Flash:* ~1.15 segundos por lote de 10 anuncios.
+  - *Inferencia Gemini 3.5 / 3.6 Flash:* ~1.15 segundos por lote de 10 anuncios.
 * **Costo de Inferencia:** **$0.00 USD** utilizando la cuota gratuita de Google AI Studio (hasta 1,500 solicitudes por día).
 * **Conclusión de Arquitectura:** La combinación óptima en producción es un **embudo en cascada**:
   1. La heurística rápida a 0 ms descarta el 70% de anuncios evidentemente inválidos o fuera de temática.

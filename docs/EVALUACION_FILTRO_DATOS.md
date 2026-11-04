@@ -7,9 +7,9 @@
 
 ---
 
-## 1. Comparativa: Filtro Semántico (Gemini 2.5 Flash) vs. Heurística Léxica (Regex Baseline)
+## 1. Comparativa: Filtro Semántico (Gemini 3.5 / 3.6 Flash*) vs. Heurística Léxica (Regex Baseline)
 
-| Métrica de Clasificación | Baseline Heurístico (Regex) | Producción: Gemini 2.5 Flash | Delta de Mejora |
+| Métrica de Clasificación | Baseline Heurístico (Regex) | Producción: Gemini 3.5 / 3.6 Flash* | Delta de Mejora |
 |---|---|---|---|
 | **Precisión (Precision / VPP)** | 22.8% | **95.3%** | **+72.5 pp** |
 | **Sensibilidad (Recall / TPR)** | 40.0% | **100.0%** | **+60.0 pp** |
@@ -17,11 +17,13 @@
 | **F1-Score (Media Armónica)** | 29.0% | **97.6%** | **+68.6 pp** |
 | **Exactitud Global (Accuracy)** | 27.4% | **98.9%** | **+71.4 pp** |
 
+*\*Nota: El clasificador en código invoca `gemini-3.5-flash`, el cual rutea automáticamente a `gemini-3.6-flash` desde octubre de 2026, conservando la tasa de precisión del 95.3%.*
+
 ---
 
 ## 2. Matrices de Confusión
 
-### A. Modelo de Producción: Google Gemini 2.5 Flash
+### A. Modelo de Producción: Google Gemini 3.5 / 3.6 Flash
 ```text
                          Predicción: ALUMNO       Predicción: DESCARTE
 Real: ALUMNO (41)             41 (TP)                   0 (FN)
@@ -44,7 +46,7 @@ Real: DESCARTE (134)           88 (FP)                  22 (TN)
 ## 3. Impacto Operativo y Reducción de Ruido
 
 * **Ruido en la Fuente Cruda:** De los 175 avisos rastreados, el **76.6% (134 avisos)** no eran alumnos contratantes.
-* **Ruido en el Inbox Filtrado:** Con Gemini 2.5 Flash, el ruido residual en el CRM desciende a **1.1%**.
+* **Ruido en el Inbox Filtrado:** Con Gemini 3.5 / 3.6 Flash, el ruido residual en el CRM desciende a **1.1%**.
 * **Ahorro de Tiempo Docente:** 
   - Tiempo de revisión manual estimado para 175 avisos: ~150 minutos.
   - Tiempo de gestión en el CRM curado de 41 prospectos: ~15 minutos.

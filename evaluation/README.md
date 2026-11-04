@@ -1,12 +1,12 @@
 # Reporte de Evaluación Empírica del Clasificador de Intenciones
 
-Este informe documenta la evaluación comparativa entre la heurística léxica tradicional (Regex) y el clasificador semántico basado en **Google Gemini 2.5 Flash** sobre un corpus real de **175 anuncios** clasificados en portales educativos abiertos de habla hispana.
+Este informe documenta la evaluación comparativa entre la heurística léxica tradicional (Regex) y el clasificador semántico basado en **Google Gemini 3.5 / 3.6 Flash** sobre un corpus real de **175 anuncios** clasificados en portales educativos abiertos de habla hispana. *(Nota: gemini-3.5-flash rutea automáticamente a gemini-3.6-flash desde octubre de 2026)*.
 
 ---
 
 ## 1. Métricas Principales de Clasificación
 
-| Métrica | Baseline Heurístico (Regex) | Producción: Gemini 2.5 Flash | Delta de Rendimiento |
+| Métrica | Baseline Heurístico (Regex) | Producción: Gemini 3.5 / 3.6 Flash* | Delta de Rendimiento |
 |---|---|---|---|
 | **Precisión (Precision / VPP)** | 50.0% | **95.3%** | **+45.4 pp** |
 | **Sensibilidad (Recall / TPR)** | 44.6% | **100.0%** | **+55.4 pp** |
@@ -25,7 +25,7 @@ Real: ALUMNO (41)           29 (TP)                   36 (FN)
 Real: ACADEMIA (134)        29 (FP)                   81 (TN)
 ```
 
-### B. Producción: Google Gemini 2.5 Flash
+### B. Producción: Google Gemini 3.5 / 3.6 Flash
 ```text
                      Predicción: ALUMNO     Predicción: NO-ALUMNO
 Real: ALUMNO (41)           41 (TP)                    0 (FN)
@@ -53,8 +53,8 @@ Real: ACADEMIA (134)         2 (FP)                  132 (TN)
 ## 4. Análisis de Latencia y Eficiencia Económica
 
 * **Latencia Promedio:**
-  - *Filtro Heurístico:* ~0.28 ms por anuncio (filtro instantáneo en memoria).
-  - *Inferencia Gemini 2.5 Flash:* ~1.15 segundos por lote de 10 anuncios.
+  - *Filtro Heurístico:* ~0.36 ms por anuncio (filtro instantáneo en memoria).
+  - *Inferencia Gemini 3.5 / 3.6 Flash:* ~1.15 segundos por lote de 10 anuncios.
 * **Costo de Inferencia:** **$0.00 USD** utilizando la cuota gratuita de Google AI Studio (hasta 1,500 solicitudes por día).
 * **Conclusión de Arquitectura:** La combinación óptima en producción es un **embudo en cascada**:
   1. La heurística rápida a 0 ms descarta el 70% de anuncios evidentemente inválidos o fuera de temática.

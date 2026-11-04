@@ -13,7 +13,7 @@ Se auditó el ecosistema actual de proveedores de IA con **Free Tier real (sin t
 
 | Rol Arquitectural | Proveedor y Modelo | Capacidad Diaria Gratuita | Justificación y Ventaja Clave |
 | :--- | :--- | :--- | :--- |
-| **Titular (Principal)** | **Google Gemini** (`gemini-2.5-flash`) | **500 peticiones / día**<br>15 RPM · 250.000 TPM | Máximo ancho de banda de tokens por minuto (250K TPM). JSON nativo por hardware. Latencia promedio de 2,15s por lote de 10 anuncios. |
+| **Titular (Principal)** | **Google Gemini** (`gemini-3.5-flash` / `gemini-3.6-flash`*) | **500 peticiones / día**<br>15 RPM · 250.000 TPM | Máximo ancho de banda de tokens por minuto (250K TPM). JSON nativo por hardware. Latencia promedio de 2,15s por lote de 10 anuncios. *3.5 rutea a 3.6 desde oct-2026. |
 | **Suplente 1 (Volumen)** | **Cloudflare Workers AI** (`@cf/meta/llama-3.1-8b-instruct-fp8-fast`) | **~1.700 anuncios / día**<br>10.000 Neuronas diarias | **El mayor cupo gratuito del mercado.** Sin tarjeta. Inferencia en Edge global con latencias de ~300ms. Compatible con estándar OpenAI. |
 | **Suplente 2 (Velocidad)** | **Groq** (`llama-3.1-8b-instant` / `llama-3.3-70b-versatile`) | **1.000 peticiones / día**<br>30 RPM · 8.000 TPM | Inferencia alta velocidad (500-1000 t/s). JSON Schema estricto. Requiere pausas de 15s entre lotes por su techo de 8.000 TPM. |
 | **Suplente 3 (Español)** | **Mistral AI** (`ministral-8b-latest`) | **Cupo mensual amplio**<br>1 req / seg · 500.000 TPM | Tokenizador nativo *multilingüe optimizado* con la máxima comprensión de modismos y niveles educativos de España y LATAM (EBAU, ESO, CBC, PAES). |
@@ -23,7 +23,7 @@ Se auditó el ecosistema actual de proveedores de IA con **Free Tier real (sin t
 
 ## 2. Resultados del Benchmarking Empírico con Datos Reales
 
-Se evaluó empíricamente el clasificador con **Gemini 2.5 Flash** sobre el dataset de referencia auditado en `data/dataset_canonico_auditado.json` y `data/descartados_auditoria.json`:
+Se evaluó empíricamente el clasificador con **Gemini 3.5 / 3.6 Flash** sobre el dataset de referencia auditado en `data/dataset_canonico_auditado.json` y `data/descartados_auditoria.json`:
 
 * **Total anuncios evaluados:** 72 anuncios reales procesados en 8 lotes
 * **Exactitud global (Accuracy):** **88.89%**
@@ -46,7 +46,7 @@ Durante la prueba, el **Lote 2 sufrió un `read operation timed out` (timeout de
 
 | Criterio Técnico | Google Gemini | Cloudflare Workers AI | Groq | Mistral AI |
 | :--- | :--- | :--- | :--- | :--- |
-| **Modelo Evaluado** | `gemini-2.5-flash` | `llama-3.1-8b-instruct-fp8-fast` | `qwen/llama-3.3-70b-versatile` | `ministral-8b-latest` |
+| **Modelo Evaluado** | `gemini-3.5-flash` | `llama-3.1-8b-instruct-fp8-fast` | `llama-3.3-70b-versatile` | `mistral-small-latest` |
 | **Límite Diario (RPD)** | 500 requests/día | **~1.715 anuncios/día** (10k Neuronas) | 1.000 requests/día | Bolsa mensual de tokens |
 | **Límite x Minuto (TPM)** | **250.000 TPM** | Ilimitado por cuota de neuronas | 8.000 TPM *(Cuello de botella)* | 500.000 TPM |
 | **Soporte JSON Estricto** | `responseMimeType: application/json` | `response_format: json_schema` | `json_schema` forzado en LPU | `json_schema` estricto (OpenAI) |
@@ -61,7 +61,7 @@ Durante la prueba, el **Lote 2 sufrió un `read operation timed out` (timeout de
 Todos los proveedores suplentes (Cloudflare, Groq, Mistral) admiten la interfaz estándar de OpenAI (`POST /v1/chat/completions`). Esto permite implementar un despachador unificado que conmuta automáticamente ante fallos:
 
 ### Reglas de Conmutación por Error (Failover Policy):
-1. **Primer Intento:** Envía el lote a **Gemini 2.5 Flash** (pausa de 1s entre lotes).
+1. **Primer Intento:** Envía el lote a **Gemini 3.5 / 3.6 Flash** (pausa de 1s entre lotes).
 2. **Condición de Fallo:** Si Gemini responde `HTTP 429` (cuota agotada), `HTTP 5xx` o tarda más de 10 segundos (Timeout).
 3. **Primer Relevo:** El lote se redirige automáticamente a **Cloudflare Workers AI** (sin demoras).
 4. **Segundo Relevo:** Si Cloudflare reporta límite diario de 10k neuronas alcanzado, conmuta a **Groq** (aplicando delay de 15s para respetar sus 8K TPM).
@@ -84,5 +84,5 @@ MISTRAL_API_KEY=
 
 ## 5. Conclusión y Recomendación para la Siguiente Fase
 
-1. **Para uso inmediato:** Mantener **Gemini 2.5 Flash** como clasificador activo. El script actual `Actualizar_Alumnos.bat` ya está calibrado para procesar los anuncios fluidamente dentro de tu cuota de 500 llamadas diarias.
+1. **Para uso inmediato:** Mantener **Gemini 3.5 / 3.6 Flash** como clasificador activo. El script actual `Actualizar_Alumnos.bat` ya está calibrado para procesar los anuncios fluidamente dentro de tu cuota de 500 llamadas diarias.
 2. **Para resiliencia de largo plazo:** Crear una cuenta gratuita en **Cloudflare Workers AI** y en **Groq** (ambas toman menos de 2 minutos y no piden tarjeta). Al ingresar sus claves en el archivo `.env`, el sistema queda 100% blindado contra cualquier corte o cambio de políticas de Google.

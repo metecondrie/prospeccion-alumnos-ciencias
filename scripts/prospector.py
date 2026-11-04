@@ -487,7 +487,7 @@ def main():
     # Subcomando audit
     p_audit = subparsers.add_parser("audit", help="Audita anuncios con Gemini Flash")
     p_audit.add_argument("--input", default="data/extracted_listings.json")
-    p_audit.add_argument("--model", default="gemini-2.5-flash")
+    p_audit.add_argument("--model", default="gemini-3.5-flash")
     p_audit.add_argument("--batch-size", type=int, default=10)
     p_audit.add_argument("--api-key", default=None)
     p_audit.add_argument("--output-approved", default="data/dataset_canonico_auditado.json")
@@ -505,7 +505,7 @@ def main():
 
     # Subcomando run
     p_run = subparsers.add_parser("run", help="Ejecuta todo el flujo de auditoría y compilación")
-    p_run.add_argument("--model", default="gemini-2.5-flash")
+    p_run.add_argument("--model", default="gemini-3.5-flash")
     p_run.add_argument("--batch-size", type=int, default=10)
     p_run.add_argument("--api-key", default=None)
     p_run.add_argument("--desktop-sync", action="store_true")

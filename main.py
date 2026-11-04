@@ -48,7 +48,7 @@ def run_demo_pipeline():
         input=str(demo_raw),
         output_approved=str(DATA_DIR / "dataset_canonico_auditado.json"),
         output_discarded=str(DATA_DIR / "descartados_auditoria.json"),
-        model="gemini-2.5-flash",
+        model="gemini-3.5-flash",
         batch_size=10,
         api_key=None
     )
@@ -83,7 +83,7 @@ def main():
 
     # Command: run (Pipeline completo)
     p_run = subparsers.add_parser("run", help="Ejecuta el ciclo completo: extracción web, auditoría IA y compilación")
-    p_run.add_argument("--model", default="gemini-2.5-flash", help="Modelo principal de IA (ej: gemini-2.5-flash)")
+    p_run.add_argument("--model", default="gemini-3.5-flash", help="Modelo principal de IA (ej: gemini-3.5-flash)")
     p_run.add_argument("--batch-size", type=int, default=10, help="Tamaño de lote para la API")
     p_run.add_argument("--api-key", default=None, help="Clave API opcional")
     p_run.add_argument("--desktop-sync", action="store_true", help="Sincroniza en directorio secundario")
@@ -98,7 +98,7 @@ def main():
     p_audit.add_argument("--input", default=str(DATA_DIR / "extracted_listings.json"))
     p_audit.add_argument("--output-approved", default=str(DATA_DIR / "dataset_canonico_auditado.json"))
     p_audit.add_argument("--output-discarded", default=str(DATA_DIR / "descartados_auditoria.json"))
-    p_audit.add_argument("--model", default="gemini-2.5-flash", help="Modelo de IA")
+    p_audit.add_argument("--model", default="gemini-3.5-flash", help="Modelo de IA")
     p_audit.add_argument("--batch-size", type=int, default=10)
     p_audit.add_argument("--api-key", default=None)
     p_audit.add_argument("--demo", action="store_true")
@@ -150,7 +150,7 @@ def main():
             input=str(raw_path),
             output_approved=str(DATA_DIR / "dataset_canonico_auditado.json"),
             output_discarded=str(DATA_DIR / "descartados_auditoria.json"),
-            model=getattr(args, "model", "gemini-2.5-flash"),
+            model=getattr(args, "model", "gemini-3.5-flash"),
             batch_size=getattr(args, "batch_size", 10),
             api_key=getattr(args, "api_key", None)
         )
