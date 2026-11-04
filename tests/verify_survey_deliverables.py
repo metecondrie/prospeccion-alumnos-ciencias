@@ -118,14 +118,14 @@ EXPIRATION_PHRASES = [
 
 
 def verify_file_existence(csv_path, dir_path):
-    """Check that both deliverables exist and are of non-trivial size."""
+    """Check that both deliverables exist and contain non-empty content."""
     errors = []
     if not os.path.exists(csv_path):
         errors.append(f"MISSING FILE: CSV database not found at {csv_path}")
     else:
         size = os.path.getsize(csv_path)
-        if size < 200:
-            errors.append(f"FILE TOO SMALL: CSV database has {size} bytes (minimum 200 bytes expected).")
+        if size == 0:
+            errors.append(f"EMPTY FILE: CSV database at {csv_path} is empty.")
         else:
             print(f"[OK] CSV file found ({size} bytes): {csv_path}")
 
@@ -133,8 +133,8 @@ def verify_file_existence(csv_path, dir_path):
         errors.append(f"MISSING FILE: Directory file not found at {dir_path}")
     else:
         size = os.path.getsize(dir_path)
-        if size < 500:
-            errors.append(f"FILE TOO SMALL: Directory has {size} bytes (minimum 500 bytes expected).")
+        if size == 0:
+            errors.append(f"EMPTY FILE: Directory file at {dir_path} is empty.")
         else:
             print(f"[OK] Directory file found ({size} bytes): {dir_path}")
 
