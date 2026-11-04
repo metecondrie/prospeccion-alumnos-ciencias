@@ -21,29 +21,77 @@ if hasattr(sys.stderr, "reconfigure"):
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
+SYNTHETIC_HOST = "anuncio-ejemplo-anonimizado.local"
+REAL_URL_SNAPSHOT_REV = "f1855dd~1"
+
+
+def _url(rec):
+    return rec.get("enlace al anuncio") or rec.get("enlace_anuncio") or ""
+
+
+def _git_json(rev_path):
+    out = subprocess.check_output(["git", "show", rev_path], cwd=str(PROJECT_ROOT), text=True, encoding="utf-8")
+    return json.loads(out)
+
+
+def _load_local(rel):
+    p = PROJECT_ROOT / rel
+    if p.exists():
+        with open(p, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return None
+
+
+def _restore_real_urls(records, real_by_id):
+    """Reemplaza URLs sintéticas por la URL real del anuncio (por ID) y elimina IDs duplicados."""
+    out, seen = [], {}
+    for rec in records:
+        rec = dict(rec)
+        if SYNTHETIC_HOST in _url(rec) and rec.get("id") in real_by_id:
+            real = real_by_id[rec["id"]]
+            rec["enlace al anuncio"] = real
+            if "enlace_anuncio" in rec:
+                rec["enlace_anuncio"] = real
+        rid = rec.get("id")
+        if rid in seen:
+            # Preferir la versión con URL real
+            if SYNTHETIC_HOST in _url(out[seen[rid]]) and SYNTHETIC_HOST not in _url(rec):
+                out[seen[rid]] = rec
+            continue
+        if rid:
+            seen[rid] = len(out)
+        out.append(rec)
+    return out
+
+
 def build_operational_crm():
     print("=== GENERACIÓN DE CRM OPERATIVO CON URLs REALES ===")
-    
-    # 1. Recuperar los datos canónicos con enlaces reales desde el historial de Git
+
+    # 1. Mapa id -> URL real desde el snapshot privado previo a la anonimización
+    real_by_id = {}
+    snapshot_leads, snapshot_disc = [], []
     try:
-        out_canon = subprocess.check_output(
-            ["git", "show", "f1855dd~1:data/dataset_canonico_auditado.json"],
-            cwd=str(PROJECT_ROOT),
-            text=True,
-            encoding="utf-8"
-        )
-        real_leads = json.loads(out_canon)
+        snapshot_leads = _git_json(f"{REAL_URL_SNAPSHOT_REV}:data/dataset_canonico_auditado.json")
+        snapshot_disc = _git_json(f"{REAL_URL_SNAPSHOT_REV}:data/descartados_auditoria.json")
+        for rec in snapshot_leads + snapshot_disc:
+            if rec.get("id") and _url(rec) and SYNTHETIC_HOST not in _url(rec):
+                real_by_id[rec["id"]] = _url(rec)
     except Exception as e:
-        print(f"[Error] No se pudo recuperar datos de f1855dd~1: {e}")
+        print(f"[Aviso] Snapshot de URLs reales no disponible ({e}).")
+
+    # 2. Datos actuales (incluye leads nuevos de cada escaneo) con URLs reales restauradas
+    local_leads = _load_local("data/dataset_canonico_auditado.json")
+    local_disc = _load_local("data/descartados_auditoria.json")
+    real_leads = _restore_real_urls(local_leads if local_leads is not None else snapshot_leads, real_by_id)
+    discarded_leads = _restore_real_urls(local_disc if local_disc is not None else snapshot_disc, real_by_id)
+
+    if not real_leads:
+        print("[Error] No hay prospectos para generar el CRM operativo.")
         return False
 
-    out_disc = subprocess.check_output(
-        ["git", "show", "f1855dd~1:data/descartados_auditoria.json"],
-        cwd=str(PROJECT_ROOT),
-        text=True,
-        encoding="utf-8"
-    )
-    discarded_leads = json.loads(out_disc)
+    n_synth = sum(1 for r in real_leads if SYNTHETIC_HOST in _url(r))
+    if n_synth:
+        print(f"[Aviso] {n_synth} prospectos siguen sin URL real conocida.")
 
     print(f"-> Recuperados {len(real_leads)} prospectos calificados con URLs reales.")
     print(f"-> Recuperados {len(discarded_leads)} avisos descartados.")

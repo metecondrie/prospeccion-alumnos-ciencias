@@ -432,6 +432,51 @@ def apply_lead_expiration(
     return expired_count
 
 
+SYNTHETIC_URL_HOST = "anuncio-ejemplo-anonimizado.local"
+
+
+def _record_url(item: Dict[str, Any]) -> str:
+    return str(item.get("enlace al anuncio") or item.get("enlace_anuncio") or item.get("enlace") or "")
+
+
+def is_synthetic_url(url: str) -> bool:
+    """True si la URL es un placeholder anonimizado (copia pública), no un anuncio real."""
+    return SYNTHETIC_URL_HOST in str(url or "")
+
+
+def dedupe_records_by_id(records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Elimina registros con ID repetido conservando el orden de primera aparición.
+    Si hay dos versiones del mismo ID, prefiere la que tiene URL real (no anonimizada)
+    y conserva los campos de seguimiento CRM de la versión previa.
+    """
+    out: List[Dict[str, Any]] = []
+    pos: Dict[str, int] = {}
+    for rec in records:
+        rid = rec.get("id")
+        if not rid:
+            out.append(rec)
+            continue
+        if rid not in pos:
+            pos[rid] = len(out)
+            out.append(rec)
+            continue
+        prev = out[pos[rid]]
+        if is_synthetic_url(_record_url(prev)) and not is_synthetic_url(_record_url(rec)):
+            merged = dict(rec)
+            for k, v in prev.items():
+                if k.startswith(("estado", "notas", "crm_", "contactado", "fecha_contacto")) and v not in (None, ""):
+                    merged.setdefault(k, v)
+            out[pos[rid]] = merged
+    return out
+
+
+def _external_ai_configured(api_key: Optional[str] = None) -> bool:
+    if api_key or os.environ.get("GEMINI_API_KEY") or os.environ.get("GROQ_API_KEY") or os.environ.get("MISTRAL_API_KEY"):
+        return True
+    return bool(os.environ.get("CLOUDFLARE_ACCOUNT_ID") and os.environ.get("CLOUDFLARE_API_TOKEN"))
+
+
 def cmd_audit(args):
     """Clasifica de forma incremental los nuevos anuncios brutos usando el Triple Motor de IA."""
     print(f"--> Iniciando auditoría semántica con modelo: {args.model}")
@@ -441,14 +486,23 @@ def cmd_audit(args):
     # Normalizar leads entrantes con IDs deterministas
     raw_items = [normalize_item(it, idx + 1) for idx, it in enumerate(raw_items)]
 
+    # Las copias anonimizadas (URL sintética) ya forman parte del dataset público auditado:
+    # nunca se re-auditan ni se agregan como leads nuevos (evita duplicados en el CRM).
+    skipped_synthetic = sum(1 for it in raw_items if is_synthetic_url(_record_url(it)))
+    raw_items = dedupe_records_by_id([it for it in raw_items if not is_synthetic_url(_record_url(it))])
+    if skipped_synthetic:
+        print(f"  [Dedup] Omitidas {skipped_synthetic} copias anonimizadas (URL sintética) ya auditadas.")
+
     # 0. Monitoreo y registro de salud de fuentes (F3)
     check_and_record_source_health(raw_items)
 
     # 1. Cargar históricos ya auditados de manera segura y concurrente
     existing_approved = safe_read_json(args.output_approved, default=[])
     existing_discarded = safe_read_json(args.output_discarded, default=[])
-    approved = list(existing_approved)
-    discarded = list(existing_discarded)
+    approved = dedupe_records_by_id(list(existing_approved))
+    discarded = dedupe_records_by_id(list(existing_discarded))
+    approved_ids_set = {it.get("id") for it in approved}
+    discarded = [it for it in discarded if it.get("id") not in approved_ids_set]
 
     audited_ids = {it["id"] for it in approved + discarded if "id" in it}
     audited_urls = {it.get("enlace al anuncio") or it.get("enlace_anuncio") for it in approved + discarded if it.get("enlace al anuncio") or it.get("enlace_anuncio")}
@@ -467,6 +521,8 @@ def cmd_audit(args):
 
     batch_size = args.batch_size
     new_approved_count = 0
+    postponed_count = 0
+    external_ai = _external_ai_configured(getattr(args, "api_key", None))
 
     for i in range(0, len(pending_items), batch_size):
         batch = pending_items[i:i + batch_size]
@@ -485,7 +541,23 @@ def cmd_audit(args):
         try:
             results = call_multiprovider_batch(items_payload, primary_model=args.model, api_key=args.api_key)
             result_map = {r["id"]: r for r in results if isinstance(r, dict) and "id" in r}
+            if external_ai and result_map and all(
+                r.get("actual_provider") == "Heuristic Engine" for r in result_map.values()
+            ):
+                # Todos los proveedores externos fallaron: cortar aquí y posponer el resto
+                # en lugar de reintentar lote por lote contra APIs sin cuota.
+                remaining = len(pending_items) - i
+                postponed_count += remaining
+                print(f"  [IA no disponible] Se posponen {remaining} avisos hasta que vuelva la cuota de IA.")
+                break
             for item in batch:
+                res_probe = result_map.get(item["id"], {})
+                if external_ai and res_probe.get("actual_provider") == "Heuristic Engine":
+                    # Hay IA configurada pero todos los proveedores fallaron (cuota/HTTP):
+                    # no se persiste una decisión heurística; el aviso queda pendiente
+                    # y se audita con IA en la próxima ejecución.
+                    postponed_count += 1
+                    continue
                 res = result_map.get(item["id"], {
                     "is_student": False,
                     "decision_ia": "Descartado",
@@ -504,11 +576,10 @@ def cmd_audit(args):
                 else:
                     discarded.append(item)
         except Exception as e:
-            print(f"  [Error en lote] {e}. Registros del lote marcados para revisión manual.", file=sys.stderr)
-            for item in batch:
-                item["decision_ia"] = "Pendiente de revisión"
-                item["justificacion_ia"] = f"Error en inferencia de IA: {e}"
-                discarded.append(item)
+            remaining = len(pending_items) - i
+            print(f"  [Error en lote] {e}. Se posponen {remaining} avisos: se reintentarán en la próxima ejecución.", file=sys.stderr)
+            postponed_count += remaining
+            break
 
         time.sleep(1.0)
 
@@ -521,6 +592,8 @@ def cmd_audit(args):
     save_classifier_predictions(approved + discarded, getattr(args, "output_predictions", "data/predicciones_clasificador.json"), model_name=args.model)
 
     print(f"[OK] Auditoría completada. Nuevos alumnos aprobados: {new_approved_count} | Total en base de datos: {len(approved)}")
+    if postponed_count:
+        print(f"  [Pospuestos] {postponed_count} avisos sin IA disponible (cuota agotada o error); se auditarán en la próxima ejecución.")
     print(f"  Archivo aprobados: {args.output_approved}")
     print(f"  Archivo descartados: {args.output_discarded}")
 
@@ -532,6 +605,11 @@ def cmd_build(args):
 
     # Normalización consistente y evaluación de caducidad automática (> 21d) (F5)
     approved_leads = [normalize_item(it, idx + 1) for idx, it in enumerate(approved_leads)]
+    n_before = len(approved_leads)
+    approved_leads = dedupe_records_by_id(approved_leads)
+    if len(approved_leads) != n_before:
+        print(f"  [Dedup] Eliminados {n_before - len(approved_leads)} registros con ID duplicado.")
+        atomic_write_json(args.approved, approved_leads)
     expired_count = apply_lead_expiration(approved_leads)
     if expired_count > 0:
         print(f"  [Caducidad F5] {expired_count} leads antiguos marcados como vencidos (>21 días).")

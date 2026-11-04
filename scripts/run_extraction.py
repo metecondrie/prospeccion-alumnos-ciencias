@@ -40,7 +40,11 @@ def run_full_pipeline() -> List[Dict[str, Any]]:
             with open(OUTPUT_JSON_PATH, "r", encoding="utf-8") as f:
                 existing_hist = json.load(f)
                 if isinstance(existing_hist, list):
-                    all_raw_listings.extend(existing_hist)
+                    # Las copias anonimizadas (URL sintética) no se re-inyectan al pipeline operativo
+                    all_raw_listings.extend(
+                        it for it in existing_hist
+                        if "anuncio-ejemplo-anonimizado.local" not in str(it.get("enlace_anuncio") or it.get("enlace al anuncio") or "")
+                    )
         except Exception:
             pass
 
@@ -86,6 +90,7 @@ def run_full_pipeline() -> List[Dict[str, Any]]:
 
     # 4. Deduplication & Final Schema Validation
     seen_keys: Set[Any] = set()
+    seen_ids: Set[str] = set()
     verified_listings: List[Dict[str, Any]] = []
 
     for item in all_raw_listings:
@@ -93,7 +98,8 @@ def run_full_pipeline() -> List[Dict[str, Any]]:
         plat = item.get("plataforma", "").strip()
         msg = item.get("mensaje_descripcion", "").strip()
         dedup_key = (plat, url, msg[:50])
-        if not url or dedup_key in seen_keys:
+        item_id = item.get("id")
+        if not url or dedup_key in seen_keys or (item_id and item_id in seen_ids):
             continue
 
         valid, err = validate_listing_record(item)
@@ -102,6 +108,8 @@ def run_full_pipeline() -> List[Dict[str, Any]]:
             continue
 
         seen_keys.add(dedup_key)
+        if item_id:
+            seen_ids.add(item_id)
         verified_listings.append(item)
 
     print(f"\nDEDUPLICATED & STRICTLY VALIDATED: {len(verified_listings)} listings")
