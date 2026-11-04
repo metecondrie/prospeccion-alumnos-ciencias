@@ -212,11 +212,12 @@ async def main():
 
     @client.on(events.NewMessage)
     async def handler(event):
-        # Ignorar mensajes de chats privados directos o enviados por uno mismo
-        if event.is_private or event.out:
+        # Ignorar mensajes de chats privados directos
+        if event.is_private:
             return
 
         text = event.raw_text or ""
+        is_own = bool(event.out)
         STATS["messages_scanned"] += 1
 
         # Registrar de forma silenciosa en el archivo cada 10 mensajes para auditoría
@@ -237,7 +238,8 @@ async def main():
         sender_name = f"{getattr(sender, 'first_name', '')} {getattr(sender, 'last_name', '')}".strip() or "Estudiante"
         sender_user = getattr(sender, 'username', '')
 
-        log_event(f"\n🔥 [POTENCIAL ALUMNO DETECTADO] Grupo: '{chat_title}' | Autor: {sender_name} (@{sender_user})")
+        prefix = "🧪 [MENSAJE DE PRUEBA PROPIO]" if is_own else "🔥 [POTENCIAL ALUMNO DETECTADO]"
+        log_event(f"\n{prefix} Grupo: '{chat_title}' | Autor: {sender_name} (@{sender_user})")
         print(f"   Mensaje: \"{text[:120]}...\"")
         print(f"   🤖 Consultando Triple Motor de IA (Gemini Flash Lite / Groq / Mistral)...")
 
