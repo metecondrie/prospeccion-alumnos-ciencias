@@ -37,6 +37,13 @@ Pipeline de web scraping, clasificación semántica de intenciones con Google Ge
 ## 🏗️ Arquitectura del Sistema
 
 ```mermaid
+graph LR
+    Sources["Fuentes de Datos<br/>(Clasificados Web + Telegram MTProto)"] --> Filter["Filtro Común e Inferencia LLM<br/>(Regex + Google Gemini 3.5/3.6 Flash)"]
+    Filter --> Anonymizer["Anonimizador PII Determinista<br/>(Desidentificación Criptográfica SHA-256)"]
+    Anonymizer --> Artifacts["Artefactos y CRM Local<br/>(dashboard.html + CSVs RFC 4180)"]
+```
+
+```mermaid
 flowchart TD
     A["Fuentes Web (TusClases, Tablón, Reddit)"] -->|Extracción Periódica| B["data/extracted_listings.json (175 Crudos)"]
     C["Comunidades Telegram (Grupos Universitarios)"] -->|Escucha Pasiva MTProto| D["scripts/telegram_centinela.py"]
@@ -59,6 +66,7 @@ El rendimiento del clasificador fue evaluado formalmente contra el Ground Truth 
 | **Sensibilidad (Recall / TPR)** | 44.6% | **100.0%** | **+55.4 pp** |
 | **Especificidad (TNR)** | 73.6% | **97.3%** | **+23.7 pp** |
 | **F1-Score (Media Armónica)** | 47.1% | **97.7%** | **+50.6 pp** |
+| **Latencia Promedio** | ~0.25 ms | **~1,150 ms** | **Inferencia contextual batch** |
 | **Exactitud (Accuracy)** | 62.9% | **98.3%** | **+35.4 pp** |
 
 *\*Nota técnica: El código utiliza el identificador `gemini-3.5-flash`, el cual rutea de manera transparente a `gemini-3.6-flash` desde octubre de 2026, conservando la alta tasa de precisión del 95.6% sin alterar las cuotas ni la latencia.*

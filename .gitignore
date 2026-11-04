@@ -39,3 +39,8 @@ centinela_session*
 # Dynamic runtime queues and deduplication state
 data/centinela_dedupe.json
 data/centinela_digest_queue.json
+
+# Raw scraping datasets, unanonymized CSVs and live sentinel outputs
+*raw*.json
+*_real.csv
+data/leads_centinela_en_vivo.json

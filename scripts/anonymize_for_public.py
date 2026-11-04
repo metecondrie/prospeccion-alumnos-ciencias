@@ -246,6 +246,10 @@ def apply_anonymization(target_dir: str, mapas: Mapas):
         procesar_json(os.path.join(target_dir, "data", "dataset_ejemplo.json"), mapas)
     if os.path.exists(os.path.join(target_dir, "data", "leads_centinela_en_vivo.json")):
         procesar_json(os.path.join(target_dir, "data", "leads_centinela_en_vivo.json"), mapas)
+    if os.path.exists(os.path.join(target_dir, "data", "crm_export.json")):
+        procesar_json(os.path.join(target_dir, "data", "crm_export.json"), mapas)
+    if os.path.exists(os.path.join(target_dir, "data", "predicciones_clasificador.json")):
+        procesar_json(os.path.join(target_dir, "data", "predicciones_clasificador.json"), mapas)
     if os.path.exists(os.path.join(target_dir, "evaluation", "dataset_benchmark_etiquetado.json")):
         procesar_json(os.path.join(target_dir, "evaluation", "dataset_benchmark_etiquetado.json"), mapas)
 
@@ -360,7 +364,14 @@ def main():
 
     print(f"--> Generando copia pública en: {PUBLIC_DIR}\n")
     if os.path.exists(PUBLIC_DIR):
-        shutil.rmtree(PUBLIC_DIR)
+        def _onerror(func, path, exc_info):
+            import stat
+            try:
+                os.chmod(path, stat.S_IWRITE)
+                func(path)
+            except Exception:
+                pass
+        shutil.rmtree(PUBLIC_DIR, onerror=_onerror)
     os.makedirs(PUBLIC_DIR, exist_ok=True)
 
     # Copiar archivos ignorando git, pycache, envs, mapas privados y sesiones

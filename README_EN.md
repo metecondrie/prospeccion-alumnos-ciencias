@@ -38,11 +38,18 @@ In public classified ad boards and academic tutor portals, **76.6%** of listings
 ## 🏗️ System Architecture
 
 ```mermaid
+graph LR
+    Sources["Raw Data Sources<br/>(Web + Telegram MTProto)"] --> Filter["Common Filter & LLM Inference<br/>(Regex + Google Gemini 3.5/3.6 Flash)"]
+    Filter --> Anonymizer["PII Deterministic Anonymizer<br/>(Cryptographic SHA-256)"]
+    Anonymizer --> Artifacts["Artifacts & Local CRM<br/>(dashboard.html + RFC 4180 CSVs)"]
+```
+
+```mermaid
 flowchart TD
     A["Web Classifieds (TusClases, Tablón, Reddit)"] -->|Periodic Extraction| B["data/extracted_listings.json (175 Raw Listings)"]
     C["Telegram Groups (Public University Channels)"] -->|Passive MTProto Listening| D["scripts/telegram_centinela.py"]
     B & D --> E["Semantic Classifier (Google Gemini 3.5/3.6 Flash)"]
-    E -->|95.3% Precision Filtering| F["data/dataset_canonico_auditado.json (41 Approved Leads)"]
+    E -->|95.6% Precision Filtering| F["data/dataset_canonico_auditado.json (41 Approved Leads)"]
     E -->|Audit Trail & Discards| G["data/descartados_auditoria.json (134 Academy Ads)"]
     F --> H["dashboard.html (Standalone Browser CRM)"]
     H --> I["Human Outreach (1-Click Personalized Letter)"]
@@ -56,13 +63,14 @@ The classifier performance was benchmarked against a verified Ground Truth acros
 
 | Classification Metric | Heuristic Baseline (Regex) | Production: Gemini 3.5 / 3.6 Flash* | Delta |
 |---|---|---|---|
-| **Precision (PPV)** | 22.8% | **95.3%** | **+72.5 pp** |
-| **Recall / Sensitivity (TPR)** | 40.0% | **100.0%** | **+60.0 pp** |
-| **Specificity (TNR)** | 20.0% | **98.5%** | **+78.5 pp** |
-| **F1-Score** | 29.0% | **97.6%** | **+68.6 pp** |
-| **CRM Residual Noise** | 76.6% initial | **1.1% residual** | **-75.5 pp spam removed** |
+| **Precision (PPV)** | 50.0% | **95.6%** | **+45.6 pp** |
+| **Recall / Sensitivity (TPR)** | 44.6% | **100.0%** | **+55.4 pp** |
+| **Specificity (TNR)** | 73.6% | **97.3%** | **+23.7 pp** |
+| **F1-Score** | 47.1% | **97.7%** | **+50.6 pp** |
+| **Average Latency** | ~0.25 ms | **~1,150 ms** | **Contextual batch inference** |
+| **Accuracy** | 62.9% | **98.3%** | **+35.4 pp** |
 
-*\*Technical note: The code invokes the `gemini-3.5-flash` model identifier, which transparently routes to `gemini-3.6-flash` since Oct-2026, delivering the verified 95.3% precision without impacting free-tier quotas or latency.*
+*\*Technical note: The code invokes the `gemini-3.5-flash` model identifier, which transparently routes to `gemini-3.6-flash` since Oct-2026, delivering the verified 95.6% precision without impacting free-tier quotas or latency.*
 
 ### Commercial Funnel & Pilot Telemetry
 Tracking the 41 qualified opportunities inside the local CRM (telemetry recorded in [`data/feedback_piloto_conversion.json`](data/feedback_piloto_conversion.json)):

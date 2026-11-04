@@ -12,6 +12,7 @@ Este informe documenta la evaluación comparativa entre la heurística léxica t
 | **Sensibilidad (Recall / TPR)** | 44.6% | **100.0%** | **+55.4 pp** |
 | **Especificidad (TNR)** | 73.6% | **97.3%** | **+23.6 pp** |
 | **F1-Score (Media Armónica)** | 47.1% | **97.7%** | **+50.6 pp** |
+| **Latencia Promedio** | ~0.26 ms | **~1,150 ms** | **Inferencia contextual batch** |
 | **Exactitud (Accuracy)** | 62.9% | **98.3%** | **+35.4 pp** |
 
 ---
@@ -53,7 +54,7 @@ Real: ACADEMIA (110)         3 (FP)                  107 (TN)
 ## 4. Análisis de Latencia y Eficiencia Económica
 
 * **Latencia Promedio:**
-  - *Filtro Heurístico:* ~0.25 ms por anuncio (filtro instantáneo en memoria).
+  - *Filtro Heurístico:* ~0.26 ms por anuncio (filtro instantáneo en memoria).
   - *Inferencia Gemini 3.5 / 3.6 Flash:* ~1.15 segundos por lote de 10 anuncios.
 * **Costo de Inferencia:** **$0.00 USD** utilizando la cuota gratuita de Google AI Studio (hasta 1,500 solicitudes por día).
 * **Conclusión de Arquitectura:** La combinación óptima en producción es un **embudo en cascada**:
