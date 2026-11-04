@@ -12,7 +12,7 @@ Este software fue diseñado como una herramienta de apoyo pedagógico para docen
 
 El sistema se rige bajo cuatro pilares éticos:
 1. **Prospección No Invasiva**: No se realizan envíos salientes automatizados, campañas de spam ni difusión masiva.
-2. **Intervención Humana Permanente (*Human-in-the-Loop*)**: Todo contacto con un estudiante o familia es evaluado, personalizado y ejecutado manualmente por el docente a través de los canales autorizados por la plataforma de origen.
+2. **Intervención Humana Permanente (*Human-in-the-Loop*)**: Todo contacto con un estudiante o familia es evaluado, personalizado y ejecutado de forma directa por el docente a través de los canales autorizados por la plataforma de origen.
 3. **Respeto a las Plataformas**: La recolección respeta los términos de acceso público, sin eludir controles de autenticación, muros de pago (*paywalls*) ni mecanismos CAPTCHA.
 4. **Minimización y Anonimización de Datos**: El repositorio público no expone datos personales identificables (PII) de estudiantes.
 

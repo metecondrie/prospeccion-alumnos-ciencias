@@ -58,7 +58,7 @@ flowchart TD
 
 ## 📊 Evidencia de Datos y Evaluación de Modelos
 
-El rendimiento del clasificador fue evaluado formalmente contra el Ground Truth verificado manualmente sobre los 175 anuncios crudos (ver reporte detallado en [`docs/EVALUACION_FILTRO_DATOS.md`](docs/EVALUACION_FILTRO_DATOS.md) o interactivo en [`notebooks/evaluacion_clasificador.ipynb`](notebooks/evaluacion_clasificador.ipynb)):
+El rendimiento del clasificador fue evaluado analizando la **consistencia interna** entre la heurística base (Regex) y el clasificador semántico auditado por IA sobre los 175 anuncios crudos. El Ground Truth operativo proviene de la salida estructurada del propio pipeline (41 solicitudes calificadas por auditoría LLM y 134 ofertas comerciales descartadas) junto con una revisión del owner por muestreo puntual (ver reporte detallado en [`docs/EVALUACION_FILTRO_DATOS.md`](docs/EVALUACION_FILTRO_DATOS.md) o interactivo en [`notebooks/evaluacion_clasificador.ipynb`](notebooks/evaluacion_clasificador.ipynb)):
 
 | Métrica | Baseline Heurístico (Regex) | Producción: Gemini 3.5 / 3.6 Flash* | Delta de Rendimiento |
 |---|---|---|---|
@@ -69,7 +69,9 @@ El rendimiento del clasificador fue evaluado formalmente contra el Ground Truth 
 | **Latencia Promedio** | ~0.25 ms | **~1,150 ms** | **Inferencia contextual batch** |
 | **Exactitud (Accuracy)** | 62.9% | **98.3%** | **+35.4 pp** |
 
-*\*Nota técnica: El código utiliza el identificador `gemini-3.5-flash`, el cual rutea de manera transparente a `gemini-3.6-flash` desde octubre de 2026, conservando la alta tasa de precisión del 95.6% sin alterar las cuotas ni la latencia.*
+*\*Nota técnica y metodológica:*
+* **Ruteo de modelo:** El código utiliza el identificador `gemini-3.5-flash`, el cual rutea de manera transparente a `gemini-3.6-flash` desde octubre de 2026, conservando la alta tasa de precisión del 95.6% sin alterar las cuotas ni la latencia.
+* **Caveat de métricas y autoconsistencia:** La sensibilidad (Recall) del 100.0% refleja la **autoconsistencia** del clasificador frente a las etiquetas derivadas del propio pipeline auditado por LLM, **NO** una exactitud o precisión independiente con múltiples anotadores humanos. Las métricas expresan la consistencia interna entre la heurística regex y el modelo LLM.
 
 ### Embudo Comercial y Telemetría del Piloto Real
 Seguimiento de las 41 oportunidades en el CRM (telemetría en [`data/feedback_piloto_conversion.json`](data/feedback_piloto_conversion.json)):
@@ -89,7 +91,13 @@ Seguimiento de las 41 oportunidades en el CRM (telemetría en [`data/feedback_pi
 * **El problema de negocio nació de mi necesidad real:** Como docente de ciencias exactas, pasaba entre 2 y 3 horas diarias navegando portales de clasificados para encontrar alumnos particulares reales entre decenas de avisos de institutos y colegas ofreciendo servicios.
 * **Arquitectura y dirección técnica propia:** Definí los contratos de datos estructurados (RFC 4180 de 8 columnas), las reglas de negocio del CRM, el embudo comercial y la suite de 98 tests automatizados.
 * **Implementación en pair-programming con IA:** Desarrollé el sistema asistido por Google Antigravity. Corregí los prompts tras detectar que las academias engañaban a los primeros filtros usando frases como *"clases de matemáticas"*, agregando reglas negativas explícitas (*few-shot negative pool*).
-* **Auditoría humana y privacidad:** Verifiqué manualmente cada uno de los 175 avisos crudos para construir el Ground Truth del dataset y diseñé el algoritmo de anonimización determinista ([`scripts/anonymize_for_public.py`](scripts/anonymize_for_public.py)) con 0 colisiones para publicar este portfolio de forma éticamente responsable.
+* **Gobernanza de datos y privacidad post-PII:** La referencia operativa del dataset se construyó a partir de la salida estructurada del pipeline auditada por LLM y validada mediante revisión del owner por muestreo puntual. Diseñé el algoritmo de anonimización determinista ([`scripts/anonymize_for_public.py`](scripts/anonymize_for_public.py)) con mapeo privado nombre→seudónimo gitignoreado (`data/name_map.local.json`), URLs sintéticas y desidentificación criptográfica SHA-256, garantizando que los registros originales crudos nunca se publiquen.
+
+### 🛡️ Política de Privacidad y Mitigación de Historial Git
+* **Mapeo Privado y Gitignoreado:** La correspondencia nombre real → seudónimo (`data/name_map.local.json` y `data/name_map.privado.json`) reside en almacenamiento local y está estrictamente excluida del control de versiones (`.gitignore`).
+* **Desidentificación de URLs:** Todas las URLs externas de portales de clasificados fueron transformadas determinísticamente en identificadores sintéticos (`https://anuncio-ejemplo-anonimizado.local/...`).
+* **Registros Originales:** Los datos crudos con información personal nunca se publican.
+* **Mitigación por Historial Git:** Como medida de máxima seguridad sobre commits tempranos de desarrollo, la estrategia aprobada consiste en convertir el repositorio original a privado y republicar este portfolio como un repositorio público limpio de commit único (acción manual del owner, PENDIENTE).
 
 ---
 
@@ -156,7 +164,6 @@ python main.py test
 * 🛡️ [**MARCO_ETICO_Y_LEGAL.md**](docs/MARCO_ETICO_Y_LEGAL.md): Marco normativo de privacidad (RGPD / Ley 25.326) y protocolo de opt-out.
 * 🔒 [**AUDITORIA_HISTORIAL_GIT.md**](docs/AUDITORIA_HISTORIAL_GIT.md): Auditoría de seguridad del historial de commits y estrategia de preservación de privacidad.
 * 📈 [**CONCLUSIONES.md**](docs/CONCLUSIONES.md): Resultados pedagógicos y análisis de conversión comercial.
-* 📝 [**AUDITORIA_CAMBIOS.md**](docs/AUDITORIA_CAMBIOS.md): Bitácora de decisiones de diseño y auditorías técnicas.
 
 ---
 

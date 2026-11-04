@@ -59,7 +59,7 @@ flowchart TD
 
 ## 📊 Data Science Benchmark & Classifier Evaluation
 
-The classifier performance was benchmarked against a verified Ground Truth across all 175 raw listings (detailed report in [`docs/EVALUACION_FILTRO_DATOS.md`](docs/EVALUACION_FILTRO_DATOS.md) or interactive Jupyter Notebook in [`notebooks/evaluacion_clasificador.ipynb`](notebooks/evaluacion_clasificador.ipynb)):
+The classifier performance was evaluated by assessing **internal consistency** between the baseline heuristic (Regex) and the LLM-audited classifier across all 175 raw listings. The operational ground truth is derived directly from structured pipeline output (41 leads approved by LLM audit / 134 commercial ads discarded) alongside owner spot-check review (detailed report in [`docs/EVALUACION_FILTRO_DATOS.md`](docs/EVALUACION_FILTRO_DATOS.md) or interactive Jupyter Notebook in [`notebooks/evaluacion_clasificador.ipynb`](notebooks/evaluacion_clasificador.ipynb)):
 
 | Classification Metric | Heuristic Baseline (Regex) | Production: Gemini 3.5 / 3.6 Flash* | Delta |
 |---|---|---|---|
@@ -70,7 +70,9 @@ The classifier performance was benchmarked against a verified Ground Truth acros
 | **Average Latency** | ~0.25 ms | **~1,150 ms** | **Contextual batch inference** |
 | **Accuracy** | 62.9% | **98.3%** | **+35.4 pp** |
 
-*\*Technical note: The code invokes the `gemini-3.5-flash` model identifier, which transparently routes to `gemini-3.6-flash` since Oct-2026, delivering the verified 95.6% precision without impacting free-tier quotas or latency.*
+*\*Technical & Methodological Note:*
+* **Model Routing:** The code invokes the `gemini-3.5-flash` model identifier, which transparently routes to `gemini-3.6-flash` since Oct-2026, delivering the verified 95.6% precision without impacting free-tier quotas or latency.
+* **Metric Caveat & Self-Consistency:** The 100.0% Recall (sensitivity) reflects **self-consistency** with labels derived from the LLM-audited pipeline itself, **NOT** an independent multi-annotator ground truth accuracy. The reported metrics measure internal consistency between regex heuristics and LLM decision boundaries.
 
 ### Commercial Funnel & Pilot Telemetry
 Tracking the 41 qualified opportunities inside the local CRM (telemetry recorded in [`data/feedback_piloto_conversion.json`](data/feedback_piloto_conversion.json)):
@@ -90,7 +92,13 @@ Tracking the 41 qualified opportunities inside the local CRM (telemetry recorded
 * **Business Problem Driven by Real Need:** As an independent STEM educator, I spent hours sifting through tutor platforms to find real students. I built this tool to automate lead discovery while keeping the outreach personal and human.
 * **Architecture & Rigorous Contracts:** I designed the RFC 4180 data contracts, CRM business rules, evaluation metrics, and a comprehensive automated test suite (98 passing unit/integration tests).
 * **AI-Assisted Engineering:** Implemented through iterative pair programming with Google Antigravity. When commercial academies bypassed early filters using student-like phrasing, I refined system prompts with few-shot negative exemplars and fallback chains.
-* **Data Ethics & Privacy Governance:** Hand-verified all 175 raw ads to establish the benchmark ground truth, and designed a collision-free deterministic anonymizer ([`scripts/anonymize_for_public.py`](scripts/anonymize_for_public.py)) ensuring zero personal data is exposed in public repositories.
+* **Data Governance & Privacy Post-PII:** The operational reference dataset was established from structured pipeline outputs audited by LLM and validated through owner spot-check review. Designed a deterministic anonymizer ([`scripts/anonymize_for_public.py`](scripts/anonymize_for_public.py)) featuring a private, gitignored name-to-pseudonym map (`data/name_map.local.json`), synthetic URLs, and cryptographic SHA-256 de-identification, ensuring raw personal data is never published.
+
+### 🛡️ Privacy Policy & Git History Mitigation
+* **Private Gitignored Mapping:** Real-name to pseudonym mappings (`data/name_map.local.json` and `data/name_map.privado.json`) remain strictly local and excluded from version control (`.gitignore`).
+* **Synthetic URLs:** External ad links have been deterministically replaced with synthetic placeholders (`https://anuncio-ejemplo-anonimizado.local/...`).
+* **Zero Raw PII Published:** Original scraped records containing contact data are excluded from git tracking.
+* **Git History Mitigation Plan:** To prevent residual exposure in early development commits, the current development repository is scheduled for migration to private visibility, followed by a clean, single-commit public mirror repository (manual owner action, PENDING).
 
 ---
 
@@ -157,7 +165,6 @@ python main.py test
 * 🛡️ [**MARCO_ETICO_Y_LEGAL.md**](docs/MARCO_ETICO_Y_LEGAL.md): Privacy compliance framework (GDPR / Argentine Law 25.326), passive MTProto listening policies, and opt-out protocol.
 * 🔒 [**AUDITORIA_HISTORIAL_GIT.md**](docs/AUDITORIA_HISTORIAL_GIT.md): Security audit on commit history and personal data mitigation strategy.
 * 📈 [**CONCLUSIONES.md**](docs/CONCLUSIONES.md): Tutoring pedagogical insights and commercial conversion analysis.
-* 📝 [**AUDITORIA_CAMBIOS.md**](docs/AUDITORIA_CAMBIOS.md): Technical decision log and architecture audit history.
 
 ---
 

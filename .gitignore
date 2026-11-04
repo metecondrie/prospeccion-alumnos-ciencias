@@ -23,7 +23,9 @@ desktop.ini
 
 # Private anonymization mapping
 data/name_map.privado.json
+data/name_map.local.json
 *.privado.json
+*.local.json
 
 # Scratch / Temporary files / Audit work
 scratch/

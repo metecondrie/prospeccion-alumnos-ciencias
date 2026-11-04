@@ -1,10 +1,14 @@
-# Protocolo de Anotación y Ground Truth — Clasificación de Prospectos
+# Protocolo de Criterios para Futuro Etiquetado Independiente
 
-Este documento establece los criterios metodológicos y las directrices de etiquetado humano utilizadas para construir el conjunto de referencia (*Ground Truth*) de 175 anuncios de portales de clasificados y redes sociales.
+Este documento establece los criterios metodológicos y las directrices técnicas diseñadas para la **futura ejecución de un proceso de etiquetado independiente** sobre el universo de anuncios de portales clasificados y redes sociales.
+
+> [!NOTE]
+> **Estado del Proceso**: Criterios de diseño metodológico propuestos. **No ha sido ejecutado aún**.
+> En el estado actual del repositorio, la referencia de evaluación del pipeline proviene de la salida estructurada auditada por LLM (41 aprobados / 134 descartados) validada mediante revisión del owner por muestreo puntual. Las métricas reportadas reflejan consistencia interna y autoconsistencia del pipeline frente a sus propias etiquetas, no una evaluación externa independiente.
 
 ---
 
-## 1. Definición del Problema de Clasificación
+## 1. Definición de Clases para Futura Anotación
 
 * **Clase Positiva (Etiqueta = 1 — Alumno Genuino):**  
   Cualquier publicación donde un individuo (estudiante o padre/tutor en su representación) solicita expresamente la contratación de clases particulares o apoyo académico en ciencias exactas (Matemáticas, Física, Química, Biología o áreas afines de ingeniería/salud).
@@ -12,11 +16,11 @@ Este documento establece los criterios metodológicos y las directrices de etiqu
 * **Clase Negativa (Etiqueta = 0 — No Alumno / Ruido):**  
   - **Docentes particulares:** Profesores que publican para ofrecer sus propios servicios.
   - **Academias e institutos:** Empresas comerciales que ofrecen cursos, diplomaturas o captación de profesores.
-  - **Publicaciones irrelevantes:** Consultas administrativas, venta de apuntes, memes o charlas generales en grupos.
+  - **Publicaciones irrelevantes:** Consultas administrativas, venta de apuntes o charlas generales en grupos.
 
 ---
 
-## 2. Reglas Específicas de Decisión
+## 2. Reglas Específicas de Decisión para Anotadores
 
 ### 2.1 Indicadores Positivos de Alumno (Clase 1)
 1. **Intención de demanda en primera persona:**
@@ -24,7 +28,7 @@ Este documento establece los criterios metodológicos y las directrices de etiqu
 2. **Contexto de evaluación inminente:**
    * Mención de materias específicas, programas universitarios (*CBC, UBA XXI, PAES, Selectividad*), o fechas de parciales y finales.
 3. **Solicitudes por terceros directos:**
-   * Padres o familiares buscando tutor para sus hijos de nivel secundario o primario (*"Busco profe para mi hijo de 3er año"*). Se consideran leads válidos de clase particular.
+   * Padres o familiares buscando tutor para sus hijos de nivel secundario o primario (*"Busco profe para mi hijo de 3er año"*). Se consideran prospectos válidos de clase particular.
 
 ### 2.2 Indicadores Negativos de Exclusión (Clase 0)
 1. **Oferta explícita de servicios docentes:**
@@ -38,8 +42,8 @@ Este documento establece los criterios metodológicos y las directrices de etiqu
 
 ---
 
-## 3. Protocolo de Auditoría Cruzada
+## 3. Protocolo Propuesto para Futura Auditoría Cruzada
 
-* Los 175 registros extraídos fueron etiquetados independientemente por el evaluador humano y sometidos a una verificación cruzada frente a los avisos públicos originales.
-* En casos de ambigüedad sintáctica (por ejemplo, textos muy breves como *"Clases de análisis"*), se revisó el endpoint de origen de la plataforma para verificar si el usuario publicó en la sección de *oferta* o en la de *demanda*.
-* El dataset resultante sirve como patrón inmutable para medir la precisión, recall y F1 de los algoritmos sin sesgo de entrenamiento.
+* **Asignación Ciega:** En la futura etapa de anotación, los 175 registros extraídos se presentarán sin revelar las predicciones previas de los modelos a los evaluadores independientes.
+* **Resolución de Ambigüedades:** En casos de ambigüedad sintáctica (por ejemplo, textos muy breves como *"Clases de análisis"*), el evaluador consultará la URL o endpoint original para constatar si el aviso se emitió en la categoría de oferta de servicios o demanda de clases.
+* **Concordancia Inter-Evaluador:** Se calculará el índice Kappa de Fleiss/Cohen entre al menos dos anotadores independientes para establecer un patrón de referencia definitivo y libre de sesgos del propio pipeline.

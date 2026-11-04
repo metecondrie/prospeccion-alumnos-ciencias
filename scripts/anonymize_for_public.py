@@ -75,7 +75,9 @@ FORBIDDEN_NAME_HASHES = {
 }
 
 # Carga segura del mapeo privado de desidentificación
-PRIVATE_MAP_FILE = os.path.join(PROJECT_ROOT, "data", "name_map.privado.json")
+PRIVATE_MAP_FILE = os.path.join(PROJECT_ROOT, "data", "name_map.local.json")
+if not os.path.exists(PRIVATE_MAP_FILE):
+    PRIVATE_MAP_FILE = os.path.join(PROJECT_ROOT, "data", "name_map.privado.json")
 if os.path.exists(PRIVATE_MAP_FILE):
     try:
         with open(PRIVATE_MAP_FILE, "r", encoding="utf-8") as _pf:
