@@ -35,3 +35,7 @@ backup_audit_*/
 *.session
 *.session-journal
 centinela_session*
+
+# Dynamic runtime queues and deduplication state
+data/centinela_dedupe.json
+data/centinela_digest_queue.json

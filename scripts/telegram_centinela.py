@@ -15,8 +15,14 @@ import html
 import asyncio
 import signal
 import argparse
-from datetime import datetime
-from typing import Dict, Any, Tuple, Optional
+from datetime import datetime, timezone, timedelta
+from typing import Dict, Any, Tuple, Optional, List
+
+try:
+    from zoneinfo import ZoneInfo
+    TZ_ART = ZoneInfo("America/Argentina/Buenos_Aires")
+except Exception:
+    TZ_ART = timezone(timedelta(hours=-3))
 
 # Ensure UTF-8 output on Windows
 if hasattr(sys.stdout, 'reconfigure'):
@@ -45,6 +51,9 @@ except ImportError:
 load_env_file()
 
 DATA_APPROVED = os.path.join(PROJECT_ROOT, "data", "leads_centinela_en_vivo.json")
+DEDUPE_FILE = os.path.join(PROJECT_ROOT, "data", "centinela_dedupe.json")
+DIGEST_QUEUE_FILE = os.path.join(PROJECT_ROOT, "data", "centinela_digest_queue.json")
+UMBRAL_PUSH = float(os.environ.get("CENTINELA_SCORE_UMBRAL", "0.70"))
 LOG_DIR = os.path.join(PROJECT_ROOT, "logs")
 os.makedirs(LOG_DIR, exist_ok=True)
 LOG_FILE = os.path.join(LOG_DIR, "centinela.log")
@@ -122,7 +131,123 @@ def save_approved_lead(lead: Dict[str, Any]) -> bool:
     return saved_any
 
 
-def send_centinela_push_alert(lead: Dict[str, Any], group_title: str, student_username: str) -> Tuple[bool, str]:
+def is_persona_deduped_24h(persona_id: str, current_time: Optional[float] = None) -> bool:
+    """Verifica si persona_id ya fue alertada en las últimas 24 horas (F4 dedupe 24h)."""
+    if not persona_id:
+        return False
+    now_ts = current_time if current_time is not None else time.time()
+    dedupe_map = safe_read_json(DEDUPE_FILE, default={})
+    last_seen = dedupe_map.get(str(persona_id))
+    if last_seen and (now_ts - float(last_seen)) < 86400:  # 24h en segundos
+        return True
+    return False
+
+
+def record_persona_seen(persona_id: str, current_time: Optional[float] = None) -> None:
+    """Registra la marca de tiempo de contacto para persona_id."""
+    if not persona_id:
+        return
+    now_ts = current_time if current_time is not None else time.time()
+    os.makedirs(os.path.dirname(os.path.abspath(DEDUPE_FILE)), exist_ok=True)
+    dedupe_map = safe_read_json(DEDUPE_FILE, default={})
+    dedupe_map[str(persona_id)] = now_ts
+    pruned = {k: v for k, v in dedupe_map.items() if (now_ts - float(v)) < 172800}
+    atomic_write_json(DEDUPE_FILE, pruned)
+
+
+def compute_heuristic_score(text: str) -> float:
+    """Calcula score heurístico (0.0 - 1.0) ponderando intención de alumno vs oferta."""
+    t = text.lower()
+    score = 0.50
+    student_signals = [
+        r"\bnecesito\b", r"\bbusco\b", r"\balguien que d[eé]\b", r"\bpreparar\b",
+        r"\brecuperatorio\b", r"\bparcial\b", r"\bexamen\b", r"\bfinal\b",
+        r"\bapoyo\b", r"\bayuda\b", r"\bcuanto cobr\b", r"\bprecio\b"
+    ]
+    for pat in student_signals:
+        if re.search(pat, t):
+            score += 0.08
+    for sub in [r"\bmatem[aá]tic", r"\bf[ií]sic", r"\bqu[ií]mic", r"\bc[aá]lculo\b", r"\b[aá]lgebra\b"]:
+        if re.search(sub, t):
+            score += 0.06
+    for pen in [r"\bdoy clases\b", r"\bofrezco\b", r"\bexperiencia\b", r"\bprimera clase gratis\b"]:
+        if re.search(pen, t):
+            score -= 0.30
+    return max(0.0, min(1.0, round(score, 3)))
+
+
+def compute_combined_score(heuristic_score: float, ai_score: float) -> float:
+    """score = f(heurística, IA): 35% heurística + 65% IA."""
+    combined = (0.35 * heuristic_score) + (0.65 * ai_score)
+    return max(0.0, min(1.0, round(combined, 3)))
+
+
+def enqueue_for_daily_digest(
+    lead: Dict[str, Any],
+    chat_title: str,
+    sender_user: str,
+    score: float,
+    edad_msg_min: float
+) -> None:
+    """Encola leads calificados que no alcanzaron el umbral de push para el digest de las 20:00 ART."""
+    os.makedirs(os.path.dirname(os.path.abspath(DIGEST_QUEUE_FILE)), exist_ok=True)
+    queue: List[Dict[str, Any]] = safe_read_json(DIGEST_QUEUE_FILE, default=[])
+    queue.append({
+        "lead": lead,
+        "chat_title": chat_title,
+        "sender_user": sender_user,
+        "score": score,
+        "edad_msg_min": edad_msg_min,
+        "enqueued_at": datetime.now(timezone.utc).isoformat()
+    })
+    atomic_write_json(DIGEST_QUEUE_FILE, queue)
+    log_event(f"   📋 [DIGEST 20:00 ART] Lead encolado para resumen diario (Score: {score:.2f} < {UMBRAL_PUSH}).")
+
+
+def send_daily_digest(force: bool = False) -> int:
+    """Envía el resumen diario a las 20:00 America/Argentina/Buenos_Aires y vacía la cola."""
+    queue: List[Dict[str, Any]] = safe_read_json(DIGEST_QUEUE_FILE, default=[])
+    if not queue:
+        return 0
+
+    bot_token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID")
+    if not bot_token or not chat_id:
+        if force:
+            atomic_write_json(DIGEST_QUEUE_FILE, [])
+        return len(queue)
+
+    msg = (
+        "📰 <b>RESUMEN DIARIO CENTINELA (20:00 ART)</b>\n"
+        f"<i>Total leads calificados en cola secundaria: {len(queue)}</i>\n\n"
+    )
+    for idx, it in enumerate(queue[:10], 1):
+        ld = it.get("lead", {})
+        esc_nom = html.escape(str(ld.get("nombre", "Alumno")))
+        esc_mat = html.escape(str(ld.get("materia", "Exactas")))
+        esc_chat = html.escape(str(it.get("chat_title", "")))
+        esc_lnk = html.escape(str(ld.get("enlace al anuncio", "")))
+        msg += (
+            f"<b>{idx}. {esc_nom}</b> ({esc_mat})\n"
+            f"   ⭐ Score: {it.get('score', 0):.2f} | Grupo: {esc_chat}\n"
+            f"   👉 <a href='{esc_lnk}'>Contactar alumno</a>\n\n"
+        )
+
+    success = send_telegram_notification(bot_token, chat_id, msg)
+    if success or force:
+        atomic_write_json(DIGEST_QUEUE_FILE, [])
+        log_event(f"📰 [DIGEST ENVIADO] {len(queue)} oportunidades entregadas a Telegram.")
+        return len(queue)
+    return 0
+
+
+def send_centinela_push_alert(
+    lead: Dict[str, Any],
+    group_title: str,
+    student_username: str,
+    edad_msg_min: float = 0.0,
+    score: float = 0.0
+) -> Tuple[bool, str]:
     """
     Construye y envía la alerta al bot personal con escape HTML estricto.
     Retorna (éxito, mensaje_detalle).
@@ -148,7 +273,9 @@ def send_centinela_push_alert(lead: Dict[str, Any], group_title: str, student_us
         f"<i>Nuevo alumno detectado en el grupo:</i> <b>{esc_group}</b>\n\n"
         f"👤 <b>Alumno:</b> {esc_author}\n"
         f"📚 <b>Materia:</b> {esc_subject}\n"
-        f"🎯 <b>Nivel:</b> {esc_level}\n\n"
+        f"🎯 <b>Nivel:</b> {esc_level}\n"
+        f"⭐ <b>Score Calidad:</b> {score:.2f}\n"
+        f"⏱️ <b>Antigüedad:</b> {edad_msg_min} min\n\n"
         f"💬 <b>Mensaje:</b> <i>\"{esc_msg}\"</i>\n\n"
         f"👉 <a href='{esc_link}'><b>Abrir chat y contactar al alumno</b></a>"
     )
@@ -165,8 +292,9 @@ def send_centinela_push_alert(lead: Dict[str, Any], group_title: str, student_us
 async def classification_worker(queue: asyncio.Queue, stop_event: asyncio.Event, args):
     """
     Worker asíncrono en segundo plano:
-    Consume candidatos de la cola, ejecuta la clasificación por IA en un thread pool
-    (para no bloquear el bucle de eventos de Telethon) y envía alertas.
+    Consume candidatos de la cola, ejecuta la clasificación por IA en un thread pool,
+    deduplica por persona_id (24h), pondera score = f(heurística, IA),
+    y despacha alerta push inmediata (score >= umbral) o encola para digest 20:00 ART.
     """
     while not stop_event.is_set() or not queue.empty():
         try:
@@ -179,51 +307,72 @@ async def classification_worker(queue: asyncio.Queue, stop_event: asyncio.Event,
         sender_user = item_data["sender_user"]
         sender_name = item_data["sender_name"]
         raw_text = item_data["text"]
+        msg_date_ts = item_data.get("msg_ts") or time.time()
+        edad_msg_min = max(0.1, round((time.time() - float(msg_date_ts)) / 60.0, 1))
+
+        persona_id = str(sender_user or f"user_{candidate.get('id', '0')}")
+
+        # F4: Deduplicación 24h por persona_id
+        if is_persona_deduped_24h(persona_id):
+            log_event(f"   ⏭️ [DEDUPE 24h] Alerta omitida para '{persona_id}': ya fue contactado/alertado en las últimas 24 horas.")
+            queue.task_done()
+            continue
 
         STATS["ai_audits"] += 1
-        log_event(f"🤖 [COLA DE AUDITORÍA] Analizando mensaje de {sender_name} en '{chat_title}'...")
+        log_event(f"🤖 [COLA DE AUDITORÍA] Analizando mensaje de {sender_name} en '{chat_title}' (Antigüedad: {edad_msg_min} min)...")
 
+        model_name = "heuristic" if (args and getattr(args, "simulate", False)) else "gemini-3.5-flash"
         try:
-            # Ejecución no bloqueante en hilo de fondo con timeout
             loop = asyncio.get_running_loop()
             results = await asyncio.wait_for(
-                loop.run_in_executor(None, call_multiprovider_batch, [candidate]),
-                timeout=12.0
+                loop.run_in_executor(None, lambda: call_multiprovider_batch([candidate], primary_model=model_name)),
+                timeout=25.0
             )
 
             if results and isinstance(results, list):
                 res = results[0]
-                if res.get("is_student") is True or res.get("decision_ia") == "Aprobado":
+                is_student = (res.get("is_student") is True or res.get("decision_ia") == "Aprobado")
+                heur_score = compute_heuristic_score(raw_text)
+                final_score = compute_combined_score(heur_score, 0.95 if is_student else 0.10)
+
+                if is_student:
                     STATS["approved_leads"] += 1
-                    log_event(f"   ✅ [APROBADO POR IA] {res.get('justificacion_ia')}")
+                    log_event(f"   ✅ [APROBADO POR IA] {res.get('justificacion_ia')} (Score F4: {final_score:.2f})")
 
                     normalized_lead = normalize_item({
                         "id": candidate["id"],
                         "plataforma": candidate["plataforma"],
                         "país/ubicación": candidate["ubicacion"],
                         "nombre": sender_name,
-                        "persona_id": sender_user or f"user_{candidate.get('id', '0')}",
+                        "persona_id": persona_id,
                         "materia": candidate["materia"],
                         "nivel educativo": normalize_level(raw_text),
                         "enlace al anuncio": candidate["enlace"],
                         "mensaje/descripción": sanitize_text(raw_text),
                         "método de contacto directo": f"Telegram (@{sender_user})" if sender_user else "Telegram (Mensaje en grupo)",
                         "decision_ia": "Aprobado",
-                        "justificacion_ia": res.get("justificacion_ia", "Detectado en vivo por Centinela")
+                        "justificacion_ia": res.get("justificacion_ia", "Detectado en vivo por Centinela"),
+                        "score_calidad": final_score,
+                        "edad_msg_min": edad_msg_min
                     })
 
                     # Persistencia atómica
                     save_approved_lead(normalized_lead)
 
-                    # Alerta push
-                    ok, detail = send_centinela_push_alert(normalized_lead, chat_title, sender_user)
-                    if ok:
-                        log_event(f"   📲 [ALERTA ENVIADA] {detail}")
+                    # F4: Routing según umbral (push inmediato vs digest 20:00 ART)
+                    if final_score >= UMBRAL_PUSH:
+                        ok, detail = send_centinela_push_alert(normalized_lead, chat_title, sender_user, edad_msg_min, final_score)
+                        record_persona_seen(persona_id)
+                        if ok:
+                            log_event(f"   📲 [ALERTA INMEDIATA ENVIADA] Score: {final_score:.2f} >= {UMBRAL_PUSH} | {detail}")
+                        else:
+                            log_event(f"   ⚠️ [ALERTA NO ENTREGADA] {detail}")
                     else:
-                        log_event(f"   ⚠️ [ALERTA NO ENTREGADA] {detail}")
+                        enqueue_for_daily_digest(normalized_lead, chat_title, sender_user, final_score, edad_msg_min)
+                        record_persona_seen(persona_id)
                 else:
                     STATS["discarded_leads"] += 1
-                    log_event(f"   ❌ [DESCARTADO POR IA] {res.get('justificacion_ia')}")
+                    log_event(f"   ❌ [DESCARTADO POR IA] {res.get('justificacion_ia')} (Score F4: {final_score:.2f})")
         except asyncio.TimeoutError:
             log_event(f"   ⚠️ [TIMEOUT EN AUDITORÍA IA] La consulta excedió el tiempo límite (12s).")
         except Exception as e:
@@ -234,7 +383,8 @@ async def classification_worker(queue: asyncio.Queue, stop_event: asyncio.Event,
 
 
 async def heartbeat_loop(stop_event: asyncio.Event):
-    """Latido continuo cada 60s para telemetría y salud del proceso."""
+    """Latido continuo cada 60s para telemetría y disparo de digest diario 20:00 ART."""
+    last_digest_day = None
     while not stop_event.is_set():
         try:
             await asyncio.wait_for(stop_event.wait(), timeout=60.0)
@@ -242,9 +392,14 @@ async def heartbeat_loop(stop_event: asyncio.Event):
         except asyncio.TimeoutError:
             pass
 
-        now_str = datetime.now().strftime("%H:%M:%S")
+        now_art = datetime.now(TZ_ART)
+        if now_art.hour == 20 and now_art.minute < 3 and last_digest_day != now_art.date():
+            send_daily_digest()
+            last_digest_day = now_art.date()
+
+        now_str = now_art.strftime("%H:%M:%S")
         status_line = (
-            f"[LATIDO {now_str}] 🟢 Centinela en guardia | "
+            f"[LATIDO {now_str} ART] 🟢 Centinela en guardia | "
             f"Escaneados: {STATS['messages_scanned']} | "
             f"Auditados IA: {STATS['ai_audits']} | "
             f"Aprobados: {STATS['approved_leads']} | "
@@ -254,7 +409,7 @@ async def heartbeat_loop(stop_event: asyncio.Event):
 
 
 async def run_simulation():
-    """Modo de prueba determinista y offline para validar el Centinela y la cola de auditoría."""
+    """Modo de prueba determinista y offline para validar el Centinela, dedupe 24h y digest."""
     print("=" * 70)
     print("   MODO SIMULACIÓN: PRUEBA DE COLA Y CLASIFICACIÓN CENTINELA")
     print("=" * 70)
@@ -263,26 +418,31 @@ async def run_simulation():
     stop_event = asyncio.Event()
 
     # Iniciar worker
-    worker = asyncio.create_task(classification_worker(queue, stop_event, None))
+    sim_args = argparse.Namespace(simulate=True)
+    worker = asyncio.create_task(classification_worker(queue, stop_event, sim_args))
 
+    sim_now = time.time()
     test_messages = [
         {
             "text": "Hola a todos! Alguien que dé clases particulares de Análisis Matemático II para ingeniería? Necesito preparar el recuperatorio urgente.",
             "chat_title": "FIUBA - Estudiantes Exactas",
             "sender_name": "Lucas B.",
-            "sender_user": "lucas_exactas"
+            "sender_user": "lucas_exactas",
+            "msg_ts": sim_now - 150.0  # Mensaje de hace 2.5 min
         },
         {
             "text": "Doy clases de Física I y Química General. Amplia experiencia universitaria, primera clase gratis. Comunicarse por privado.",
             "chat_title": "CBC UBA - Grupos de Estudio",
             "sender_name": "Profesor Particular",
-            "sender_user": "profe_particular"
+            "sender_user": "profe_particular",
+            "msg_ts": sim_now - 60.0
         },
         {
             "text": "Alguien sabe si mañana hay paro de trenes para ir a la facu?",
             "chat_title": "Exactas UNLP",
             "sender_name": "Mariana D.",
-            "sender_user": "mariana_d"
+            "sender_user": "mariana_d",
+            "msg_ts": sim_now - 30.0
         }
     ]
 
@@ -308,7 +468,8 @@ async def run_simulation():
             "chat_title": msg["chat_title"],
             "sender_user": msg["sender_user"],
             "sender_name": msg["sender_name"],
-            "text": raw_text
+            "text": raw_text,
+            "msg_ts": msg["msg_ts"]
         })
         print(f"  [Msg #{idx}] Encolado para auditoría IA: '{raw_text[:40]}...'")
 
@@ -408,6 +569,10 @@ async def main_async(args):
             "enlace": link
         }
 
+        # Extraer timestamp de origen del mensaje
+        msg_date = getattr(event.message, 'date', None)
+        msg_ts = msg_date.timestamp() if msg_date else time.time()
+
         # Encolado rápido sin bloquear el event loop de Telethon
         try:
             queue.put_nowait({
@@ -415,7 +580,8 @@ async def main_async(args):
                 "chat_title": chat_title,
                 "sender_user": sender_user,
                 "sender_name": sender_name,
-                "text": text
+                "text": text,
+                "msg_ts": msg_ts
             })
             log_event(f"📥 [ENCOLADO] Msg de {sender_name} en '{chat_title}' agregado a la cola de auditoría.")
         except asyncio.QueueFull:
@@ -434,7 +600,13 @@ def main():
     parser = argparse.ArgumentParser(description="Centinela de Telegram 24/7 con Clasificación Asíncrona")
     parser.add_argument("--simulate", action="store_true", help="Ejecuta una prueba simulada de la cola y clasificación")
     parser.add_argument("--test-mode", action="store_true", help="Permite procesar mensajes propios durante pruebas")
+    parser.add_argument("--flush-digest", action="store_true", help="Fuerza el envío inmediato del digest acumulado (20:00 ART)")
     args = parser.parse_args()
+
+    if getattr(args, "flush_digest", False):
+        sent = send_daily_digest(force=True)
+        print(f"[OK] Digest diario procesado. Leads despachados: {sent}")
+        return
 
     try:
         asyncio.run(main_async(args))

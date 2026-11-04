@@ -69,6 +69,11 @@
             <span>💾 Respaldo JSON</span>
           </button>
 
+          <button onclick="exportCrmJson()" title="Exportar CRM completo en formato JSON con estados, timestamps y transiciones"
+                  class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold bg-indigo-700 hover:bg-indigo-600 text-white rounded-xl shadow-sm transition active:scale-95">
+            <span>📦 Exportar CRM JSON</span>
+          </button>
+
           <label class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-xl border border-slate-700 cursor-pointer transition active:scale-95" title="Restaurar copia de seguridad">
             <span>📂 Restaurar</span>
             <input type="file" id="restore-file-input" onchange="restoreJsonBackup(event)" class="hidden" accept=".json">
@@ -313,13 +318,22 @@
           <label for="filter-estado" class="block font-bold text-slate-600 mb-1">Estado de Contacto</label>
           <select id="filter-estado" onchange="applyFilters()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:ring-2 focus:ring-indigo-500 font-medium">
             <option value="">Todos los Estados</option>
-            <option value="Pendiente">⏳ Pendiente</option>
-            <option value="Contactado">✉️ Contactado</option>
-            <option value="En negociación">💬 En negociación</option>
-            <option value="Cerrado">🎯 Clase Cerrada</option>
-            <option value="Descartado">❌ Descartado</option>
+            <option value="nuevo">⏳ Nuevo</option>
+            <option value="contactado">✉️ Contactado</option>
+            <option value="respondio">💬 Respondió</option>
+            <option value="cerrado">🎯 Cerrado</option>
+            <option value="descartado">❌ Descartado</option>
+            <option value="vencido">⏰ Vencido (+21d)</option>
           </select>
         </div>
+      </div>
+
+      <!-- TOGGLE VENCIDOS -->
+      <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between">
+        <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-600 hover:text-slate-900 select-none">
+          <input type="checkbox" id="filter-show-vencidos" onchange="applyFilters()" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300">
+          <span>Mostrar prospectos vencidos (> 21 días de antigüedad sin contactar)</span>
+        </label>
       </div>
 
     </div>
@@ -518,15 +532,78 @@ Te dejo mi correo electrónico directo:
       }
     }
 
+    function getStoredHistory() {
+      try {
+        if (typeof localStorage === 'undefined') return memoryStore['alumnos_lead_history'] || {};
+        var raw = localStorage.getItem('alumnos_lead_history');
+        if (!raw || raw === 'null' || raw === 'undefined') return {};
+        var parsed = JSON.parse(raw);
+        return (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) ? parsed : {};
+      } catch (e) {
+        return memoryStore['alumnos_lead_history'] || {};
+      }
+    }
+
+    function isLeadExpired(item) {
+      var capStr = item.fecha_captura || item['fecha de publicación'] || item.fecha_publicacion || '';
+      if (!capStr) return false;
+      try {
+        var m = capStr.match(/(\d{4}-\d{2}-\d{2})/);
+        if (!m) return false;
+        var leadDate = new Date(m[1]);
+        var now = new Date();
+        var diffTime = now.getTime() - leadDate.getTime();
+        var diffDays = Math.floor(diffTime / (1000 * 3600 * 24));
+        return diffDays > 21;
+      } catch(e) {
+        return false;
+      }
+    }
+
+    function getLeadCurrentStatus(item) {
+      var id = getLeadId(item);
+      var statuses = getStoredStatuses();
+      var rawStatus = statuses[id] || item.estado || item.estado_contacto;
+      if (!rawStatus) {
+        if (isLeadExpired(item)) return 'vencido';
+        return 'nuevo';
+      }
+      var s = rawStatus.toString().toLowerCase().trim();
+      if (s === 'pendiente' || s === 'nuevo') {
+        if (isLeadExpired(item)) return 'vencido';
+        return 'nuevo';
+      }
+      if (s === 'contactado') return 'contactado';
+      if (s === 'en negociación' || s === 'en negociacion' || s === 'respondio' || s === 'respondió') return 'respondio';
+      if (s === 'cerrado') return 'cerrado';
+      if (s === 'descartado') return 'descartado';
+      if (s === 'vencido') return 'vencido';
+      return rawStatus;
+    }
+
     function saveStatus(id, status) {
       var map = getStoredStatuses();
+      var prevStatus = map[id] || 'nuevo';
       map[id] = status;
+
+      var history = getStoredHistory();
+      if (!history[id]) history[id] = [];
+      var nowIso = new Date().toISOString();
+      history[id].push({
+        from: prevStatus,
+        to: status,
+        estado: status,
+        ts: nowIso
+      });
+
       try {
         if (typeof localStorage !== 'undefined') {
           localStorage.setItem('alumnos_lead_statuses', JSON.stringify(map));
+          localStorage.setItem('alumnos_lead_history', JSON.stringify(history));
         }
       } catch (e) {
         memoryStore['alumnos_lead_statuses'] = map;
+        memoryStore['alumnos_lead_history'] = history;
       }
       updateKPICounters();
       applyFilters();
@@ -854,18 +931,16 @@ Te dejo mi correo electrónico directo:
     }
 
     function updateKPICounters() {
-      var map = getStoredStatuses();
       var total = RAW_DATA.length;
       var pending = 0;
       var contacted = 0;
       var closed = 0;
 
       RAW_DATA.forEach(function(item) {
-        var id = getLeadId(item);
-        var status = map[id] || 'Pendiente';
-        if (status === 'Pendiente') pending++;
-        else if (status === 'Contactado' || status === 'En negociación') contacted++;
-        else if (status === 'Cerrado') closed++;
+        var status = getLeadCurrentStatus(item);
+        if (status === 'Pendiente' || status === 'nuevo') pending++;
+        else if (status === 'Contactado' || status === 'contactado' || status === 'En negociación' || status === 'respondio') contacted++;
+        else if (status === 'Cerrado' || status === 'cerrado') closed++;
       });
 
       var elTot = document.getElementById('kpi-total');
@@ -964,9 +1039,13 @@ Te dejo mi correo electrónico directo:
       if (cardsContainer) cardsContainer.innerHTML = '';
       if (tableTbody) tableTbody.innerHTML = '';
 
+      var showVencidos = !!(document.getElementById('filter-show-vencidos')?.checked);
+
       var filtered = RAW_DATA.filter(function(item) {
         var id = getLeadId(item);
-        var currentStatus = statuses[id] || 'Pendiente';
+        var currentStatus = getLeadCurrentStatus(item);
+
+        if (!showVencidos && currentStatus === 'vencido' && fEstado !== 'vencido') return false;
 
         var fullText = stripDiacritics(
           (item.plataforma || '') + ' ' +
@@ -986,7 +1065,17 @@ Te dejo mi correo electrónico directo:
         if (fNivel && item.nivel_categoria !== fNivel) return false;
         if (fMod && item.modalidad !== fMod) return false;
         if (fCosto && !item.costo_contacto.toLowerCase().includes(fCosto.toLowerCase())) return false;
-        if (fEstado && currentStatus !== fEstado) return false;
+        if (fEstado) {
+          var matchEstado = false;
+          if (fEstado === 'nuevo' && (currentStatus === 'nuevo' || currentStatus === 'Pendiente')) matchEstado = true;
+          else if (fEstado === 'contactado' && (currentStatus === 'contactado' || currentStatus === 'Contactado')) matchEstado = true;
+          else if (fEstado === 'respondio' && (currentStatus === 'respondio' || currentStatus === 'En negociación')) matchEstado = true;
+          else if (fEstado === 'cerrado' && (currentStatus === 'cerrado' || currentStatus === 'Cerrado')) matchEstado = true;
+          else if (fEstado === 'descartado' && (currentStatus === 'descartado' || currentStatus === 'Descartado')) matchEstado = true;
+          else if (fEstado === 'vencido' && currentStatus === 'vencido') matchEstado = true;
+          else if (currentStatus === fEstado) matchEstado = true;
+          if (!matchEstado) return false;
+        }
 
         return true;
       });
@@ -999,7 +1088,7 @@ Te dejo mi correo electrónico directo:
           if (sortCol === 'pais') { va = a['país/ubicación']; vb = b['país/ubicación']; }
           else if (sortCol === 'nombre') { va = a.nombre || ''; vb = b.nombre || ''; }
           else if (sortCol === 'materia') { va = a.materia; vb = b.materia; }
-          else if (sortCol === 'estado') { va = statuses[getLeadId(a)] || 'Pendiente'; vb = statuses[getLeadId(b)] || 'Pendiente'; }
+          else if (sortCol === 'estado') { va = getLeadCurrentStatus(a); vb = getLeadCurrentStatus(b); }
           var cmp = va.localeCompare(vb);
           return sortAsc ? cmp : -cmp;
         });
@@ -1007,7 +1096,7 @@ Te dejo mi correo electrónico directo:
 
       filtered.forEach(function(item) {
         var id = getLeadId(item);
-        var currentStatus = statuses[id] || 'Pendiente';
+        var currentStatus = getLeadCurrentStatus(item);
         var leadDet = details[id] || {};
         var hasNotes = !!(leadDet.notas || leadDet.telefono || leadDet.precio);
         var flag = getCountryFlag(item['país/ubicación']);
@@ -1017,10 +1106,11 @@ Te dejo mi correo electrónico directo:
         var isCronoshare = (item.canal === 'creditos') || (item.enlace_tipo === 'categoria') || (item.plataforma && item.plataforma.toLowerCase().includes('cronoshare'));
 
         var statusColor = 'bg-amber-50 text-amber-700 border-amber-200';
-        if (currentStatus === 'Contactado') statusColor = 'bg-blue-50 text-blue-700 border-blue-200';
-        if (currentStatus === 'En negociación') statusColor = 'bg-purple-50 text-purple-700 border-purple-200';
-        if (currentStatus === 'Cerrado') statusColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
-        if (currentStatus === 'Descartado') statusColor = 'bg-slate-100 text-slate-500 border-slate-200';
+        if (currentStatus === 'contactado' || currentStatus === 'Contactado') statusColor = 'bg-blue-50 text-blue-700 border-blue-200';
+        if (currentStatus === 'respondio' || currentStatus === 'En negociación') statusColor = 'bg-purple-50 text-purple-700 border-purple-200';
+        if (currentStatus === 'cerrado' || currentStatus === 'Cerrado') statusColor = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+        if (currentStatus === 'descartado' || currentStatus === 'Descartado') statusColor = 'bg-slate-100 text-slate-500 border-slate-200';
+        if (currentStatus === 'vencido') statusColor = 'bg-rose-50 text-rose-700 border-rose-200';
 
         var modBadge = '<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">🌐 Online</span>';
         if (item.modalidad === 'Presencial') {
@@ -1129,11 +1219,12 @@ Te dejo mi correo electrónico directo:
                 
                 <select class="select-status text-[11px] font-bold rounded-xl px-2 py-1.5 border border-slate-200 bg-white text-slate-700 focus:ring-2 focus:ring-indigo-500"
                         data-id="${escapeHTML(id)}">
-                  <option value="Pendiente" ${currentStatus === 'Pendiente' ? 'selected' : ''}>⏳ Pendiente</option>
-                  <option value="Contactado" ${currentStatus === 'Contactado' ? 'selected' : ''}>✉️ Contactado</option>
-                  <option value="En negociación" ${currentStatus === 'En negociación' ? 'selected' : ''}>💬 Negociando</option>
-                  <option value="Cerrado" ${currentStatus === 'Cerrado' ? 'selected' : ''}>🎯 Cerrado</option>
-                  <option value="Descartado" ${currentStatus === 'Descartado' ? 'selected' : ''}>❌ Descartado</option>
+                  <option value="nuevo" ${currentStatus === 'nuevo' || currentStatus === 'Pendiente' ? 'selected' : ''}>⏳ Nuevo</option>
+                  <option value="contactado" ${currentStatus === 'contactado' || currentStatus === 'Contactado' ? 'selected' : ''}>✉️ Contactado</option>
+                  <option value="respondio" ${currentStatus === 'respondio' || currentStatus === 'En negociación' ? 'selected' : ''}>💬 Respondió</option>
+                  <option value="cerrado" ${currentStatus === 'cerrado' || currentStatus === 'Cerrado' ? 'selected' : ''}>🎯 Cerrado</option>
+                  <option value="descartado" ${currentStatus === 'descartado' || currentStatus === 'Descartado' ? 'selected' : ''}>❌ Descartado</option>
+                  <option value="vencido" ${currentStatus === 'vencido' ? 'selected' : ''}>⏰ Vencido</option>
                 </select>
               </div>
             </div>
@@ -1192,11 +1283,12 @@ Te dejo mi correo electrónico directo:
             <td class="py-3.5 px-4 align-top text-center whitespace-nowrap">
               <select class="select-status text-xs font-bold rounded-xl px-2.5 py-1.5 border border-slate-200 bg-white focus:ring-2 focus:ring-indigo-500 text-slate-800"
                       data-id="${escapeHTML(id)}">
-                <option value="Pendiente" ${currentStatus === 'Pendiente' ? 'selected' : ''}>⏳ Pendiente</option>
-                <option value="Contactado" ${currentStatus === 'Contactado' ? 'selected' : ''}>✉️ Contactado</option>
-                <option value="En negociación" ${currentStatus === 'En negociación' ? 'selected' : ''}>💬 Negociando</option>
-                <option value="Cerrado" ${currentStatus === 'Cerrado' ? 'selected' : ''}>🎯 Cerrado</option>
-                <option value="Descartado" ${currentStatus === 'Descartado' ? 'selected' : ''}>❌ Descartado</option>
+                <option value="nuevo" ${currentStatus === 'nuevo' || currentStatus === 'Pendiente' ? 'selected' : ''}>⏳ Nuevo</option>
+                <option value="contactado" ${currentStatus === 'contactado' || currentStatus === 'Contactado' ? 'selected' : ''}>✉️ Contactado</option>
+                <option value="respondio" ${currentStatus === 'respondio' || currentStatus === 'En negociación' ? 'selected' : ''}>💬 Respondió</option>
+                <option value="cerrado" ${currentStatus === 'cerrado' || currentStatus === 'Cerrado' ? 'selected' : ''}>🎯 Cerrado</option>
+                <option value="descartado" ${currentStatus === 'descartado' || currentStatus === 'Descartado' ? 'selected' : ''}>❌ Descartado</option>
+                <option value="vencido" ${currentStatus === 'vencido' ? 'selected' : ''}>⏰ Vencido</option>
               </select>
             </td>
           `;
@@ -1327,6 +1419,37 @@ Te dejo mi correo electrónico directo:
         a.click();
         showToast('📥 Archivo Exportado', 'Se descargó el CSV con tu seguimiento de estados y notas actualizado.');
       }
+    }
+
+    // EXPORT CRM JSON DATASET WITH FULL STATE AND TIMESTAMPS
+    function exportCrmJson() {
+      var details = getStoredDetails();
+      var history = getStoredHistory();
+      var exportedList = RAW_DATA.map(function(item) {
+        var id = getLeadId(item);
+        var st = getLeadCurrentStatus(item);
+        var hist = history[id] || item.historial_estados || [
+          { from: null, to: st, estado: st, ts: item.fecha_captura || new Date().toISOString() }
+        ];
+        var det = details[id] || {};
+        return Object.assign({}, item, {
+          estado: st,
+          ts_estado: hist.length ? hist[hist.length - 1].ts : (item.fecha_captura || new Date().toISOString()),
+          historial_estados: hist,
+          detalles_crm: det
+        });
+      });
+      var jsonStr = JSON.stringify(exportedList, null, 2);
+      if (typeof Blob !== 'undefined' && typeof URL !== 'undefined') {
+        var blob = new Blob([jsonStr], { type: 'application/json' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'crm_export_' + new Date().toISOString().slice(0, 10) + '.json';
+        a.click();
+        showToast('📦 CRM Exportado (JSON)', 'Se descargó el archivo con ' + exportedList.length + ' leads, estados y notas.');
+      }
+      return exportedList;
     }
 
     // FULL JSON BACKUP & RESTORE

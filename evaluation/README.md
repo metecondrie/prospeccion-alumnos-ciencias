@@ -53,7 +53,7 @@ Real: ACADEMIA (134)         2 (FP)                  132 (TN)
 ## 4. Análisis de Latencia y Eficiencia Económica
 
 * **Latencia Promedio:**
-  - *Filtro Heurístico:* ~0.27 ms por anuncio (filtro instantáneo en memoria).
+  - *Filtro Heurístico:* ~0.24 ms por anuncio (filtro instantáneo en memoria).
   - *Inferencia Gemini 3.5 / 3.6 Flash:* ~1.15 segundos por lote de 10 anuncios.
 * **Costo de Inferencia:** **$0.00 USD** utilizando la cuota gratuita de Google AI Studio (hasta 1,500 solicitudes por día).
 * **Conclusión de Arquitectura:** La combinación óptima en producción es un **embudo en cascada**:

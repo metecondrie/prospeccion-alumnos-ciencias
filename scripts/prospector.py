@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Prospector CLI - Sistema Autónomo de Captación y Auditoría de Alumnos de Ciencias Exactas
-Modelos IA: Google Gemini 2.5 Flash / Groq
+Modelos IA: Google Gemini 3.5 / 3.6 Flash / Groq LPU
 Destinatario: Docente de Ciencias Exactas
 """
 
@@ -17,6 +17,7 @@ import shutil
 import re
 import hashlib
 import unicodedata
+from datetime import datetime, timezone
 from typing import List, Dict, Any, Optional, Tuple
 
 try:
@@ -252,6 +253,174 @@ def notify_telegram_lead(lead: Dict[str, Any]):
     except Exception:
         pass
 
+def save_classifier_predictions(
+    items: List[Dict[str, Any]],
+    output_path: str = "data/predicciones_clasificador.json",
+    model_name: str = "gemini-3.5-flash"
+) -> int:
+    """Persiste las predicciones de la IA en data/predicciones_clasificador.json de forma acumulativa y atómica."""
+    os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
+    existing: List[Dict[str, Any]] = safe_read_json(output_path, default=[])
+    preds_by_id = {p.get("id"): p for p in existing if isinstance(p, dict) and "id" in p}
+
+    now_iso = datetime.now(timezone.utc).isoformat()
+    for it in items:
+        lid = it.get("id")
+        if not lid:
+            continue
+        dec = it.get("decision_ia", "")
+        just = it.get("justificacion_ia", "")
+        is_stud = it.get("is_student", dec == "Aprobado")
+
+        preds_by_id[lid] = {
+            "id": lid,
+            "decision_ia": dec,
+            "justificacion_ia": just,
+            "is_student": is_stud,
+            "modelo": model_name,
+            "timestamp": now_iso
+        }
+
+    atomic_write_json(output_path, list(preds_by_id.values()))
+    return len(preds_by_id)
+
+
+def check_and_record_source_health(
+    listings: List[Dict[str, Any]],
+    output_csv: str = "data/salud_fuentes.csv",
+    today_str: Optional[str] = None
+) -> List[Dict[str, Any]]:
+    """
+    Monitorea la salud de cada fuente/plataforma extractora (F3):
+    Registra data/salud_fuentes.csv(fecha,fuente,n)
+    Si n == 0 o n < 0.3 * mediana_ult7, dispara alerta: FUENTE_ROTA <fuente>.
+    """
+    import statistics
+    from collections import Counter
+
+    fecha = today_str or datetime.now().strftime("%Y-%m-%d")
+    os.makedirs(os.path.dirname(os.path.abspath(output_csv)), exist_ok=True)
+
+    # Leer historial previo
+    history_by_fuente: Dict[str, List[int]] = {}
+    existing_rows = []
+    if os.path.exists(output_csv):
+        try:
+            with open(output_csv, "r", encoding="utf-8-sig") as f:
+                reader = csv.DictReader(f)
+                for r in reader:
+                    existing_rows.append(r)
+                    f_name = r.get("fuente", "").strip()
+                    try:
+                        n_val = int(r.get("n", 0))
+                        history_by_fuente.setdefault(f_name, []).append(n_val)
+                    except ValueError:
+                        pass
+        except Exception:
+            pass
+
+    # Conteo actual por fuente
+    current_counts = Counter()
+    for it in listings:
+        plat = it.get("plataforma") or "Desconocida"
+        current_counts[plat] += 1
+
+    all_fuentes = sorted(set(list(history_by_fuente.keys()) + list(current_counts.keys())))
+    if not all_fuentes:
+        all_fuentes = ["TusClases", "Tablón de Anuncios", "Cronoshare", "Reddit", "Telegram"]
+
+    alerts = []
+    new_records = []
+
+    bot_token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID")
+
+    for fuente in all_fuentes:
+        n = current_counts.get(fuente, 0)
+        past_n = history_by_fuente.get(fuente, [])
+        recent_7 = past_n[-7:] if past_n else []
+        mediana_ult7 = float(statistics.median(recent_7)) if recent_7 else float(n)
+
+        # Regla estricta: n == 0 OR n < 0.3 * mediana_ult7
+        is_broken = (n == 0) or (mediana_ult7 > 0 and n < 0.3 * mediana_ult7)
+
+        if is_broken:
+            alert_msg = f"FUENTE_ROTA {fuente} (n={n}, mediana_ult7={mediana_ult7:.1f})"
+            alerts.append({
+                "fuente": fuente,
+                "n": n,
+                "mediana_ult7": mediana_ult7,
+                "mensaje": alert_msg
+            })
+            print(f"🚨 [ALERTA FUENTE] {alert_msg}", file=sys.stderr)
+            if bot_token and chat_id:
+                try:
+                    from extract_telegram import send_telegram_notification
+                    send_telegram_notification(bot_token, chat_id, f"🚨 <b>FUENTE_ROTA</b> {fuente}\nExtracción: {n} anuncios (Mediana 7d: {mediana_ult7:.1f})")
+                except Exception:
+                    pass
+
+        new_records.append({"fecha": fecha, "fuente": fuente, "n": n})
+
+    seen_keys = {(r.get("fecha"), r.get("fuente")) for r in existing_rows}
+    file_exists = os.path.exists(output_csv) and os.path.getsize(output_csv) > 0
+    with open(output_csv, "a", encoding="utf-8-sig", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=["fecha", "fuente", "n"], lineterminator="\r\n")
+        if not file_exists:
+            writer.writeheader()
+        for rec in new_records:
+            if (rec["fecha"], rec["fuente"]) not in seen_keys:
+                writer.writerow(rec)
+
+    return alerts
+
+
+def apply_lead_expiration(
+    leads: List[Dict[str, Any]],
+    max_days: int = 21,
+    reference_date: Optional[datetime] = None
+) -> int:
+    """
+    F5 Caducidad automática:
+    fecha_captura > 21d AND estado == 'nuevo' -> estado := 'vencido'.
+    Retorna la cantidad de leads marcados como vencidos.
+    """
+    ref_dt = reference_date or datetime.now()
+    expired_count = 0
+
+    for item in leads:
+        current_state = (item.get("estado") or item.get("estado_contacto") or "nuevo").strip().lower()
+        if current_state not in ["nuevo", "pendiente"]:
+            continue
+
+        cap_str = item.get("fecha_captura") or item.get("fecha de publicación") or item.get("fecha_publicacion") or ""
+        m = re.search(r"(\d{4}-\d{2}-\d{2})", str(cap_str))
+        if not m:
+            continue
+
+        try:
+            lead_dt = datetime.strptime(m.group(1), "%Y-%m-%d")
+            diff_days = (ref_dt.date() - lead_dt.date()).days
+            if diff_days > max_days:
+                item["estado"] = "vencido"
+                hist = item.get("historial_estados") or []
+                now_iso = ref_dt.isoformat()
+                hist.append({
+                    "from": current_state,
+                    "to": "vencido",
+                    "estado": "vencido",
+                    "ts": now_iso,
+                    "motivo": f"Caducidad automática por inactividad ({diff_days} días > {max_days} días)"
+                })
+                item["historial_estados"] = hist
+                item["ts_estado"] = now_iso
+                expired_count += 1
+        except Exception:
+            pass
+
+    return expired_count
+
+
 def cmd_audit(args):
     """Clasifica de forma incremental los nuevos anuncios brutos usando el Triple Motor de IA."""
     print(f"--> Iniciando auditoría semántica con modelo: {args.model}")
@@ -260,6 +429,9 @@ def cmd_audit(args):
 
     # Normalizar leads entrantes con IDs deterministas
     raw_items = [normalize_item(it, idx + 1) for idx, it in enumerate(raw_items)]
+
+    # 0. Monitoreo y registro de salud de fuentes (F3)
+    check_and_record_source_health(raw_items)
 
     # 1. Cargar históricos ya auditados de manera segura y concurrente
     existing_approved = safe_read_json(args.output_approved, default=[])
@@ -279,6 +451,7 @@ def cmd_audit(args):
 
     if not pending_items:
         print("[OK] No hay nuevos anuncios pendientes de clasificar. Base de datos al día.")
+        save_classifier_predictions(approved + discarded, getattr(args, "output_predictions", "data/predicciones_clasificador.json"), model_name=args.model)
         return
 
     batch_size = args.batch_size
@@ -329,6 +502,9 @@ def cmd_audit(args):
     atomic_write_json(args.output_approved, approved)
     atomic_write_json(args.output_discarded, discarded)
 
+    # Persistir predicciones del clasificador (F1)
+    save_classifier_predictions(approved + discarded, getattr(args, "output_predictions", "data/predicciones_clasificador.json"), model_name=args.model)
+
     print(f"[OK] Auditoría completada. Nuevos alumnos aprobados: {new_approved_count} | Total en base de datos: {len(approved)}")
     print(f"  Archivo aprobados: {args.output_approved}")
     print(f"  Archivo descartados: {args.output_discarded}")
@@ -339,8 +515,12 @@ def cmd_build(args):
     with open(args.approved, "r", encoding="utf-8") as f:
         approved_leads = json.load(f)
 
-    # Normalización consistente
+    # Normalización consistente y evaluación de caducidad automática (> 21d) (F5)
     approved_leads = [normalize_item(it, idx + 1) for idx, it in enumerate(approved_leads)]
+    expired_count = apply_lead_expiration(approved_leads)
+    if expired_count > 0:
+        print(f"  [Caducidad F5] {expired_count} leads antiguos marcados como vencidos (>21 días).")
+        atomic_write_json(args.approved, approved_leads)
 
     discarded_leads = []
     if args.discarded and os.path.exists(args.discarded):
@@ -492,6 +672,7 @@ def main():
     p_audit.add_argument("--api-key", default=None)
     p_audit.add_argument("--output-approved", default="data/dataset_canonico_auditado.json")
     p_audit.add_argument("--output-discarded", default="data/descartados_auditoria.json")
+    p_audit.add_argument("--output-predictions", default="data/predicciones_clasificador.json")
     p_audit.set_defaults(func=cmd_audit)
 
     # Subcomando build

@@ -14,7 +14,7 @@
       "specificity": 0.7364,
       "f1_score": 0.4715
     },
-    "avg_latency_ms": 0.274,
+    "avg_latency_ms": 0.243,
     "cost_per_1k_usd": 0.0
   },
   "gemini_3_5_flash": {

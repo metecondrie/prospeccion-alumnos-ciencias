@@ -3,7 +3,7 @@
 ai_providers.py
 Módulo de integración con proveedores de Inteligencia Artificial para auditoría semántica.
 Soporta:
-1. Google AI Studio (Google Gemini 2.5 Flash / 1.5 Flash / 2.5 Pro)
+1. Google AI Studio (Google Gemini 3.5 Flash / Gemini 3.6 Flash)
 2. Cloudflare Workers AI (Llama 3.1 8B Instruct Fast)
 3. Groq (Llama 3.1 8B Instant / Llama 3.3 70B Versatile)
 4. Mistral AI (Mistral Small Latest)
@@ -24,7 +24,7 @@ class RateLimitError(Exception):
     """Excepción cuando se recibe HTTP 429 de la API de Google."""
     pass
 
-DEFAULT_MODELS = ["gemini-3.5-flash", "gemini-3.6-flash", "gemini-2.5-flash"]
+DEFAULT_MODELS = ["gemini-3.5-flash", "gemini-3.6-flash"]
 
 def strip_accents(text: str) -> str:
     """Elimina diacríticos y acentos para comparaciones robustas."""
@@ -282,6 +282,9 @@ def call_multiprovider_batch(items: List[Dict[str, Any]], primary_model: str = "
     4. Mistral AI (mistral-small-latest)
     5. Heuristic Fallback (Reglas deterministas locales de PLN)
     """
+    if primary_model == "heuristic":
+        return [rule_based_audit(it) for it in items]
+
     providers = []
     
     # 1. Google Gemini (Titular)
