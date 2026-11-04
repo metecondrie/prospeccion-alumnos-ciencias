@@ -78,7 +78,7 @@ Tracking the 41 qualified opportunities inside the local CRM (telemetry recorded
 ## 💡 How I Built This (Human Direction + AI Pair Programming)
 
 * **Business Problem Driven by Real Need:** As an independent STEM educator, I spent hours sifting through tutor platforms to find real students. I built this tool to automate lead discovery while keeping the outreach personal and human.
-* **Architecture & Rigorous Contracts:** I designed the RFC 4180 data contracts, CRM business rules, evaluation metrics, and a comprehensive automated test suite (75 passing unit/integration tests).
+* **Architecture & Rigorous Contracts:** I designed the RFC 4180 data contracts, CRM business rules, evaluation metrics, and a comprehensive automated test suite (98 passing unit/integration tests).
 * **AI-Assisted Engineering:** Implemented through iterative pair programming with Google Antigravity. When commercial academies bypassed early filters using student-like phrasing, I refined system prompts with few-shot negative exemplars and fallback chains.
 * **Data Ethics & Privacy Governance:** Hand-verified all 175 raw ads to establish the benchmark ground truth, and designed a collision-free deterministic anonymizer ([`scripts/anonymize_for_public.py`](scripts/anonymize_for_public.py)) ensuring zero personal data is exposed in public repositories.
 
@@ -117,12 +117,16 @@ python main.py run
 python -m scripts.prospector run
 
 # Run quantitative Machine Learning benchmark
-python scripts/evaluate_filter.py
+python main.py evaluate
+# Or directly as script:
+python evaluation/evaluar_clasificadores.py
 
 # Start real-time Telegram Sentinel listener
 python -m scripts.telegram_centinela
+# Or offline simulation mode:
+python -m scripts.telegram_centinela --simulate
 
-# Run the full automated test suite (75 tests)
+# Run the full automated test suite (98 tests)
 python main.py test
 ```
 
@@ -132,11 +136,13 @@ python main.py test
 
 ---
 
-## 📚 Technical Documentation (`/docs`)
+## 📚 Technical Documentation (`/docs` & `/evaluation`)
 
 * ⚙️ [**DOCUMENTACION_TECNICA.md**](docs/DOCUMENTACION_TECNICA.md): Complete system specification, data contracts, Mermaid diagrams, and failover architecture.
 * 📊 [**EVALUACION_FILTRO_DATOS.md**](docs/EVALUACION_FILTRO_DATOS.md): Detailed ML evaluation benchmark, confusion matrices, and error analysis.
+* 🧪 [**protocolo_anotacion.md**](evaluation/protocolo_anotacion.md): Formal annotation protocol and Ground Truth guidelines for objective model evaluation.
 * 🛡️ [**MARCO_ETICO_Y_LEGAL.md**](docs/MARCO_ETICO_Y_LEGAL.md): Privacy compliance framework (GDPR / Argentine Law 25.326), passive MTProto listening policies, and opt-out protocol.
+* 🔒 [**AUDITORIA_HISTORIAL_GIT.md**](docs/AUDITORIA_HISTORIAL_GIT.md): Security audit on commit history and personal data mitigation strategy.
 * 📈 [**CONCLUSIONES.md**](docs/CONCLUSIONES.md): Tutoring pedagogical insights and commercial conversion analysis.
 * 📝 [**AUDITORIA_CAMBIOS.md**](docs/AUDITORIA_CAMBIOS.md): Technical decision log and architecture audit history.
 

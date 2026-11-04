@@ -1,0 +1,119 @@
+{
+  "baseline_regex": {
+    "metrics": {
+      "confusion_matrix": {
+        "tp": 29,
+        "fp": 29,
+        "tn": 81,
+        "fn": 36
+      },
+      "total": 175,
+      "accuracy": 0.6286,
+      "precision": 0.5,
+      "recall": 0.4462,
+      "specificity": 0.7364,
+      "f1_score": 0.4715
+    },
+    "avg_latency_ms": 0.4,
+    "cost_per_1k_usd": 0.0
+  },
+  "gemini_2_5_flash": {
+    "metrics": {
+      "confusion_matrix": {
+        "tp": 41,
+        "fp": 2,
+        "tn": 132,
+        "fn": 0
+      },
+      "total": 175,
+      "accuracy": 0.9886,
+      "precision": 0.9535,
+      "recall": 1.0,
+      "specificity": 0.9851,
+      "f1_score": 0.9762
+    },
+    "avg_latency_ms": 1150.0,
+    "cost_per_1k_usd": 0.0,
+    "noise_reduction_pct": 98.51
+  },
+  "by_platform": {
+    "Tablón de Anuncios": {
+      "total": 2,
+      "positives": 2,
+      "regex_tp": 2,
+      "regex_fp": 0,
+      "llm_tp": 0,
+      "llm_fp": 0
+    },
+    "TusClasesParticulares": {
+      "total": 26,
+      "positives": 0,
+      "regex_tp": 0,
+      "regex_fp": 0,
+      "llm_tp": 0,
+      "llm_fp": 0
+    },
+    "TusClases Argentina": {
+      "total": 25,
+      "positives": 18,
+      "regex_tp": 15,
+      "regex_fp": 0,
+      "llm_tp": 0,
+      "llm_fp": 0
+    },
+    "TusClases México": {
+      "total": 10,
+      "positives": 2,
+      "regex_tp": 2,
+      "regex_fp": 0,
+      "llm_tp": 0,
+      "llm_fp": 0
+    },
+    "TusClases Colombia": {
+      "total": 16,
+      "positives": 2,
+      "regex_tp": 0,
+      "regex_fp": 4,
+      "llm_tp": 0,
+      "llm_fp": 0
+    },
+    "TusClases Chile": {
+      "total": 25,
+      "positives": 7,
+      "regex_tp": 4,
+      "regex_fp": 8,
+      "llm_tp": 0,
+      "llm_fp": 0
+    },
+    "TusClases Perú": {
+      "total": 17,
+      "positives": 2,
+      "regex_tp": 2,
+      "regex_fp": 9,
+      "llm_tp": 0,
+      "llm_fp": 0
+    },
+    "Cronoshare": {
+      "total": 47,
+      "positives": 32,
+      "regex_tp": 4,
+      "regex_fp": 1,
+      "llm_tp": 0,
+      "llm_fp": 0
+    },
+    "Reddit": {
+      "total": 7,
+      "positives": 0,
+      "regex_tp": 0,
+      "regex_fp": 7,
+      "llm_tp": 0,
+      "llm_fp": 0
+    }
+  },
+  "sample_size": 175,
+  "ground_truth_distribution": {
+    "students_positive": 41,
+    "non_students_negative": 134,
+    "noise_prevalence_pct": 76.6
+  }
+}

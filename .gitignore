@@ -12,6 +12,9 @@ __pycache__/
 # Logs and runtime databases
 *.log
 *.sqlite3
+*.bak
+*.lock
+
 
 # Operating System Files
 .DS_Store

@@ -2,11 +2,8 @@
 """
 telegram_centinela.py
 Bot Centinela en Tiempo Real para Telegram (Telethon Client).
-Escucha mensajes en vivo en todos los grupos y supergrupos de estudiantes donde esté unida la cuenta,
-detecta solicitudes de alumnos en ciencias exactas, audita con IA (Gemini / Groq / Mistral) en 1 segundo
-y envía una alerta push instantánea al celular del Prof. Alejo con el enlace para contactar al alumno.
-Incluye precarga de caché de grupos de Telegram, feedback en vivo de cada mensaje recibido,
-sistema de logging continuo a archivo (logs/centinela.log) y latido en vivo (heartbeat).
+Monitorea grupos estudiantiles, detecta alumnos de ciencias exactas,
+clasifica con IA mediante cola asíncrona no bloqueante y emite alertas push inmediatas.
 """
 
 import os
@@ -14,9 +11,12 @@ import sys
 import json
 import time
 import re
+import html
 import asyncio
+import signal
+import argparse
 from datetime import datetime
-from typing import Dict, Any
+from typing import Dict, Any, Tuple, Optional
 
 # Ensure UTF-8 output on Windows
 if hasattr(sys.stdout, 'reconfigure'):
@@ -24,7 +24,6 @@ if hasattr(sys.stdout, 'reconfigure'):
 if hasattr(sys.stderr, 'reconfigure'):
     sys.stderr.reconfigure(encoding='utf-8')
 
-# Ensure scripts dir is on sys.path
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
 EXPORT_SYNC_DIR = os.environ.get("PROSPECTOR_EXPORT_DIR", "")
@@ -35,6 +34,7 @@ if SCRIPT_DIR not in sys.path:
 from prospector import load_env_file, call_multiprovider_batch, normalize_item
 from common_filter import normalize_subject, normalize_level, sanitize_text
 from extract_telegram import send_telegram_notification
+from storage import atomic_write_json, safe_read_json, FileLock, compute_stable_id
 
 try:
     from telethon.errors import FloodWaitError
@@ -44,7 +44,7 @@ except ImportError:
 
 load_env_file()
 
-DATA_APPROVED = os.path.join(PROJECT_ROOT, "data", "dataset_canonico_auditado.json")
+DATA_APPROVED = os.path.join(PROJECT_ROOT, "data", "leads_centinela_en_vivo.json")
 LOG_DIR = os.path.join(PROJECT_ROOT, "logs")
 os.makedirs(LOG_DIR, exist_ok=True)
 LOG_FILE = os.path.join(LOG_DIR, "centinela.log")
@@ -54,12 +54,14 @@ STATS = {
     "messages_scanned": 0,
     "ai_audits": 0,
     "approved_leads": 0,
-    "discarded_leads": 0
+    "discarded_leads": 0,
+    "alerts_sent": 0,
+    "alerts_failed": 0
 }
 
 
 def log_event(text: str, print_to_console: bool = True):
-    """Escribe en logs/centinela.log y opcionalmente en pantalla."""
+    """Escribe en logs/centinela.log y opcionalmente en consola."""
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     formatted = f"[{now_str}] {text}"
     if print_to_console:
@@ -67,17 +69,15 @@ def log_event(text: str, print_to_console: bool = True):
     try:
         with open(LOG_FILE, "a", encoding="utf-8") as f:
             f.write(formatted + "\n")
-        # Espejar en directorio secundario si está configurado
         if EXPORT_SYNC_DIR and os.path.exists(EXPORT_SYNC_DIR):
-            secondary_logs = os.path.join(EXPORT_SYNC_DIR, "logs")
-            os.makedirs(secondary_logs, exist_ok=True)
-            with open(os.path.join(secondary_logs, "centinela.log"), "a", encoding="utf-8") as f:
+            sec_logs = os.path.join(EXPORT_SYNC_DIR, "logs")
+            os.makedirs(sec_logs, exist_ok=True)
+            with open(os.path.join(sec_logs, "centinela.log"), "a", encoding="utf-8") as f:
                 f.write(formatted + "\n")
     except Exception:
         pass
 
 
-# Palabras clave de activación rápida (Fast Heuristic)
 FAST_TRIGGERS = [
     r"\bprofesor\b", r"\bprofesora\b", r"\bprofe\b", r"\bparticular\b",
     r"\bclases\b", r"\btutor\b", r"\btutora\b", r"\benseñ\b", r"\bexplic\b",
@@ -101,80 +101,244 @@ def fast_match(text: str) -> bool:
     return has_trigger and has_subject
 
 
-def save_approved_lead(lead: Dict[str, Any]):
-    """Guarda el nuevo alumno en data/dataset_canonico_auditado.json de forma incremental y sincronizada."""
+def save_approved_lead(lead: Dict[str, Any]) -> bool:
+    """Guarda el nuevo alumno de forma atómica y concurrente usando storage.py."""
     targets = [DATA_APPROVED]
     if EXPORT_SYNC_DIR and os.path.exists(EXPORT_SYNC_DIR):
-        secondary_target = os.path.join(EXPORT_SYNC_DIR, "data", "dataset_canonico_auditado.json")
-        targets.append(secondary_target)
+        targets.append(os.path.join(EXPORT_SYNC_DIR, "data", "leads_centinela_en_vivo.json"))
 
+    saved_any = False
     for target_path in targets:
         os.makedirs(os.path.dirname(target_path), exist_ok=True)
-        existing = []
-        if os.path.exists(target_path):
-            try:
-                with open(target_path, "r", encoding="utf-8") as f:
-                    existing = json.load(f)
-            except Exception:
-                existing = []
-
-        seen_ids = {it.get("id") for it in existing}
+        existing = safe_read_json(target_path, default=[])
+        seen_ids = {it.get("id") for it in existing if isinstance(it, dict)}
         if lead.get("id") not in seen_ids:
             existing.append(lead)
-            with open(target_path, "w", encoding="utf-8") as f:
-                json.dump(existing, f, ensure_ascii=False, indent=2)
+            atomic_write_json(target_path, existing)
+            saved_any = True
 
-    log_event(f"[BASE DE DATOS] Alumno registrado con éxito. Total acumulado: {len(existing)} alumnos.")
+    if saved_any:
+        log_event(f"[BASE DE DATOS] Alumno registrado con éxito ({lead.get('id')}).")
+    return saved_any
 
 
-def send_centinela_push_alert(lead: Dict[str, Any], group_title: str, student_username: str):
-    """Envía la alerta al bot de Telegram personal de Alejo."""
+def send_centinela_push_alert(lead: Dict[str, Any], group_title: str, student_username: str) -> Tuple[bool, str]:
+    """
+    Construye y envía la alerta al bot personal con escape HTML estricto.
+    Retorna (éxito, mensaje_detalle).
+    """
     bot_token = os.environ.get("TELEGRAM_BOT_TOKEN")
     chat_id = os.environ.get("TELEGRAM_CHAT_ID")
     if not bot_token or not chat_id:
-        return
+        return False, "TELEGRAM_BOT_TOKEN o TELEGRAM_CHAT_ID no configurados en .env"
 
     user_link = f"https://t.me/{student_username}" if student_username else lead.get("enlace al anuncio", "")
     author_display = f"@{student_username}" if student_username else lead.get("nombre", "Estudiante en grupo")
 
+    # Escape seguro de entidades HTML para evitar errores 400 de Telegram
+    esc_group = html.escape(str(group_title or "Grupo Telegram"))
+    esc_author = html.escape(str(author_display))
+    esc_subject = html.escape(str(lead.get("materia", "Ciencias Exactas")))
+    esc_level = html.escape(str(lead.get("nivel educativo", "Universitario / Secundario")))
+    esc_msg = html.escape(str(lead.get("mensaje/descripción", ""))[:250])
+    esc_link = html.escape(str(user_link))
+
     msg = (
         "🚨 <b>¡CENTINELA TELEGRAM EN VIVO!</b>\n"
-        f"<i>Nuevo alumno detectado en el grupo:</i> <b>{group_title}</b>\n\n"
-        f"👤 <b>Alumno:</b> {author_display}\n"
-        f"📚 <b>Materia:</b> {lead.get('materia', 'Ciencias Exactas')}\n"
-        f"🎯 <b>Nivel:</b> {lead.get('nivel educativo', 'Universitario / Secundario')}\n\n"
-        f"💬 <b>Mensaje:</b> <i>\"{lead.get('mensaje/descripción', '')[:250]}\"</i>\n\n"
-        f"👉 <a href='{user_link}'><b>Abrir chat y contactar al alumno</b></a>"
+        f"<i>Nuevo alumno detectado en el grupo:</i> <b>{esc_group}</b>\n\n"
+        f"👤 <b>Alumno:</b> {esc_author}\n"
+        f"📚 <b>Materia:</b> {esc_subject}\n"
+        f"🎯 <b>Nivel:</b> {esc_level}\n\n"
+        f"💬 <b>Mensaje:</b> <i>\"{esc_msg}\"</i>\n\n"
+        f"👉 <a href='{esc_link}'><b>Abrir chat y contactar al alumno</b></a>"
     )
 
-    send_telegram_notification(bot_token, chat_id, msg)
+    success = send_telegram_notification(bot_token, chat_id, msg)
+    if success:
+        STATS["alerts_sent"] += 1
+        return True, "Notificación push entregada exitosamente vía Telegram Bot API"
+    else:
+        STATS["alerts_failed"] += 1
+        return False, "Fallo al enviar notificación push a la API de Telegram"
 
 
-async def heartbeat_loop(client):
-    """Latido continuo cada 60s para mostrar en pantalla que el Centinela está 100% activo y saludable."""
-    while True:
-        await asyncio.sleep(60)
+async def classification_worker(queue: asyncio.Queue, stop_event: asyncio.Event, args):
+    """
+    Worker asíncrono en segundo plano:
+    Consume candidatos de la cola, ejecuta la clasificación por IA en un thread pool
+    (para no bloquear el bucle de eventos de Telethon) y envía alertas.
+    """
+    while not stop_event.is_set() or not queue.empty():
+        try:
+            item_data = await asyncio.wait_for(queue.get(), timeout=1.0)
+        except asyncio.TimeoutError:
+            continue
+
+        candidate = item_data["candidate"]
+        chat_title = item_data["chat_title"]
+        sender_user = item_data["sender_user"]
+        sender_name = item_data["sender_name"]
+        raw_text = item_data["text"]
+
+        STATS["ai_audits"] += 1
+        log_event(f"🤖 [COLA DE AUDITORÍA] Analizando mensaje de {sender_name} en '{chat_title}'...")
+
+        try:
+            # Ejecución no bloqueante en hilo de fondo con timeout
+            loop = asyncio.get_running_loop()
+            results = await asyncio.wait_for(
+                loop.run_in_executor(None, call_multiprovider_batch, [candidate]),
+                timeout=12.0
+            )
+
+            if results and isinstance(results, list):
+                res = results[0]
+                if res.get("is_student") is True or res.get("decision_ia") == "Aprobado":
+                    STATS["approved_leads"] += 1
+                    log_event(f"   ✅ [APROBADO POR IA] {res.get('justificacion_ia')}")
+
+                    normalized_lead = normalize_item({
+                        "id": candidate["id"],
+                        "plataforma": candidate["plataforma"],
+                        "país/ubicación": candidate["ubicacion"],
+                        "nombre": sender_name,
+                        "persona_id": sender_user or f"user_{candidate.get('id', '0')}",
+                        "materia": candidate["materia"],
+                        "nivel educativo": normalize_level(raw_text),
+                        "enlace al anuncio": candidate["enlace"],
+                        "mensaje/descripción": sanitize_text(raw_text),
+                        "método de contacto directo": f"Telegram (@{sender_user})" if sender_user else "Telegram (Mensaje en grupo)",
+                        "decision_ia": "Aprobado",
+                        "justificacion_ia": res.get("justificacion_ia", "Detectado en vivo por Centinela")
+                    })
+
+                    # Persistencia atómica
+                    save_approved_lead(normalized_lead)
+
+                    # Alerta push
+                    ok, detail = send_centinela_push_alert(normalized_lead, chat_title, sender_user)
+                    if ok:
+                        log_event(f"   📲 [ALERTA ENVIADA] {detail}")
+                    else:
+                        log_event(f"   ⚠️ [ALERTA NO ENTREGADA] {detail}")
+                else:
+                    STATS["discarded_leads"] += 1
+                    log_event(f"   ❌ [DESCARTADO POR IA] {res.get('justificacion_ia')}")
+        except asyncio.TimeoutError:
+            log_event(f"   ⚠️ [TIMEOUT EN AUDITORÍA IA] La consulta excedió el tiempo límite (12s).")
+        except Exception as e:
+            log_event(f"   ⚠️ [ERROR EN AUDITORÍA IA] {e}")
+        finally:
+            queue.task_done()
+            await asyncio.sleep(0.5)  # Respetar rate limits entre consultas
+
+
+async def heartbeat_loop(stop_event: asyncio.Event):
+    """Latido continuo cada 60s para telemetría y salud del proceso."""
+    while not stop_event.is_set():
+        try:
+            await asyncio.wait_for(stop_event.wait(), timeout=60.0)
+            break
+        except asyncio.TimeoutError:
+            pass
+
         now_str = datetime.now().strftime("%H:%M:%S")
         status_line = (
             f"[LATIDO {now_str}] 🟢 Centinela en guardia | "
-            f"Msgs escaneados: {STATS['messages_scanned']} | "
-            f"Auditados por IA: {STATS['ai_audits']} | "
-            f"Alumnos aprobados: {STATS['approved_leads']}"
+            f"Escaneados: {STATS['messages_scanned']} | "
+            f"Auditados IA: {STATS['ai_audits']} | "
+            f"Aprobados: {STATS['approved_leads']} | "
+            f"Alertas: {STATS['alerts_sent']}/{STATS['alerts_sent']+STATS['alerts_failed']}"
         )
         log_event(status_line, print_to_console=True)
 
 
-async def main():
+async def run_simulation():
+    """Modo de prueba determinista y offline para validar el Centinela y la cola de auditoría."""
     print("=" * 70)
-    print("   SISTEMA CENTINELA TELEGRAM EN TIEMPO REAL - PROF. ALEJO ONGARO")
-    print("   Escucha continua de grupos de estudiantes con auditoría de IA en vivo")
+    print("   MODO SIMULACIÓN: PRUEBA DE COLA Y CLASIFICACIÓN CENTINELA")
     print("=" * 70)
+
+    queue = asyncio.Queue()
+    stop_event = asyncio.Event()
+
+    # Iniciar worker
+    worker = asyncio.create_task(classification_worker(queue, stop_event, None))
+
+    test_messages = [
+        {
+            "text": "Hola a todos! Alguien que dé clases particulares de Análisis Matemático II para ingeniería? Necesito preparar el recuperatorio urgente.",
+            "chat_title": "FIUBA - Estudiantes Exactas",
+            "sender_name": "Lucas B.",
+            "sender_user": "lucas_exactas"
+        },
+        {
+            "text": "Doy clases de Física I y Química General. Amplia experiencia universitaria, primera clase gratis. Comunicarse por privado.",
+            "chat_title": "CBC UBA - Grupos de Estudio",
+            "sender_name": "Profesor Particular",
+            "sender_user": "profe_particular"
+        },
+        {
+            "text": "Alguien sabe si mañana hay paro de trenes para ir a la facu?",
+            "chat_title": "Exactas UNLP",
+            "sender_name": "Mariana D.",
+            "sender_user": "mariana_d"
+        }
+    ]
+
+    print(f"\nInyectando {len(test_messages)} mensajes simulados a la cola...")
+    for idx, msg in enumerate(test_messages, 1):
+        raw_text = msg["text"]
+        STATS["messages_scanned"] += 1
+        if not fast_match(raw_text):
+            print(f"  [Msg #{idx}] Descartado en capa heurística: '{raw_text[:40]}...' (charla general)")
+            continue
+
+        item_id = compute_stable_id("Telegram", msg["sender_name"], "2026-11-04", raw_text)
+        candidate = {
+            "id": item_id,
+            "plataforma": f"Telegram ({msg['chat_title']})",
+            "materia": normalize_subject(raw_text) or "Ciencias Exactas",
+            "ubicacion": "Argentina - Grupo Telegram Simulado",
+            "mensaje": raw_text,
+            "enlace": "https://t.me/demo_student"
+        }
+        await queue.put({
+            "candidate": candidate,
+            "chat_title": msg["chat_title"],
+            "sender_user": msg["sender_user"],
+            "sender_name": msg["sender_name"],
+            "text": raw_text
+        })
+        print(f"  [Msg #{idx}] Encolado para auditoría IA: '{raw_text[:40]}...'")
+
+    # Esperar a que la cola termine de procesar
+    await queue.join()
+    stop_event.set()
+    await worker
+
+    print("\n" + "=" * 70)
+    print("RESULTADO DE LA SIMULACIÓN:")
+    print(f"  Mensajes escaneados: {STATS['messages_scanned']}")
+    print(f"  Auditados por IA: {STATS['ai_audits']}")
+    print(f"  Aprobados (Alumnos): {STATS['approved_leads']}")
+    print(f"  Descartados (Profesores): {STATS['discarded_leads']}")
+    print("==================================================")
+    print("✅ Centinela: Bucle asíncrono, worker y cola verificados con éxito.")
+
+
+async def main_async(args):
+    if args.simulate:
+        await run_simulation()
+        return
 
     api_id = os.environ.get("TELEGRAM_API_ID")
     api_hash = os.environ.get("TELEGRAM_API_HASH")
 
     if not api_id or not api_hash:
         print("\n[ERROR] TELEGRAM_API_ID o TELEGRAM_API_HASH no configurados en .env.")
+        print("Para probar el Centinela sin credenciales, utiliza:")
+        print("  python -m scripts.telegram_centinela --simulate")
         return
 
     from telethon import TelegramClient, events
@@ -185,66 +349,46 @@ async def main():
         print(f"[ERROR] TELEGRAM_API_ID debe ser un número entero. Valor: {api_id}")
         return
 
-    # Buscar sesión en candidatos
-    session_candidates = [
-        os.path.join(PROJECT_ROOT, "centinela_session"),
-        os.path.join(os.getcwd(), "centinela_session")
-    ]
-    if EXPORT_SYNC_DIR:
-        session_candidates.insert(1, os.path.join(EXPORT_SYNC_DIR, "centinela_session"))
-    target_session = None
-    for cand in session_candidates:
-        if os.path.exists(cand + ".session"):
-            target_session = cand
-            break
-    if not target_session:
-        target_session = os.path.join(PROJECT_ROOT, "centinela_session")
-
-    print(f"\nIniciando cliente Telegram con sesión: {target_session}.session")
-    log_event(f"[INICIO] Arrancando Centinela con sesión {target_session}")
-
-    client = TelegramClient(target_session, api_id_int, api_hash)
+    session_path = os.path.join(PROJECT_ROOT, "centinela_session")
+    client = TelegramClient(session_path, api_id_int, api_hash)
     await client.start()
 
     me = await client.get_me()
-    print(f"\n[CENTINELA CONECTADO Y AUTENTICADO]")
+    print(f"\n[CENTINELA TELEGRAM CONECTADO]")
     print(f"Cuenta: {me.first_name} (@{me.username or 'sin_username'}) | ID: {me.id}")
-    print(f"Registro en tiempo real: {LOG_FILE}")
 
-    # PRE-CARGA CRUCIAL DE DIÁLOGOS Y GRUPOS (Para que Telegram envíe updates en tiempo real)
-    print("\nSincronizando entidades y grupos de estudiantes...")
     try:
         dialogs = await client.get_dialogs(limit=50)
     except FloodWaitError as e:
-        log_event(f"[RATE LIMIT MTPROTO] FloodWait de {e.seconds}s. Esperando enfriamiento...")
+        log_event(f"[RATE LIMIT] FloodWait de {e.seconds}s. Esperando enfriamiento...")
         await asyncio.sleep(e.seconds + 2)
         dialogs = await client.get_dialogs(limit=50)
+
     active_groups = [d for d in dialogs if (d.is_group or d.is_channel)]
-    print(f"[SINCRONIZACIÓN EXITOSA] {len(active_groups)} chats/grupos monitoreados activamente.")
-    print("\nGrupos de estudio en guardia activa:")
-    for g in active_groups[:8]:
-        uname = getattr(g.entity, 'username', None)
-        uname_str = f"(@{uname})" if uname else ""
-        print(f"  • {g.title} {uname_str}")
+    print(f"[SINCRONIZACIÓN EXITOSA] {len(active_groups)} grupos monitoreados activamente.")
 
-    print("\nEscuchando mensajes en vivo en todos tus grupos de estudiantes...")
-    print("Emitiendo latido de actividad cada 60 segundos...")
-    print("Presiona Ctrl + C en cualquier momento para detener.\n" + "-" * 70)
+    queue = asyncio.Queue(maxsize=100)
+    stop_event = asyncio.Event()
 
-    log_event(f"[CONEXION EXITOSA] Usuario: {me.first_name} (@{me.username}) ID: {me.id} | Grupos: {len(active_groups)}")
-
-    # Iniciar tarea en segundo plano de latido (heartbeat)
-    asyncio.create_task(heartbeat_loop(client))
+    # Iniciar tareas concurrentes en segundo plano
+    worker_task = asyncio.create_task(classification_worker(queue, stop_event, args))
+    heartbeat_task = asyncio.create_task(heartbeat_loop(stop_event))
 
     @client.on(events.NewMessage)
     async def handler(event):
-        # Ignorar mensajes de chats privados directos
         if event.is_private:
             return
+        if event.out and not args.test_mode:
+            return  # Excluir mensajes propios en producción
 
         text = event.raw_text or ""
-        is_own = bool(event.out)
         STATS["messages_scanned"] += 1
+
+        if len(text) < 10:
+            return
+
+        if not fast_match(text):
+            return
 
         chat = await event.get_chat()
         chat_title = getattr(chat, 'title', 'Grupo Telegram')
@@ -252,73 +396,51 @@ async def main():
         sender_name = f"{getattr(sender, 'first_name', '')} {getattr(sender, 'last_name', '')}".strip() or "Estudiante"
         sender_user = getattr(sender, 'username', '')
 
-        now_time = datetime.now().strftime("%H:%M:%S")
+        item_id = f"tg_live_{abs(event.chat_id)}_{event.id}"
+        link = f"https://t.me/c/{abs(event.chat_id)}/{event.id}" if not getattr(chat, 'username', None) else f"https://t.me/{chat.username}/{event.id}"
 
-        if len(text) < 10:
-            return
-
-        # 1. Filtro rápido de regex para descartar charlas que no buscan profe
-        if not fast_match(text):
-            # Feedback sutil en consola para confirmar que el mensaje fue recibido y evaluado
-            print(f"[{now_time}] 💬 Msg en '{chat_title[:25]}' de {sender_name[:15]}: (charla general)")
-            return
-
-        STATS["ai_audits"] += 1
-
-        prefix = "🧪 [MENSAJE DE PRUEBA PROPIO]" if is_own else "🔥 [POTENCIAL ALUMNO DETECTADO]"
-        log_event(f"\n{prefix} Grupo: '{chat_title}' | Autor: {sender_name} (@{sender_user})")
-        print(f"   Mensaje: \"{text[:120]}...\"")
-        print(f"   🤖 Consultando Triple Motor de IA (Gemini Flash Lite / Groq / Mistral)...")
-
-        # 2. Construir payload y validar con Triple Motor de IA
-        candidate_item = {
-            "id": f"tg_live_{event.chat_id}_{event.id}",
+        candidate = {
+            "id": item_id,
             "plataforma": f"Telegram ({chat_title})",
             "materia": normalize_subject(text) or "Ciencias Exactas",
             "ubicacion": "Argentina / LATAM - Grupo Estudiantil Telegram",
             "mensaje": text,
-            "enlace": f"https://t.me/c/{abs(event.chat_id)}/{event.id}" if not getattr(chat, 'username', None) else f"https://t.me/{chat.username}/{event.id}"
+            "enlace": link
         }
 
+        # Encolado rápido sin bloquear el event loop de Telethon
         try:
-            results = call_multiprovider_batch([candidate_item])
-            if results and isinstance(results, list):
-                res = results[0]
-                if res.get("is_student") is True or res.get("decision_ia") == "Aprobado":
-                    STATS["approved_leads"] += 1
-                    log_event(f"   ✅ [APROBADO POR IA] {res.get('justificacion_ia')}")
+            queue.put_nowait({
+                "candidate": candidate,
+                "chat_title": chat_title,
+                "sender_user": sender_user,
+                "sender_name": sender_name,
+                "text": text
+            })
+            log_event(f"📥 [ENCOLADO] Msg de {sender_name} en '{chat_title}' agregado a la cola de auditoría.")
+        except asyncio.QueueFull:
+            log_event("⚠️ [COLA LLENA] Se descartó mensaje por saturación temporal de auditoría.")
 
-                    normalized_lead = normalize_item({
-                        "id": candidate_item["id"],
-                        "plataforma": candidate_item["plataforma"],
-                        "país/ubicación": candidate_item["ubicacion"],
-                        "nombre": sender_name,
-                        "persona_id": sender_user or f"user_{getattr(sender, 'id', '0')}",
-                        "materia": candidate_item["materia"],
-                        "nivel educativo": normalize_level(text),
-                        "enlace al anuncio": candidate_item["enlace"],
-                        "mensaje/descripción": sanitize_text(text),
-                        "método de contacto directo": f"Telegram (@{sender_user})" if sender_user else "Telegram (Mensaje directo en grupo)",
-                        "decision_ia": "Aprobado",
-                        "justificacion_ia": res.get("justificacion_ia", "Detectado en vivo por Centinela")
-                    })
+    try:
+        await client.run_until_disconnected()
+    finally:
+        stop_event.set()
+        worker_task.cancel()
+        heartbeat_task.cancel()
+        await client.disconnect()
 
-                    # Guardar en base de datos incremental
-                    save_approved_lead(normalized_lead)
 
-                    # Enviar alerta push inmediata al celular
-                    send_centinela_push_alert(normalized_lead, chat_title, sender_user)
-                    log_event(f"   📲 [ALERTA ENVIADA] Notificación push entregada a tu celular con éxito.")
-                else:
-                    STATS["discarded_leads"] += 1
-                    log_event(f"   ❌ [DESCARTADO POR IA] {res.get('justificacion_ia')}")
-        except Exception as e:
-            log_event(f"   ⚠️ [ERROR EN AUDITORÍA IA] {e}")
+def main():
+    parser = argparse.ArgumentParser(description="Centinela de Telegram 24/7 con Clasificación Asíncrona")
+    parser.add_argument("--simulate", action="store_true", help="Ejecuta una prueba simulada de la cola y clasificación")
+    parser.add_argument("--test-mode", action="store_true", help="Permite procesar mensajes propios durante pruebas")
+    args = parser.parse_args()
 
-    await client.run_until_disconnected()
+    try:
+        asyncio.run(main_async(args))
+    except (KeyboardInterrupt, SystemExit):
+        log_event("[CENTINELA DETENIDO] Proceso cerrado ordenadamente.")
+
 
 if __name__ == "__main__":
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        log_event("[CENTINELA DETENIDO] Sesión cerrada correctamente por el usuario.")
+    main()

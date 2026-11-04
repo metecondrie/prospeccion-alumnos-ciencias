@@ -77,7 +77,7 @@ Seguimiento de las 41 oportunidades en el CRM (telemetría en [`data/feedback_pi
 ## 💡 Cómo construí este proyecto (Dirección Humana + Asistencia de IA)
 
 * **El problema de negocio nació de mi necesidad real:** Como docente de ciencias exactas, pasaba entre 2 y 3 horas diarias navegando portales de clasificados para encontrar alumnos particulares reales entre decenas de avisos de institutos y colegas ofreciendo servicios.
-* **Arquitectura y dirección técnica propia:** Definí los contratos de datos estructurados (RFC 4180 de 8 columnas), las reglas de negocio del CRM, el embudo comercial y la suite de 75 tests automatizados.
+* **Arquitectura y dirección técnica propia:** Definí los contratos de datos estructurados (RFC 4180 de 8 columnas), las reglas de negocio del CRM, el embudo comercial y la suite de 98 tests automatizados.
 * **Implementación en pair-programming con IA:** Programé el sistema asistido por Google Antigravity. Corregí los prompts tras detectar que las academias engañaban a los primeros filtros usando frases como *"clases de matemáticas"*, agregando reglas negativas explícitas (*few-shot negative pool*).
 * **Auditoría humana y privacidad:** Verifiqué manualmente cada uno de los 175 avisos crudos para construir el Ground Truth del dataset y diseñé el algoritmo de anonimización determinista ([`scripts/anonymize_for_public.py`](scripts/anonymize_for_public.py)) con 0 colisiones para publicar este portfolio de forma éticamente responsable.
 
@@ -116,12 +116,16 @@ python main.py run
 python -m scripts.prospector run
 
 # Ejecutar benchmark cuantitativo de Machine Learning
-python scripts/evaluate_filter.py
+python main.py evaluate
+# O directamente por script:
+python evaluation/evaluar_clasificadores.py
 
 # Iniciar Centinela de Telegram en tiempo real
 python -m scripts.telegram_centinela
+# O modo simulación offline:
+python -m scripts.telegram_centinela --simulate
 
-# Ejecutar la suite completa de pruebas (75 tests)
+# Ejecutar la suite completa de pruebas (98 tests)
 python main.py test
 ```
 
@@ -131,11 +135,13 @@ python main.py test
 
 ---
 
-## 📚 Documentación Técnica Detallada (`/docs`)
+## 📚 Documentación Técnica Detallada (`/docs` y `/evaluation`)
 
 * ⚙️ [**DOCUMENTACION_TECNICA.md**](docs/DOCUMENTACION_TECNICA.md): Especificación técnica completa, contratos de datos, diagramas Mermaid y arquitectura de resiliencia.
 * 📊 [**EVALUACION_FILTRO_DATOS.md**](docs/EVALUACION_FILTRO_DATOS.md): Informe cuantitativo de Machine Learning y matrices de confusión.
+* 🧪 [**protocolo_anotacion.md**](evaluation/protocolo_anotacion.md): Protocolo formal de etiquetado y Ground Truth para evaluación objetiva.
 * 🛡️ [**MARCO_ETICO_Y_LEGAL.md**](docs/MARCO_ETICO_Y_LEGAL.md): Marco normativo de privacidad (RGPD / Ley 25.326) y protocolo de opt-out.
+* 🔒 [**AUDITORIA_HISTORIAL_GIT.md**](docs/AUDITORIA_HISTORIAL_GIT.md): Auditoría de seguridad del historial de commits y estrategia de preservación de privacidad.
 * 📈 [**CONCLUSIONES.md**](docs/CONCLUSIONES.md): Resultados pedagógicos y análisis de conversión comercial.
 * 📝 [**AUDITORIA_CAMBIOS.md**](docs/AUDITORIA_CAMBIOS.md): Bitácora de decisiones de diseño y auditorías técnicas.
 

@@ -17,7 +17,24 @@ import shutil
 import re
 import hashlib
 import unicodedata
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional, Tuple
+
+try:
+    from storage import (
+        atomic_write_json,
+        safe_read_json,
+        atomic_write_text,
+        merge_crm_tracking,
+        compute_stable_id as storage_stable_id
+    )
+except ImportError:
+    from scripts.storage import (
+        atomic_write_json,
+        safe_read_json,
+        atomic_write_text,
+        merge_crm_tracking,
+        compute_stable_id as storage_stable_id
+    )
 
 # Ensure UTF-8 output on Windows consoles
 if hasattr(sys.stdout, 'reconfigure'):
@@ -532,22 +549,11 @@ def cmd_audit(args):
     # Normalizar leads entrantes con IDs deterministas
     raw_items = [normalize_item(it, idx + 1) for idx, it in enumerate(raw_items)]
 
-    # 1. Cargar históricos ya auditados para no desperdiciar llamadas de IA
-    approved = []
-    if os.path.exists(args.output_approved):
-        try:
-            with open(args.output_approved, "r", encoding="utf-8") as f:
-                approved = json.load(f)
-        except Exception:
-            approved = []
-
-    discarded = []
-    if os.path.exists(args.output_discarded):
-        try:
-            with open(args.output_discarded, "r", encoding="utf-8") as f:
-                discarded = json.load(f)
-        except Exception:
-            discarded = []
+    # 1. Cargar históricos ya auditados de manera segura y concurrente
+    existing_approved = safe_read_json(args.output_approved, default=[])
+    existing_discarded = safe_read_json(args.output_discarded, default=[])
+    approved = list(existing_approved)
+    discarded = list(existing_discarded)
 
     audited_ids = {it["id"] for it in approved + discarded if "id" in it}
     audited_urls = {it.get("enlace al anuncio") or it.get("enlace_anuncio") for it in approved + discarded if it.get("enlace al anuncio") or it.get("enlace_anuncio")}
@@ -606,12 +612,10 @@ def cmd_audit(args):
 
         time.sleep(1.0)
 
-    # Guardar salidas acumuladas
-    with open(args.output_approved, "w", encoding="utf-8") as f:
-        json.dump(approved, f, ensure_ascii=False, indent=2)
-
-    with open(args.output_discarded, "w", encoding="utf-8") as f:
-        json.dump(discarded, f, ensure_ascii=False, indent=2)
+    # Preservar el seguimiento del CRM (notas, estados de contacto) y guardar atómicamente
+    approved = merge_crm_tracking(approved, existing_approved)
+    atomic_write_json(args.output_approved, approved)
+    atomic_write_json(args.output_discarded, discarded)
 
     print(f"[OK] Auditoría completada. Nuevos alumnos aprobados: {new_approved_count} | Total en base de datos: {len(approved)}")
     print(f"  Archivo aprobados: {args.output_approved}")
@@ -719,8 +723,7 @@ def cmd_build(args):
     else:
         new_html = current_html
 
-    with open(args.output_html, "w", encoding="utf-8") as f:
-        f.write(new_html)
+    atomic_write_text(args.output_html, new_html, encoding="utf-8")
 
     print(f"[OK] Archivos generados con éxito: {args.output_html}, {args.output_csv}, {crm_csv_path}")
 

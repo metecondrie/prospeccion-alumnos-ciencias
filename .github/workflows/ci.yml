@@ -6,7 +6,7 @@
 #    1. validate_dataset.py          -> integridad del dataset canónico
 #    2. tests/test_common_filter.py  -> tests unitarios del filtro heurístico
 #    3. tests/check_dashboard.cjs    -> tests del dashboard CRM (Node.js)
-#    4. Suite completa de tests      -> 64 pruebas unitarias y e2e (100% verde)
+#    4. Suite completa de tests      -> 98 pruebas unitarias y e2e (100% verde)
 # ============================================================================
 name: CI
 
@@ -52,5 +52,5 @@ jobs:
       - name: "[3/4] Tests del dashboard (Node)"
         run: node tests/check_dashboard.cjs
 
-      - name: "[4/4] Suite completa de tests (64 pruebas)"
+      - name: "[4/4] Suite completa de tests (98 pruebas)"
         run: python -m unittest discover -s tests -p "test_*.py" -v
