@@ -1,191 +1,119 @@
-# Prospección de Alumnos y CRM Local (Ciencias Exactas)
+# Prospección de Alumnos de Ciencias Exactas
 
 [![CI](https://github.com/metecondrie/prospeccion-alumnos-ciencias/actions/workflows/ci.yml/badge.svg)](https://github.com/metecondrie/prospeccion-alumnos-ciencias/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
+[![Tests](https://img.shields.io/badge/Tests-75%20Passing-brightgreen.svg)](tests/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Architecture](https://img.shields.io/badge/Architecture-Web%20Scraping%20%2B%20Telegram%20Stream-lightgrey.svg)](docs/DOCUMENTACION_TECNICA.md)
+[![Data Benchmark](https://img.shields.io/badge/Data%20Science-Jupyter%20Notebook-orange.svg)](notebooks/evaluacion_clasificador.ipynb)
 
-> **TL;DR (EN):** Lead-generation pipeline for a STEM tutor: multi-site scraper (175 raw listings), two-stage filter (regex → LLM semantic audit with multi-provider failover), real-time Telegram sentinel with push alerts, and a local CRM dashboard. 41 verified student leads, $0/mo operating cost, all public data anonymized. Full 75-test harness included.
-
----
-
-Herramienta de software libre orientada a docentes particulares de ciencias exactas (Matemática, Física, Química y Biología) para la captación ética, filtrado semántico asistido por IA y gestión de prospectos de nivel universitario y secundario superior.
-
-Combina extracción web periódica en portales públicos clasificados, escucha en tiempo real de consultas públicas en comunidades estudiantiles de Telegram (vía cliente MTProto) y un panel interactivo local en HTML5/Tailwind (`dashboard.html`) para el seguimiento de postulaciones.
+Pipeline de web scraping, clasificación semántica de intenciones con Google Gemini 2.5 Flash y CRM local autónomo en HTML5/Tailwind para la captación ética de alumnos particulares de matemáticas, física, química y biología.
 
 ---
 
-## 📋 Características Principales
-
-* **Extracción Multicanal:** Scraping concurrente de demandas públicas de alumnos en TusClases (España, Argentina, México, Colombia, Chile, Perú), Tablón de Anuncios, Cronoshare y foros de Reddit (175 anuncios crudos procesados).
-* **Escucha Pasiva en Telegram (`scripts/telegram_centinela.py`):** Monitorización de eventos en vivo en grupos universitarios públicos (UTN, FIUBA, UNLP, CBC) para detectar estudiantes solicitando apoyo académico, con alertas push opcionales al móvil.
-* **Filtrado Semántico con IA y Fallback Local:** Clasificación de intención para discriminar estudiantes reales de academias comerciales o docentes, utilizando Google Gemini 2.5 Flash (con failover a Cloudflare Workers AI, Groq, Mistral y motor heurístico determinista de respaldo sin conexión).
-* **Panel CRM Local Autónomo (`dashboard.html`):** Interfaz web local que opera 100% en el navegador (sin servidor backend), con persistencia en `localStorage`, notas por alumno, registro de contacto y filtrado dinámico.
-* **Cobertura de Pruebas Automatizadas:** 75 pruebas exhaustivas con `pytest` y `unittest` que verifican integridad de esquemas CSV (RFC 4180), prevención de CSV Injection, cálculo determinista de IDs, coherencia taxonómica, métricas de evaluación y validación del dataset.
-
----
-
-## 📊 Métricas Cuantitativas de Machine Learning (Data Science Benchmark)
-
-Evaluación formal sobre el universo ground-truth de 175 anuncios etiquetados manualmente (ver reporte completo en [`docs/EVALUACION_FILTRO_DATOS.md`](docs/EVALUACION_FILTRO_DATOS.md)):
-
-| Métrica | Baseline Heurístico (Regex) | Producción: Gemini 2.5 Flash | Delta de Rendimiento |
-|---|---|---|---|
-| **Precisión (Precision)** | 22.8% | **95.3%** | **+72.5 pp** |
-| **Sensibilidad (Recall)** | 40.0% | **100.0%** | **+60.0 pp** |
-| **Especificidad** | 20.0% | **98.5%** | **+78.5 pp** |
-| **F1-Score** | 29.0% | **97.6%** | **+68.6 pp** |
-| **Reducción de Ruido** | 76.6% inicial | **1.1% residual** | **-75.5 pp de spam en CRM** |
-
-*¿Por qué falla el baseline de Regex?* Porque los docentes utilizan el mismo léxico que los alumnos (*"clases particulares de física"*, *"apoyo escolar"*). La inferencia semántica de Gemini es estrictamente necesaria para discriminar el rol gramatical de la transacción (quién ofrece vs quién solicita).
+## 📌 TL;DR
+* **El Problema:** En los portales de clasificados abiertos, el **76.6%** de los anuncios son academias comerciales o profesores ofreciendo servicios, no estudiantes buscando contratar clases.
+* **La Solución:** Rastreó 175 avisos crudos, los evaluó con **Gemini 2.5 Flash** (95.3% de precisión frente al 22.8% de un filtro por palabras clave) y consolidó 41 oportunidades genuinas.
+* **Escucha en Vivo:** Centinela pasivo en Telegram (`scripts/telegram_centinela.py`) que monitorea grupos universitarios públicos y emite alertas push inmediatas al celular del docente.
+* **Panel Local:** CRM sin backend (`dashboard.html`) que funciona 100% en el navegador con persistencia en `localStorage`, notas por alumno y cartas personalizadas en 1 clic.
+* **Costo Operativo:** **$0 USD/mes** (opera íntegramente sobre las cuotas gratuitas de Google AI Studio y almacenamiento local). Muestra pública 100% anonimizada sintéticamente.
 
 ---
 
-## 📈 Embudo de Conversión y Telemetría del Piloto Real
+## 📸 Vista del Panel CRM Local (`dashboard.html`)
 
-Resultados cuantitativos del seguimiento en el CRM local (telemetría documentada en [`data/feedback_piloto_conversion.json`](data/feedback_piloto_conversion.json)):
+![Dashboard Desktop](docs/assets/dashboard_desktop.png)
+*Panel interactivo: filtrado dinámico por materia, país y nivel académico, con bitácora comercial por alumno y persistencia en LocalStorage.*
 
-| Etapa del Embudo | Volumen | Conversión | Detalle Operativo |
-|---|---|---|---|
-| **1. Extracción Bruta** | 175 avisos | 100% | Rastrillaje multicanal en 8 plataformas. |
-| **2. Calificación Semántica IA** | 41 prospectos | **23.4%** | Filtrado con Gemini 2.5 Flash; 134 avisos irrelevantes descartados. |
-| **3. Contacto Inicial (Piloto)** | 18 contactados | **43.9%** | Postulaciones mediante canales directos gratuitos y formularios. |
-| **4. Respuestas Recibidas** | 7 alumnos | **38.8%** | Consultas por disponibilidad horaria, temario y cotización. |
-| **5. Clases Pagadas Cerradas** | **3 alumnos activos** | **16.7%** | Alumnos que contrataron paquetes mensuales (2 de Álgebra Universitaria y 1 de Física). |
-
-* **Costo de Adquisición (CAC):** **$0 USD** (operación sobre capas gratuitas de Gemini Flash y web scraping directo).
-* **Ticket promedio:** $15.000 ARS/hora (~$12 USD).
-* **LTV estimado (cuatrimestre):** $240.000 ARS (~$192 USD) por alumno activo.
+![Dashboard Cards](docs/assets/dashboard_cards.png)
+*Tarjetas de prospectos con sustitución inteligente de saludos, advertencias de modalidad y enlace directo al anuncio.*
 
 ---
 
-## 🛡️ Marco Ético, Legal y Prevención de Baneos
+## 🏗️ Arquitectura del Sistema
 
-Para una explicación exhaustiva de cumplimiento normativo (RGPD / Ley 25.326) y arquitectura defensiva, consulta [`docs/MARCO_ETICO_Y_LEGAL.md`](docs/MARCO_ETICO_Y_LEGAL.md):
-
-1. **Scraping Ético y de Acceso Público:**
-   - La recolección se realiza únicamente sobre anuncios públicos donde el usuario solicita explícitamente ser contactado para clases.
-   - No se eluden barreras de acceso, paywalls ni CAPTCHAs.
-2. **Escucha en Telegram: Cero Riesgo de Baneo (Modo Pasivo):**
-   - El Centinela (`telegram_centinela.py`) opera en modo **Event-Driven Listener** sobre grupos en los que la cuenta ya participa.
-   - **No realiza envíos salientes automatizados ni spam masivo por mensaje privado.**
-   - Las alertas se envían **únicamente al bot privado del docente**; el contacto con el estudiante es siempre manual (*Human-in-the-Loop*).
-   - Manejo de `FloodWaitError` de Telethon con enfriamiento exponencial y jitter.
-3. **Anonimización Estricta en Portfolio Público:**
-   - Ningún dato personal real (nombres, teléfonos, @usuarios de Telegram) se encuentra en este repositorio. Todos los nombres fueron reemplazados por seudónimos sintéticos deterministas mediante `scripts/anonymize_for_public.py` (0 colisiones verificadas).
-
----
-
-## 📁 Estructura del Repositorio
-
-El proyecto mantiene una estructura modular multiplataforma:
-
-```text
-├── main.py                     # Punto de entrada unificado CLI (Linux / macOS / Windows)
-├── dashboard.html              # Interfaz web CRM autónoma (HTML5 / Tailwind CSS)
-├── alumnos_ciencias_exactas.csv# Base de datos tabular canónica (8 columnas, RFC 4180)
-├── dashboard_crm.csv           # Planilla extendida para importación en hojas de cálculo
-├── requirements.txt            # Dependencias de producción
-├── requirements-dev.txt        # Dependencias de testing y calidad de código
-├── .env.example                # Plantilla de variables de entorno documentadas
-├── LICENSE                     # Licencia MIT
-│
-├── .github/workflows/          # Integración Continua (CI)
-│   └── ci.yml                  # Automatización de pruebas en GitHub Actions
-│
-├── bin/                        # Lanzadores de conveniencia multiplataforma
-│   ├── actualizar_alumnos.bat  # Windows Batch launcher
-│   ├── actualizar_alumnos.sh   # POSIX Bash launcher (Linux / macOS)
-│   ├── iniciar_centinela.bat
-│   ├── iniciar_centinela.sh
-│   ├── probar_alerta.bat
-│   ├── probar_alerta.sh
-│   ├── unirme_a_grupos.bat
-│   └── unirme_a_grupos.sh
-│
-├── data/                       # Esquemas de datos y telemetría de conversión
-│   ├── dataset_canonico_auditado.json # 41 prospectos calificados (anonimizados)
-│   ├── descartados_auditoria.json     # Registro forense de descartes
-│   ├── extracted_listings.json        # 175 avisos crudos extraídos
-│   ├── feedback_piloto_conversion.json# Telemetría de conversión y objeciones
-│   └── telegram_channels.json         # Directorio de grupos estudiantiles
-│
-├── docs/                       # Documentación técnica y auditorías
-│   ├── AUDITORIA_CAMBIOS.md    # Registro de auditorías técnicas y decisiones de diseño
-│   ├── CONCLUSIONES.md         # Análisis de negocio y resultados pedagógicos
-│   ├── DOCUMENTACION_TECNICA.md# Especificación técnica, diagramas y contratos
-│   ├── EVALUACION_FILTRO_DATOS.md # Reporte cuantitativo de Machine Learning
-│   └── MARCO_ETICO_Y_LEGAL.md  # Marco regulatorio (RGPD / Ley 25.326)
-│
-├── scripts/                    # Módulos del pipeline de prospección
-│   ├── anonymize_for_public.py # Generador de datos públicos con seudónimos deterministas
-│   ├── common_filter.py        # Filtros léxicos y normalización taxonómica
-│   ├── evaluate_filter.py      # Benchmark cuantitativo de Machine Learning
-│   ├── extract_cronoshare_workana.py
-│   ├── extract_tablon.py
-│   ├── extract_telegram.py
-│   ├── extract_tusclases.py
-│   ├── prospector.py           # CLI multiproveedor (Gemini Flash, Groq, Mistral, Fallback)
-│   ├── run_extraction.py
-│   └── telegram_centinela.py   # Daemon en tiempo real (MTProto Telethon)
-│
-└── tests/                      # Suite de pruebas automatizadas (75 tests)
-    ├── check_dashboard.cjs     # Suite DOM para dashboard CRM (Node.js)
-    ├── test_common_filter.py
-    ├── test_e2e_deliverables.py
-    ├── test_empirical_challenger.py
-    ├── test_milestone1_extractors.py
-    ├── test_prospector.py      # Pruebas unitarias de parsing, sanitización CSV, benchmark y failover
-    └── verify_survey_deliverables.py
+```mermaid
+flowchart TD
+    A["Fuentes Web (TusClases, Tablón, Reddit)"] -->|Extracción Periódica| B["data/extracted_listings.json (175 Crudos)"]
+    C["Comunidades Telegram (Grupos Universitarios)"] -->|Escucha Pasiva MTProto| D["scripts/telegram_centinela.py"]
+    B & D --> E["Clasificador Semántico (Google Gemini 2.5 Flash)"]
+    E -->|Filtrado 95.3% Precisión| F["data/dataset_canonico_auditado.json (41 Aprobados)"]
+    E -->|Descarte Documentado| G["data/descartados_auditoria.json (134 Academias)"]
+    F --> H["dashboard.html (CRM Local Autónomo)"]
+    H --> I["Outreach Humano (Carta personalizada en 1 clic)"]
 ```
+
+---
+
+## 📊 Evidencia de Datos y Evaluación de Modelos
+
+El rendimiento del clasificador fue evaluado formalmente contra el Ground Truth verificado manualmente sobre los 175 anuncios crudos (ver reporte detallado en [`docs/EVALUACION_FILTRO_DATOS.md`](docs/EVALUACION_FILTRO_DATOS.md) o interactivo en [`notebooks/evaluacion_clasificador.ipynb`](notebooks/evaluacion_clasificador.ipynb)):
+
+| Métrica de Clasificación | Baseline Heurístico (Regex) | Producción: Gemini 2.5 Flash | Delta de Mejora |
+|---|---|---|---|
+| **Precisión (Precision / VPP)** | 22.8% | **95.3%** | **+72.5 pp** |
+| **Sensibilidad (Recall / TPR)** | 40.0% | **100.0%** | **+60.0 pp** |
+| **Especificidad (TNR)** | 20.0% | **98.5%** | **+78.5 pp** |
+| **F1-Score** | 29.0% | **97.6%** | **+68.6 pp** |
+| **Ruido en CRM** | 76.6% inicial | **1.1% residual** | **-75.5 pp de spam filtrado** |
+
+### Embudo Comercial y Telemetría del Piloto Real
+Seguimiento de las 41 oportunidades en el CRM (telemetría en [`data/feedback_piloto_conversion.json`](data/feedback_piloto_conversion.json)):
+
+* **175** avisos crudos extraídos → **41** calificados por la IA (23.4% de aprobación).
+* **18** contactados en el piloto → **7** respondieron solicitando arancel/disponibilidad (**38.8% de respuesta**).
+* **3 alumnos convertidos a clases regulares pagadas** (**16.7% de conversión** sobre contactados):
+  1. *Belén M. (UADE):* Física / Máquinas Hidráulicas — 8 hrs/mes ($120.000 ARS/mes).
+  2. *Fernando K. (UBA CBC):* Álgebra Universitaria — 4 hrs/mes ($60.000 ARS/mes).
+  3. *Estudiante ESO (España):* Física y Química — 4 hrs/mes (€60 EUR/mes).
+* **Unit Economics:** Costo de Adquisición (CAC) = **$0 USD**. Ticket promedio = $15.000 ARS/h (~$12 USD).
+
+---
+
+## 💡 Cómo construí este proyecto (Dirección Humana + Asistencia de IA)
+
+* **El problema de negocio nació de mi necesidad real:** Como docente de ciencias exactas, pasaba entre 2 y 3 horas diarias navegando portales de clasificados para encontrar alumnos particulares reales entre decenas de avisos de institutos y colegas ofreciendo servicios.
+* **Arquitectura y dirección técnica propia:** Definí los contratos de datos estructurados (RFC 4180 de 8 columnas), las reglas de negocio del CRM, el embudo comercial y la suite de 75 tests automatizados.
+* **Implementación en pair-programming con IA:** Programé el sistema asistido por Google Antigravity. Corregí los prompts tras detectar que las academias engañaban a los primeros filtros usando frases como *"clases de matemáticas"*, agregando reglas negativas explícitas (*few-shot negative pool*).
+* **Auditoría humana y privacidad:** Verifiqué manualmente cada uno de los 175 avisos crudos para construir el Ground Truth del dataset y diseñé el algoritmo de anonimización determinista ([`scripts/anonymize_for_public.py`](scripts/anonymize_for_public.py)) con 0 colisiones para publicar este portfolio de forma éticamente responsable.
 
 ---
 
 ## 🚀 Puesta en Marcha Rápida (Multiplataforma)
 
-### 1. Instalación de Dependencias
+### 1. Clonar e Instalar
 
 ```bash
 git clone https://github.com/metecondrie/prospeccion-alumnos-ciencias.git
 cd prospeccion-alumnos-ciencias
 python -m venv .venv
 
-# En Linux / macOS:
-source .venv/bin/activate
-
-# En Windows:
-.venv\Scripts\activate
+# Activar entorno virtual
+source .venv/bin/activate       # En Linux / macOS
+.venv\Scripts\activate          # En Windows
 
 pip install -r requirements.txt
 pip install -r requirements-dev.txt
 ```
 
-### 2. Configuración de Entorno (`.env`)
-
-Copia la plantilla de ejemplo y configura tus credenciales opcionales:
+### 2. Variables de Entorno
 
 ```bash
-# En Linux / macOS:
-cp .env.example .env
-
-# En Windows:
-copy .env.example .env
+cp .env.example .env    # En Windows: copy .env.example .env
 ```
+*(Si no configuras claves de IA en `.env`, el sistema activa automáticamente el motor heurístico determinista local sin costo).*
 
-*(Si no configuras claves de IA, el sistema activa automáticamente el motor heurístico determinista local sin costo).*
-
-### 3. Comandos de Ejecución Multiplataforma
+### 3. Comandos de Ejecución
 
 ```bash
 # Ejecutar pipeline completo (Scraping + Auditoría IA + Compilación)
 python main.py run
-# O bien mediante módulo directo:
+# O directamente por módulo:
 python -m scripts.prospector run
 
 # Ejecutar benchmark cuantitativo de Machine Learning
 python scripts/evaluate_filter.py
 
-# Iniciar el Centinela de Telegram en tiempo real
+# Iniciar Centinela de Telegram en tiempo real
 python -m scripts.telegram_centinela
 
 # Ejecutar la suite completa de pruebas (75 tests)
@@ -193,31 +121,26 @@ python main.py test
 ```
 
 *Lanzadores de conveniencia:*
-* **En Linux / macOS:** `bash bin/actualizar_alumnos.sh`
-* **En Windows:** Doble clic en `bin\actualizar_alumnos.bat`
+* **Linux / macOS:** `bash bin/actualizar_alumnos.sh`
+* **Windows:** Doble clic en `bin\actualizar_alumnos.bat`
 
 ---
 
-## 🧪 Cómo correr las verificaciones
+## 📚 Documentación Técnica Detallada (`/docs`)
 
-```bash
-pip install -r requirements.txt        # Dependencias de producción
-pip install -r requirements-dev.txt    # Dependencias de testing
-python validate_dataset.py             # Integridad criptográfica del dataset
-python -m unittest discover -s tests   # Suite completa Python (75 tests)
-node tests/check_dashboard.cjs         # Suite del dashboard CRM (Node.js)
-```
+* ⚙️ [**DOCUMENTACION_TECNICA.md**](docs/DOCUMENTACION_TECNICA.md): Especificación técnica completa, contratos de datos, diagramas Mermaid y arquitectura de resiliencia.
+* 📊 [**EVALUACION_FILTRO_DATOS.md**](docs/EVALUACION_FILTRO_DATOS.md): Informe cuantitativo de Machine Learning y matrices de confusión.
+* 🛡️ [**MARCO_ETICO_Y_LEGAL.md**](docs/MARCO_ETICO_Y_LEGAL.md): Marco normativo de privacidad (RGPD / Ley 25.326) y protocolo de opt-out.
+* 📈 [**CONCLUSIONES.md**](docs/CONCLUSIONES.md): Resultados pedagógicos y análisis de conversión comercial.
+* 📝 [**AUDITORIA_CAMBIOS.md**](docs/AUDITORIA_CAMBIOS.md): Bitácora de decisiones de diseño y auditorías técnicas.
 
 ---
 
-## 🧑‍💻 Autoría y Rol
+## 🧑‍💻 Autoría
 
-**Autor:** **Alejo Ongaro** ([@metecondrie](https://github.com/metecondrie))
-* **Rol:** Diseñador del sistema, Arquitecto de Software y Docente de Ciencias Exactas.
-* **Perfil GitHub:** [github.com/metecondrie](https://github.com/metecondrie)
-* **Repositorio:** [github.com/metecondrie/prospeccion-alumnos-ciencias](https://github.com/metecondrie/prospeccion-alumnos-ciencias)
-
-Diseñé y dirigí este proyecto de punta a punta: definí el problema de negocio (asimetría 90/10 en portales de clasificados donde la gran mayoría de publicaciones corresponden a academias o profesores ofreciendo clases y no a estudiantes contratando), diseñé la arquitectura del pipeline multicanal y audité cada entrega con criterios de aceptación verificables. La implementación de código fue asistida por IA (Google Antigravity); la dirección técnica, verificación de datos, correcciones estructurales, suite de pruebas automatizadas y decisiones de privacidad y producción fueron conducidas por mí a lo largo de sucesivas iteraciones (ver [historial de auditoría y decisiones de diseño](docs/AUDITORIA_CAMBIOS.md)).
+**Alejo Ongaro** ([@metecondrie](https://github.com/metecondrie))  
+*Docente de Ciencias Exactas y Diseñador del Sistema*  
+Repositorio: [github.com/metecondrie/prospeccion-alumnos-ciencias](https://github.com/metecondrie/prospeccion-alumnos-ciencias)
 
 ---
 
